@@ -19,9 +19,10 @@ const config: Config = {
           light: "#E8D5B5", // italic emphasis on dark backgrounds
           dark: "#8B6535",  // links on cream backgrounds
         },
-        // Light backgrounds
-        cream: "#FAF7F2",
-        blush: "#F0E8E0",
+        // Light backgrounds — pulled cooler/paler so they read as off-white
+        // instead of tan. Cream is the page default, blush is the secondary.
+        cream: "#F8F5EF",
+        blush: "#F2EDE4",
         // Body text
         warmgray: "#6B6560",
       },

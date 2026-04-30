@@ -7,7 +7,7 @@
   html {
     font-family: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
     color: #1C1917;
-    background-color: #FAF7F2;
+    background-color: #F8F5EF;
     /* Smooth in-page scroll for anchor jumps */
     scroll-behavior: smooth;
   }

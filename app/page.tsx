@@ -16,7 +16,11 @@ export default function Home() {
   return (
     <>
       {/* ---------- HERO ---------- */}
-      <Section tone="cream" className="relative overflow-hidden">
+      {/* Soft top-down gold wash adds depth without darkening the page */}
+      <Section
+        tone="cream"
+        className="relative overflow-hidden bg-gradient-to-b from-gold/[0.07] via-cream to-cream"
+      >
         <div className="grid gap-12 md:grid-cols-2 md:items-center">
           <div>
             <Reveal direction="up" delay={0.1}>
