@@ -4,8 +4,8 @@ import { cn } from "@/lib/cn";
 // Pulls from Zillow reviews — 5-star rating shown as gold sparkles.
 type TestimonialCardProps = {
   quote: string;
-  /** Reviewer name */
-  author: string;
+  /** Reviewer name. Optional — Zillow reviews may be anonymous. */
+  author?: string;
   /** Optional descriptor like "Buyer · Decatur, GA" */
   context?: string;
   /** 1–5; renders that many gold sparkles. Default: 5. */
@@ -58,16 +58,18 @@ export default function TestimonialCard({
         &ldquo;{quote}&rdquo;
       </p>
 
-      {/* Author */}
+      {/* Author / source */}
       <div className="mt-6 pt-6 border-t border-brand">
-        <p
-          className={cn(
-            "font-sans font-medium text-sm",
-            onDark ? "text-cream" : "text-charcoal",
-          )}
-        >
-          {author}
-        </p>
+        {author && (
+          <p
+            className={cn(
+              "font-sans font-medium text-sm",
+              onDark ? "text-cream" : "text-charcoal",
+            )}
+          >
+            {author}
+          </p>
+        )}
         {context && (
           <p
             className={cn(
@@ -78,7 +80,12 @@ export default function TestimonialCard({
             {context}
           </p>
         )}
-        <p className="mt-2 text-[10px] uppercase tracking-eyebrow text-gold">
+        <p
+          className={cn(
+            "text-[10px] uppercase tracking-eyebrow text-gold",
+            author || context ? "mt-2" : "",
+          )}
+        >
           {source}
         </p>
       </div>
