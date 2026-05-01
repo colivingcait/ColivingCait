@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { cn } from "@/lib/cn";
+import { rememberVisitor } from "@/lib/visitor";
 
 // Reusable inline lead-magnet capture. Used on the homepage for the Coliving
 // Starter Guide and on multiple other pages for their respective magnets.
@@ -47,14 +48,22 @@ export default function LeadMagnetForm({
     setError(null);
 
     try {
-      // Placeholder endpoint — wire to ConvertKit once API keys are added.
-      const res = await fetch("/api/lead-magnet", {
+      // Posts to the unified /api/subscribe endpoint which calls
+      // ConvertKit (or no-ops in dev when no API key is set).
+      const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, email, tag }),
+        body: JSON.stringify({
+          email,
+          first_name: firstName || undefined,
+          tag_name: tag,
+        }),
       });
 
       if (!res.ok) throw new Error("Submission failed");
+
+      // Cache the visitor identity for future page-visit tags
+      rememberVisitor(email, firstName || undefined);
 
       setStatus("success");
     } catch (err) {

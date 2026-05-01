@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
+import { subscribeToConvertKit } from "@/lib/convertkit";
 
-// Placeholder lead-magnet endpoint. Logs the submission to the server
-// console so we can verify forms are wiring up end-to-end before ConvertKit
-// keys are added. Once CONVERTKIT_API_KEY is in the env, this will tag the
-// subscriber with `tag` and trigger the matching email sequence.
+// Lead-magnet endpoint. Used by every LeadMagnetForm + the calculator
+// email gate. Posts directly to ConvertKit via the shared helper —
+// applies the tag passed in the request body.
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -16,20 +16,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Replace with ConvertKit API call once keys are configured.
-    // Example shape:
-    //   await fetch(`https://api.convertkit.com/v3/tags/${tagId}/subscribe`, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       api_key: process.env.CONVERTKIT_API_KEY,
-    //       email,
-    //       first_name: firstName,
-    //     }),
-    //   });
-    console.log("[lead-magnet]", { firstName, email, tag });
+    const result = await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: tag,
+    });
 
-    return NextResponse.json({ ok: true });
+    if (!result.ok) {
+      return NextResponse.json({ error: result.error }, { status: 502 });
+    }
+
+    return NextResponse.json({ ok: true, mode: result.mode });
   } catch (err) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }

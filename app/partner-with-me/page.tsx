@@ -4,6 +4,8 @@ import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import TestimonialCard from "@/components/TestimonialCard";
+import PageVisitTracker from "@/components/PageVisitTracker";
+import { CK_TAGS } from "@/lib/convertkit";
 import { zillowTestimonials } from "@/lib/testimonials";
 
 export const metadata = {
@@ -22,6 +24,7 @@ const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/discovery";
 export default function PartnerWithMePage() {
   return (
     <>
+      <PageVisitTracker tag={CK_TAGS.PARTNER_PAGE_VISITED} />
       <Hero />
       <HowItWorks />
       <PartnershipModels />

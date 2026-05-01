@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { cn } from "@/lib/cn";
+import { rememberVisitor } from "@/lib/visitor";
 
 // General contact form. Collects everything Caitlyn needs to triage a
 // message and route it to the right follow-up.
@@ -69,6 +70,10 @@ export default function ContactForm({ className }: ContactFormProps) {
         }),
       });
       if (!res.ok) throw new Error("Submission failed");
+
+      // Cache visitor identity for future page-visit tags
+      rememberVisitor(email, firstName);
+
       setStatus("success");
     } catch (err) {
       setStatus("error");

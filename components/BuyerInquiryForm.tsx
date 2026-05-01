@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Button from "./Button";
 import { cn } from "@/lib/cn";
+import { rememberVisitor } from "@/lib/visitor";
 
 // Buyer / investor inquiry form for the Buy & Sell page. Collects enough
 // for Caitlyn to qualify a buyer in 30 seconds. Once Zapier credentials
@@ -62,6 +63,10 @@ export default function BuyerInquiryForm({ className }: BuyerInquiryFormProps) {
         }),
       });
       if (!res.ok) throw new Error("Submission failed");
+
+      // Cache visitor identity (best-effort first-name split)
+      rememberVisitor(email, name?.split(/\s+/)[0]);
+
       setStatus("success");
     } catch (err) {
       setStatus("error");

@@ -6,6 +6,8 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import TestimonialCard from "@/components/TestimonialCard";
 import LeadMagnetForm from "@/components/LeadMagnetForm";
 import BuyerInquiryForm from "@/components/BuyerInquiryForm";
+import PageVisitTracker from "@/components/PageVisitTracker";
+import { CK_TAGS } from "@/lib/convertkit";
 import { zillowTestimonials } from "@/lib/testimonials";
 
 export const metadata = {
@@ -24,6 +26,7 @@ const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/discovery";
 export default function BuyAndSellPage() {
   return (
     <>
+      <PageVisitTracker tag={CK_TAGS.BUY_SELL_PAGE_VISITED} />
       <Hero />
       <BuyersPanel />
       <SellersPanel />

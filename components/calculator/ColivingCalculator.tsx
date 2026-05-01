@@ -11,6 +11,8 @@ import {
   calculate,
   computeConversion,
 } from "@/lib/coliving-calculator";
+import { CK_TAGS } from "@/lib/convertkit";
+import { rememberVisitor } from "@/lib/visitor";
 
 const TOTAL_STEPS = 6;
 
@@ -100,17 +102,39 @@ export default function ColivingCalculator() {
   }, [step, inputs, email]);
 
   const handleEmailSubmit = async () => {
-    // Tag the email in ConvertKit as `coliving-calculator-used` once
-    // keys are wired. For now we just post to the placeholder endpoint.
+    // Compute results first so we can tag the verdict alongside the
+    // generic "calculator used" tag.
+    const results = calculate(inputs);
+    const verdictTag =
+      results.verdict === "strong"
+        ? CK_TAGS.COLIVING_DEAL_STRONG
+        : results.verdict === "marginal"
+          ? CK_TAGS.COLIVING_DEAL_MARGINAL
+          : CK_TAGS.COLIVING_DEAL_WEAK;
+
+    rememberVisitor(email);
+
+    // Two CK calls: the generic usage tag and the verdict-specific tag.
+    // Both go through the unified /api/subscribe endpoint.
     try {
-      await fetch("/api/lead-magnet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          tag: "coliving-calculator-used",
+      await Promise.all([
+        fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            tag_name: CK_TAGS.COLIVING_CALCULATOR_USED,
+          }),
         }),
-      });
+        fetch("/api/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            tag_name: verdictTag,
+          }),
+        }),
+      ]);
     } catch (err) {
       // Don't block the user from seeing results on a network hiccup
     }

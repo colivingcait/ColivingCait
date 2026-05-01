@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
+import { CK_TAGS, subscribeToConvertKit } from "@/lib/convertkit";
 
-// Buyer / investor inquiry endpoint. Will fan out to:
-//   1. Follow Up Boss via Zapier webhook (CRM) — env: ZAPIER_BUYER_HOOK
-//   2. ConvertKit with tag `buyer-lead` — env: CONVERTKIT_API_KEY
-// Until those keys land, the endpoint just logs the submission so we can
-// verify the form posts end-to-end.
+// Buyer / investor inquiry endpoint. Two side effects:
+//   1. ConvertKit subscribe with `buyer-lead` tag (live now via lib)
+//   2. Forward to Follow Up Boss via Zapier webhook (TODO — needs
+//      ZAPIER_BUYER_HOOK env var)
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -17,10 +17,46 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: when ZAPIER_BUYER_HOOK is set, POST to that webhook with the
-    // full payload to land in Follow Up Boss.
-    // TODO: when CONVERTKIT_API_KEY is set, tag this email as `buyer-lead`
-    // to trigger the buyer email sequence.
+    // First name from full name (best-effort split; Caitlyn can clean
+    // these up in CK if needed)
+    const firstName = name.split(/\s+/)[0];
+
+    const ck = await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: CK_TAGS.BUYER_LEAD,
+      fields: {
+        full_name: name,
+        phone,
+        looking_for: lookingFor,
+        price_range: priceRange,
+      },
+    });
+
+    if (!ck.ok) {
+      console.warn("[buyer-inquiry] CK subscribe failed", ck.error);
+    }
+
+    // TODO: forward to Follow Up Boss via Zapier hook.
+    const zapHook = process.env.ZAPIER_BUYER_HOOK;
+    if (zapHook) {
+      try {
+        await fetch(zapHook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            phone,
+            lookingFor,
+            priceRange,
+          }),
+        });
+      } catch (err) {
+        console.warn("[buyer-inquiry] Zapier forward failed", err);
+      }
+    }
+
     console.log("[buyer-inquiry]", {
       name,
       email,
