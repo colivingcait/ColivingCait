@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
@@ -76,16 +77,24 @@ function Hero() {
           </Reveal>
         </div>
 
-        {/* Headshot — yellow blazer photo (placeholder until photo asset arrives) */}
+        {/* Headshot — yellow blazer photo. Next/Image lazy-loads the optimized
+            version at the right size for every breakpoint. */}
         <Reveal direction="left" delay={0.3} duration={1}>
           <Parallax distance={50}>
-            <div className="aspect-[4/5] w-full bg-blush border border-brand flex items-center justify-center text-warmgray relative">
-              <span className="font-heading italic text-2xl">
-                yellow blazer headshot
-              </span>
-              <span className="absolute top-4 left-4 text-[10px] uppercase tracking-eyebrow text-gold">
-                ✦ Photo placeholder
-              </span>
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-brand bg-blush">
+              <Image
+                src="/images/caitlyn-yellow-blazer.jpg"
+                alt="Caitlyn Verdugo, Coliving Cait — Atlanta-based coliving investor and Realtor"
+                fill
+                priority
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+              />
+              {/* Soft gold wash overlay — keeps the photo feeling brand-cohesive */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent"
+              />
             </div>
           </Parallax>
         </Reveal>
