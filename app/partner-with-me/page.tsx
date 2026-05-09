@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import PropertyCard from "@/components/PropertyCard";
 
 export const metadata = {
   title: "Partner With Me — Coliving Cait",
@@ -37,63 +38,6 @@ const models = [
     title: "Coliving Arbitrage",
     copy: "You own the property. I lease it from you and operate it as a coliving house. You get guaranteed monthly rent — I handle everything else.",
     items: ["You retain ownership", "Guaranteed monthly lease payment", "I handle all operations and residents", "Master lease agreement", "No vacancy risk for you"],
-  },
-];
-
-type Property = {
-  name: string;
-  location: string;
-  original: string;
-  converted: string;
-  gross: string;
-  strategy: string;
-  conversion: React.ReactNode;
-  image?: string;
-};
-
-const properties: Property[] = [
-  {
-    name: "Villa Candace",
-    location: "Atlanta Metro, Georgia",
-    original: "5 Bed / 3 Bath",
-    converted: "8 Rooms / 3 Bath",
-    gross: "$6,000",
-    strategy: "Acquisition",
-    image: "/images/villa-candace/IMG_0190.JPG",
-    conversion: (
-      <>
-        Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
-        <strong className="text-charcoal font-medium">converted the garage into 2 rooms</strong>. Cleaned up, furnished, and listed on PadSplit.
-      </>
-    ),
-  },
-  {
-    name: "Raven",
-    location: "Atlanta Metro, Georgia",
-    original: "X Bed / X Bath",
-    converted: "X Rooms / X Bath",
-    gross: "$X,XXX",
-    strategy: "Acquisition",
-    image: "/images/raven/ravenfront.jpg",
-    conversion: <>Brief description of what was converted and how.</>,
-  },
-  {
-    name: "Property Name",
-    location: "Atlanta Metro, Georgia",
-    original: "X Bed / X Bath",
-    converted: "X Rooms / X Bath",
-    gross: "$X,XXX",
-    strategy: "Arbitrage",
-    conversion: <>Brief description of what was converted and how.</>,
-  },
-  {
-    name: "Property Name",
-    location: "Atlanta Metro, Georgia",
-    original: "X Bed / X Bath",
-    converted: "X Rooms / X Bath",
-    gross: "$X,XXX",
-    strategy: "Acquisition",
-    conversion: <>Brief description of what was converted and how.</>,
   },
 ];
 
@@ -264,80 +208,67 @@ export default function PartnerPage() {
             </p>
           </div>
 
-          {properties.map((p, i) => (
-            <div
-              key={i}
-              className={`reveal ${i > 0 ? `reveal-d${i}` : ""} bg-white border border-soft mb-6 transition-all duration-500 hover:border-brand hover:shadow-card`}
-            >
-              <div className="grid lg:grid-cols-2">
-                <div
-                  className="relative flex items-center justify-center text-sm text-warmgray-light overflow-hidden bg-blush"
-                  style={{ aspectRatio: "16 / 10" }}
-                >
-                  <span className="absolute top-4 left-4 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-3 py-1.5">
-                    Active
-                  </span>
-                  {p.image ? (
-                    <Image
-                      src={p.image}
-                      alt={`${p.name} — ${p.location}`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 600px"
-                      className="object-cover"
-                    />
-                  ) : (
-                    "Property overview photo"
-                  )}
-                </div>
-                <div className="p-10 lg:p-11 flex flex-col justify-center">
-                  <div className="font-heading font-medium text-[28px] text-charcoal mb-1">
-                    {p.name}
-                  </div>
-                  <div className="text-[13px] text-warmgray-light tracking-[0.04em] mb-6">
-                    {p.location}
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
-                    {[
-                      ["Original", p.original],
-                      ["Converted", p.converted],
-                      ["Avg Monthly Gross", p.gross],
-                      ["Strategy", p.strategy],
-                    ].map(([label, val]) => (
-                      <div key={label as string}>
-                        <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-gold mb-1">
-                          {label}
-                        </span>
-                        <span className="font-heading font-medium text-[22px] text-charcoal">
-                          {val}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="text-sm text-warmgray leading-[1.75] pt-5 border-t border-soft">
-                    {p.conversion}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center justify-between px-10 lg:px-11 py-4 border-t border-soft">
-                <div className="hidden sm:flex gap-2">
-                  {["Main", "Before", "After", "Rooms"].map((label, idx) => (
-                    <div
-                      key={label}
-                      className={`w-14 h-10 bg-blush border flex items-center justify-center text-[9px] text-warmgray-light cursor-pointer transition-colors duration-300 hover:border-gold ${idx === 0 ? "border-gold" : "border-soft"}`}
-                    >
-                      {label}
-                    </div>
-                  ))}
-                </div>
-                <a
-                  href="#"
-                  className="group inline-flex items-center gap-2 text-xs font-medium tracking-[0.08em] uppercase text-gold-dark hover:text-gold hover:gap-3 transition-all duration-300"
-                >
-                  View all photos →
-                </a>
-              </div>
-            </div>
-          ))}
+          <PropertyCard
+            name="Villa Candace"
+            location="Atlanta Metro, Georgia"
+            original="5 Bed / 3 Bath"
+            converted="8 Rooms / 3 Bath"
+            gross="$6,000"
+            strategy="Acquisition"
+            images={[
+              "/images/villa-candace/IMG_0190.JPG",
+              "/images/villa-candace/candacekitchen.jpg",
+              "/images/villa-candace/IMG_4109.jpeg",
+              "/images/villa-candace/12.png",
+              "/images/villa-candace/18.png",
+            ]}
+          >
+            Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
+            <strong className="text-charcoal font-medium">converted the garage into 2 rooms</strong>. Cleaned up, furnished, and listed on PadSplit.
+          </PropertyCard>
+
+          <PropertyCard
+            name="Raven"
+            location="Atlanta Metro, Georgia"
+            original="X Bed / X Bath"
+            converted="X Rooms / X Bath"
+            gross="$X,XXX"
+            strategy="Acquisition"
+            delay={1}
+            images={[
+              "/images/raven/ravenfront.jpg",
+              "/images/raven/ravenkitchen.jpg",
+              "/images/raven/ravenbed1.jpg",
+              "/images/raven/ravenbed2.jpg",
+              "/images/raven/ravenbed3.jpg",
+            ]}
+          >
+            Brief description of what was converted and how.
+          </PropertyCard>
+
+          <PropertyCard
+            name="Property Name"
+            location="Atlanta Metro, Georgia"
+            original="X Bed / X Bath"
+            converted="X Rooms / X Bath"
+            gross="$X,XXX"
+            strategy="Arbitrage"
+            delay={2}
+          >
+            Brief description of what was converted and how.
+          </PropertyCard>
+
+          <PropertyCard
+            name="Property Name"
+            location="Atlanta Metro, Georgia"
+            original="X Bed / X Bath"
+            converted="X Rooms / X Bath"
+            gross="$X,XXX"
+            strategy="Acquisition"
+            delay={3}
+          >
+            Brief description of what was converted and how.
+          </PropertyCard>
 
           <div className="reveal mt-16">
             <h3
