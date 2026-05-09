@@ -260,7 +260,7 @@ function LessonNavigation({
         </Link>
       ) : (
         <Link
-          href="/get-coaching"
+          href="/learn"
           className="group block border border-gold bg-gold/[0.06] p-5 hover:border-gold hover:bg-gold/[0.12] transition-colors text-right"
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-gold">
