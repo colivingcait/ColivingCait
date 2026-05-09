@@ -249,10 +249,10 @@ export default function PartnerPage() {
 
           <PropertyCard
             name="Meadow"
-            location="Atlanta Metro, Georgia"
-            original="X Bed / X Bath"
-            converted="X Rooms / X Bath"
-            gross="$X,XXX"
+            location="Snellville, Georgia"
+            original="4 Bed / 3 Bath"
+            converted="8 Rooms / 3 Bath"
+            gross="$5,000"
             strategy="Arbitrage"
             delay={2}
             images={[
@@ -265,7 +265,8 @@ export default function PartnerPage() {
               "/images/meadow/meadow7.jpg",
             ]}
           >
-            Brief description of what was converted and how.
+            Converted the living rooms, dining room and basement into{" "}
+            <strong className="text-charcoal font-medium">4 additional bedrooms</strong>.
           </PropertyCard>
 
           <div className="reveal mt-16">
