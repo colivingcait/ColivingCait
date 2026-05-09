@@ -234,7 +234,7 @@ export default function HomePage() {
                 className="font-heading font-medium text-xl text-gold-light inline-block pt-3 border-t"
                 style={{ borderTopColor: "rgba(232,213,181,0.2)" }}
               >
-                +$2,600/mo cashflow
+                +$1,500/mo cashflow
               </div>
             </div>
           </div>
