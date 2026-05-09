@@ -229,10 +229,10 @@ export default function PartnerPage() {
 
           <PropertyCard
             name="Raven"
-            location="Atlanta Metro, Georgia"
-            original="X Bed / X Bath"
-            converted="X Rooms / X Bath"
-            gross="$X,XXX"
+            location="Stone Mountain, Georgia"
+            original="4 Bed / 3 Bath"
+            converted="8 Rooms / 3 Bath"
+            gross="$6,500"
             strategy="Acquisition"
             delay={1}
             images={[
@@ -243,7 +243,8 @@ export default function PartnerPage() {
               "/images/raven/ravenbed3.jpg",
             ]}
           >
-            Brief description of what was converted and how.
+            Converted the living room, dining room and basement into{" "}
+            <strong className="text-charcoal font-medium">4 additional bedrooms</strong>.
           </PropertyCard>
 
           <PropertyCard
