@@ -28,8 +28,11 @@ export default function Footer() {
     <footer className="bg-charcoal px-8 lg:px-[60px] border-t border-white/[0.04]">
       <div className="mx-auto grid w-full max-w-[1320px] gap-10 py-14 md:gap-[60px] md:grid-cols-[1.2fr_1fr_1fr]">
         <div>
-          <Link href="/" className="font-heading text-xl font-normal text-white">
-            ColivingCait
+          <Link
+            href="/"
+            className="font-heading text-xl font-normal text-white hover:opacity-70 transition-opacity inline-block"
+          >
+            Coliving<em className="italic font-light text-gold-light">Cait</em>
           </Link>
           <p className="mt-3 max-w-[280px] text-[13px] leading-[1.6] text-warmgray">
             Helping women build wealth through intentional coliving. Atlanta-based investor, coach, and Keller Williams Realtor.

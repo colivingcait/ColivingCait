@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,9 +42,17 @@ export default function Nav() {
         {/* Wordmark */}
         <Link
           href="/"
-          className="font-heading text-2xl font-normal tracking-[-0.01em] text-charcoal hover:opacity-70 transition-opacity"
+          aria-label="ColivingCait — home"
+          className="inline-flex items-center hover:opacity-70 transition-opacity"
         >
-          ColivingCait
+          <Image
+            src="/images/colivingcait-logo.png"
+            alt="ColivingCait"
+            width={200}
+            height={40}
+            priority
+            className="h-7 w-auto"
+          />
         </Link>
 
         {/* Desktop links */}
