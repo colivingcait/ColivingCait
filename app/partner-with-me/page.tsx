@@ -42,14 +42,14 @@ const models = [
 ];
 
 const photoGrid = [
-  "/images/villa-candace/candacekitchen.jpg",
-  "/images/villa-candace/IMG_4109.jpeg",
-  "/images/villa-candace/12.png",
-  "/images/villa-candace/18.png",
-  "/images/raven/ravenkitchen.jpg",
-  "/images/raven/ravenbed1.jpg",
-  "/images/raven/ravenbed2.jpg",
-  "/images/raven/ravenbed3.jpg",
+  "/images/colivingconsulting/1.png",
+  "/images/colivingconsulting/2.png",
+  "/images/colivingconsulting/3.png",
+  "/images/colivingconsulting/4.png",
+  "/images/colivingconsulting/5.png",
+  "/images/colivingconsulting/8.png",
+  "/images/colivingconsulting/9.png",
+  "/images/colivingconsulting/10.png",
 ];
 
 const trust = [
@@ -273,11 +273,11 @@ export default function PartnerPage() {
             <h3
               className="font-heading font-normal text-[28px] text-charcoal mb-3 tracking-[-0.01em]"
             >
-              More properties I&apos;ve worked on, helped purchase, consulted on, and{" "}
-              <em className="italic text-gold font-light">helped sell.</em>
+              More coliving properties I&apos;ve{" "}
+              <em className="italic text-gold font-light">worked on.</em>
             </h3>
             <p className="text-[15px] text-warmgray mb-8">
-              A look across my portfolio and the deals I&apos;ve been part of.
+              Consulting, property management, or helping a client purchase or sell.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {photoGrid.map((src, i) => (
