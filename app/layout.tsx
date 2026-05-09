@@ -34,7 +34,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
-      <body className="bg-cream text-charcoal">
+      <body className="bg-white text-warmgray">
         <Nav />
         <main>{children}</main>
         <Footer />

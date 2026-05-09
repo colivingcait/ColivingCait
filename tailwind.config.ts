@@ -1,8 +1,9 @@
 import type { Config } from "tailwindcss";
 
-// Coliving Cait brand design system
-// Colors, typography, and spacing tokens are mapped here so every component
-// can reference the brand directly via Tailwind utility classes.
+// Coliving Cait brand design system — v2 (May 2026)
+// Tokens mirror Section 3 of the playbook so utilities map 1:1 to the HTML
+// design files. See globals.css for component-level helpers (.btn-*, .eyebrow,
+// .reveal) that are shared across pages.
 const config: Config = {
   content: [
     "./app/**/*.{ts,tsx}",
@@ -11,49 +12,66 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Primary dark background
-        charcoal: "#1C1917",
-        // Primary accent
+        charcoal: {
+          DEFAULT: "#1C1917",
+          soft: "#2A2725",
+        },
         gold: {
           DEFAULT: "#C4955A",
-          light: "#E8D5B5", // italic emphasis on dark backgrounds
-          dark: "#8B6535",  // links on cream backgrounds
+          light: "#E8D5B5",
+          dark: "#8B6535",
         },
-        // Light backgrounds — pulled cooler/paler so they read as off-white
-        // instead of tan. Cream is the page default, blush is the secondary.
-        cream: "#F8F5EF",
-        blush: "#F2EDE4",
-        // Body text
-        warmgray: "#6B6560",
+        cream: "#FAF7F2",
+        blush: "#F0E8E0",
+        warmgray: {
+          DEFAULT: "#6B6560",
+          light: "#A09A94",
+        },
       },
       borderColor: {
-        // Card / divider border (gold @ 25% opacity)
-        brand: "rgba(196,149,90,0.25)",
+        // Card / divider borders
+        brand: "rgba(196,149,90,0.15)",
+        soft: "rgba(28,25,23,0.06)",
       },
       fontFamily: {
-        // Headings — Cormorant Garamond (weight 500, italic for emphasis)
         heading: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "serif"],
-        // Body — DM Sans (weight 300 body, 500 labels)
         sans: ["var(--font-dm-sans)", "DM Sans", "system-ui", "sans-serif"],
       },
       letterSpacing: {
-        // Eyebrow labels: 0.18em uppercase gold
-        eyebrow: "0.18em",
-        // Buttons: uppercase 0.09em
-        button: "0.09em",
+        eyebrow: "0.2em",
+        button: "0.12em",
       },
       lineHeight: {
-        // Heading tight 1.1, body open 1.8
-        heading: "1.1",
+        heading: "1.08",
         body: "1.8",
       },
       fontSize: {
-        // Eyebrow labels are 9–10px
-        eyebrow: ["0.625rem", { letterSpacing: "0.18em", lineHeight: "1.2" }],
+        eyebrow: ["0.625rem", { letterSpacing: "0.2em", lineHeight: "1.2" }],
       },
       borderRadius: {
-        // Buttons are square corners — keep "none" available explicitly
         none: "0",
+      },
+      boxShadow: {
+        card: "0 12px 32px rgba(28,25,23,0.04)",
+        cardGold: "0 16px 40px rgba(196,149,90,0.08)",
+        btnGold: "0 16px 40px rgba(196,149,90,0.2)",
+        photo: "0 12px 40px rgba(28,25,23,0.08)",
+      },
+      transitionTimingFunction: {
+        brand: "cubic-bezier(0.16, 1, 0.3, 1)",
+      },
+      animation: {
+        ticker: "ticker 30s linear infinite",
+        heroReveal: "heroReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+      },
+      keyframes: {
+        ticker: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        heroReveal: {
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
     },
   },

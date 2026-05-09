@@ -1,91 +1,117 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import Button from "./Button";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 
-// Primary site navigation. Links match the Phase 1 page list from the
-// playbook — keeps mobile-first behavior with a hamburger toggle.
+// Primary site navigation — frosted glass, transparent → solid on scroll.
+// Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
 const links = [
   { href: "/about", label: "About" },
   { href: "/what-is-coliving", label: "What Is Coliving" },
-  { href: "/get-coaching", label: "Coaching" },
+  { href: "/learn", label: "Learn With Me" },
   { href: "/partner-with-me", label: "Partner" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
   { href: "/community", label: "Community" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-brand">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 md:px-10">
-        {/* Wordmark — Cormorant italic for the brand feel */}
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-[100] px-8 lg:px-[60px] transition-all duration-500 ease-brand border-b",
+        scrolled
+          ? "bg-white/95 [backdrop-filter:blur(24px)] [-webkit-backdrop-filter:blur(24px)] border-soft"
+          : "bg-transparent border-transparent",
+      )}
+    >
+      <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between py-5">
+        {/* Wordmark */}
         <Link
           href="/"
-          className="font-heading text-2xl tracking-tight text-charcoal"
+          className="font-heading text-2xl font-normal tracking-[-0.01em] text-charcoal hover:opacity-70 transition-opacity"
         >
-          Coliving <span className="italic text-gold">Cait</span>
+          ColivingCait
         </Link>
 
         {/* Desktop links */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {links.map((l) => (
+        <ul className="hidden lg:flex items-center gap-9 list-none">
+          {links.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  className={cn(
+                    "relative text-[13px] tracking-[0.02em] transition-colors duration-200",
+                    "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
+                    "after:transition-[width] after:duration-[350ms] after:ease-brand",
+                    active
+                      ? "text-charcoal font-medium after:w-full"
+                      : "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full",
+                  )}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            );
+          })}
+          <li>
             <Link
-              key={l.href}
-              href={l.href}
-              className="text-xs font-medium uppercase tracking-button text-charcoal hover:text-gold transition-colors"
+              href="/contact"
+              className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
             >
-              {l.label}
+              Book a Call
             </Link>
-          ))}
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden lg:block">
-          <Button href="/contact" variant="primary" size="md">
-            Book a Discovery Call
-          </Button>
-        </div>
+          </li>
+        </ul>
 
         {/* Mobile toggle */}
         <button
           aria-label="Toggle navigation"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden h-10 w-10 inline-flex items-center justify-center text-charcoal"
+          className="lg:hidden inline-flex h-10 w-10 flex-col items-center justify-center gap-[5px] cursor-pointer"
         >
-          <span className="sr-only">Menu</span>
-          <div className="space-y-1.5">
-            <span className={cn("block h-px w-6 bg-charcoal transition", open && "translate-y-1.5 rotate-45")} />
-            <span className={cn("block h-px w-6 bg-charcoal transition", open && "opacity-0")} />
-            <span className={cn("block h-px w-6 bg-charcoal transition", open && "-translate-y-1.5 -rotate-45")} />
-          </div>
+          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "translate-y-[6.5px] rotate-45")} />
+          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "opacity-0")} />
+          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "-translate-y-[6.5px] -rotate-45")} />
         </button>
       </div>
 
       {/* Mobile drawer */}
       {open && (
-        <div className="lg:hidden border-t border-brand bg-cream">
-          <nav className="flex flex-col px-6 py-4">
+        <div className="lg:hidden border-t border-soft bg-white/95 [backdrop-filter:blur(24px)]">
+          <nav className="flex flex-col px-2 py-4">
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-sm font-medium uppercase tracking-button text-charcoal hover:text-gold"
+                className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
               >
                 {l.label}
               </Link>
             ))}
-            <div className="pt-4">
-              <Button href="/contact" variant="primary" size="md" className="w-full">
-                Book a Discovery Call
-              </Button>
-            </div>
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-3 bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] text-center hover:bg-gold transition-colors"
+            >
+              Book a Call
+            </Link>
           </nav>
         </div>
       )}

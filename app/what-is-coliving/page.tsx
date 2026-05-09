@@ -1,776 +1,425 @@
-import Section from "@/components/Section";
-import Eyebrow from "@/components/Eyebrow";
-import Heading from "@/components/Heading";
-import Button from "@/components/Button";
-import Card from "@/components/Card";
-import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
-import LeadMagnetForm from "@/components/LeadMagnetForm";
+import Link from "next/link";
+import RevealObserver from "@/components/RevealObserver";
+import VillaCandaceSlider from "@/components/VillaCandaceSlider";
 
 export const metadata = {
-  title: "What is coliving? — Coliving Cait",
+  title: "What Is Coliving — Coliving Cait",
   description:
-    "Coliving is rent-by-the-room housing that solves the affordable housing crisis and creates an investment opportunity that traditional rentals can't match. Here's how it works.",
+    "Coliving transforms single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works.",
 };
 
-// What Is Coliving — 11 sections per spec. Educates dual audiences:
-// the resident perspective (sections 2–4, 7) and the investor perspective
-// (sections 5, 6, 8, 10). Sections 9 and 11 close the loop with a free
-// download and a mission-driven quote.
+// What Is Coliving — pixel-perfect rewrite of coliving-cait-what-is-coliving.html.
+// Sections: Hero · Problem · Traditional Options · Solution · The Math (Villa
+// Candace slider) · Calculator CTA · Communities · Two Paths · Lead Magnet ·
+// Coliving 101 Upsell · Quote · Final CTA.
+
+const solution = [
+  { icon: "⌂", title: "Furnished Room", copy: "Move in with a suitcase. Bed, dresser, desk, everything you need — already there." },
+  { icon: "↻", title: "Flexible Terms", copy: "Weekly or monthly leases. No 12-month commitment. Stay as long as you need." },
+  { icon: "$", title: "Affordable", copy: "$750–$1,000/month all-in. Utilities, internet, furnishing included. No surprise bills." },
+  { icon: "✓", title: "High Quality", copy: "Clean, well-maintained homes in good neighborhoods. Not a last resort — a real option." },
+  { icon: "♀", title: "Community", copy: "Shared common spaces, respectful housemates, and a sense of belonging." },
+  { icon: "⚷", title: "Individual Accountability", copy: "Your lease, your room, your responsibility. No cosigner. No shared liability." },
+];
+
+const impact = [
+  { icon: "⌂", title: "More Housing, Faster", copy: "Converting existing homes creates housing in weeks, not years." },
+  { icon: "$", title: "Affordable by Design", copy: "Room rates are 40–60% less than a one-bedroom apartment." },
+  { icon: "✓", title: "Quality Standards", copy: "Professionally managed, fully furnished, well-maintained homes." },
+  { icon: "♀", title: "Community Impact", copy: "Every home opened is one more option for someone who needs it." },
+];
+
 export default function WhatIsColivingPage() {
   return (
     <>
-      <Hero />
-      <TheProblem />
-      <TraditionalOptions />
-      <TheSolution />
-      <TheMath />
-      <CalculatorCTA />
-      <ForCommunities />
-      <TwoPaths />
-      <LeadMagnet />
-      <Coliving101Upsell />
-      <ClosingQuote />
-    </>
-  );
-}
+      <RevealObserver />
 
-/* ---------------------------------------------------------------- */
-/* 1. HERO                                                            */
-/* ---------------------------------------------------------------- */
-function Hero() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:items-end">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-6">What is coliving?</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading level={1} size="xl" className="text-cream">
-              The housing solution our communities need — and the{" "}
-              <em className="text-gold-light">
-                investment opportunity you&apos;ve been looking for.
-              </em>
-            </Heading>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.25}>
-          <div className="md:pl-12 md:border-l md:border-cream/15">
-            <p className="text-cream/75 leading-body text-[1.0625rem]">
-              Coliving is rent-by-the-room housing — a single home with six or
-              more private bedrooms and shared common spaces. For residents,
-              it&apos;s furnished, flexible, and finally affordable. For
-              investors, it&apos;s the rare strategy where the math actually
-              works in 2026 — six to eight income streams instead of one,
-              real cashflow on day one, and a model that genuinely serves
-              the community.
-            </p>
-            <p className="mt-6 text-cream/75 leading-body text-[1.0625rem]">
-              The strategy isn&apos;t new. The timing has just never been
-              better.
-            </p>
-          </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 2. THE PROBLEM                                                     */
-/* ---------------------------------------------------------------- */
-function TheProblem() {
-  return (
-    <Section tone="cream">
-      <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-start">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-6">The problem</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="lg">
-              The people keeping our world running are being{" "}
-              <em>priced out of it.</em>
-            </Heading>
-          </Reveal>
-        </div>
-
-        <div className="space-y-6">
-          <Reveal delay={0.2}>
-            <p className="text-warmgray leading-body text-[1.0625rem]">
-              Nurses working twelve-hour shifts. Teachers shaping the next
-              generation. Mechanics keeping our cars on the road. Bus
-              drivers, line cooks, retail workers, hairstylists — the
-              people who make a community function are being squeezed out
-              of the very communities they serve.
-            </p>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="text-warmgray leading-body text-[1.0625rem]">
-              Rents have outpaced wages for over a decade. The math
-              stopped working for working people years ago — and the
-              market hasn&apos;t caught up.
-            </p>
-          </Reveal>
-
-          {/* Pullquote */}
-          <Reveal delay={0.4}>
-            <blockquote className="mt-10 border-l-2 border-gold pl-6 font-heading italic text-2xl md:text-3xl leading-heading text-charcoal">
-              &ldquo;Coliving investors are the rare housing operators rolling
-              up their sleeves and reconfiguring what we already have to
-              serve who needs it now.&rdquo;
-            </blockquote>
-          </Reveal>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 3. TRADITIONAL OPTIONS                                             */
-/* ---------------------------------------------------------------- */
-function TraditionalOptions() {
-  return (
-    <Section tone="blush">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">What residents face today</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Two options, neither of them <em>great.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 items-stretch"
-        stagger={0.12}
-      >
-        <StaggerItem>
-          <Card interactive className="h-full flex flex-col bg-cream">
-            <Eyebrow className="mb-3">Option 1</Eyebrow>
-            <Heading level={3} size="sm">
-              Rent alone.
-            </Heading>
-            <p className="mt-4 text-warmgray text-sm leading-body">
-              The traditional path — and increasingly out of reach.
-            </p>
-            <ul className="mt-6 space-y-2 text-sm text-warmgray">
-              <li>
-                <span className="text-gold mr-2">✦</span>3x monthly rent
-                income requirement
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Credit check + rental
-                history
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>12-month minimum lease
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Security deposit + first
-                / last month
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Furnish it yourself
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Utilities not included
-              </li>
-            </ul>
-          </Card>
-        </StaggerItem>
-
-        <StaggerItem>
-          <Card interactive className="h-full flex flex-col bg-cream">
-            <Eyebrow className="mb-3">Option 2</Eyebrow>
-            <Heading level={3} size="sm">
-              Cosign.
-            </Heading>
-            <p className="mt-4 text-warmgray text-sm leading-body">
-              Borrow someone else&apos;s credit and income — and their risk.
-            </p>
-            <ul className="mt-6 space-y-2 text-sm text-warmgray">
-              <li>
-                <span className="text-gold mr-2">✦</span>Family or friend
-                signed on the lease
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Shared liability if
-                anything goes wrong
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Awkward power
-                dynamics from day one
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Same income / credit
-                requirements still apply
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Same monthly cost
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Same long-term lock-in
-              </li>
-            </ul>
-          </Card>
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 4. THE SOLUTION — 6-card grid                                      */
-/* ---------------------------------------------------------------- */
-function TheSolution() {
-  const benefits: { symbol: string; title: string; body: string }[] = [
-    {
-      symbol: "⌂",
-      title: "Furnished room",
-      body: "Bed, dresser, desk, lamp — already set up. Move in with a suitcase.",
-    },
-    {
-      symbol: "↻",
-      title: "Flexible terms",
-      body: "Month-to-month or weekly. Life shifts — your housing should keep up.",
-    },
-    {
-      symbol: "$",
-      title: "Affordable",
-      body: "Under-market room rates, all-inclusive. One payment covers everything.",
-    },
-    {
-      symbol: "✦",
-      title: "High quality",
-      body: "Professionally managed, high-speed internet, clean common spaces.",
-    },
-    {
-      symbol: "♀",
-      title: "Community",
-      body: "Built-in neighbors. Optional connection — never forced.",
-    },
-    {
-      symbol: "✓",
-      title: "Individual accountability",
-      body: "Your room, your lease, your responsibility. No shared liability.",
-    },
-  ];
-
-  return (
-    <Section tone="blush">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">The solution</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            What coliving gives residents{" "}
-            <em>that nothing else can.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch"
-        stagger={0.06}
-      >
-        {benefits.map((b) => (
-          <StaggerItem key={b.title}>
-            <div className="border border-brand bg-cream p-6 md:p-8 h-full flex flex-col">
-              <p className="text-2xl text-gold mb-4">{b.symbol}</p>
-              <p className="font-heading text-xl leading-heading">{b.title}</p>
-              <p className="mt-3 text-warmgray text-sm leading-body flex-1">
-                {b.body}
-              </p>
-            </div>
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 5. THE MATH — investor angle                                       */
-/* ---------------------------------------------------------------- */
-function TheMath() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-3xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">The math</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="lg" className="text-cream">
-            The math that makes coliving{" "}
-            <em className="text-gold-light">impossible to ignore.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-6 text-cream/70 leading-body">
-            Same property. Same neighborhood. Same purchase price. Two
-            completely different financial outcomes.
-          </p>
-        </Reveal>
-      </div>
-
-      <div className="mt-14 grid gap-6 md:grid-cols-2 items-stretch">
-        <Reveal delay={0.1}>
-          <MathPanel
-            label="Traditional Rental"
-            grossLabel="Gross monthly rent"
-            grossValue="$1,800 – $2,200"
-            rows={[
-              { label: "Mortgage (P&I)", value: "−$1,400" },
-              { label: "Taxes + insurance", value: "−$400" },
-              { label: "Maintenance reserve", value: "−$200" },
-              { label: "Management", value: "−$180" },
-            ]}
-            net="Often negative cashflow"
-            netTone="negative"
-          />
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <MathPanel
-            label="Coliving Conversion"
-            grossLabel="Gross monthly rent"
-            grossValue="$5,000+"
-            rows={[
-              { label: "Mortgage (P&I)", value: "−$1,400" },
-              { label: "Utilities + internet", value: "−$900" },
-              { label: "Platform fee (8%)", value: "−$400" },
-              { label: "Maintenance + turnover", value: "−$700" },
-              { label: "Management", value: "−$300" },
-            ]}
-            net="$1,000+ monthly cashflow"
-            netTone="positive"
-            featured
-          />
-        </Reveal>
-      </div>
-
-      <Reveal delay={0.3}>
-        <p className="mt-12 text-center text-xs uppercase tracking-button text-cream/60">
-          ✦ Calculations assume 85% occupancy
-        </p>
-      </Reveal>
-    </Section>
-  );
-}
-
-type MathPanelProps = {
-  label: string;
-  grossLabel: string;
-  grossValue: string;
-  rows: { label: string; value: string }[];
-  net: string;
-  netTone: "positive" | "negative";
-  featured?: boolean;
-};
-
-function MathPanel({
-  label,
-  grossLabel,
-  grossValue,
-  rows,
-  net,
-  netTone,
-  featured = false,
-}: MathPanelProps) {
-  return (
-    <div
-      className={`h-full border p-8 md:p-10 ${
-        featured ? "border-gold bg-gold/5" : "border-cream/20"
-      }`}
-    >
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-6">
-        {label}
-      </p>
-
-      {/* Gross headline number */}
-      <p className="text-[10px] uppercase tracking-eyebrow text-cream/50 mb-2">
-        {grossLabel}
-      </p>
-      <p className="font-heading text-4xl md:text-6xl text-cream leading-heading">
-        {grossValue}
-      </p>
-
-      {/* Expense rows */}
-      <ul className="mt-8 space-y-3 border-t border-cream/15 pt-6">
-        {rows.map((r) => (
-          <li
-            key={r.label}
-            className="flex items-baseline justify-between gap-4 text-sm"
+      {/* ===== 1. HERO ===== */}
+      <section className="px-8 lg:px-[60px] pt-32 pb-16 lg:pt-[180px] lg:pb-[100px] bg-white text-center">
+        <div className="mx-auto max-w-[800px]">
+          <span className="eyebrow eyebrow-center">What Is Coliving</span>
+          <h1
+            className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-7 leading-[1.06] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
+            style={{ fontSize: "clamp(38px, 4.4vw, 60px)" }}
           >
-            <span className="text-cream/70">{r.label}</span>
-            <span className="font-mono text-cream/90 tabular-nums">
-              {r.value}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Net cashflow */}
-      <div className="mt-8 border-t border-cream/15 pt-6">
-        <p className="text-[10px] uppercase tracking-eyebrow text-cream/50 mb-2">
-          Net cashflow
-        </p>
-        <p
-          className={`font-heading text-2xl md:text-3xl leading-heading ${
-            netTone === "positive" ? "text-gold-light" : "text-red-400"
-          }`}
-        >
-          {net}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 6. CALCULATOR CTA                                                  */
-/* ---------------------------------------------------------------- */
-function CalculatorCTA() {
-  return (
-    <Section tone="gold" fullBleed className="relative overflow-hidden">
-      <div className="mx-auto max-w-5xl px-6 md:px-10">
-        <div className="flex flex-col items-center justify-between gap-8 text-center md:flex-row md:text-left">
-          <Reveal direction="right" className="md:flex-1">
-            <p className="text-[10px] uppercase tracking-eyebrow text-white/80 mb-3">
-              The coliving calculator
-            </p>
-            <Heading size="md" className="text-white">
-              Want to see what <em className="text-white">YOUR</em> property
-              could earn?
-            </Heading>
-          </Reveal>
-          <Reveal direction="left">
-            <Button
-              href="/calculator/coliving"
-              variant="secondary"
-              size="lg"
-              magnetic
-            >
-              Run the Numbers →
-            </Button>
-          </Reveal>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 7. FOR COMMUNITIES                                                 */
-/* ---------------------------------------------------------------- */
-function ForCommunities() {
-  const impacts: string[] = [
-    "Activates housing supply without waiting on new construction",
-    "Provides genuinely affordable housing to working professionals",
-    "Reduces displacement and homelessness pressure in neighborhoods",
-    "Strengthens community ties — one home, one block at a time",
-  ];
-
-  return (
-    <Section tone="cream">
-      <div className="grid gap-12 md:grid-cols-[1.1fr_1fr] md:items-start">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-6">For communities</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="lg">
-              Coliving investors are doing something{" "}
-              <em>politicians aren&apos;t.</em>
-            </Heading>
-          </Reveal>
-        </div>
-
-        <div className="space-y-6">
-          <Reveal delay={0.2}>
-            <p className="text-warmgray leading-body text-[1.0625rem]">
-              While housing policy debates drag on for a decade, coliving
-              investors are activating supply right now. Not waiting for
-              new construction. Not waiting for permits. Reconfiguring the
-              housing that already exists to serve the people who need it
-              most.
-            </p>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <ul className="mt-6 space-y-4">
-              {impacts.map((line) => (
-                <li
-                  key={line}
-                  className="flex gap-4 text-warmgray leading-body"
-                >
-                  <span className="text-gold mt-1">✦</span>
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 8. TWO PATHS                                                       */
-/* ---------------------------------------------------------------- */
-function TwoPaths() {
-  return (
-    <Section tone="gold">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <p className="text-[10px] uppercase tracking-eyebrow text-white/80 mb-4">
-            Two paths in
+            The housing solution our communities need — and the{" "}
+            <em className="italic text-gold font-light">investment opportunity you&apos;ve been looking for.</em>
+          </h1>
+          <p className="text-[17px] leading-[1.85] text-warmgray max-w-[620px] mx-auto opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+            Rent-by-the-room housing that&apos;s affordable for residents and profitable for investors. One model, two wins.
           </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md" className="text-white">
-            However you want to be in the deal — there&apos;s a path{" "}
-            <em className="text-white">for you.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 items-stretch"
-        stagger={0.12}
-      >
-        <StaggerItem>
-          <PathCard
-            label="Path 01 · Active"
-            symbol="◈"
-            title="Active investor"
-            body="Build your own coliving portfolio. You own the property, you operate it, you keep all the upside. I coach you through every step — acquisition, conversion, launch, and operations."
-            ctaLabel="Get Coaching →"
-            ctaHref="/get-coaching"
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <PathCard
-            label="Path 02 · Passive"
-            symbol="$"
-            title="Passive investor"
-            body="Put capital to work in vetted coliving deals — directly with me, no fund or syndication. I find, fund, fix, and operate. You earn quarterly returns from a real, cashflowing asset."
-            ctaLabel="Partner With Me →"
-            ctaHref="/partner-with-me"
-          />
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-function PathCard({
-  label,
-  symbol,
-  title,
-  body,
-  ctaLabel,
-  ctaHref,
-}: {
-  label: string;
-  symbol: string;
-  title: string;
-  body: string;
-  ctaLabel: string;
-  ctaHref: string;
-}) {
-  return (
-    <div className="h-full flex flex-col border border-charcoal/20 bg-charcoal text-cream p-8 md:p-10">
-      <p className="text-3xl text-gold mb-6">{symbol}</p>
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        {label}
-      </p>
-      <Heading level={3} size="sm" className="text-cream">
-        {title}
-      </Heading>
-      <p className="mt-4 text-cream/70 text-sm leading-body flex-1">{body}</p>
-      <div className="mt-8">
-        <Button href={ctaHref} variant="outline" size="md">
-          {ctaLabel}
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 9. LEAD MAGNET — Coliving Conversion Checklist                     */
-/* ---------------------------------------------------------------- */
-function LeadMagnet() {
-  return (
-    <Section tone="blush">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-center">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">Free download</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="md">
-              The Coliving Conversion <em>Checklist.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-4 text-warmgray leading-body">
-              Every property you tour from now on, scored against the same
-              criteria I use for my own portfolio. The non-negotiables.
-              The hidden costs. The questions to ask before you ever make
-              an offer.
-            </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <ul className="mt-6 space-y-2 text-sm text-warmgray">
-              <li>
-                <span className="text-gold mr-2">✦</span>The 3 non-negotiables
-                of a great coliving property
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>The hidden $15K problem
-                no inspection catches
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Where to find extra
-                rooms hiding in plain sight
-              </li>
-            </ul>
-          </Reveal>
         </div>
+      </section>
 
-        <Reveal direction="left" delay={0.2}>
-          <LeadMagnetForm
-            eyebrow="The Coliving Conversion Checklist"
-            heading={
-              <>
-                Send me the <em>checklist.</em>
-              </>
-            }
-            body="One PDF. No spam. Unsubscribe with one click."
-            cta="Send The Checklist"
-            tag="coliving-checklist-downloaded"
-          />
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 10. COLIVING 101 UPSELL                                            */
-/* ---------------------------------------------------------------- */
-function Coliving101Upsell() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">Go deeper</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="lg" className="text-cream">
-              Coliving 101 — the full <em className="text-gold-light">model walk-through.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-6 text-cream/70 leading-body">
-              Six lessons covering the model, the math, finding the
-              property, setting up, operations, and choosing your path.
-              Worksheets and quizzes per lesson. Lifetime access. Built
-              for the woman seriously considering coliving as her next
-              move.
+      {/* ===== 2. THE PROBLEM ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+        <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-start lg:grid-cols-[1fr_0.45fr]">
+          <div className="reveal">
+            <span className="eyebrow">The Problem</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-6 leading-[1.12]"
+              style={{ fontSize: "clamp(28px, 3vw, 40px)" }}
+            >
+              The people keeping our world running are being{" "}
+              <em className="italic text-gold font-light">priced out of it.</em>
+            </h2>
+            <p className="text-[15.5px] leading-[1.9] text-warmgray mb-5">
+              Nurses, teachers, mechanics, bus drivers — the people who hold our communities together can&apos;t afford to live in them anymore. Rents are outpacing wages, credit requirements are tightening, and the people who need housing the most have the fewest options.
             </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <ul className="mt-6 space-y-2 text-sm text-cream/70">
-              <li>
-                <span className="text-gold mr-2">✦</span>6 self-paced lessons
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Downloadable worksheet
-                per lesson
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Knowledge-check quizzes
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>Lifetime access &amp;
-                future updates
-              </li>
-            </ul>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.2}>
-          <div className="border border-gold/40 bg-gradient-to-b from-gold/[0.08] to-transparent p-8 md:p-10">
-            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-4">
-              Mini Course
-            </p>
-            <p className="font-heading text-3xl md:text-4xl text-cream leading-heading">
-              Coliving 101
-            </p>
-            <div className="mt-6 flex items-baseline gap-3">
-              <p className="font-heading text-5xl md:text-6xl text-gold-light leading-none">
-                $27
-              </p>
-              <p className="text-xs uppercase tracking-button text-cream/60">
-                One-time · Lifetime access
-              </p>
-            </div>
-            <div className="mt-8">
-              <Button
-                href="/courses/coliving-101"
-                variant="primary"
-                size="lg"
-                magnetic
-                className="w-full"
-              >
-                Enroll in Coliving 101
-              </Button>
-            </div>
-            <p className="mt-4 text-[11px] text-cream/50 text-center">
-              ✦ Course unlocks immediately after checkout
+            <p className="text-[15.5px] leading-[1.9] text-warmgray">
+              At the same time, traditional real estate investing has stopped working. Single-family rentals barely break even. The math that penciled ten years ago doesn&apos;t anymore. Coliving solves both problems at the same time.
             </p>
           </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
 
-/* ---------------------------------------------------------------- */
-/* 11. CLOSING QUOTE                                                  */
-/* ---------------------------------------------------------------- */
-function ClosingQuote() {
-  return (
-    <Section tone="cream">
-      <div className="mx-auto max-w-4xl text-center">
-        <Reveal>
-          <span aria-hidden className="text-gold text-2xl block mb-8">
-            ✦
-          </span>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <blockquote className="font-heading italic text-3xl md:text-5xl leading-heading text-charcoal">
-            &ldquo;Every coliving home any of us opens is one more option for
-            someone in our community who needs a safe, stable, clean, high
-            quality and affordable place to land.&rdquo;
-          </blockquote>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-10 text-xs uppercase tracking-button text-warmgray">
-            ✦ Caitlyn Verdugo · Coliving Cait
+          <div className="reveal reveal-d2 lg:sticky lg:top-32">
+            <div className="font-heading font-light italic text-2xl leading-[1.35] text-charcoal pl-6 border-l-2 border-gold">
+              “Coliving investors are rolling up their sleeves and creating housing solutions in communities that need them — one room at a time.”
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3. TRADITIONAL OPTIONS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white">
+        <div className="mx-auto max-w-[900px]">
+          <div className="reveal text-center mb-14">
+            <span className="eyebrow eyebrow-center">The Current Options</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
+            >
+              What&apos;s available today <em className="italic text-gold font-light">isn&apos;t working.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {[
+              {
+                title: "Rent Alone",
+                items: [
+                  "Requires 3x monthly income to qualify",
+                  "Credit check and rental history required",
+                  "12-month lease minimum",
+                  "First, last, and security deposit upfront",
+                  "Unfurnished — buy everything yourself",
+                  "One missed payment and you're out",
+                ],
+              },
+              {
+                title: "Find a Cosigner",
+                items: [
+                  "Shared financial liability",
+                  "Puts someone else's credit at risk",
+                  "Not everyone has someone to ask",
+                  "Still requires long lease commitment",
+                  "Still unfurnished",
+                  "Doesn't solve the affordability problem",
+                ],
+              },
+            ].map((card, i) => (
+              <div
+                key={card.title}
+                className={`reveal reveal-d${i + 1} p-10 border border-soft bg-white transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card`}
+              >
+                <h3 className="font-heading font-medium text-[22px] text-charcoal mb-4">
+                  {card.title}
+                </h3>
+                <ul className="list-none">
+                  {card.items.map((it, idx) => (
+                    <li
+                      key={it}
+                      className={`text-sm text-warmgray py-2 flex items-start gap-3 ${idx === card.items.length - 1 ? "" : "border-b border-soft"}`}
+                    >
+                      <span className="text-gold text-[7px] mt-2 shrink-0">✦</span>
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. THE SOLUTION ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-16">
+            <span className="eyebrow eyebrow-center">The Solution</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
+            >
+              What coliving gives residents{" "}
+              <em className="italic text-gold font-light">that nothing else can.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
+            {solution.map((s, i) => (
+              <div
+                key={s.title}
+                className={`reveal reveal-d${i + 1} group p-10 lg:px-8 bg-white border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-1 hover:shadow-card`}
+              >
+                <span className="block text-[28px] text-gold mb-4 transition-transform duration-500 group-hover:scale-[1.15]">
+                  {s.icon}
+                </span>
+                <h3 className="font-heading font-medium text-xl text-charcoal mb-2.5">
+                  {s.title}
+                </h3>
+                <p className="text-sm leading-[1.75] text-warmgray">{s.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 5. THE MATH — VILLA CANDACE ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16">
+            <div className="grid items-end gap-4 lg:gap-[60px] lg:grid-cols-2">
+              <div>
+                <span className="eyebrow">The Math — A Real House From My Portfolio</span>
+                <h2
+                  className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+                  style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
+                >
+                  The math that makes coliving{" "}
+                  <em className="italic text-gold font-light">impossible to ignore.</em>
+                </h2>
+              </div>
+              <div>
+                <p className="text-[15px] text-warmgray leading-[1.8]">
+                  This is Villa Candace. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <VillaCandaceSlider />
+        </div>
+      </section>
+
+      {/* ===== 6. CALCULATOR CTA ===== */}
+      <section
+        className="px-8 lg:px-[60px] py-16 lg:py-[72px] text-center"
+        style={{ background: "linear-gradient(135deg, #C4955A 0%, #D4A86A 100%)" }}
+      >
+        <div className="reveal">
+          <h2
+            className="font-heading font-normal text-white mb-2 tracking-[-0.01em]"
+            style={{ fontSize: "clamp(26px, 2.6vw, 36px)" }}
+          >
+            Want to see what your property could earn?
+          </h2>
+          <p className="text-[15px] text-white/80 mb-7">
+            Run the numbers on any address and see how it performs as a coliving conversion.
           </p>
-        </Reveal>
-      </div>
-    </Section>
+          <Link href="/calculator/coliving" className="btn-white">
+            Run the Numbers →
+          </Link>
+        </div>
+      </section>
+
+      {/* ===== 7. FOR COMMUNITIES ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16 max-w-[600px]">
+            <span className="eyebrow">For Communities</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5"
+              style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
+            >
+              Coliving investors are doing something{" "}
+              <em className="italic text-gold font-light">politicians aren&apos;t.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray">
+              Rather than waiting for new construction that takes decades, coliving reconfigures the housing we already have to serve the people who need it right now.
+            </p>
+          </div>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {impact.map((c, i) => (
+              <div
+                key={c.title}
+                className={`reveal reveal-d${i + 1} p-9 lg:px-7 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
+              >
+                <span className="block text-2xl text-gold mb-3.5">{c.icon}</span>
+                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
+                  {c.title}
+                </h3>
+                <p className="text-[13px] text-warmgray leading-[1.7]">{c.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 8. TWO PATHS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-cream">
+        <div className="mx-auto max-w-[900px]">
+          <div className="reveal text-center mb-12">
+            <span className="eyebrow eyebrow-center">Two Paths</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
+            >
+              How do you want to be <em className="italic text-gold font-light">involved?</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-2">
+            {[
+              {
+                icon: "◈",
+                title: "Active Investor",
+                copy: "Build and operate your own coliving portfolio. Learn the model, find the deals, run the properties. I'll show you how.",
+                href: "/learn",
+                cta: "Learn With Me →",
+              },
+              {
+                icon: "$",
+                title: "Passive Investor",
+                copy: "Put your capital to work in my portfolio. You invest, I operate — with full transparency, legal protections, and consistent returns.",
+                href: "/partner-with-me",
+                cta: "Partner With Me →",
+              },
+            ].map((p, i) => (
+              <div
+                key={p.title}
+                className={`reveal reveal-d${i + 1} group p-12 lg:px-10 bg-white border border-soft text-center transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
+              >
+                <span className="block text-[32px] text-gold mb-5">{p.icon}</span>
+                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3">
+                  {p.title}
+                </h3>
+                <p className="text-sm text-warmgray leading-[1.75] mb-7">{p.copy}</p>
+                <Link href={p.href} className="btn-sm">{p.cta}</Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 9. LEAD MAGNET ===== */}
+      <section className="px-8 lg:px-[60px] py-16 lg:py-20 bg-blush">
+        <div className="reveal mx-auto max-w-[720px] text-center">
+          <span className="eyebrow eyebrow-center">Free Download</span>
+          <h3
+            className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-3"
+            style={{ fontSize: "clamp(24px, 2.4vw, 32px)" }}
+          >
+            Grab the free{" "}
+            <em className="italic text-gold font-light">Coliving Conversion Checklist.</em>
+          </h3>
+          <p className="text-[15px] text-warmgray mb-8">
+            Everything you need to evaluate a property for coliving potential — room by room, dollar by dollar.
+          </p>
+          <form className="flex flex-col sm:flex-row gap-0 max-w-[520px] mx-auto">
+            <input
+              type="email"
+              placeholder="Your email address"
+              required
+              className="flex-1 px-5 py-4 font-sans text-sm font-light text-charcoal border border-soft sm:border-r-0 bg-white outline-none transition-colors duration-300 focus:border-gold placeholder:text-warmgray-light"
+            />
+            <button
+              type="submit"
+              className="px-8 py-4 bg-charcoal text-white font-sans text-[11px] font-medium uppercase tracking-[0.1em] cursor-pointer whitespace-nowrap transition-colors duration-300 hover:bg-gold"
+            >
+              Get the Checklist
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* ===== 10. COLIVING 101 UPSELL ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white border-t border-soft">
+        <div className="mx-auto grid max-w-[900px] gap-10 lg:gap-16 items-center lg:grid-cols-2">
+          <div className="reveal">
+            <span className="eyebrow">Go Deeper</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(26px, 2.6vw, 34px)" }}
+            >
+              Ready to learn the full <em className="italic text-gold font-light">coliving model?</em>
+            </h2>
+            <p className="text-[15px] text-warmgray leading-[1.8] mb-7">
+              Coliving 101 breaks down everything — how the model works, who it serves, how the math works, and what to look for in your first property. Six lessons, quizzes, worksheets, and a certificate when you&apos;re done.
+            </p>
+            <p className="text-sm text-warmgray">
+              Coliving 101 is part of The Explorer — my foundations curriculum for new investors. See all three courses, the bundle deal, and the full learning path.
+            </p>
+          </div>
+
+          <div className="reveal reveal-d2 bg-cream p-12 lg:px-10 text-center border border-soft">
+            <span className="eyebrow eyebrow-center justify-center">Coliving 101</span>
+            <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-2">
+              $37
+            </div>
+            <span className="block text-[13px] text-warmgray-light mb-6">
+              6 lessons · Self-paced · Certificate
+            </span>
+            <Link
+              href="/courses/coliving-101"
+              className="btn-gold w-full text-center mb-3"
+              style={{ display: "block" }}
+            >
+              Buy Now
+            </Link>
+            <Link
+              href="/learn#foundations"
+              className="text-[13px] text-warmgray hover:text-charcoal transition-colors duration-300"
+            >
+              See all courses →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 11. QUOTE ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream text-center relative overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute -top-5 left-1/2 -translate-x-1/2 font-heading font-light leading-none pointer-events-none"
+          style={{ fontSize: "280px", color: "rgba(196,149,90,0.06)" }}
+        >
+          “
+        </span>
+        <div className="reveal relative">
+          <blockquote
+            className="font-heading font-light italic leading-[1.4] text-charcoal max-w-[760px] mx-auto"
+            style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
+          >
+            “Every coliving home any of us opens is one more option for someone in our community who needs a safe, stable, clean, high quality and affordable place to land.”
+            <span className="font-sans not-italic block mt-7 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">
+              — Caitlyn Verdugo
+            </span>
+          </blockquote>
+        </div>
+      </section>
+
+      {/* ===== FINAL CTA ===== */}
+      <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
+        />
+        <div className="reveal">
+          <span className="eyebrow eyebrow-center !text-gold">Be Part of the Solution</span>
+          <h2
+            className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
+            style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
+          >
+            Join the <em className="italic text-gold-light font-light">movement.</em>
+          </h2>
+          <p className="text-[15px] text-warmgray-light mb-11 max-w-[560px] mx-auto leading-[1.8]">
+            Coliving is how we solve the housing crisis and build real wealth at the same time. The only question is how you want to be part of it.
+          </p>
+          <div className="flex flex-wrap justify-center gap-5">
+            <Link href="/learn" className="btn-gold">Start Building Your Portfolio →</Link>
+            <Link href="/partner-with-me" className="btn-outline-light">
+              Put Your Capital to Work →
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

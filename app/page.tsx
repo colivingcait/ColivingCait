@@ -1,645 +1,499 @@
-import Image from "next/image";
-import Section from "@/components/Section";
-import Eyebrow from "@/components/Eyebrow";
-import Heading from "@/components/Heading";
-import Button from "@/components/Button";
-import Card from "@/components/Card";
-import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
-import Marquee from "@/components/Marquee";
-import CountUp from "@/components/CountUp";
-import Parallax from "@/components/Parallax";
-import LeadMagnetForm from "@/components/LeadMagnetForm";
-import TestimonialCard from "@/components/TestimonialCard";
-import { zillowTestimonials } from "@/lib/testimonials";
+import Link from "next/link";
+import RevealObserver from "@/components/RevealObserver";
 
-export const metadata = {
-  title: "Coliving Cait — Building wealth through intentional coliving",
-  description:
-    "Caitlyn Verdugo is an Atlanta-based coliving investor, Realtor, and women's coliving coach. 50+ rooms, 100+ residents housed, helping women build real wealth through real estate.",
-};
+// Homepage — pixel-perfect rewrite of coliving-cait-homepage.html.
+// Sections: Hero · Stats Ticker · Service Cards · Coliving Math · Lead Magnet 1
+// · Why Coliving · Quote · Testimonials · Community · Lead Magnet 2 · Final CTA.
+//
+// All component-level styles (.btn-*, .eyebrow, .reveal) live in globals.css
+// so utility usage matches the source HTML 1:1.
 
-// Homepage — Page 1 of the build. Section order matches the playbook spec
-// exactly. Primary CTA throughout: Book a Discovery Call. Secondary CTA:
-// Coliving Starter Guide PDF.
+const tickerItems = [
+  "$2.5M AUM",
+  "50+ Rooms",
+  "Top Realtor in DeKalb County",
+  "5 Star Zillow Rating",
+  "Community Builder",
+  "Women's Empowerment",
+];
+
+const testimonials = [
+  '"Caitlyn made the entire process seamless. She knew exactly what to look for and guided us through every step. I wouldn\'t work with anyone else."',
+  '"Her knowledge of investment properties is unmatched. She helped me see potential in a property I would have passed on — and it turned out to be my best deal."',
+  '"Professional, responsive, and genuinely invested in my success. Caitlyn goes above and beyond for every client."',
+  '"I came in with a vague idea about real estate investing. Caitlyn helped me build a clear plan and execute on it. Can\'t recommend her enough."',
+];
+
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <StatsBar />
-      <HowICanHelp />
-      <WhatIsColivingTeaser />
-      <WhyColiving />
-      <QuoteBanner />
-      <SocialProof />
-      <LeadMagnet />
-      <CommunityCallout />
-      <FinalCTA />
+      <RevealObserver />
+
+      {/* ===== 1. HERO ===== */}
+      <section className="min-h-screen flex items-end pt-[140px] px-8 lg:px-[60px] bg-white relative">
+        <div className="mx-auto grid w-full max-w-[1320px] items-end gap-10 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="lg:pb-24 z-[2] text-center lg:text-left">
+            <span className="eyebrow lg:inline-flex">Investor · Coach · Realtor</span>
+            <h1
+              className="font-heading font-normal tracking-[-0.025em] text-charcoal mt-0 mb-8 leading-[1.03] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
+              style={{ fontSize: "clamp(44px, 5vw, 72px)" }}
+            >
+              Helping women build wealth through{" "}
+              <em className="italic text-gold font-light">intentional coliving.</em>
+            </h1>
+            <p className="text-base leading-[1.85] text-warmgray mb-11 max-w-[440px] mx-auto lg:mx-0 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+              I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro. Now I coach women through doing the same — from first deal to full portfolio. Whether you want to learn, invest, or buy, there&apos;s a seat at this table for you.
+            </p>
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
+              <Link href="/contact" className="btn-primary">Book a Discovery Call</Link>
+              <Link href="/what-is-coliving" className="btn-text">
+                Learn about coliving <span>→</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative self-end opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
+            <div
+              className="w-full overflow-hidden flex items-center justify-center text-sm text-warmgray-light"
+              style={{
+                aspectRatio: "3 / 4",
+                background:
+                  "linear-gradient(165deg, #FAF7F2 0%, #F0E8E0 60%, rgba(196,149,90,0.08) 100%)",
+              }}
+            >
+              Yellow blazer headshot
+            </div>
+            <div className="hidden lg:block absolute bottom-12 -left-9 bg-white px-7 py-[22px] z-[3] shadow-photo opacity-0 [animation:heroReveal_0.7s_cubic-bezier(0.16,1,0.3,1)_1.1s_forwards]">
+              <div className="font-heading font-medium text-[28px] leading-none text-charcoal">50+</div>
+              <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light">
+                Coliving Rooms
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 2. STATS TICKER ===== */}
+      <section className="bg-cream border-y border-soft overflow-hidden relative py-5">
+        <div className="absolute inset-y-0 left-0 w-20 z-[2] pointer-events-none bg-gradient-to-r from-cream to-transparent" />
+        <div className="absolute inset-y-0 right-0 w-20 z-[2] pointer-events-none bg-gradient-to-l from-cream to-transparent" />
+        <div className="flex w-max animate-ticker hover:[animation-play-state:paused]">
+          {[...tickerItems, ...tickerItems].map((text, i) => (
+            <div key={i} className="flex items-center gap-6 px-6 whitespace-nowrap shrink-0">
+              <span className="font-heading font-medium text-base tracking-[0.04em] text-charcoal">
+                {text}
+              </span>
+              <span className="text-gold text-[10px]">✦</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== 3. SERVICE CARDS ===== */}
+      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="grid items-end gap-4 lg:gap-[60px] mb-12 lg:mb-20 lg:grid-cols-2">
+            <div className="reveal">
+              <span className="eyebrow">How I Can Help</span>
+              <h2
+                className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.08]"
+                style={{ fontSize: "clamp(32px, 3.4vw, 48px)" }}
+              >
+                Three ways to work <em className="italic text-gold font-light">with me.</em>
+              </h2>
+            </div>
+            <p className="reveal reveal-d1 max-w-[400px] text-[15px] text-warmgray">
+              Whether you&apos;re ready to learn, invest, or buy — I meet you exactly where you are.
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:gap-px lg:grid-cols-3 lg:bg-[rgba(28,25,23,0.06)] lg:border lg:border-soft">
+            {[
+              {
+                num: "01",
+                title: "Learn With Me",
+                desc: "Whether you're starting from scratch or scaling what you've built, I'll meet you where you are with the right level of guidance.",
+                items: ["1:1 Coaching Program", "Advisory Retainer", "Mini Courses"],
+                href: "/learn",
+                cta: "Explore options",
+              },
+              {
+                num: "02",
+                title: "Partner With Me",
+                desc: "Put your capital to work in Atlanta's coliving market. You invest, I operate — with full transparency, legal protections, and consistent payment history.",
+                items: ["Private Money Lending", "Private Money Partnerships", "Coliving Arbitrage"],
+                href: "/partner-with-me",
+                cta: "Learn more",
+              },
+              {
+                num: "03",
+                title: "Buy & Sell With Me",
+                desc: "Work with a Keller Williams Realtor who thinks like an investor. I specialize in investment properties, coliving conversions, and house hacking.",
+                items: ["Investment Properties", "Coliving Conversions", "House Hacking"],
+                href: "/buy-and-sell",
+                cta: "Get started",
+              },
+            ].map((card, i) => (
+              <Link
+                key={card.num}
+                href={card.href}
+                className={`reveal reveal-d${i + 1} group bg-white px-9 lg:px-11 py-12 cursor-pointer transition-[background] duration-500 ease-brand relative overflow-hidden border border-soft lg:border-0 hover:bg-cream`}
+              >
+                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold scale-x-0 origin-left transition-transform duration-500 ease-brand group-hover:scale-x-100" />
+                <div className="font-heading font-light text-[64px] leading-none mb-7 text-[rgba(28,25,23,0.05)] group-hover:text-[rgba(196,149,90,0.25)] transition-colors duration-500">
+                  {card.num}
+                </div>
+                <h3 className="font-heading font-medium text-[26px] leading-tight tracking-[-0.01em] text-charcoal mb-4">
+                  {card.title}
+                </h3>
+                <p className="text-sm leading-[1.8] text-warmgray mb-6">{card.desc}</p>
+                <ul className="list-none mb-8">
+                  {card.items.map((it) => (
+                    <li key={it} className="text-[13px] text-warmgray py-[5px] flex items-center gap-2.5">
+                      <span className="text-gold text-[7px] shrink-0">✦</span>
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+                <span className="inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.1em] text-charcoal group-hover:text-gold-dark transition-colors duration-300">
+                  {card.cta}
+                  <span className="relative inline-block w-6 h-px bg-charcoal group-hover:w-10 group-hover:bg-gold-dark transition-all duration-300">
+                    <span className="absolute -top-[3px] right-0 w-[7px] h-[7px] border-t border-r border-charcoal group-hover:border-gold-dark rotate-45 transition-colors duration-300" />
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. WHAT IS COLIVING — MATH ===== */}
+      <section className="px-8 lg:px-[60px] bg-white">
+        <div className="mx-auto max-w-[1320px] grid lg:grid-cols-2 min-h-[560px]">
+          <div className="reveal bg-cream px-10 py-16 lg:px-[72px] lg:py-20 flex flex-col justify-center">
+            <span className="eyebrow">What Is Coliving</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-6 leading-[1.12]"
+              style={{ fontSize: "clamp(28px, 2.8vw, 40px)" }}
+            >
+              The math that makes coliving{" "}
+              <em className="italic text-gold font-light">impossible to ignore.</em>
+            </h2>
+            <p className="text-[15px] leading-[1.85] text-warmgray mb-10 max-w-[420px]">
+              Coliving transforms a single-family home into multiple individual income streams — giving residents affordable, flexible, high-quality housing while generating significantly more revenue than a traditional rental.
+            </p>
+            <div>
+              <Link href="/what-is-coliving" className="btn-outline">
+                Learn How Coliving Works →
+              </Link>
+            </div>
+          </div>
+
+          <div className="bg-charcoal px-10 py-16 lg:px-[72px] lg:py-20 flex flex-col justify-center gap-12">
+            <div className="reveal relative">
+              <span className="block mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-warmgray-light">
+                Traditional Rental
+              </span>
+              <div
+                className="font-heading font-normal text-warmgray-light leading-none mb-1 tracking-[-0.02em]"
+                style={{ fontSize: "clamp(40px, 4vw, 52px)" }}
+              >
+                $2,000
+              </div>
+              <span className="text-[13px] text-warmgray-light block mb-3">
+                gross monthly revenue
+              </span>
+              <div
+                className="font-heading font-medium text-xl inline-block pt-3 border-t"
+                style={{ color: "#C07070", borderTopColor: "rgba(192,112,112,0.25)" }}
+              >
+                −$200/mo cashflow
+              </div>
+            </div>
+
+            <div className="w-full h-px bg-white/[0.06]" />
+
+            <div className="reveal reveal-d2 relative">
+              <span className="block mb-3 text-[10px] font-medium uppercase tracking-[0.18em] text-gold">
+                Coliving Model
+              </span>
+              <div
+                className="font-heading font-normal text-white leading-none mb-1 tracking-[-0.02em]"
+                style={{ fontSize: "clamp(40px, 4vw, 52px)" }}
+              >
+                $6,500
+              </div>
+              <span className="text-[13px] text-warmgray-light block mb-3">
+                gross monthly revenue · same property
+              </span>
+              <div
+                className="font-heading font-medium text-xl text-gold-light inline-block pt-3 border-t"
+                style={{ borderTopColor: "rgba(232,213,181,0.2)" }}
+              >
+                +$2,600/mo cashflow
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 5. LEAD MAGNET #1 ===== */}
+      <LeadMagnet
+        eyebrow="Free Guide"
+        title={
+          <>
+            Not ready to book a call? Grab the free{" "}
+            <em className="italic text-gold font-light">Coliving Starter Guide.</em>
+          </>
+        }
+        copy="Everything you need to understand the coliving model, the math, and how to evaluate your first deal — in one quick read."
+        button="Send It"
+        bg="bg-blush"
+      />
+
+      {/* ===== 6. WHY COLIVING ===== */}
+      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-16 lg:mb-20">
+            <span className="eyebrow eyebrow-center">Why Coliving</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
+              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
+            >
+              One strategy. <em className="italic text-gold font-light">Three wins.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:gap-14 lg:grid-cols-3">
+            {[
+              {
+                icon: "$",
+                title: "For Investors",
+                copy: "Higher cashflow, built-in risk diversification, and a proven model that turns single-family homes into wealth-building machines. The math speaks for itself.",
+              },
+              {
+                icon: "⌂",
+                title: "For Residents",
+                copy: "Affordable, flexible, fully furnished housing with individual leases and no cosigner required. A real option for the people who keep our communities running.",
+              },
+              {
+                icon: "♀",
+                title: "For Communities",
+                copy: "Every coliving home is one more option for someone who needs a safe, stable, high-quality, and affordable place to land — without waiting on politicians or new construction.",
+              },
+            ].map((c, i) => (
+              <div
+                key={c.title}
+                className={`reveal reveal-d${i + 1} group text-center p-10 lg:py-10 lg:px-7 transition-all duration-500 border border-transparent hover:border-brand hover:bg-cream hover:-translate-y-1`}
+              >
+                <span className="block text-[32px] text-gold mb-6 transition-transform duration-500 group-hover:scale-110">
+                  {c.icon}
+                </span>
+                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3.5 leading-tight">
+                  {c.title}
+                </h3>
+                <p className="text-sm leading-[1.8] text-warmgray">{c.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 7. QUOTE BANNER ===== */}
+      <section className="px-8 lg:px-[60px] py-24 bg-cream text-center relative overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute -top-5 left-1/2 -translate-x-1/2 font-heading font-light leading-none pointer-events-none"
+          style={{ fontSize: "280px", color: "rgba(196,149,90,0.06)" }}
+        >
+          “
+        </span>
+        <div className="reveal relative">
+          <blockquote
+            className="font-heading font-light italic leading-[1.4] text-charcoal max-w-[760px] mx-auto"
+            style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
+          >
+            “Coliving isn&apos;t just a housing strategy — it&apos;s how women are building generational wealth right now.”
+            <span className="font-sans not-italic block mt-7 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">
+              — Caitlyn Verdugo
+            </span>
+          </blockquote>
+        </div>
+      </section>
+
+      {/* ===== 8. TESTIMONIALS ===== */}
+      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-14 lg:mb-[72px]">
+            <span className="eyebrow eyebrow-center">What People Are Saying</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-2 leading-[1.1]"
+              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
+            >
+              Real reviews from <em className="italic text-gold font-light">real clients.</em>
+            </h2>
+            <p className="text-[13px] text-warmgray-light tracking-[0.06em]">
+              <span className="text-gold tracking-[2px]">★★★★★</span>
+              &nbsp;&nbsp;5.0 on Zillow
+            </p>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className={`reveal reveal-d${i + 1} bg-cream p-10 border border-transparent hover:border-brand hover:-translate-y-[3px] hover:shadow-card transition-all duration-500`}
+              >
+                <span className="block text-gold text-xs tracking-[3px] mb-4">★★★★★</span>
+                <p className="text-[14.5px] leading-[1.75] text-warmgray italic mb-5">{t}</p>
+                <span className="block text-[13px] font-medium text-charcoal">Zillow Review</span>
+                <span className="block text-[11px] text-warmgray-light tracking-[0.06em]">
+                  Verified Client
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 9. COMMUNITY CALLOUT ===== */}
+      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-cream">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-14 lg:mb-[72px]">
+            <span className="eyebrow eyebrow-center">Join Our Community</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
+              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
+            >
+              You don&apos;t have to figure this out{" "}
+              <em className="italic text-gold font-light">alone.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
+            {[
+              {
+                icon: "♀",
+                title: "She Leads Coliving",
+                copy: "A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.",
+                detail: "500+ members · Free to join",
+                cta: "Join on Facebook →",
+                href: "#",
+              },
+              {
+                icon: "◈",
+                title: "Atlanta Monthly Meetup",
+                copy: "Real conversations, real connections, every month. Join us the last Tuesday of every month in Atlanta. Bring your questions, your deals, and your ambition.",
+                detail: "Last Tuesday · Atlanta · Free",
+                cta: "RSVP on Eventbrite →",
+                href: "#",
+              },
+              {
+                icon: "★",
+                title: "Women's Coliving Summit",
+                copy: "The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won't find anywhere else.",
+                detail: "Oct 16–17, 2026 · Atlanta · ~150 attendees",
+                cta: "Reserve Your Seat →",
+                href: "#",
+              },
+            ].map((c, i) => (
+              <div
+                key={c.title}
+                className={`reveal reveal-d${i + 1} group border border-soft p-9 lg:p-12 bg-white transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
+              >
+                <span className="block text-[28px] text-gold mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-[5deg]">
+                  {c.icon}
+                </span>
+                <h3 className="font-heading font-medium text-[22px] leading-tight text-charcoal mb-3">
+                  {c.title}
+                </h3>
+                <p className="text-sm leading-[1.75] text-warmgray mb-3">{c.copy}</p>
+                <span className="block text-[11px] text-warmgray-light tracking-[0.06em] mb-6">
+                  {c.detail}
+                </span>
+                <a href={c.href} className="btn-sm">{c.cta}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 10. LEAD MAGNET #2 ===== */}
+      <LeadMagnet
+        eyebrow="Free Download"
+        title={
+          <>
+            Thinking about investing? Don&apos;t make these{" "}
+            <em className="italic text-gold font-light">5 costly mistakes.</em>
+          </>
+        }
+        copy="The five coliving mistakes that cost first-time investors thousands — and exactly how to avoid every one of them."
+        button="Get the Guide"
+        bg="bg-white border-y border-soft"
+      />
+
+      {/* ===== 11. FINAL CTA ===== */}
+      <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
+        />
+        <div className="reveal">
+          <span className="eyebrow eyebrow-center">Ready?</span>
+          <h2
+            className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
+            style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
+          >
+            There&apos;s a seat at this table{" "}
+            <em className="italic text-gold-light font-light">for you.</em>
+          </h2>
+          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
+            Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
+          </p>
+          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+        </div>
+      </section>
     </>
   );
 }
 
-/* ---------------------------------------------------------------- */
-/* 1. HERO                                                           */
-/* ---------------------------------------------------------------- */
-function Hero() {
+// Reusable lead-magnet block matching the HTML's `.lead-magnet` section.
+function LeadMagnet({
+  eyebrow,
+  title,
+  copy,
+  button,
+  bg,
+}: {
+  eyebrow: string;
+  title: React.ReactNode;
+  copy: string;
+  button: string;
+  bg: string;
+}) {
   return (
-    <Section
-      tone="cream"
-      className="relative overflow-hidden bg-gradient-to-b from-gold/[0.07] via-cream to-cream"
-    >
-      <div className="grid gap-12 md:grid-cols-2 md:items-center">
-        <div>
-          <Reveal direction="up" delay={0.1}>
-            <Eyebrow className="mb-6">Coliving Cait · Atlanta</Eyebrow>
-          </Reveal>
-          <Reveal direction="up" delay={0.2}>
-            <Heading level={1} size="xl">
-              Building wealth through <em>intentional coliving.</em>
-            </Heading>
-          </Reveal>
-          <Reveal direction="up" delay={0.4}>
-            <p className="mt-6 max-w-lg text-warmgray leading-body">
-              I&apos;m Caitlyn Verdugo — an Atlanta-based coliving investor,
-              Realtor, and women&apos;s coliving coach. I operate 50+ coliving
-              rooms across the metro and help women build real wealth through
-              real estate.
-            </p>
-          </Reveal>
-          <Reveal direction="up" delay={0.55}>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Button href="/contact" variant="primary" size="lg" magnetic>
-                Book a Discovery Call
-              </Button>
-              <Button href="/what-is-coliving" variant="outline" size="lg">
-                Learn About Coliving
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* Headshot — yellow blazer photo. Next/Image lazy-loads the optimized
-            version at the right size for every breakpoint. */}
-        <Reveal direction="left" delay={0.3} duration={1}>
-          <Parallax distance={50}>
-            <div className="relative aspect-[4/5] w-full overflow-hidden border border-brand bg-blush">
-              <Image
-                src="/images/caitlyn-yellow-blazer.jpg"
-                alt="Caitlyn Verdugo, Coliving Cait — Atlanta-based coliving investor and Realtor"
-                fill
-                priority
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-              {/* Soft gold wash overlay — keeps the photo feeling brand-cohesive */}
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent"
-              />
-            </div>
-          </Parallax>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 2. STATS BAR                                                      */
-/* ---------------------------------------------------------------- */
-function StatsBar() {
-  return (
-    <section className="relative bg-charcoal text-cream py-10 grain overflow-hidden">
-      <Marquee speed={40}>
-        <StatPill>
-          $<CountUp to={2.5} decimals={1} duration={2} />M Assets Under Management
-        </StatPill>
-        <Sparkle />
-        <StatPill>
-          <CountUp to={50} suffix="+" /> Coliving Rooms
-        </StatPill>
-        <Sparkle />
-        <StatPill>
-          <CountUp to={100} suffix="+" /> Residents Housed
-        </StatPill>
-        <Sparkle />
-        <StatPill>5.0 Zillow Rating</StatPill>
-        <Sparkle />
-        <StatPill>Atlanta Metro · Keller Williams</StatPill>
-        <Sparkle />
-      </Marquee>
-    </section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 3. HOW I CAN HELP — 3 SERVICE CARDS                               */
-/* ---------------------------------------------------------------- */
-function HowICanHelp() {
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">How I can help</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Three ways to <em>work together.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-4 text-warmgray">
-            Whether you&apos;re buying your first investment property, building
-            a coliving portfolio from scratch, or putting capital to work
-            passively — there&apos;s a path here for you.
-          </p>
-        </Reveal>
-      </div>
-
-      <Stagger className="mt-14 grid gap-6 md:grid-cols-3" stagger={0.12}>
-        <StaggerItem>
-          <ServiceCard
-            symbol="◈"
-            title="Buy & Sell"
-            body="A realtor who thinks like an investor. Investment properties, coliving conversions, house hacking, and traditional sales across the Atlanta metro."
-            href="/buy-and-sell"
+    <section className={`px-8 lg:px-[60px] py-16 lg:py-20 ${bg}`}>
+      <div className="reveal mx-auto max-w-[720px] text-center">
+        <span className="eyebrow eyebrow-center">{eyebrow}</span>
+        <h3
+          className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-3"
+          style={{ fontSize: "clamp(24px, 2.4vw, 32px)" }}
+        >
+          {title}
+        </h3>
+        <p className="text-[15px] text-warmgray mb-8">{copy}</p>
+        <form className="flex flex-col sm:flex-row gap-0 max-w-[520px] mx-auto">
+          <input
+            type="email"
+            placeholder="Your email address"
+            required
+            className="flex-1 px-5 py-4 font-sans text-sm font-light text-charcoal border border-soft sm:border-r-0 bg-white outline-none transition-colors duration-300 focus:border-gold placeholder:text-warmgray-light"
           />
-        </StaggerItem>
-        <StaggerItem>
-          <ServiceCard
-            symbol="♀"
-            title="Get Coaching"
-            body="Your roadmap to coliving — tailored to where you are and where you want to go. 1:1 coaching for women building their first portfolios, or advisory for women already operating."
-            href="/get-coaching"
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <ServiceCard
-            symbol="$"
-            title="Partner With Me"
-            body="Your money working while you live your life. Passive coliving partnerships in the Atlanta metro — directly with me, no fund or syndication."
-            href="/partner-with-me"
-          />
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 4. WHAT IS COLIVING — EDUCATION TEASER                            */
-/* ---------------------------------------------------------------- */
-function WhatIsColivingTeaser() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="grid gap-12 md:grid-cols-2 md:items-center">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">What is coliving?</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="lg" className="text-cream">
-              Same property. <em>Different strategy.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-6 text-cream/70 leading-body">
-              Coliving is a rent-by-the-room model that turns a single-family
-              home into 6+ private bedrooms with shared common spaces. The
-              math works because you&apos;re no longer dependent on one
-              tenant covering one rent — you&apos;ve got six to eight income
-              streams stabilizing the property.
-            </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <div className="mt-8">
-              <Button href="/what-is-coliving" variant="outline" size="lg">
-                Learn How Coliving Works →
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-
-        {/* The math — side by side */}
-        <Reveal direction="left" delay={0.2}>
-          <div className="grid gap-4">
-            <MathPanel
-              label="Traditional Rental"
-              value="$2,000"
-              sub="Gross monthly · Often negative cashflow after expenses"
-            />
-            <MathPanel
-              label="Coliving · 6 Rooms"
-              value="$5,000+"
-              sub="Gross monthly · ~$1,000+ cashflow at 85% occupancy"
-              featured
-            />
-          </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 5. WHY COLIVING — 3 ANGLES                                        */
-/* ---------------------------------------------------------------- */
-function WhyColiving() {
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Why coliving</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            One housing model. <em>Three winners.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-3 items-stretch"
-        stagger={0.12}
-      >
-        <StaggerItem>
-          <AngleCard
-            symbol="$"
-            label="For Investors"
-            title="The math finally works."
-            body="Six to eight income streams instead of one. Higher gross revenue, real cashflow, and better risk diversification than a traditional rental."
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <AngleCard
-            symbol="⌂"
-            label="For Residents"
-            title="A place to land."
-            body="Furnished private rooms, flexible lease terms, all-inclusive pricing, and built-in community — at a price working professionals can actually afford."
-            tone="blush"
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <AngleCard
-            symbol="✦"
-            label="For Communities"
-            title="Affordable housing — solved one home at a time."
-            body="Every coliving home is one more option for the nurses, teachers, and tradespeople who keep our neighborhoods running."
-          />
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 6. QUOTE BANNER                                                   */
-/* ---------------------------------------------------------------- */
-function QuoteBanner() {
-  return (
-    <Section tone="gold" fullBleed className="relative overflow-hidden">
-      <div className="mx-auto max-w-4xl px-6 text-center">
-        <Reveal>
-          <p className="font-heading text-3xl md:text-5xl italic leading-heading text-white">
-            &ldquo;Coliving isn&apos;t just a housing strategy — it&apos;s how
-            women are building generational wealth right now.&rdquo;
-          </p>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p className="mt-8 text-xs uppercase tracking-button text-white/80">
-            ✦ Caitlyn Verdugo · Coliving Cait
-          </p>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 7. SOCIAL PROOF — TESTIMONIALS                                    */
-/* ---------------------------------------------------------------- */
-function SocialProof() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">5.0 ★ Zillow Rating</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md" className="text-cream">
-            What clients <em>actually say.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch"
-        stagger={0.1}
-      >
-        {zillowTestimonials.map((t, i) => (
-          <StaggerItem key={i}>
-            <TestimonialCard {...t} tone="charcoal" />
-          </StaggerItem>
-        ))}
-      </Stagger>
-
-      <Reveal delay={0.2}>
-        <div className="mt-12 text-center">
-          <a
-            href="https://www.zillow.com/profile/colivingcait"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs uppercase tracking-button text-gold link-underline inline-block"
+          <button
+            type="submit"
+            className="px-8 py-4 bg-charcoal text-white font-sans text-[11px] font-medium uppercase tracking-[0.1em] border-none cursor-pointer whitespace-nowrap transition-colors duration-300 hover:bg-gold"
           >
-            Read all reviews on Zillow →
-          </a>
-        </div>
-      </Reveal>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 8. LEAD MAGNET — COLIVING STARTER GUIDE                           */
-/* ---------------------------------------------------------------- */
-function LeadMagnet() {
-  return (
-    <Section tone="blush">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-center">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">Free download</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="md">
-              Not ready to book a call? <em>Start here.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-4 text-warmgray leading-body">
-              The Coliving Starter Guide walks you through the model, the
-              math, and the first three decisions every new operator has to
-              make. Twenty minutes of reading, weeks of clarity.
-            </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <ul className="mt-6 space-y-2 text-sm text-warmgray">
-              <li>
-                <span className="text-gold mr-2">✦</span>How coliving differs
-                from a traditional rental
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>The 3 non-negotiables
-                of a great coliving property
-              </li>
-              <li>
-                <span className="text-gold mr-2">✦</span>A worked example so
-                the numbers feel real
-              </li>
-            </ul>
-          </Reveal>
-        </div>
-
-        <Reveal direction="left" delay={0.2}>
-          <LeadMagnetForm
-            eyebrow="The Coliving Starter Guide"
-            heading={
-              <>
-                Send me the <em>free guide.</em>
-              </>
-            }
-            body="One PDF. No spam. Unsubscribe with one click."
-            cta="Send The Guide"
-            tag="coliving-starter-guide-downloaded"
-          />
-        </Reveal>
+            {button}
+          </button>
+        </form>
       </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 9. COMMUNITY CALLOUT                                              */
-/* ---------------------------------------------------------------- */
-function CommunityCallout() {
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Community</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            You don&apos;t have to figure this out <em>alone.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-3 items-stretch"
-        stagger={0.12}
-      >
-        <StaggerItem>
-          <CommunityCard
-            symbol="♀"
-            label="Free to join"
-            title="She Leads Coliving"
-            body="A community built by women, for women. 500+ members swapping deals, lessons, and wins inside a private Facebook group."
-            ctaLabel="Join the group"
-            ctaHref="https://facebook.com/groups/sheleadscoliving"
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <CommunityCard
-            symbol="★"
-            label="October 16–17, 2026"
-            title="Women's Coliving Summit"
-            body="The first and only live event of its kind — built for and by women in coliving. Two days. ~150 attendees. Atlanta, GA."
-            ctaLabel="Reserve your seat"
-            ctaHref="https://www.eventbrite.com/e/womens-coliving-summit"
-          />
-        </StaggerItem>
-        <StaggerItem>
-          <CommunityCard
-            symbol="◉"
-            label="Last Wednesday monthly"
-            title="Atlanta Monthly Meetup"
-            body="Real conversations. Real connections. In-person every month in Atlanta — free to attend, RSVP required."
-            ctaLabel="RSVP on Eventbrite"
-            ctaHref="https://www.eventbrite.com/e/atlanta-coliving-meetup"
-          />
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 10. FINAL CTA                                                     */
-/* ---------------------------------------------------------------- */
-function FinalCTA() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-3xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-6">Let&apos;s talk</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading level={2} size="xl" className="text-cream">
-            There&apos;s a seat at this table <em>for you.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-6 text-cream/70 leading-body max-w-xl mx-auto">
-            Whether you&apos;re investor-curious or already running rooms,
-            the next step is the same: a 30-minute discovery call. We&apos;ll
-            figure out together whether — and how — coliving fits.
-          </p>
-        </Reveal>
-        <Reveal delay={0.4}>
-          <div className="mt-10">
-            <Button href="/contact" variant="primary" size="lg" magnetic>
-              Book a Discovery Call
-            </Button>
-          </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ================================================================ */
-/* HELPERS                                                           */
-/* ================================================================ */
-
-function StatPill({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="font-heading text-2xl md:text-3xl text-gold-light italic">
-      {children}
-    </span>
-  );
-}
-
-function Sparkle() {
-  return <span className="text-gold text-xl">✦</span>;
-}
-
-function MathPanel({
-  label,
-  value,
-  sub,
-  featured = false,
-}: {
-  label: string;
-  value: string;
-  sub: string;
-  featured?: boolean;
-}) {
-  return (
-    <div
-      className={`border p-6 md:p-8 ${
-        featured ? "border-gold bg-gold/5" : "border-brand"
-      }`}
-    >
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        {label}
-      </p>
-      <p className="font-heading text-4xl md:text-6xl text-cream leading-heading">
-        {value}
-      </p>
-      <p className="mt-3 text-cream/70 text-sm leading-body">{sub}</p>
-    </div>
-  );
-}
-
-function ServiceCard({
-  symbol,
-  title,
-  body,
-  href,
-}: {
-  symbol: string;
-  title: string;
-  body: string;
-  href: string;
-}) {
-  return (
-    <Card interactive className="h-full flex flex-col">
-      <p className="text-3xl text-gold mb-5">{symbol}</p>
-      <Heading level={3} size="sm">
-        {title}
-      </Heading>
-      <p className="mt-3 text-warmgray text-sm leading-body flex-1">{body}</p>
-      <a
-        href={href}
-        className="mt-6 inline-block text-xs uppercase tracking-button text-gold link-underline"
-      >
-        Explore →
-      </a>
-    </Card>
-  );
-}
-
-function AngleCard({
-  symbol,
-  label,
-  title,
-  body,
-  tone = "cream",
-}: {
-  symbol: string;
-  label: string;
-  title: string;
-  body: string;
-  tone?: "cream" | "blush";
-}) {
-  return (
-    <div
-      className={`border border-brand p-8 md:p-10 h-full flex flex-col ${
-        tone === "blush" ? "bg-blush" : "bg-cream"
-      }`}
-    >
-      <p className="text-3xl text-gold mb-4">{symbol}</p>
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        {label}
-      </p>
-      <Heading level={3} size="sm">
-        {title}
-      </Heading>
-      <p className="mt-3 text-warmgray text-sm leading-body flex-1">{body}</p>
-    </div>
-  );
-}
-
-function CommunityCard({
-  symbol,
-  label,
-  title,
-  body,
-  ctaLabel,
-  ctaHref,
-}: {
-  symbol: string;
-  label: string;
-  title: string;
-  body: string;
-  ctaLabel: string;
-  ctaHref: string;
-}) {
-  return (
-    <Card interactive className="h-full flex flex-col">
-      <p className="text-3xl text-gold mb-4">{symbol}</p>
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        {label}
-      </p>
-      <Heading level={3} size="sm">
-        {title}
-      </Heading>
-      <p className="mt-3 text-warmgray text-sm leading-body flex-1">{body}</p>
-      <div className="mt-6">
-        <Button href={ctaHref} variant="outline" size="md">
-          {ctaLabel}
-        </Button>
-      </div>
-    </Card>
+    </section>
   );
 }
