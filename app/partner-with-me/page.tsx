@@ -247,25 +247,22 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Property Name"
+            name="Meadow"
             location="Atlanta Metro, Georgia"
             original="X Bed / X Bath"
             converted="X Rooms / X Bath"
             gross="$X,XXX"
             strategy="Arbitrage"
             delay={2}
-          >
-            Brief description of what was converted and how.
-          </PropertyCard>
-
-          <PropertyCard
-            name="Property Name"
-            location="Atlanta Metro, Georgia"
-            original="X Bed / X Bath"
-            converted="X Rooms / X Bath"
-            gross="$X,XXX"
-            strategy="Acquisition"
-            delay={3}
+            images={[
+              "/images/meadow/meadowfront.jpg",
+              "/images/meadow/meadow2.jpg",
+              "/images/meadow/meadow3.jpg",
+              "/images/meadow/meadow4.jpg",
+              "/images/meadow/meadow5.jpg",
+              "/images/meadow/meadow6.jpg",
+              "/images/meadow/meadow7.jpg",
+            ]}
           >
             Brief description of what was converted and how.
           </PropertyCard>
