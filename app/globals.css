@@ -252,6 +252,23 @@
   .reveal-d6 { transition-delay: 0.6s; }
 }
 
+/* Hero entrance animation — referenced via arbitrary `[animation:heroReveal_...]`
+   utilities, so the keyframes must live in real CSS (not Tailwind's
+   keyframes config, which is only emitted alongside `animate-*` utilities). */
+@keyframes heroReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stats ticker — same reason: emitted globally so `animate-ticker` works
+   even if the utility class isn't compiled into the build. */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
