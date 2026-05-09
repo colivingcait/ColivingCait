@@ -1,282 +1,144 @@
-import Section from "@/components/Section";
-import Eyebrow from "@/components/Eyebrow";
-import Heading from "@/components/Heading";
-import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
-import ContactForm from "@/components/ContactForm";
+import Link from "next/link";
+import RevealObserver from "@/components/RevealObserver";
+import ContactFormV2 from "@/components/ContactFormV2";
 
 export const metadata = {
   title: "Contact — Coliving Cait",
   description:
-    "Get in touch with Caitlyn Verdugo — coaching, partnerships, real estate, speaking, or anything else. Personally read, replied within one business day.",
+    "Get in touch with Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. General inquiries, coaching, partnerships, speaking, and media.",
 };
 
-// Three discovery-call links per service. Swap these for Caitlyn's real
-// Calendly URLs in this single constant when she shares them.
-const COACHING_CALL_URL =
-  "https://calendly.com/colivingcait/coaching-discovery";
-const PARTNERSHIP_CALL_URL =
-  "https://calendly.com/colivingcait/partnership-discovery";
-const BUY_SELL_CALL_URL =
-  "https://calendly.com/colivingcait/buy-sell-discovery";
+// Contact — pixel-perfect rewrite of coliving-cait-contact.html.
+// Sections: Hero · Quick Links · Contact Form · Contact Info · Socials.
 
-// Contact — 4 sections per spec. Hero → quick links (bypass the form
-// for known intents) → general contact form → contact info.
+const quickLinks = [
+  { icon: "◈", title: "Learning & Coaching", copy: "Courses, coaching, consulting, or a strategy session.", href: "/learn" },
+  { icon: "$", title: "Partnership & Investing", copy: "Private lending, partnerships, or coliving arbitrage.", href: "/partner-with-me" },
+  { icon: "⌂", title: "Buy & Sell", copy: "Investment properties, coliving conversions, or house hacking.", href: "/buy-and-sell" },
+];
+
+const info = [
+  { icon: "✉", label: "Email", val: <a href="mailto:colivingcait@gmail.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait@gmail.com</a> },
+  { icon: "◈", label: "Location", val: "Atlanta Metro, Georgia" },
+  { icon: "⌂", label: "Brokerage", val: "Keller Williams Metro Atlanta" },
+  { icon: "★", label: "Website", val: <a href="https://colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait.com</a> },
+];
+
+const socials = [
+  { label: "IG", title: "Instagram", href: "https://instagram.com/colivingcait" },
+  { label: "YT", title: "YouTube", href: "#" },
+  { label: "FB", title: "Facebook", href: "#" },
+  { label: "LI", title: "LinkedIn", href: "#" },
+  { label: "TT", title: "TikTok", href: "#" },
+];
+
 export default function ContactPage() {
   return (
     <>
-      <Hero />
-      <QuickLinks />
-      <ContactFormSection />
-      <ContactInfo />
-    </>
-  );
-}
+      <RevealObserver />
 
-/* ---------------------------------------------------------------- */
-/* 1. HERO                                                            */
-/* ---------------------------------------------------------------- */
-function Hero() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-3xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-6">Contact</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading level={1} size="display" className="text-cream">
-            Let&apos;s <em className="text-gold-light">connect.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-8 text-cream/75 leading-body text-[1.0625rem]">
+      {/* ===== 1. HERO ===== */}
+      <section className="px-8 lg:px-[60px] pt-[140px] pb-16 lg:pt-[180px] lg:pb-20 bg-white text-center">
+        <div className="mx-auto max-w-[600px]">
+          <span className="eyebrow eyebrow-center">Contact</span>
+          <h1
+            className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-4 leading-[1.05] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
+            style={{ fontSize: "clamp(44px, 5vw, 68px)" }}
+          >
+            Let&apos;s <em className="italic text-gold font-light">connect.</em>
+          </h1>
+          <p className="text-[17px] text-warmgray opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
             The right conversation starts here.
           </p>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 2. QUICK LINKS — bypass the form                                   */
-/* ---------------------------------------------------------------- */
-function QuickLinks() {
-  const links: {
-    symbol: string;
-    label: string;
-    title: string;
-    body: string;
-    cta: string;
-    href: string;
-  }[] = [
-    {
-      symbol: "◈",
-      label: "For coaching",
-      title: "Coaching discovery call",
-      body: "Coaching Program ($3K · 8 weeks) or Advisory Retainer ($1.5K / mo). Both start here.",
-      cta: "Book a Coaching Call →",
-      href: COACHING_CALL_URL,
-    },
-    {
-      symbol: "$",
-      label: "For partnerships",
-      title: "Partnership discovery call",
-      body: "Private money lending, equity partnerships, or coliving arbitrage. Atlanta metro deals only.",
-      cta: "Book a Partnership Call →",
-      href: PARTNERSHIP_CALL_URL,
-    },
-    {
-      symbol: "⌂",
-      label: "For real estate",
-      title: "Buy & sell discovery call",
-      body: "Investment properties, coliving conversions, or house hacking — across the Atlanta metro.",
-      cta: "Book a Real Estate Call →",
-      href: BUY_SELL_CALL_URL,
-    },
-  ];
-
-  return (
-    <Section tone="blush">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Skip the form</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Know what you need? <em>Book directly.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p className="mt-4 text-warmgray">
-            Three different discovery calls — pick the one that fits and
-            grab a time.
-          </p>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-3 items-stretch"
-        stagger={0.1}
-      >
-        {links.map((l) => (
-          <StaggerItem key={l.label}>
-            <a
-              href={l.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block h-full border border-brand bg-cream p-8 md:p-10 transition-all duration-300 hover:border-gold hover:shadow-[0_20px_60px_-20px_rgba(196,149,90,0.35)] hover:-translate-y-1.5 relative"
-            >
-              {/* Top gold accent line scales in on hover */}
-              <span
-                aria-hidden
-                className="absolute left-0 top-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full"
-              />
-              <p className="text-3xl text-gold mb-5">{l.symbol}</p>
-              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-                {l.label}
-              </p>
-              <Heading level={3} size="sm">
-                {l.title}
-              </Heading>
-              <p className="mt-3 text-warmgray text-sm leading-body">
-                {l.body}
-              </p>
-              <p className="mt-6 text-xs uppercase tracking-button text-gold link-underline inline-block">
-                {l.cta}
-              </p>
-            </a>
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 3. CONTACT FORM                                                    */
-/* ---------------------------------------------------------------- */
-function ContactFormSection() {
-  return (
-    <Section tone="cream">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-start">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">Send a message</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="lg">
-              Ask me <em>anything.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-6 text-warmgray leading-body">
-              Press inquiries, speaking requests, partnership questions,
-              random thoughts about housing — it all lands in the same
-              inbox. I read every message personally and reply within
-              one business day.
-            </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <ul className="mt-8 space-y-3 text-warmgray text-sm">
-              <li className="flex gap-3">
-                <span className="text-gold mt-1">✦</span>
-                <span>No auto-responders, no chatbots</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-gold mt-1">✦</span>
-                <span>Replies within one business day</span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-gold mt-1">✦</span>
-                <span>Your information is never shared</span>
-              </li>
-            </ul>
-          </Reveal>
         </div>
+      </section>
 
-        <Reveal direction="left" delay={0.2}>
-          <ContactForm />
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
+      {/* ===== 2. QUICK LINKS ===== */}
+      <section className="px-8 lg:px-[60px] py-16 lg:py-20 bg-cream">
+        <div className="mx-auto max-w-[1100px]">
+          <div className="reveal text-center mb-12">
+            <p className="text-[15px] text-warmgray">
+              Already know what you need? Skip the form and book directly.
+            </p>
+          </div>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
+            {quickLinks.map((q, i) => (
+              <Link
+                key={q.title}
+                href={q.href}
+                className={`reveal reveal-d${i + 1} group bg-white border border-soft p-10 lg:px-8 text-center transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
+              >
+                <span className="block text-[28px] text-gold mb-4 transition-transform duration-500 group-hover:scale-[1.15]">
+                  {q.icon}
+                </span>
+                <h3 className="font-heading font-medium text-[22px] text-charcoal mb-2">
+                  {q.title}
+                </h3>
+                <p className="text-[13px] text-warmgray leading-[1.6] mb-4">{q.copy}</p>
+                <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.1em] text-gold-dark group-hover:gap-3 transition-all duration-300">
+                  Schedule a Call →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-/* ---------------------------------------------------------------- */
-/* 4. CONTACT INFO                                                    */
-/* ---------------------------------------------------------------- */
-function ContactInfo() {
-  const items: {
-    label: string;
-    value: string;
-    href?: string;
-  }[] = [
-    {
-      label: "Email",
-      value: "colivingcait@gmail.com",
-      href: "mailto:colivingcait@gmail.com",
-    },
-    {
-      label: "Location",
-      value: "Atlanta metro · Keller Williams Metro Atlanta",
-    },
-    {
-      label: "Instagram",
-      value: "@colivingcait",
-      href: "https://instagram.com/colivingcait",
-    },
-    {
-      label: "Facebook",
-      value: "She Leads Coliving",
-      href: "https://facebook.com/groups/sheleadscoliving",
-    },
-  ];
+      {/* ===== 3. CONTACT FORM ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white">
+        <div className="mx-auto grid max-w-[1100px] gap-10 lg:gap-20 items-start lg:grid-cols-2">
+          <div className="reveal">
+            <span className="eyebrow">Send a Message</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Or just reach out{" "}
+              <em className="italic text-gold font-light">directly.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray max-w-[420px]">
+              General inquiries, speaking requests, media, partnerships, or anything else — I&apos;d love to hear from you. Fill out the form and I&apos;ll get back to you within 48 hours.
+            </p>
+          </div>
+          <ContactFormV2 />
+        </div>
+      </section>
 
-  return (
-    <Section tone="cream" className="border-t border-brand">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Other ways to reach me</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Or find me <em>here.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-x-12 gap-y-8 md:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto"
-        stagger={0.08}
-      >
-        {items.map((it) => (
-          <StaggerItem key={it.label}>
-            <div className="border-t border-brand pt-4">
-              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
-                {it.label}
-              </p>
-              {it.href ? (
-                <a
-                  href={it.href}
-                  target={it.href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    it.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="font-heading text-xl md:text-2xl leading-heading text-charcoal hover:text-gold transition-colors"
-                >
-                  {it.value}
-                </a>
-              ) : (
-                <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal">
-                  {it.value}
-                </p>
-              )}
+      {/* ===== 4. CONTACT INFO ===== */}
+      <section className="px-8 lg:px-[60px] py-16 lg:py-20 bg-cream">
+        <div className="reveal mx-auto grid max-w-[1100px] gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {info.map((c) => (
+            <div key={c.label} className="p-8 lg:px-6 text-center">
+              <span className="block text-xl text-gold mb-3">{c.icon}</span>
+              <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light mb-2">
+                {c.label}
+              </span>
+              <span className="text-[15px] text-charcoal font-normal">{c.val}</span>
             </div>
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== SOCIALS ===== */}
+      <section className="px-8 lg:px-[60px] pt-12 pb-20 bg-cream">
+        <div className="reveal mx-auto max-w-[600px] text-center">
+          <p className="text-[15px] text-warmgray mb-6">Find me online</p>
+          <div className="flex justify-center gap-4">
+            {socials.map((s) => (
+              <a
+                key={s.title}
+                href={s.href}
+                title={s.title}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="w-12 h-12 border border-soft bg-white flex items-center justify-center text-base text-charcoal hover:border-gold hover:text-gold hover:-translate-y-[3px] transition-all duration-300"
+              >
+                {s.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

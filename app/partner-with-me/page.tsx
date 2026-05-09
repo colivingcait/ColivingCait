@@ -1,662 +1,409 @@
-import Section from "@/components/Section";
-import Eyebrow from "@/components/Eyebrow";
-import Heading from "@/components/Heading";
-import Button from "@/components/Button";
-import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
-import TestimonialCard from "@/components/TestimonialCard";
-import PageVisitTracker from "@/components/PageVisitTracker";
-import { CK_TAGS } from "@/lib/convertkit";
-import { zillowTestimonials } from "@/lib/testimonials";
+import Link from "next/link";
+import RevealObserver from "@/components/RevealObserver";
 
 export const metadata = {
   title: "Partner With Me — Coliving Cait",
   description:
-    "Passive partnership opportunities in Atlanta coliving. Three models — private money lending, equity partnerships, and arbitrage. Direct with me. No fund, no syndication.",
+    "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
 };
 
-// Both CTAs route to the discovery call. Constant kept local so it can be
-// swapped to Caitlyn's real Calendly link in one place.
-const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/discovery";
+// Partner With Me — pixel-perfect rewrite of coliving-cait-partner.html.
+// Sections: Hero · How It Works (3 steps) · Partnership Models (3 cards) ·
+// Portfolio (4 property cards + photo grid) · Trust & Protections (4) ·
+// Partner Testimonial · Final CTA.
 
-// Partner With Me — 8 sections per spec. Targets passive investors.
-// Legal posture: no specific return percentages stated publicly,
-// accredited-investor language in fine print.
-export default function PartnerWithMePage() {
+const steps = [
+  { num: "01", title: "We Meet & Align", copy: "We hop on a call, I walk you through my portfolio, my track record, and the opportunity. You ask questions, I give straight answers. No pressure — just clarity." },
+  { num: "02", title: "We Structure the Deal", copy: "We find the model that fits your goals — lending, partnership, or arbitrage. Everything is documented with proper legal protections for both sides." },
+  { num: "03", title: "You Earn, I Operate", copy: "Your capital goes to work. I handle everything — acquisition, conversion, operations, residents, maintenance. You get consistent reporting and returns." },
+];
+
+const models = [
+  {
+    icon: "$",
+    title: "Private Money Lending",
+    copy: "You lend capital at a fixed rate. I pay you back with interest on a set schedule. You're the bank — predictable returns, secured position, no operational involvement.",
+    items: ["Fixed interest rate", "Set repayment schedule", "Secured by the property", "No operational involvement", "Promissory note documentation"],
+  },
+  {
+    icon: "◈",
+    title: "Private Money Partnership",
+    copy: "You invest capital into a deal and we share the returns. You have equity in the property and upside in its performance. I operate, you earn.",
+    items: ["Equity position in the deal", "Shared returns based on performance", "Operating agreement in place", "Quarterly reporting", "Upside in appreciation and cashflow"],
+  },
+  {
+    icon: "⌂",
+    title: "Coliving Arbitrage",
+    copy: "You own the property. I lease it from you and operate it as a coliving house. You get guaranteed monthly rent — I handle everything else.",
+    items: ["You retain ownership", "Guaranteed monthly lease payment", "I handle all operations and residents", "Master lease agreement", "No vacancy risk for you"],
+  },
+];
+
+const properties = [
+  {
+    name: "Villa Candace",
+    location: "Atlanta Metro, Georgia",
+    original: "5 Bed / 3 Bath",
+    converted: "8 Rooms / 3 Bath",
+    gross: "$6,000",
+    strategy: "Acquisition",
+    conversion: (
+      <>
+        Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
+        <strong className="text-charcoal font-medium">converted the garage into 2 rooms</strong>. Cleaned up, furnished, and listed on PadSplit.
+      </>
+    ),
+  },
+  {
+    name: "Property Name",
+    location: "Atlanta Metro, Georgia",
+    original: "X Bed / X Bath",
+    converted: "X Rooms / X Bath",
+    gross: "$X,XXX",
+    strategy: "Acquisition",
+    conversion: <>Brief description of what was converted and how.</>,
+  },
+  {
+    name: "Property Name",
+    location: "Atlanta Metro, Georgia",
+    original: "X Bed / X Bath",
+    converted: "X Rooms / X Bath",
+    gross: "$X,XXX",
+    strategy: "Arbitrage",
+    conversion: <>Brief description of what was converted and how.</>,
+  },
+  {
+    name: "Property Name",
+    location: "Atlanta Metro, Georgia",
+    original: "X Bed / X Bath",
+    converted: "X Rooms / X Bath",
+    gross: "$X,XXX",
+    strategy: "Acquisition",
+    conversion: <>Brief description of what was converted and how.</>,
+  },
+];
+
+const trust = [
+  { icon: "§", title: "Promissory Note", copy: "Every lending partnership is backed by a legally binding promissory note with clear terms." },
+  { icon: "⊞", title: "Operating Agreement", copy: "Equity partnerships are structured with detailed operating agreements that define roles and returns." },
+  { icon: "↻", title: "Quarterly Reporting", copy: "Full transparency — you see exactly how the property is performing, every quarter." },
+  { icon: "✓", title: "Payment History", copy: "Consistent payment track record across my entire portfolio. Ask me about it on our call." },
+];
+
+export default function PartnerPage() {
   return (
     <>
-      <PageVisitTracker tag={CK_TAGS.PARTNER_PAGE_VISITED} />
-      <Hero />
-      <HowItWorks />
-      <PartnershipModels />
-      <Portfolio />
-      <TrustProtections />
-      <MarketReportLeadMagnet />
-      <Testimonials />
-      <FinalCTA />
-    </>
-  );
-}
+      <RevealObserver />
 
-/* ---------------------------------------------------------------- */
-/* 1. HERO                                                            */
-/* ---------------------------------------------------------------- */
-function Hero() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="grid gap-12 md:grid-cols-[1.2fr_1fr] md:items-end">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-6">Passive partnerships</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading level={1} size="xl" className="text-cream">
-              Your money working while you{" "}
-              <em className="text-gold-light">live your life.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-xl">
-              Partner with me directly in Atlanta-metro coliving properties.
-              No fund, no syndication, no minimum commitment beyond a
-              single deal. I find, fund, fix, and operate. You earn from a
-              real, cashflowing asset.
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Three metrics — vertical on desktop, horizontal on mobile */}
-        <Reveal delay={0.35}>
-          <div className="md:pl-12 md:border-l md:border-cream/15 grid grid-cols-3 md:grid-cols-1 gap-8">
-            <Metric
-              label="Minimum entry"
-              value="$30K"
-              sub="No upper cap"
-            />
-            <Metric
-              label="Target structure"
-              value="Quarterly returns"
-              sub="Promissory or equity"
-            />
-            <Metric
-              label="Track record"
-              value="Consistent"
-              sub="Payment history"
-            />
-          </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-function Metric({
-  label,
-  value,
-  sub,
-}: {
-  label: string;
-  value: string;
-  sub: string;
-}) {
-  return (
-    <div>
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
-        {label}
-      </p>
-      <p className="font-heading text-2xl md:text-4xl text-cream leading-heading">
-        {value}
-      </p>
-      <p className="mt-2 text-xs text-cream/60">{sub}</p>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 2. HOW IT WORKS — 3 steps                                          */
-/* ---------------------------------------------------------------- */
-function HowItWorks() {
-  const steps: { num: string; title: string; body: string }[] = [
-    {
-      num: "01",
-      title: "We meet &amp; align",
-      body: "A 30-minute call to understand your goals, your timeline, your capital situation, and how active you want to be. If we&apos;re a fit, we keep going. If we&apos;re not, I&apos;ll point you to someone who is.",
-    },
-    {
-      num: "02",
-      title: "We structure the deal",
-      body: "Together we choose the partnership model that fits — private money lending, equity partnership, or arbitrage. Attorney-drafted documents. Clear terms. Nothing hidden.",
-    },
-    {
-      num: "03",
-      title: "You earn, I operate",
-      body: "I run the property end-to-end — acquisitions, conversion, screening, leasing, maintenance. You receive quarterly distributions, quarterly reporting, and complete visibility into your investment.",
-    },
-  ];
-
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">How it works</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            From first call to first <em>distribution.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger className="mt-14 space-y-12 md:space-y-20" stagger={0.15}>
-        {steps.map((s, i) => (
-          <StaggerItem key={s.num}>
-            <div
-              className={`grid gap-6 md:grid-cols-[auto_1fr] md:items-start max-w-3xl ${
-                i % 2 === 1 ? "md:ml-auto" : ""
-              }`}
+      {/* ===== 1. HERO ===== */}
+      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-[180px] lg:pb-[100px] bg-white">
+        <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-16 items-center lg:grid-cols-[1.1fr_0.9fr] text-center lg:text-left">
+          <div className="opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]">
+            <span className="eyebrow lg:inline-flex">Partner With Me</span>
+            <h1
+              className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-6 leading-[1.05]"
+              style={{ fontSize: "clamp(40px, 4.4vw, 60px)" }}
             >
-              <p className="font-heading text-7xl md:text-9xl text-gold/40 leading-none">
-                {s.num}
-              </p>
-              <div className="md:pt-4">
-                <Heading
-                  level={3}
-                  size="sm"
-                  className=""
+              Your money working while you{" "}
+              <em className="italic text-gold font-light">live your life.</em>
+            </h1>
+            <p className="text-base leading-[1.85] text-warmgray max-w-[480px] mx-auto lg:mx-0 mb-9">
+              I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
+            </p>
+            <Link href="/contact?topic=partnership" className="btn-primary">
+              Schedule a Discovery Call →
+            </Link>
+          </div>
+          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+            <div
+              className="w-full overflow-hidden flex items-center justify-center text-sm text-warmgray-light"
+              style={{
+                aspectRatio: "4 / 3",
+                background:
+                  "linear-gradient(165deg, #FAF7F2 0%, #F0E8E0 60%, rgba(196,149,90,0.08) 100%)",
+              }}
+            >
+              Property or headshot photo
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 2. HOW IT WORKS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-16 lg:mb-[72px]">
+            <span className="eyebrow eyebrow-center">How It Works</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Three steps to putting your capital{" "}
+              <em className="italic text-gold font-light">to work.</em>
+            </h2>
+          </div>
+          <div className="grid gap-10 lg:gap-12 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
+            {steps.map((s, i) => (
+              <div
+                key={s.num}
+                className={`reveal reveal-d${i + 1} text-center relative`}
+              >
+                <div
+                  className="font-heading font-light leading-none mb-4 text-[64px]"
+                  style={{ color: "rgba(28,25,23,0.06)" }}
                 >
-                  <span dangerouslySetInnerHTML={{ __html: s.title }} />
-                </Heading>
-                <p
-                  className="mt-3 text-warmgray leading-body"
-                  dangerouslySetInnerHTML={{ __html: s.body }}
-                />
+                  {s.num}
+                </div>
+                <h3 className="font-heading font-medium text-[22px] text-charcoal mb-2.5">
+                  {s.title}
+                </h3>
+                <p className="text-sm text-warmgray leading-[1.75]">{s.copy}</p>
+                {i < steps.length - 1 && (
+                  <span className="hidden lg:block absolute top-8 -right-6 text-gold text-lg opacity-40">
+                    →
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3. PARTNERSHIP MODELS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16">
+            <span className="eyebrow">Partnership Models</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Three ways to <em className="italic text-gold font-light">partner.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray max-w-[560px]">
+              Every partnership is structured differently based on your goals, risk tolerance, and how involved you want to be. Here are the three models I work with.
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:gap-px lg:grid-cols-3 lg:bg-[rgba(28,25,23,0.06)] lg:border lg:border-soft">
+            {models.map((m, i) => (
+              <div
+                key={m.title}
+                className={`reveal reveal-d${i + 1} group bg-white p-12 lg:p-10 transition-[background] duration-500 ease-brand relative overflow-hidden flex flex-col border border-soft lg:border-0 hover:bg-cream`}
+              >
+                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold scale-x-0 origin-left transition-transform duration-500 ease-brand group-hover:scale-x-100" />
+                <span className="block text-[28px] text-gold mb-5 transition-transform duration-500 group-hover:scale-[1.15]">
+                  {m.icon}
+                </span>
+                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3">
+                  {m.title}
+                </h3>
+                <p className="text-sm leading-[1.8] text-warmgray mb-5">{m.copy}</p>
+                <ul className="list-none mb-7 flex-1">
+                  {m.items.map((it) => (
+                    <li
+                      key={it}
+                      className="text-[13px] text-warmgray py-1.5 flex items-start gap-2.5"
+                    >
+                      <span className="text-gold text-[7px] mt-[7px] shrink-0">✦</span>
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/contact?topic=partnership" className="btn-sm self-start">
+                  Schedule a Call →
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. PORTFOLIO ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16">
+            <span className="eyebrow">The Portfolio</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Real houses. Real numbers.{" "}
+              <em className="italic text-gold font-light">Real results.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray">
+              Here&apos;s a look at some of the properties I operate across the Atlanta metro.
+            </p>
+          </div>
+
+          {properties.map((p, i) => (
+            <div
+              key={i}
+              className={`reveal ${i > 0 ? `reveal-d${i}` : ""} bg-white border border-soft mb-6 transition-all duration-500 hover:border-brand hover:shadow-card`}
+            >
+              <div className="grid lg:grid-cols-2">
+                <div
+                  className="relative flex items-center justify-center text-sm text-warmgray-light overflow-hidden bg-blush"
+                  style={{ aspectRatio: "16 / 10" }}
+                >
+                  <span className="absolute top-4 left-4 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-3 py-1.5">
+                    Active
+                  </span>
+                  Property overview photo
+                </div>
+                <div className="p-10 lg:p-11 flex flex-col justify-center">
+                  <div className="font-heading font-medium text-[28px] text-charcoal mb-1">
+                    {p.name}
+                  </div>
+                  <div className="text-[13px] text-warmgray-light tracking-[0.04em] mb-6">
+                    {p.location}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+                    {[
+                      ["Original", p.original],
+                      ["Converted", p.converted],
+                      ["Avg Monthly Gross", p.gross],
+                      ["Strategy", p.strategy],
+                    ].map(([label, val]) => (
+                      <div key={label as string}>
+                        <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-gold mb-1">
+                          {label}
+                        </span>
+                        <span className="font-heading font-medium text-[22px] text-charcoal">
+                          {val}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-sm text-warmgray leading-[1.75] pt-5 border-t border-soft">
+                    {p.conversion}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between px-10 lg:px-11 py-4 border-t border-soft">
+                <div className="hidden sm:flex gap-2">
+                  {["Main", "Before", "After", "Rooms"].map((label, idx) => (
+                    <div
+                      key={label}
+                      className={`w-14 h-10 bg-blush border flex items-center justify-center text-[9px] text-warmgray-light cursor-pointer transition-colors duration-300 hover:border-gold ${idx === 0 ? "border-gold" : "border-soft"}`}
+                    >
+                      {label}
+                    </div>
+                  ))}
+                </div>
+                <a
+                  href="#"
+                  className="group inline-flex items-center gap-2 text-xs font-medium tracking-[0.08em] uppercase text-gold-dark hover:text-gold hover:gap-3 transition-all duration-300"
+                >
+                  View all photos →
+                </a>
               </div>
             </div>
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
-  );
-}
+          ))}
 
-/* ---------------------------------------------------------------- */
-/* 3. THREE PARTNERSHIP MODELS                                        */
-/* ---------------------------------------------------------------- */
-function PartnershipModels() {
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Three ways to partner</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Three models. <em>One operator.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p className="mt-4 text-warmgray">
-            Choose the structure that fits how you want your money to
-            work — and how involved you want to be.
-          </p>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-3 items-stretch"
-        stagger={0.1}
-      >
-        <StaggerItem>
-          <ModelCard
-            label="Model 01"
-            title="Private Money Lender"
-            tagline="Debt-style. Predictable income."
-            body="You lend capital secured by a promissory note and a lien on the property. I make scheduled payments per the note. Lower risk, predictable income, defined exit."
-            bullets={[
-              "Secured by promissory note",
-              "Lien recorded against property",
-              "Scheduled monthly or quarterly payments",
-              "Defined term and exit",
-            ]}
-            best="Best for: investors who want fixed-income style returns from real estate without dealing with operations."
-          />
-        </StaggerItem>
-
-        <StaggerItem>
-          <ModelCard
-            label="Model 02 · Most flexible"
-            title="Private Money Partner"
-            tagline="Equity-style. Shared upside."
-            body="You bring the capital. I bring the operations. We share the profits per the operating agreement — including ongoing cashflow, refinance proceeds, and any sale upside."
-            bullets={[
-              "Equity partnership structured by attorney",
-              "Quarterly distributions from operating cashflow",
-              "Share of refinance and sale proceeds",
-              "Quarterly reporting and full transparency",
-            ]}
-            best="Best for: investors who want real-estate equity exposure with someone else doing the work."
-            featured
-          />
-        </StaggerItem>
-
-        <StaggerItem>
-          <ModelCard
-            label="Model 03"
-            title="Coliving Arbitrage"
-            tagline="Lease your property to me."
-            body="You own the property. I lease it from you above market rate and operate it as coliving. You collect predictable rent every month — guaranteed by lease — without managing tenants or maintenance."
-            bullets={[
-              "Master lease at above-market rent",
-              "Multi-year term",
-              "I cover all turnover and maintenance",
-              "You stay completely hands-off",
-            ]}
-            best="Best for: existing property owners who want above-market rent and zero operations."
-          />
-        </StaggerItem>
-      </Stagger>
-    </Section>
-  );
-}
-
-type ModelCardProps = {
-  label: string;
-  title: string;
-  tagline: string;
-  body: string;
-  bullets: string[];
-  best: string;
-  featured?: boolean;
-};
-
-function ModelCard({
-  label,
-  title,
-  tagline,
-  body,
-  bullets,
-  best,
-  featured = false,
-}: ModelCardProps) {
-  return (
-    <div
-      className={`relative h-full flex flex-col border p-8 md:p-10 transition-colors ${
-        featured
-          ? "border-gold bg-gradient-to-b from-gold/[0.08] to-cream"
-          : "border-brand bg-cream"
-      }`}
-    >
-      {featured && (
-        <span className="absolute -top-3 left-8 bg-charcoal text-cream text-[10px] uppercase tracking-eyebrow px-3 py-1">
-          Most Popular
-        </span>
-      )}
-
-      <Eyebrow className="mb-3">{label}</Eyebrow>
-      <Heading level={3} size="sm">
-        {title}
-      </Heading>
-      <p className="mt-2 text-xs uppercase tracking-button text-warmgray">
-        {tagline}
-      </p>
-
-      <p className="mt-6 text-warmgray text-sm leading-body">{body}</p>
-
-      <ul className="mt-6 space-y-2 text-sm text-warmgray flex-1">
-        {bullets.map((b) => (
-          <li key={b} className="flex gap-2">
-            <span className="text-gold">✦</span>
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-6 pt-6 border-t border-brand text-xs text-warmgray italic leading-body">
-        {best}
-      </p>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 4. PORTFOLIO — before & after                                      */
-/* ---------------------------------------------------------------- */
-function Portfolio() {
-  // Sample property economics. Real photo paths and numbers will replace
-  // these placeholders once portfolio assets are finalized.
-  const properties: Property[] = [
-    {
-      neighborhood: "Decatur · Avondale corridor",
-      conversion: "4 BR → 7 rooms",
-      reno: "$45K",
-      timeline: "6 weeks",
-      gross: "$5,400 / mo",
-      net: "$1,150 / mo",
-      occupancy: "94%",
-    },
-    {
-      neighborhood: "East Atlanta · Edgewood",
-      conversion: "3 BR + basement → 6 rooms",
-      reno: "$68K",
-      timeline: "8 weeks",
-      gross: "$4,950 / mo",
-      net: "$1,020 / mo",
-      occupancy: "91%",
-    },
-    {
-      neighborhood: "Stone Mountain · Pine Lake",
-      conversion: "5 BR → 8 rooms (3 ensuite)",
-      reno: "$82K",
-      timeline: "10 weeks",
-      gross: "$6,800 / mo",
-      net: "$1,480 / mo",
-      occupancy: "96%",
-    },
-  ];
-
-  return (
-    <Section tone="blush">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Portfolio</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md">
-            Real properties. <em>Real numbers.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p className="mt-4 text-warmgray">
-            A look at what a converted property actually produces — what
-            we paid, what we put in, and what it earns each month.
-          </p>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-stretch"
-        stagger={0.1}
-      >
-        {properties.map((p, i) => (
-          <StaggerItem key={i}>
-            <PropertyCard property={p} />
-          </StaggerItem>
-        ))}
-      </Stagger>
-
-      <Reveal delay={0.3}>
-        <p className="mt-10 text-center text-xs text-warmgray/70 italic">
-          ✦ Full portfolio review available on a discovery call. Property
-          addresses kept confidential by policy.
-        </p>
-      </Reveal>
-    </Section>
-  );
-}
-
-type Property = {
-  neighborhood: string;
-  conversion: string;
-  reno: string;
-  timeline: string;
-  gross: string;
-  net: string;
-  occupancy: string;
-};
-
-function PropertyCard({ property: p }: { property: Property }) {
-  return (
-    <div className="h-full flex flex-col border border-brand bg-cream">
-      {/* Before / after photo placeholder split */}
-      <div className="grid grid-cols-2 aspect-[2/1] border-b border-brand">
-        <div className="relative bg-charcoal/85 flex items-center justify-center">
-          <span className="text-[10px] uppercase tracking-eyebrow text-gold">
-            Before
-          </span>
-        </div>
-        <div className="relative bg-blush flex items-center justify-center">
-          <span className="text-[10px] uppercase tracking-eyebrow text-gold-dark">
-            After
-          </span>
-        </div>
-      </div>
-
-      <div className="p-6 md:p-8 flex flex-col flex-1">
-        <p className="text-[10px] uppercase tracking-eyebrow text-gold">
-          {p.neighborhood}
-        </p>
-        <p className="mt-2 font-heading text-2xl leading-heading">
-          {p.conversion}
-        </p>
-
-        <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 text-sm flex-1">
-          <PortfolioStat label="Renovation" value={p.reno} />
-          <PortfolioStat label="Timeline" value={p.timeline} />
-          <PortfolioStat label="Gross / mo" value={p.gross} />
-          <PortfolioStat label="Net / mo" value={p.net} />
-          <PortfolioStat label="Occupancy" value={p.occupancy} />
-        </dl>
-      </div>
-    </div>
-  );
-}
-
-function PortfolioStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="text-[10px] uppercase tracking-eyebrow text-warmgray/70">
-        {label}
-      </dt>
-      <dd className="mt-1 font-heading text-lg text-charcoal">{value}</dd>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 5. TRUST & PROTECTIONS                                             */
-/* ---------------------------------------------------------------- */
-function TrustProtections() {
-  const items: { symbol: string; title: string; body: string }[] = [
-    {
-      symbol: "§",
-      title: "Promissory note",
-      body: "For lending partnerships, your investment is documented in an attorney-drafted promissory note with clear terms, interest, and repayment schedule.",
-    },
-    {
-      symbol: "⊞",
-      title: "Operating agreement",
-      body: "For equity partnerships, a formal operating agreement defines distributions, decisions, exits, and reporting obligations between us.",
-    },
-    {
-      symbol: "↻",
-      title: "Quarterly reporting",
-      body: "Every quarter you receive a complete financial report — revenue, expenses, occupancy, distributions, and any material updates on the property.",
-    },
-    {
-      symbol: "✓",
-      title: "Payment history",
-      body: "Consistent on-time payments to every partner across every deal. Track record available on request and reviewed during the discovery call.",
-    },
-  ];
-
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">Trust &amp; protections</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md" className="text-cream">
-            Structured properly. <em className="text-gold-light">Documented fully.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.2}>
-          <p className="mt-4 text-cream/70">
-            Every partnership is structured by an attorney, documented in
-            writing, and reported transparently from start to exit.
-          </p>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch"
-        stagger={0.08}
-      >
-        {items.map((it) => (
-          <StaggerItem key={it.title}>
-            <div className="h-full flex flex-col border border-gold/30 bg-charcoal p-8 md:p-10 transition-colors hover:border-gold">
-              <p className="text-3xl text-gold mb-5">{it.symbol}</p>
-              <Heading level={3} size="sm" className="text-cream">
-                {it.title}
-              </Heading>
-              <p className="mt-3 text-cream/70 text-sm leading-body flex-1">
-                {it.body}
-              </p>
-            </div>
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 6. LEAD MAGNET — Atlanta Coliving Market Report (placeholder)      */
-/* ---------------------------------------------------------------- */
-function MarketReportLeadMagnet() {
-  return (
-    <Section tone="blush">
-      <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
-        <div>
-          <Reveal>
-            <Eyebrow className="mb-4">Coming soon</Eyebrow>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <Heading size="md">
-              The Atlanta Coliving <em>Market Report.</em>
-            </Heading>
-          </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-4 text-warmgray leading-body">
-              A market-by-market view of where coliving is working in
-              Atlanta — neighborhoods, room rates, occupancy, and the
-              kind of properties producing the strongest returns. Built
-              from my own portfolio data and ground-truth conversations
-              with operators across the metro.
-            </p>
-          </Reveal>
-          <Reveal delay={0.4}>
-            <p className="mt-6 text-xs uppercase tracking-button text-warmgray/70">
-              ✦ Releasing soon — partners get it first
-            </p>
-          </Reveal>
-        </div>
-
-        {/* Placeholder card with a "report cover" feel */}
-        <Reveal direction="left" delay={0.2}>
-          <div className="aspect-[3/4] border border-brand bg-cream p-8 md:p-10 flex flex-col justify-between relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-gold/[0.06] via-transparent to-transparent pointer-events-none" />
-            <div className="relative">
-              <p className="text-[10px] uppercase tracking-eyebrow text-gold">
-                Market Report · 2026
-              </p>
-              <p className="mt-6 font-heading text-3xl md:text-4xl leading-heading">
-                Atlanta Coliving Market Report
-              </p>
-            </div>
-            <div className="relative">
-              <p className="text-xs uppercase tracking-button text-warmgray">
-                ✦ Coming soon
-              </p>
-              <p className="mt-2 text-sm text-warmgray italic">
-                Coliving Cait
-              </p>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 7. TESTIMONIALS                                                    */
-/* ---------------------------------------------------------------- */
-function Testimonials() {
-  return (
-    <Section tone="charcoal" className="relative grain overflow-hidden">
-      <div className="text-center max-w-2xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-4">5.0 ★ Zillow Rating</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading size="md" className="text-cream">
-            Trusted by the people who&apos;ve <em className="text-gold-light">worked with me.</em>
-          </Heading>
-        </Reveal>
-      </div>
-
-      <Stagger
-        className="mt-14 grid gap-6 md:grid-cols-2 items-stretch"
-        stagger={0.1}
-      >
-        {zillowTestimonials.map((t, i) => (
-          <StaggerItem key={i}>
-            <TestimonialCard {...t} tone="charcoal" />
-          </StaggerItem>
-        ))}
-      </Stagger>
-    </Section>
-  );
-}
-
-/* ---------------------------------------------------------------- */
-/* 8. FINAL CTA                                                       */
-/* ---------------------------------------------------------------- */
-function FinalCTA() {
-  return (
-    <Section tone="cream">
-      <div className="text-center max-w-3xl mx-auto">
-        <Reveal>
-          <Eyebrow className="mb-6">Let&apos;s talk</Eyebrow>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <Heading level={2} size="xl">
-            Let&apos;s put your money to work{" "}
-            <em>together.</em>
-          </Heading>
-        </Reveal>
-        <Reveal delay={0.25}>
-          <p className="mt-6 text-warmgray leading-body max-w-xl mx-auto">
-            Every partnership starts with the same 30-minute call —
-            understanding your goals, walking through the models, and
-            answering anything you want to ask.
-          </p>
-        </Reveal>
-        <Reveal delay={0.4}>
-          <div className="mt-10 flex flex-wrap gap-4 justify-center">
-            <Button
-              href={DISCOVERY_CALL_URL}
-              variant="primary"
-              size="lg"
-              magnetic
+          <div className="reveal mt-16">
+            <h3
+              className="font-heading font-normal text-[28px] text-charcoal mb-3 tracking-[-0.01em]"
             >
-              Schedule a Call →
-            </Button>
-            <Button href="/contact" variant="outline" size="lg">
-              I Have Questions First →
-            </Button>
+              More properties I&apos;ve worked on, helped purchase, consulted on, and{" "}
+              <em className="italic text-gold font-light">helped sell.</em>
+            </h3>
+            <p className="text-[15px] text-warmgray mb-8">
+              A look across my portfolio and the deals I&apos;ve been part of.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="aspect-square bg-blush border border-soft flex items-center justify-center text-xs text-warmgray-light cursor-pointer transition-all duration-300 hover:border-brand"
+                >
+                  Photo
+                </div>
+              ))}
+            </div>
           </div>
-        </Reveal>
-        <Reveal delay={0.55}>
-          <p className="mt-12 text-[11px] text-warmgray/60 italic max-w-2xl mx-auto leading-relaxed">
-            ✦ Partnership opportunities are limited and discussed only on
-            individual calls. All offerings are restricted to accredited
-            investors. Past performance is not indicative of future results.
-            This page does not constitute an offer to sell or a solicitation
-            to buy any security.
+        </div>
+      </section>
+
+      {/* ===== 5. TRUST ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-16">
+            <span className="eyebrow eyebrow-center">Trust &amp; Protections</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Your investment is <em className="italic text-gold font-light">protected.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {trust.map((t, i) => (
+              <div
+                key={t.title}
+                className={`reveal reveal-d${i + 1} p-10 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
+              >
+                <span className="block text-2xl text-gold mb-4">{t.icon}</span>
+                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
+                  {t.title}
+                </h3>
+                <p className="text-[13px] text-warmgray leading-[1.7]">{t.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 6. TESTIMONIAL ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+        <div className="mx-auto max-w-[900px]">
+          <div className="reveal text-center mb-14">
+            <span className="eyebrow eyebrow-center">From Partners</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
+            >
+              What my partners <em className="italic text-gold font-light">say.</em>
+            </h2>
+          </div>
+          <div className="reveal text-center">
+            <blockquote
+              className="font-heading font-light italic leading-[1.45] text-charcoal mb-6"
+              style={{ fontSize: "clamp(20px, 2.2vw, 28px)" }}
+            >
+              “Partner testimonial placeholder — a quote from a current lending or equity partner about their experience working with Caitlyn, the transparency, and the returns.”
+            </blockquote>
+            <span className="block text-sm font-medium text-charcoal">Partner Name</span>
+            <span className="block text-xs text-warmgray-light">Partnership Type</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 7. FINAL CTA ===== */}
+      <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
+        <span
+          aria-hidden
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
+        />
+        <div className="reveal">
+          <span className="eyebrow eyebrow-center !text-gold">Ready?</span>
+          <h2
+            className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
+            style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
+          >
+            Let&apos;s put your money to work{" "}
+            <em className="italic text-gold-light font-light">together.</em>
+          </h2>
+          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
+            Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
-        </Reveal>
-      </div>
-    </Section>
+          <div className="flex flex-wrap gap-5 justify-center">
+            <Link href="/contact?topic=partnership" className="btn-gold">
+              Schedule a Discovery Call
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
