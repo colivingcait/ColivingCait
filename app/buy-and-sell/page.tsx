@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
@@ -92,14 +93,17 @@ export default function BuyAndSellPage() {
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
-              className="w-full overflow-hidden flex items-center justify-center text-sm text-warmgray-light"
-              style={{
-                aspectRatio: "4 / 3",
-                background:
-                  "linear-gradient(165deg, #FAF7F2 0%, #F0E8E0 60%, rgba(196,149,90,0.08) 100%)",
-              }}
+              className="relative w-full overflow-hidden bg-cream"
+              style={{ aspectRatio: "4 / 3" }}
             >
-              Professional headshot
+              <Image
+                src="/images/caitlyn-buy-sell.jpg"
+                alt="Caitlyn Verdugo, Keller Williams Realtor"
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 560px"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>

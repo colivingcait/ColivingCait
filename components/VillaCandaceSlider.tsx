@@ -8,10 +8,10 @@ import { useEffect, useRef, useState } from "react";
 // when available; until then, gradient placeholders fill the same aspect.
 //
 // Drop final images at:
-//   /public/images/villa-candace/before.png  (5BR/3BA original)
-//   /public/images/villa-candace/after.png   (8 rooms after conversion)
-const BEFORE_SRC = "/images/villa-candace/before.png";
-const AFTER_SRC = "/images/villa-candace/after.png";
+//   /public/images/villacandace-before.png  (5BR/3BA original)
+//   /public/images/villacandace-after.png   (8 rooms after conversion)
+const BEFORE_SRC = "/images/villacandace-before.png";
+const AFTER_SRC = "/images/villacandace-after.png";
 
 export default function VillaCandaceSlider() {
   const [position, setPosition] = useState(50);

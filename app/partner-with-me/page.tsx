@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 
@@ -39,7 +40,18 @@ const models = [
   },
 ];
 
-const properties = [
+type Property = {
+  name: string;
+  location: string;
+  original: string;
+  converted: string;
+  gross: string;
+  strategy: string;
+  conversion: React.ReactNode;
+  image?: string;
+};
+
+const properties: Property[] = [
   {
     name: "Villa Candace",
     location: "Atlanta Metro, Georgia",
@@ -47,6 +59,7 @@ const properties = [
     converted: "8 Rooms / 3 Bath",
     gross: "$6,000",
     strategy: "Acquisition",
+    image: "/images/villa-candace/IMG_0190.JPG",
     conversion: (
       <>
         Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
@@ -55,12 +68,13 @@ const properties = [
     ),
   },
   {
-    name: "Property Name",
+    name: "Raven",
     location: "Atlanta Metro, Georgia",
     original: "X Bed / X Bath",
     converted: "X Rooms / X Bath",
     gross: "$X,XXX",
     strategy: "Acquisition",
+    image: "/images/raven/ravenfront.jpg",
     conversion: <>Brief description of what was converted and how.</>,
   },
   {
@@ -81,6 +95,17 @@ const properties = [
     strategy: "Acquisition",
     conversion: <>Brief description of what was converted and how.</>,
   },
+];
+
+const photoGrid = [
+  "/images/villa-candace/candacekitchen.jpg",
+  "/images/villa-candace/IMG_4109.jpeg",
+  "/images/villa-candace/12.png",
+  "/images/villa-candace/18.png",
+  "/images/raven/ravenkitchen.jpg",
+  "/images/raven/ravenbed1.jpg",
+  "/images/raven/ravenbed2.jpg",
+  "/images/raven/ravenbed3.jpg",
 ];
 
 const trust = [
@@ -116,14 +141,17 @@ export default function PartnerPage() {
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
-              className="w-full overflow-hidden flex items-center justify-center text-sm text-warmgray-light"
-              style={{
-                aspectRatio: "4 / 3",
-                background:
-                  "linear-gradient(165deg, #FAF7F2 0%, #F0E8E0 60%, rgba(196,149,90,0.08) 100%)",
-              }}
+              className="relative w-full overflow-hidden bg-cream"
+              style={{ aspectRatio: "4 / 3" }}
             >
-              Property or headshot photo
+              <Image
+                src="/images/villa-candace/IMG_0190.JPG"
+                alt="Villa Candace — Atlanta metro coliving property"
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 600px"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -246,10 +274,20 @@ export default function PartnerPage() {
                   className="relative flex items-center justify-center text-sm text-warmgray-light overflow-hidden bg-blush"
                   style={{ aspectRatio: "16 / 10" }}
                 >
-                  <span className="absolute top-4 left-4 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-3 py-1.5">
+                  <span className="absolute top-4 left-4 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-3 py-1.5">
                     Active
                   </span>
-                  Property overview photo
+                  {p.image ? (
+                    <Image
+                      src={p.image}
+                      alt={`${p.name} — ${p.location}`}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 600px"
+                      className="object-cover"
+                    />
+                  ) : (
+                    "Property overview photo"
+                  )}
                 </div>
                 <div className="p-10 lg:p-11 flex flex-col justify-center">
                   <div className="font-heading font-medium text-[28px] text-charcoal mb-1">
@@ -312,12 +350,18 @@ export default function PartnerPage() {
               A look across my portfolio and the deals I&apos;ve been part of.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {Array.from({ length: 8 }).map((_, i) => (
+              {photoGrid.map((src, i) => (
                 <div
-                  key={i}
-                  className="aspect-square bg-blush border border-soft flex items-center justify-center text-xs text-warmgray-light cursor-pointer transition-all duration-300 hover:border-brand"
+                  key={src}
+                  className="relative aspect-square bg-blush border border-soft cursor-pointer overflow-hidden transition-all duration-300 hover:border-brand"
                 >
-                  Photo
+                  <Image
+                    src={src}
+                    alt={`Portfolio property ${i + 1}`}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="object-cover"
+                  />
                 </div>
               ))}
             </div>

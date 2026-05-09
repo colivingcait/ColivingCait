@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 
@@ -54,14 +55,17 @@ export default function HomePage() {
 
           <div className="relative self-end opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
             <div
-              className="w-full overflow-hidden flex items-center justify-center text-sm text-warmgray-light"
-              style={{
-                aspectRatio: "3 / 4",
-                background:
-                  "linear-gradient(165deg, #FAF7F2 0%, #F0E8E0 60%, rgba(196,149,90,0.08) 100%)",
-              }}
+              className="relative w-full overflow-hidden bg-cream"
+              style={{ aspectRatio: "3 / 4" }}
             >
-              Yellow blazer headshot
+              <Image
+                src="/images/caitlyn-yellow-blazer.jpg"
+                alt="Caitlyn Verdugo"
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 560px"
+                className="object-cover"
+              />
             </div>
             <div className="hidden lg:block absolute bottom-12 -left-9 bg-white px-7 py-[22px] z-[3] shadow-photo opacity-0 [animation:heroReveal_0.7s_cubic-bezier(0.16,1,0.3,1)_1.1s_forwards]">
               <div className="font-heading font-medium text-[28px] leading-none text-charcoal">50+</div>
