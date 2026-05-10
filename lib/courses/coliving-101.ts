@@ -16,6 +16,7 @@ export const coliving101: Course = {
   longDescription:
     "A self-paced introduction to general workforce housing coliving. Six modules cover what coliving is, why it's growing, the math that makes it work, how to find and evaluate a property, how to set it up and launch, the day-to-day operations, and the three paths into coliving. Twenty-three lessons. Five module quizzes. Lifetime access.",
   price: 99,
+  originalPrice: 149,
   status: "available",
   symbol: "◈",
   outcomes: [
@@ -28,7 +29,7 @@ export const coliving101: Course = {
     "Pick the path that fits where you actually are — active operator, arbitrage, or passive investor",
   ],
   audience: [
-    "Women considering their first coliving deal",
+    "Anyone considering their first coliving deal",
     "Investors transitioning from traditional rentals because the math no longer pencils",
     "House hackers thinking about scaling into coliving",
     "Anyone curious about coliving before booking a coaching call",
@@ -2589,7 +2590,7 @@ export const coliving101: Course = {
         {
           type: "bullets",
           items: [
-            "Who it's for — women who want to build their own portfolio, want maximum control, are willing to put in the work, want to build a business",
+            "Who it's for — people who want to build their own portfolio, want maximum control, are willing to put in the work, want to build a business",
             "What it requires — capital for down payment + renovation + furnishing. Time, especially first 90 days. Willingness to learn. Right property in right market.",
             "The honest truth — active operating is not passive. It gets more passive as systems improve, but it's a business.",
           ],
@@ -2607,7 +2608,7 @@ export const coliving101: Course = {
         {
           type: "bullets",
           items: [
-            "Who it's for — women with less capital, want to test the model, markets where buying doesn't pencil",
+            "Who it's for — people with less capital, want to test the model, markets where buying doesn't pencil",
             "The honest truth — you're responsible for rent whether rooms are filled or not. You build cashflow but not equity. You're paying someone else's mortgage.",
           ],
         },
@@ -2623,12 +2624,12 @@ export const coliving101: Course = {
         {
           type: "bullets",
           items: [
-            "Who it's for — women with capital but limited time, want real estate returns without operating, want to learn from inside before going active",
+            "Who it's for — people with capital but limited time, want real estate returns without operating, want to learn from inside before going active",
           ],
         },
         {
           type: "fascination",
-          body: "The women building the most wealth through coliving aren't the ones waiting for the perfect moment. They're the ones who picked a path, committed to it, and figured it out as they went.",
+          body: "The investors building the most wealth through coliving aren't the ones waiting for the perfect moment. They're the ones who picked a path, committed to it, and figured it out as they went.",
         },
         {
           type: "key-takeaway",

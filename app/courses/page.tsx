@@ -9,30 +9,46 @@ import { cn } from "@/lib/cn";
 export const metadata = {
   title: "Mini Courses — Coliving Cait",
   description:
-    "Three $27 self-paced courses for women building wealth in coliving and house hacking. Lifetime access. Worksheets and quizzes per lesson.",
+    "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
 };
 
-// Course marketplace — three cards, $27 each. Coliving 101 is live.
-// House Hacking 101 and Real Estate Investing 101 are placeholders until
-// content is produced.
+// Course marketplace — three cards, $99 each ($149 bundle). Coliving 101
+// and House Hacking 101 are live; Real Estate Investing 101 is a stub
+// until its content lands.
 export default function CoursesPage() {
   return (
     <>
       <Section tone="charcoal" className="relative grain overflow-hidden">
         <div className="text-center max-w-3xl mx-auto">
           <Reveal>
-            <Eyebrow className="mb-6">Mini courses</Eyebrow>
+            <Eyebrow className="mb-6">
+              ✦ Limited time launch pricing
+            </Eyebrow>
           </Reveal>
           <Reveal delay={0.1}>
             <Heading level={1} size="display" className="text-cream">
               Learn it on <em className="text-gold-light">your time.</em>
             </Heading>
           </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-8 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
-              Three self-paced courses for women building wealth in real
-              estate. $27 each. Lifetime access. Worksheets and a
-              knowledge-check quiz with every lesson.
+          <Reveal delay={0.2}>
+            <div className="mt-8 inline-flex items-baseline gap-3 text-cream/85">
+              <span className="text-cream/40 line-through text-2xl md:text-3xl">
+                $149 each
+              </span>
+              <span className="font-heading text-3xl md:text-4xl text-gold-light">
+                $99 each
+              </span>
+              <span className="text-[10px] uppercase tracking-eyebrow text-gold-light border border-gold-light/40 px-2 py-1 ml-1">
+                33% off
+              </span>
+            </div>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
+              Three self-paced courses on coliving, house hacking, and
+              real estate investing. Bundle all three for $149 (a $447
+              value) — lifetime access, module quizzes included. This
+              pricing won&apos;t last.
             </p>
           </Reveal>
         </div>
@@ -80,9 +96,16 @@ function CourseCard({ course }: { course: (typeof courses)[number] }) {
       )}
 
       <p className="text-3xl text-gold mb-5">{course.symbol}</p>
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        Mini course
-      </p>
+      <div className="flex items-center gap-2 mb-3">
+        <p className="text-[10px] uppercase tracking-eyebrow text-gold">
+          Mini course
+        </p>
+        {course.originalPrice && (
+          <span className="text-[10px] uppercase tracking-eyebrow text-gold/80 border border-gold/40 px-1.5 py-0.5">
+            Limited time · ${course.originalPrice - course.price} off
+          </span>
+        )}
+      </div>
       <Heading level={3} size="sm">
         {course.title}
       </Heading>
@@ -95,9 +118,16 @@ function CourseCard({ course }: { course: (typeof courses)[number] }) {
       </p>
 
       <div className="mt-8 pt-6 border-t border-brand flex items-baseline justify-between">
-        <p className="font-heading text-4xl text-charcoal leading-none">
-          ${course.price}
-        </p>
+        <div className="flex items-baseline gap-2">
+          {course.originalPrice && (
+            <span className="text-base text-warmgray-light line-through">
+              ${course.originalPrice}
+            </span>
+          )}
+          <p className="font-heading text-4xl text-charcoal leading-none">
+            ${course.price}
+          </p>
+        </div>
         <p className="text-xs uppercase tracking-button">
           {isAvailable ? (
             <span className="text-gold link-underline inline-block">

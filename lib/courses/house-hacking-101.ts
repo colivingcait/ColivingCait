@@ -18,6 +18,7 @@ export const houseHacking101: Course = {
   longDescription:
     "A self-paced introduction to the most powerful first move in real estate. Six modules cover what house hacking is, the four types, owner-occupied financing (FHA / conventional / VA), how to find the right property, how to run the numbers, how to operate with tenants under your own roof, and how to scale into a portfolio. Twenty-one lessons. Five module quizzes. Lifetime access.",
   price: 99,
+  originalPrice: 149,
   status: "available",
   symbol: "⌂",
   outcomes: [

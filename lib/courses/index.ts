@@ -17,6 +17,7 @@ export const courses: Course[] = [
     longDescription:
       "Coming soon — full course content in production.",
     price: 99,
+    originalPrice: 149,
     status: "coming-soon",
     symbol: "$",
     outcomes: [
