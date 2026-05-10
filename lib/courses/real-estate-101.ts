@@ -10,7 +10,7 @@ import type { Course } from "./types";
 export const realEstate101: Course = {
   slug: "real-estate-101",
   title: "Real Estate Investing 101",
-  tagline: "The 8 residential strategies.",
+  tagline: "Start smart. Start now.",
   description:
     "Six modules. Twenty-eight lessons. Every major residential strategy, how to choose yours, and your first move.",
   longDescription:

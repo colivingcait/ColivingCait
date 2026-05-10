@@ -12,7 +12,7 @@ import type { Course } from "./types";
 export const houseHacking101: Course = {
   slug: "house-hacking-101",
   title: "House Hacking 101",
-  tagline: "The cheat code for first-time investors.",
+  tagline: "The best first move.",
   description:
     "Six modules. Twenty-one lessons. The complete strategy for buying a property, living in part of it, and renting out the rest — your first investment property and the foundation of your portfolio.",
   longDescription:

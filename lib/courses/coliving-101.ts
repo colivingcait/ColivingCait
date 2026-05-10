@@ -10,7 +10,7 @@ import type { Course } from "./types";
 export const coliving101: Course = {
   slug: "coliving-101",
   title: "Coliving 101",
-  tagline: "The model, the math, the move.",
+  tagline: "More rooms. More revenue.",
   description:
     "Six modules. Twenty-three lessons. Everything you need to understand the coliving model — from how it works to whether it's right for you.",
   longDescription:
