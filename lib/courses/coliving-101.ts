@@ -548,83 +548,95 @@ export const coliving101: Course = {
         },
         { type: "subheading", content: "Lease structure" },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          paragraphs: ["One lease. One tenant."],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          paragraphs: ["Individual leases — one per room."],
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              paragraphs: ["One lease. One tenant."],
+            },
+            {
+              eyebrow: "Coliving",
+              paragraphs: ["Individual leases — one per room."],
+            },
+          ],
         },
         { type: "subheading", content: "Furnishing & move-in" },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          paragraphs: [
-            "Rarely furnished. Move-in in weeks. 12-month minimum lease.",
-          ],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          paragraphs: [
-            "Typically furnished. Move-in in days. Mid-term (3–6 months typical).",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              paragraphs: [
+                "Rarely furnished. Move-in in weeks. 12-month minimum lease.",
+              ],
+            },
+            {
+              eyebrow: "Coliving",
+              paragraphs: [
+                "Typically furnished. Move-in in days. Mid-term (3–6 months typical).",
+              ],
+            },
           ],
         },
         { type: "subheading", content: "Income & risk" },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          paragraphs: [
-            "One income stream per property. If the tenant stops paying — $0 income.",
-          ],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          paragraphs: [
-            "6–10 income streams per property. If one resident stops paying, the rest are still paying.",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              paragraphs: [
+                "One income stream per property. If the tenant stops paying — $0 income.",
+              ],
+            },
+            {
+              eyebrow: "Coliving",
+              paragraphs: [
+                "6–10 income streams per property. If one resident stops paying, the rest are still paying.",
+              ],
+            },
           ],
         },
         { type: "subheading", content: "Affordability for the resident" },
         {
-          type: "card",
-          eyebrow: "Traditional 1BR apartment",
-          paragraphs: ["$1,500+/month"],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving private room",
-          paragraphs: ["$750–$1,000/month"],
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional 1BR apartment",
+              paragraphs: ["$1,500+/month"],
+            },
+            {
+              eyebrow: "Coliving private room",
+              paragraphs: ["$750–$1,000/month"],
+            },
+          ],
         },
         { type: "subheading", content: "Community" },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          paragraphs: ["None built in."],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          paragraphs: ["Built into the model."],
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              paragraphs: ["None built in."],
+            },
+            {
+              eyebrow: "Coliving",
+              paragraphs: ["Built into the model."],
+            },
+          ],
         },
         { type: "subheading", content: "Cashflow in today's market" },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          paragraphs: ["Often negative."],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          paragraphs: ["$1,000+/month potential."],
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              paragraphs: ["Often negative."],
+            },
+            {
+              eyebrow: "Coliving",
+              paragraphs: ["$1,000+/month potential."],
+            },
+          ],
         },
         {
           type: "key-takeaway",
@@ -820,35 +832,37 @@ export const coliving101: Course = {
           body: "Gross revenue is total rent collected. Operating expenses are total costs to run it. Net cashflow is what you actually keep. Occupancy is the % of rooms paying — use 85%. Effective gross is revenue adjusted for occupancy. Cash-on-cash is annual cashflow ÷ cash invested.",
         },
         { type: "heading", content: "Run the numbers on a real property" },
-        { type: "subheading", content: "As a traditional rental" },
-        {
-          type: "card",
-          eyebrow: "One tenant, one lease",
-          bullets: [
-            "Gross rent: $2,000/month",
-            "Mortgage + taxes + insurance + maintenance: $2,200/month",
-            "Net cashflow: −$200/month",
-            "Risk: tenant stops paying → $0 income, you still owe $2,200/month",
-          ],
-        },
-        { type: "subheading", content: "As coliving — same house, 8 rooms" },
         {
           type: "paragraph",
           content:
-            "Take that same 4-bedroom house and convert the dining room, bonus room, basement, and office into additional bedrooms for a total of 8 rooms. (Don't worry about how to do the conversion yet — that's Module 3.)",
+            "Same 4-bedroom house, two strategies. Take that same property and convert the dining room, bonus room, basement, and office into additional bedrooms for a total of 8 rooms. (Don't worry about how to do the conversion yet — that's Module 3.)",
         },
         {
-          type: "card",
-          tone: "blush",
-          eyebrow: "8 residents, 8 individual leases",
-          bullets: [
-            "7 shared bath rooms × $750/month = $5,250",
-            "1 private bath room × $1,000/month = $1,000",
-            "Gross revenue: $6,250/month",
-            "At 85% occupancy: $5,312/month effective gross income",
-            "Operating expenses: ~$3,800/month (broken down in the next lessons)",
-            "Net cashflow: ~$1,500/month",
-            "Risk: one resident stops paying → seven still paying",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "As a traditional rental",
+              title: "One tenant, one lease",
+              bullets: [
+                "Gross rent: $2,000/month",
+                "Mortgage + taxes + insurance + maintenance: $2,200/month",
+                "Net cashflow: −$200/month",
+                "Risk: tenant stops paying → $0 income, you still owe $2,200/month",
+              ],
+            },
+            {
+              eyebrow: "As coliving — 8 rooms",
+              title: "8 residents, 8 individual leases",
+              bullets: [
+                "7 shared bath rooms × $750/month = $5,250",
+                "1 private bath room × $1,000/month = $1,000",
+                "Gross revenue: $6,250/month",
+                "At 85% occupancy: $5,312/month effective gross income",
+                "Operating expenses: ~$3,800/month",
+                "Net cashflow: ~$1,500/month",
+                "Risk: one resident stops paying → seven still paying",
+              ],
+            },
           ],
         },
         {
@@ -933,18 +947,20 @@ export const coliving101: Course = {
         },
         { type: "heading", content: "The pricing sweet spot" },
         {
-          type: "card",
-          eyebrow: "For the resident",
-          paragraphs: [
-            "Meaningfully cheaper than renting a one-bedroom in the same area, while offering a quality, furnished, move-in ready experience. If the savings aren't significant, they'll just rent their own place.",
-          ],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "For you the operator",
-          paragraphs: [
-            "Enough total revenue across all rooms (at 85% occupancy) to cover all expenses and produce positive cashflow. If individual rates are too low, the deal doesn't pencil no matter how many rooms you have.",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "For the resident",
+              paragraphs: [
+                "Meaningfully cheaper than renting a one-bedroom in the same area, while offering a quality, furnished, move-in ready experience. If the savings aren't significant, they'll just rent their own place.",
+              ],
+            },
+            {
+              eyebrow: "For you the operator",
+              paragraphs: [
+                "Enough total revenue across all rooms (at 85% occupancy) to cover all expenses and produce positive cashflow. If individual rates are too low, the deal doesn't pencil no matter how many rooms you have.",
+              ],
+            },
           ],
         },
         {
@@ -1155,20 +1171,22 @@ export const coliving101: Course = {
             "Even when the cashflow numbers are close, coliving wins on risk every single time. Let's compare what happens when a tenant stops paying.",
         },
         {
-          type: "card",
-          eyebrow: "Traditional rental",
-          title: "1 tenant stops paying.",
-          paragraphs: [
-            "$0 income. You still owe $2,200/month in expenses. You're bleeding $2,200/month until resolved.",
-          ],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Coliving",
-          title: "1 of 8 residents stops paying.",
-          paragraphs: [
-            "7 others still paying. You lose $750–$1,000/month. Your other 7 residents are still covering the vast majority of your expenses.",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Traditional rental",
+              title: "1 tenant stops paying.",
+              paragraphs: [
+                "$0 income. You still owe $2,200/month in expenses. You're bleeding $2,200/month until resolved.",
+              ],
+            },
+            {
+              eyebrow: "Coliving",
+              title: "1 of 8 residents stops paying.",
+              paragraphs: [
+                "7 others still paying. You lose $750–$1,000/month. Your other 7 residents are still covering the vast majority of your expenses.",
+              ],
+            },
           ],
         },
         {
@@ -1745,28 +1763,29 @@ export const coliving101: Course = {
             "One of the first decisions you'll make as a coliving operator is how you want to furnish your rooms.",
         },
         {
-          type: "card",
-          eyebrow: "Option 1",
-          title: "Fully furnished",
-          paragraphs: [
-            "Everything provided. Residents walk in with a suitcase. Commands higher rates, attracts a broader pool. This is what I do — and what most coliving operators do.",
-          ],
-        },
-        {
-          type: "card",
-          tone: "blush",
-          eyebrow: "Option 2",
-          title: "Partially furnished",
-          paragraphs: [
-            "Essentials provided (bed, dresser, desk), resident brings the rest. Lower upfront cost, slightly lower rent.",
-          ],
-        },
-        {
-          type: "card",
-          eyebrow: "Option 3",
-          title: "Unfurnished",
-          paragraphs: [
-            "You provide the room, they bring everything. Lowest upfront cost, limits tenant pool, lower rates.",
+          type: "compare",
+          items: [
+            {
+              eyebrow: "Option 1",
+              title: "Fully furnished",
+              paragraphs: [
+                "Everything provided. Residents walk in with a suitcase. Commands higher rates, attracts a broader pool. This is what I do — and what most operators do.",
+              ],
+            },
+            {
+              eyebrow: "Option 2",
+              title: "Partially furnished",
+              paragraphs: [
+                "Essentials provided (bed, dresser, desk), resident brings the rest. Lower upfront cost, slightly lower rent.",
+              ],
+            },
+            {
+              eyebrow: "Option 3",
+              title: "Unfurnished",
+              paragraphs: [
+                "You provide the room, they bring everything. Lowest upfront cost, limits tenant pool, lower rates.",
+              ],
+            },
           ],
         },
         {
@@ -1846,9 +1865,9 @@ export const coliving101: Course = {
           type: "card",
           tone: "blush",
           eyebrow: "Recommended",
-          title: "Security cameras — exterior only",
+          title: "Security cameras",
           paragraphs: [
-            "Front door, back door, driveway. Never inside the home.",
+            "Front door, back door, driveway. Depending on your preferences, can also be in the common areas (kitchen, laundry room). Cameras help cut down on conflict over dirty dishes in the sink, food stealing, arguments, etc.",
           ],
         },
         {

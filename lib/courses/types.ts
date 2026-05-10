@@ -38,7 +38,19 @@ export type LessonSection =
       bullets?: string[];
     }
   /** Decorative ✦ divider used to break sections without a heading. */
-  | { type: "divider" };
+  | { type: "divider" }
+  /** Side-by-side comparison cards. 2-3 items render as a horizontal
+   *  grid on md+ viewports and stack on mobile. Tones alternate
+   *  cream / blush automatically based on position. */
+  | {
+      type: "compare";
+      items: Array<{
+        eyebrow?: string;
+        title?: string;
+        paragraphs?: string[];
+        bullets?: string[];
+      }>;
+    };
 
 export type Lesson = {
   slug: string;

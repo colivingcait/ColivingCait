@@ -191,6 +191,69 @@ export default function LessonSections({
                 <span className="h-px flex-1 bg-brand/40" />
               </div>
             );
+          case "compare": {
+            const cols = s.items.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2";
+            return (
+              <div
+                key={i}
+                className={cn("my-7 grid gap-4", cols)}
+              >
+                {s.items.map((item, idx) => {
+                  const tone = idx % 2 === 0 ? "cream" : "blush";
+                  const toneClasses =
+                    tone === "cream"
+                      ? "border-brand bg-cream"
+                      : "border-brand bg-blush";
+                  return (
+                    <aside
+                      key={idx}
+                      className={cn(
+                        "border p-5 md:p-6 flex flex-col",
+                        toneClasses,
+                      )}
+                    >
+                      {item.eyebrow && (
+                        <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                          ✦ {item.eyebrow}
+                        </p>
+                      )}
+                      {item.title && (
+                        <p className="font-heading text-lg md:text-xl leading-heading text-charcoal">
+                          {item.title}
+                        </p>
+                      )}
+                      {item.paragraphs?.map((p, pi) => (
+                        <p
+                          key={pi}
+                          className={cn(
+                            "leading-body text-[15px] md:text-[16px] text-warmgray",
+                            pi === 0 && (item.title || item.eyebrow)
+                              ? "mt-3"
+                              : "mt-3",
+                          )}
+                        >
+                          {p}
+                        </p>
+                      ))}
+                      {item.bullets && (
+                        <ul className="mt-3 space-y-2">
+                          {item.bullets.map((b) => (
+                            <li
+                              key={b}
+                              className="flex gap-3 leading-body text-[14px] md:text-[15px] text-warmgray"
+                            >
+                              <span className="text-gold mt-1">✦</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </aside>
+                  );
+                })}
+              </div>
+            );
+          }
         }
       })}
     </div>
