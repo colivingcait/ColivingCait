@@ -1,34 +1,13 @@
 import type { Course } from "./types";
 import { coliving101 } from "./coliving-101";
+import { houseHacking101 } from "./house-hacking-101";
 
-// All courses in the catalog. Two are stubs awaiting full content. The
-// stubs render on /courses but route nowhere — `status: "coming-soon"`.
+// All courses in the catalog. Real Estate Investing 101 is still a
+// stub awaiting full content (status: "coming-soon"); the other two
+// are fully written.
 export const courses: Course[] = [
   coliving101,
-  {
-    slug: "house-hacking-101",
-    title: "House Hacking 101",
-    tagline: "The cheat code for first-time investors.",
-    description:
-      "Six lessons on every major house-hacking strategy — spare bedroom, basement / ADU, coliving house hack, and small multifamily.",
-    longDescription:
-      "Coming soon — full course content in production.",
-    price: 99,
-    status: "coming-soon",
-    symbol: "⌂",
-    outcomes: [
-      "Understand all four house-hack types",
-      "Project your effective monthly housing cost",
-      "Manage tenants when you live in the property",
-      "Plan your exit and roll into the next deal",
-    ],
-    audience: [
-      "First-time buyers exploring owner-occupied investing",
-      "House-hack curious folks figuring out which type fits",
-      "Anyone planning to scale from house hack to portfolio",
-    ],
-    lessons: [],
-  },
+  houseHacking101,
   {
     slug: "real-estate-101",
     title: "Real Estate Investing 101",
