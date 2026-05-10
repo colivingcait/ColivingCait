@@ -221,38 +221,49 @@ export default async function CourseLandingPage({
                     </Reveal>
                   ) : (
                     <Stagger className="md:ml-12 space-y-3" stagger={0.05}>
-                      {modLessons.map((lesson) => (
-                        <StaggerItem key={lesson.slug}>
-                          <Link
-                            href={`/courses/${course.slug}/${lesson.slug}`}
-                            className="group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
-                          >
-                            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
-                              <span className="font-heading text-2xl md:text-3xl text-gold/60 leading-none tabular-nums">
-                                {String(lesson.moduleLessonNumber).padStart(2, "0")}
-                              </span>
-                              <div className="min-w-0">
-                                <p className="font-heading text-lg md:text-xl leading-heading">
-                                  {lesson.title}
-                                </p>
-                                <p className="mt-1 text-sm text-warmgray leading-body">
-                                  {lesson.description}
-                                </p>
-                              </div>
-                              <div className="flex flex-col items-end gap-1 whitespace-nowrap">
-                                <span className="text-[10px] uppercase tracking-eyebrow text-gold">
-                                  {lesson.duration}
-                                </span>
-                                {lesson.quiz.length > 0 && (
-                                  <span className="text-[10px] uppercase tracking-eyebrow text-warmgray">
-                                    Module quiz
+                      {modLessons.map((lesson) => {
+                        const isQuiz = lesson.kind === "module-quiz";
+                        return (
+                          <StaggerItem key={lesson.slug}>
+                            <Link
+                              href={`/courses/${course.slug}/${lesson.slug}`}
+                              className={
+                                isQuiz
+                                  ? "group block border border-gold bg-gold/[0.06] p-5 md:p-6 hover:bg-gold/[0.10] transition-colors"
+                                  : "group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
+                              }
+                            >
+                              <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
+                                {isQuiz ? (
+                                  <span className="font-heading text-2xl md:text-3xl text-gold leading-none">
+                                    ✦
+                                  </span>
+                                ) : (
+                                  <span className="font-heading text-2xl md:text-3xl text-gold/60 leading-none tabular-nums">
+                                    {String(lesson.moduleLessonNumber).padStart(2, "0")}
                                   </span>
                                 )}
+                                <div className="min-w-0">
+                                  {isQuiz && (
+                                    <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-1">
+                                      Module quiz · {lesson.quiz.length} questions
+                                    </p>
+                                  )}
+                                  <p className="font-heading text-lg md:text-xl leading-heading">
+                                    {lesson.title}
+                                  </p>
+                                  <p className="mt-1 text-sm text-warmgray leading-body">
+                                    {lesson.description}
+                                  </p>
+                                </div>
+                                <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
+                                  {lesson.duration}
+                                </span>
                               </div>
-                            </div>
-                          </Link>
-                        </StaggerItem>
-                      ))}
+                            </Link>
+                          </StaggerItem>
+                        );
+                      })}
                     </Stagger>
                   )}
                 </div>

@@ -4,15 +4,10 @@ import type { Course } from "./types";
 // module-end quizzes. Content sourced from the canonical course markdown
 // (Coliving_101_Complete_Course_FINAL.md, May 2026 edition).
 //
-// PHASE 1 status: Module 1 (4 lessons + 5-question quiz on the final
-// lesson) is fully written. Modules 2–6 are stubbed with metadata only —
+// PHASE 1 status: Module 1 (4 lessons + standalone 5-question module
+// quiz) is fully written. Modules 2–6 are stubbed with metadata only —
 // they appear on the course landing page so module groupings render
 // correctly, but their lessons array is empty. Phase 2 fills them in.
-
-const placeholderWorksheet = {
-  title: "Coliving 101 Worksheet (placeholder)",
-  href: "/downloads/coliving-101-worksheet.pdf",
-};
 
 export const coliving101: Course = {
   slug: "coliving-101",
@@ -169,19 +164,14 @@ export const coliving101: Course = {
         },
         { type: "subheading", content: "5. Important disclaimers" },
         {
-          type: "paragraph",
-          content:
+          type: "card",
+          tone: "blush",
+          eyebrow: "Read before you start",
+          paragraphs: [
             "This course is educational in nature. I am not your attorney, CPA, or financial advisor. Always consult licensed professionals before making investment decisions.",
-        },
-        {
-          type: "paragraph",
-          content:
             "Interest rates, room rates, property values, and financial projections used throughout this course are illustrative examples based on real experience. Your actual numbers will depend on your specific market, property, and current market conditions.",
-        },
-        {
-          type: "paragraph",
-          content:
             "Results vary. The numbers and projections in this course are based on real operational experience but are not guarantees of future performance. Real estate investing carries risk — educate yourself, do your due diligence, and make informed decisions.",
+          ],
         },
         { type: "heading", content: "One more thing" },
         {
@@ -196,7 +186,6 @@ export const coliving101: Course = {
         },
       ],
       quiz: [],
-      worksheet: placeholderWorksheet,
     },
 
     /* ====================================================================
@@ -281,7 +270,6 @@ export const coliving101: Course = {
         },
       ],
       quiz: [],
-      worksheet: placeholderWorksheet,
     },
 
     {
@@ -410,7 +398,6 @@ export const coliving101: Course = {
         },
       ],
       quiz: [],
-      worksheet: placeholderWorksheet,
     },
 
     {
@@ -515,7 +502,6 @@ export const coliving101: Course = {
         },
       ],
       quiz: [],
-      worksheet: placeholderWorksheet,
     },
 
     {
@@ -536,51 +522,83 @@ export const coliving101: Course = {
         },
         { type: "subheading", content: "Lease structure" },
         {
-          type: "bullets",
-          items: [
-            "Traditional rental: one lease, one tenant",
-            "Coliving: individual leases per room",
-          ],
+          type: "card",
+          eyebrow: "Traditional rental",
+          paragraphs: ["One lease. One tenant."],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving",
+          paragraphs: ["Individual leases — one per room."],
         },
         { type: "subheading", content: "Furnishing & move-in" },
         {
-          type: "bullets",
-          items: [
-            "Traditional rental: rarely furnished, move-in in weeks, 12-month minimum lease",
-            "Coliving: typically furnished, move-in in days, mid-term (3–6 months typical)",
+          type: "card",
+          eyebrow: "Traditional rental",
+          paragraphs: [
+            "Rarely furnished. Move-in in weeks. 12-month minimum lease.",
+          ],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving",
+          paragraphs: [
+            "Typically furnished. Move-in in days. Mid-term (3–6 months typical).",
           ],
         },
         { type: "subheading", content: "Income & risk" },
         {
-          type: "bullets",
-          items: [
-            "Traditional rental: one income stream per property; if the tenant stops paying, $0 income",
-            "Coliving: 6–10 income streams per property; if one resident stops paying, the rest are still paying",
+          type: "card",
+          eyebrow: "Traditional rental",
+          paragraphs: [
+            "One income stream per property. If the tenant stops paying — $0 income.",
+          ],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving",
+          paragraphs: [
+            "6–10 income streams per property. If one resident stops paying, the rest are still paying.",
           ],
         },
         { type: "subheading", content: "Affordability for the resident" },
         {
-          type: "bullets",
-          items: [
-            "Traditional 1BR apartment: $1,500+/month",
-            "Coliving private room: $750–$1,000/month",
-          ],
+          type: "card",
+          eyebrow: "Traditional 1BR apartment",
+          paragraphs: ["$1,500+/month"],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving private room",
+          paragraphs: ["$750–$1,000/month"],
         },
         { type: "subheading", content: "Community" },
         {
-          type: "bullets",
-          items: [
-            "Traditional rental: none built in",
-            "Coliving: built into the model",
-          ],
+          type: "card",
+          eyebrow: "Traditional rental",
+          paragraphs: ["None built in."],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving",
+          paragraphs: ["Built into the model."],
         },
         { type: "subheading", content: "Cashflow in today's market" },
         {
-          type: "bullets",
-          items: [
-            "Traditional rental: often negative",
-            "Coliving: $1,000+/month potential",
-          ],
+          type: "card",
+          eyebrow: "Traditional rental",
+          paragraphs: ["Often negative."],
+        },
+        {
+          type: "card",
+          tone: "blush",
+          eyebrow: "Coliving",
+          paragraphs: ["$1,000+/month potential."],
         },
         {
           type: "key-takeaway",
@@ -599,7 +617,28 @@ export const coliving101: Course = {
             "It's fundamentally different from traditional rentals in every way that matters",
           ],
         },
+        {
+          type: "callout",
+          tone: "gold",
+          body: "Up next — the Module 1 quiz. Five quick questions to lock in what you just learned.",
+        },
       ],
+      quiz: [],
+    },
+
+    /* ==================== MODULE 1 QUIZ — STANDALONE ==================== */
+    {
+      slug: "module-1-quiz",
+      number: 6,
+      moduleNumber: 1,
+      moduleTitle: "What is coliving & why it's having its moment",
+      moduleLessonNumber: 5,
+      kind: "module-quiz",
+      title: "Module 1 Quiz",
+      description:
+        "Five questions on what coliving is, why it's growing, and why investors are paying attention.",
+      duration: "5 min",
+      sections: [],
       quiz: [
         {
           question:
@@ -665,7 +704,6 @@ export const coliving101: Course = {
             "Coliving is one of the only strategies where doing well for yourself and doing good for your community happen at the same time — strong cashflow from multiple income streams while expanding affordable housing supply.",
         },
       ],
-      worksheet: placeholderWorksheet,
     },
 
     /* Modules 2–6 will be filled in during Phase 2. They appear in the

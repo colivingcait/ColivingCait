@@ -86,7 +86,8 @@ export function Callout({
 
 // PadSplit referral block. Reused across courses, lead magnets, and
 // the coaching hub per the playbook's PadSplit placement plan.
-const PADSPLIT_REFERRAL_URL = "https://www.padsplit.com/refer/colivingcait";
+const PADSPLIT_REFERRAL_URL =
+  "https://www.padsplit.com/hosts?referral=CDDD2DE3&ref_source=link&ref_device=desktop&ref_role=host";
 
 type PadSplitCalloutProps = {
   body: string;

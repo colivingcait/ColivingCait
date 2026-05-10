@@ -1,4 +1,5 @@
 import type { LessonSection } from "@/lib/courses/types";
+import { cn } from "@/lib/cn";
 import {
   Callout,
   FascinationCallout,
@@ -7,13 +8,18 @@ import {
   VideoPlaceholder,
 } from "./Callouts";
 
-// Renders the array of structured lesson sections into JSX. Keeps the
-// data layer pure (no JSX in course data files).
+// Renders the array of structured lesson sections into JSX. Adds visual
+// rhythm — a ✦ divider before each h2-level heading (after the first
+// one) — so long lesson bodies don't read as one wall of text.
 export default function LessonSections({
   sections,
 }: {
   sections: LessonSection[];
 }) {
+  // Track whether we've seen the first heading so we only insert
+  // dividers BEFORE subsequent h2s, not the first one.
+  let headingsSeen = 0;
+
   return (
     <div className="prose-content">
       {sections.map((s, i) => {
@@ -27,20 +33,31 @@ export default function LessonSections({
                 {s.content}
               </p>
             );
-          case "heading":
+          case "heading": {
+            headingsSeen += 1;
             return (
-              <h2
-                key={i}
-                className="mt-12 font-heading text-2xl md:text-3xl leading-heading text-charcoal"
-              >
-                {s.content}
-              </h2>
+              <div key={i} className="mt-14">
+                {headingsSeen > 1 && (
+                  <div
+                    aria-hidden
+                    className="flex items-center gap-4 mb-10 text-gold/50"
+                  >
+                    <span className="h-px flex-1 bg-brand/40" />
+                    <span className="text-base">✦</span>
+                    <span className="h-px flex-1 bg-brand/40" />
+                  </div>
+                )}
+                <h2 className="font-heading text-2xl md:text-3xl leading-heading text-charcoal">
+                  {s.content}
+                </h2>
+              </div>
             );
+          }
           case "subheading":
             return (
               <h3
                 key={i}
-                className="mt-8 font-heading text-xl md:text-2xl leading-heading text-charcoal"
+                className="mt-10 font-heading text-xl md:text-2xl leading-heading text-charcoal pl-4 border-l-2 border-gold"
               >
                 {s.content}
               </h3>
@@ -101,6 +118,79 @@ export default function LessonSections({
             );
           case "video":
             return <VideoPlaceholder key={i} />;
+          case "card": {
+            const toneClasses = {
+              cream: "border-brand bg-cream",
+              blush: "border-brand bg-blush",
+              charcoal: "border-gold/40 bg-charcoal text-cream",
+            }[s.tone ?? "cream"];
+            const isDark = s.tone === "charcoal";
+            return (
+              <aside
+                key={i}
+                className={cn(
+                  "border my-7 p-5 md:p-7",
+                  toneClasses,
+                )}
+              >
+                {s.eyebrow && (
+                  <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                    ✦ {s.eyebrow}
+                  </p>
+                )}
+                {s.title && (
+                  <p
+                    className={cn(
+                      "font-heading text-xl md:text-2xl leading-heading",
+                      isDark ? "text-cream" : "text-charcoal",
+                    )}
+                  >
+                    {s.title}
+                  </p>
+                )}
+                {s.paragraphs?.map((p, pi) => (
+                  <p
+                    key={pi}
+                    className={cn(
+                      "leading-body text-[15px] md:text-[16px]",
+                      pi === 0 && (s.title || s.eyebrow) ? "mt-3" : "mt-3",
+                      isDark ? "text-cream/85" : "text-warmgray",
+                    )}
+                  >
+                    {p}
+                  </p>
+                ))}
+                {s.bullets && (
+                  <ul className="mt-4 space-y-2">
+                    {s.bullets.map((b) => (
+                      <li
+                        key={b}
+                        className={cn(
+                          "flex gap-3 leading-body text-[15px]",
+                          isDark ? "text-cream/85" : "text-warmgray",
+                        )}
+                      >
+                        <span className="text-gold mt-1">✦</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </aside>
+            );
+          }
+          case "divider":
+            return (
+              <div
+                key={i}
+                aria-hidden
+                className="flex items-center gap-4 my-12 text-gold/50"
+              >
+                <span className="h-px flex-1 bg-brand/40" />
+                <span className="text-base">✦</span>
+                <span className="h-px flex-1 bg-brand/40" />
+              </div>
+            );
         }
       })}
     </div>

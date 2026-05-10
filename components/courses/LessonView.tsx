@@ -10,7 +10,6 @@ import {
 } from "./LessonChrome";
 import LessonSections from "./LessonSections";
 import QuizBlock from "./QuizBlock";
-import { WorksheetDownload } from "./Callouts";
 import Button from "@/components/Button";
 import { useCourseProgress } from "./useCourseProgress";
 import { cn } from "@/lib/cn";
@@ -26,9 +25,12 @@ type LessonViewProps = {
 // - Sidebar navigation with lock / completion state
 // - Progress bar
 // - Section-rendered lesson content
-// - Quiz with score tracking
-// - Mark Complete button (auto-prompts after 80%+ quiz score)
+// - Mark Complete button
 // - Prev / Next navigation
+//
+// When `lesson.kind === "module-quiz"` the page renders the quiz on its
+// own — no lesson sections, just intro chrome + the quiz block + the
+// mark-complete + nav.
 export default function LessonView({
   course,
   lesson,
@@ -42,6 +44,9 @@ export default function LessonView({
   } | null>(null);
 
   const isLessonComplete = progress.isCompleted(lesson.slug);
+  const isModuleQuiz = lesson.kind === "module-quiz";
+  const useModules = !!course.modules && course.modules.length > 0;
+  const isWelcome = useModules && lesson.moduleNumber === 0;
 
   const handleMarkComplete = () => {
     progress.markComplete(lesson.slug);
@@ -60,9 +65,13 @@ export default function LessonView({
       />
 
       <div className="grid gap-12 md:grid-cols-[260px_1fr] md:gap-16">
-        {/* Desktop sidebar — sticky */}
+        {/* Desktop sidebar — sticky, scrollable when content overflows */}
         <aside className="hidden md:block">
-          <div className="sticky top-24">
+          <div
+            className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 -mr-2"
+            // -mr-2 + pr-2 keeps the scrollbar from cutting into the
+            // sidebar content while still letting it overflow cleanly.
+          >
             <LessonSidebar
               course={course}
               currentLessonSlug={lesson.slug}
@@ -79,43 +88,43 @@ export default function LessonView({
             total={course.lessons.length}
             completedCount={progress.completed.length}
             moduleNumber={
-              course.modules &&
-              course.modules.length > 0 &&
-              lesson.moduleNumber > 0
+              useModules && lesson.moduleNumber > 0
                 ? lesson.moduleNumber
                 : undefined
             }
             moduleLessonNumber={
-              course.modules &&
-              course.modules.length > 0 &&
-              lesson.moduleNumber > 0
+              useModules && lesson.moduleNumber > 0
                 ? lesson.moduleLessonNumber
                 : undefined
             }
             moduleLessonTotal={
-              course.modules &&
-              course.modules.length > 0 &&
-              lesson.moduleNumber > 0
+              useModules && lesson.moduleNumber > 0
                 ? course.lessons.filter(
                     (l) => l.moduleNumber === lesson.moduleNumber,
                   ).length
                 : undefined
             }
             label={
-              course.modules &&
-              course.modules.length > 0 &&
-              lesson.moduleNumber === 0
+              isWelcome
                 ? "Welcome"
-                : undefined
+                : isModuleQuiz
+                  ? `Module ${lesson.moduleNumber} · Quiz`
+                  : undefined
             }
           />
 
           {/* Lesson header */}
           <header>
-            {course.modules && course.modules.length > 0 ? (
-              lesson.moduleNumber === 0 ? (
+            {useModules ? (
+              isWelcome ? (
                 <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
                   ✦ Welcome · {lesson.duration}
+                </p>
+              ) : isModuleQuiz ? (
+                <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                  ✦ Module {lesson.moduleNumber} ·{" "}
+                  <span className="text-warmgray">{lesson.moduleTitle}</span> ·{" "}
+                  Quiz
                 </p>
               ) : (
                 <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
@@ -137,29 +146,41 @@ export default function LessonView({
             </p>
           </header>
 
-          {/* Lesson sections */}
-          <div className="mt-10">
-            <LessonSections sections={lesson.sections} />
-          </div>
-
-          {/* Worksheet download */}
-          <WorksheetDownload
-            title={lesson.worksheet.title}
-            href={lesson.worksheet.href}
-          />
-
-          {/* Quiz */}
-          <QuizBlock
-            questions={lesson.quiz}
-            onAllAnswered={(correct, total) =>
-              setQuizScore({ correct, total })
-            }
-          />
+          {/* Lesson body — sections OR quiz, depending on kind */}
+          {isModuleQuiz ? (
+            <div className="mt-10">
+              <div className="border border-gold bg-gradient-to-b from-gold/[0.08] to-cream p-6 md:p-8 mb-10">
+                <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                  ✦ Module quiz
+                </p>
+                <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal">
+                  {lesson.quiz.length} questions to lock in what you just
+                  learned.
+                </p>
+                <p className="mt-3 text-warmgray text-sm leading-body">
+                  Pick the answer you think fits best. Each question explains
+                  the correct answer once you choose. Aim for 4 out of{" "}
+                  {lesson.quiz.length} to move on.
+                </p>
+              </div>
+              <QuizBlock
+                questions={lesson.quiz}
+                onAllAnswered={(correct, total) =>
+                  setQuizScore({ correct, total })
+                }
+              />
+            </div>
+          ) : (
+            <div className="mt-10">
+              <LessonSections sections={lesson.sections} />
+            </div>
+          )}
 
           {/* Mark complete + nav */}
           <MarkCompleteSection
             isLessonComplete={isLessonComplete}
             quizScore={quizScore}
+            isModuleQuiz={isModuleQuiz}
             onMarkComplete={handleMarkComplete}
             onMarkIncomplete={() => progress.markIncomplete(lesson.slug)}
           />
@@ -181,6 +202,7 @@ export default function LessonView({
 type MarkCompleteSectionProps = {
   isLessonComplete: boolean;
   quizScore: { correct: number; total: number } | null;
+  isModuleQuiz: boolean;
   onMarkComplete: () => void;
   onMarkIncomplete: () => void;
 };
@@ -188,6 +210,7 @@ type MarkCompleteSectionProps = {
 function MarkCompleteSection({
   isLessonComplete,
   quizScore,
+  isModuleQuiz,
   onMarkComplete,
   onMarkIncomplete,
 }: MarkCompleteSectionProps) {
@@ -196,23 +219,24 @@ function MarkCompleteSection({
       <div className="my-12 border border-gold bg-gradient-to-b from-gold/[0.10] to-cream p-6 md:p-8 text-center">
         <p className="text-gold text-3xl mb-3">✓</p>
         <p className="font-heading text-2xl md:text-3xl leading-heading">
-          Lesson complete.
+          {isModuleQuiz ? "Module complete." : "Lesson complete."}
         </p>
         <p className="mt-3 text-warmgray text-sm">
-          The next lesson is unlocked. Keep going.
+          {isModuleQuiz
+            ? "Onward to the next module."
+            : "The next lesson is unlocked. Keep going."}
         </p>
         <button
           type="button"
           onClick={onMarkIncomplete}
           className="mt-4 text-[10px] uppercase tracking-button text-warmgray/70 hover:text-gold transition-colors"
         >
-          Mark lesson incomplete
+          Mark {isModuleQuiz ? "module" : "lesson"} incomplete
         </button>
       </div>
     );
   }
 
-  // Encourage completion once they've at least taken a quiz
   return (
     <div className="my-12 border border-brand bg-cream p-6 md:p-8 text-center">
       <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
@@ -221,15 +245,18 @@ function MarkCompleteSection({
       <p className="font-heading text-2xl md:text-3xl leading-heading">
         {quizScore
           ? `${quizScore.correct} / ${quizScore.total} on the quiz.`
-          : "Mark this lesson complete."}
+          : isModuleQuiz
+            ? "Mark this module complete."
+            : "Mark this lesson complete."}
       </p>
       <p className="mt-3 text-warmgray text-sm max-w-md mx-auto">
-        Marking it complete unlocks the next lesson and adds it to your
-        course progress bar.
+        Marking it complete unlocks the next{" "}
+        {isModuleQuiz ? "module" : "lesson"} and adds it to your course
+        progress bar.
       </p>
       <div className="mt-6">
         <Button onClick={onMarkComplete} variant="primary" size="lg" magnetic>
-          Mark Lesson Complete →
+          Mark {isModuleQuiz ? "Module" : "Lesson"} Complete →
         </Button>
       </div>
     </div>
@@ -258,7 +285,8 @@ function LessonNavigation({
           className="group block border border-brand p-5 hover:border-gold transition-colors"
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/70">
-            ← Previous lesson
+            ← Previous{" "}
+            {prev.kind === "module-quiz" ? "module quiz" : "lesson"}
           </p>
           <p className="mt-2 font-heading text-lg leading-heading">
             {prev.title}
@@ -295,7 +323,11 @@ function LessonNavigation({
           )}
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-gold">
-            {nextUnlocked ? "Next lesson →" : "🔒 Locked — complete this lesson first"}
+            {nextUnlocked
+              ? next.kind === "module-quiz"
+                ? "Take the module quiz →"
+                : "Next lesson →"
+              : "🔒 Locked — complete this first"}
           </p>
           <p className="mt-2 font-heading text-lg leading-heading">
             {next.title}
