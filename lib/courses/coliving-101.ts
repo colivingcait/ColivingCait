@@ -139,7 +139,22 @@ export const coliving101: Course = {
         {
           type: "paragraph",
           content:
-            "That said, Atlanta is far from the only market where coliving is thriving. Charlotte and Raleigh, NC. Dallas and Houston, TX. Orlando and Jacksonville, FL. Phoenix, AZ. Kansas City, KS. Indianapolis, IN. Columbus, OH. Nashville, TN. Denver, CO. Los Angeles, CA. Markets across the country are seeing strong coliving growth — anywhere there's a gap between what working people earn and what housing costs.",
+            "That said, Atlanta is far from the only market where coliving is thriving. Markets across the country are seeing strong growth — anywhere there's a gap between what working people earn and what housing costs:",
+        },
+        {
+          type: "bullets",
+          items: [
+            "Charlotte and Raleigh, NC",
+            "Dallas and Houston, TX",
+            "Orlando and Jacksonville, FL",
+            "Phoenix, AZ",
+            "Kansas City, KS",
+            "Indianapolis, IN",
+            "Columbus, OH",
+            "Nashville, TN",
+            "Denver, CO",
+            "Los Angeles, CA",
+          ],
         },
         {
           type: "paragraph",
@@ -212,6 +227,7 @@ export const coliving101: Course = {
           content:
             "Each resident signs their own individual lease. They're only responsible for their own rent. They didn't cosign anything with their housemates. They can come and go independently.",
         },
+        { type: "divider" },
         {
           type: "paragraph",
           content:
@@ -295,14 +311,18 @@ export const coliving101: Course = {
             "The median home price in the US has more than doubled in the last decade. Rents have followed — and in many markets they've outpaced wage growth by a wide margin.",
         },
         {
-          type: "paragraph",
-          content:
-            "Let's put numbers on it. The average one-bedroom apartment in Atlanta rents for roughly $1,500–$1,800/month. Most landlords require tenants to earn 3x the monthly rent to qualify. That means a single person needs to earn $54,000–$64,800/year just to qualify for a basic one-bedroom apartment. The median individual income in Atlanta? Around $40,000.",
+          type: "card",
+          eyebrow: "Atlanta example",
+          title: "The math doesn't work.",
+          paragraphs: [
+            "The average one-bedroom apartment in Atlanta rents for roughly $1,500–$1,800/month. Most landlords require tenants to earn 3x the monthly rent to qualify.",
+            "That means a single person needs to earn $54,000–$64,800/year just to qualify for a basic one-bedroom apartment. The median individual income in Atlanta? Around $40,000.",
+          ],
         },
         {
           type: "paragraph",
           content:
-            "That math doesn't work. And it's not just Atlanta — this gap exists in nearly every major metro. It's the reason millions of working adults are doubling up with roommates, moving back in with family, or commuting hours from affordable areas.",
+            "And it's not just Atlanta — this gap exists in nearly every major metro. It's the reason millions of working adults are doubling up with roommates, moving back in with family, or commuting hours from affordable areas.",
         },
         {
           type: "paragraph",
@@ -371,6 +391,7 @@ export const coliving101: Course = {
           content:
             "And it makes sense. More people live alone than at any point in American history. Remote work has reduced daily social interaction for millions. Social media creates the illusion of connection while often deepening isolation.",
         },
+        { type: "divider" },
         {
           type: "paragraph",
           content:
@@ -434,9 +455,11 @@ export const coliving101: Course = {
             "If you've looked at buying a traditional rental property lately, you already know — the math is brutal right now. Interest rates have climbed. Home prices are elevated. Insurance and property taxes keep rising. Run the numbers on renting a single family home to one tenant at market rate — you're breaking even at best. More likely you're negative.",
         },
         {
-          type: "paragraph",
-          content:
-            "This is the reality for millions of real estate investors right now. They own properties that don't cashflow. Or they're sitting on the sidelines because they can't find a deal that makes sense.",
+          type: "card",
+          eyebrow: "Today's reality",
+          paragraphs: [
+            "This is the situation for millions of real estate investors right now. They own properties that don't cashflow. Or they're sitting on the sidelines because they can't find a deal that makes sense.",
+          ],
         },
         {
           type: "paragraph",
@@ -450,9 +473,12 @@ export const coliving101: Course = {
             "With a traditional rental, you have one tenant. One lease. One check every month. If that tenant stops paying, you have zero income and a mortgage that's still due.",
         },
         {
-          type: "paragraph",
-          content:
+          type: "card",
+          tone: "blush",
+          title: "6–10 income streams. Not 1.",
+          paragraphs: [
             "With coliving, a single property generates 6, 8, even 10 individual income streams — each from a separate resident on their own lease. If one resident stops paying, the other 5–9 are still covering your expenses.",
+          ],
         },
         {
           type: "paragraph",
@@ -465,6 +491,7 @@ export const coliving101: Course = {
           content:
             "We have an affordable housing crisis. Politicians talk about it constantly. And the solution that always gets thrown around is \"we just need to build more houses.\" The thing is — building new housing takes years. Sometimes decades. Permits, zoning, construction, financing — it's a slow, expensive, politically complicated process.",
         },
+        { type: "divider" },
         {
           type: "paragraph",
           content:
@@ -490,6 +517,7 @@ export const coliving101: Course = {
           content:
             "Coliving is different. The better you run your coliving property — the cleaner the rooms, the more responsive you are, the higher quality the furnishings, the more intentional the community — the more your residents benefit AND the more profitable your business becomes.",
         },
+        { type: "divider" },
         {
           type: "paragraph",
           content:
