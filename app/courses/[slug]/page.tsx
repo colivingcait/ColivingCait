@@ -94,20 +94,31 @@ export default async function CourseLandingPage({
             </Reveal>
           </div>
 
-          {/* Course metadata */}
+          {/* Course metadata — counts only "regular" module lessons
+              (i.e. excludes the welcome + module-quiz entries) so the
+              numbers match the marketing copy. */}
           <Reveal delay={0.3}>
             <div className="md:pl-12 md:border-l md:border-cream/15 grid grid-cols-2 md:grid-cols-1 gap-6">
               {course.modules && course.modules.length > 0 ? (
                 <CourseMeta label="Modules" value={`${course.modules.length}`} />
               ) : null}
-              <CourseMeta label="Lessons" value={`${course.lessons.length} self-paced`} />
+              <CourseMeta
+                label="Lessons"
+                value={`${
+                  course.lessons.filter(
+                    (l) => l.kind !== "module-quiz" && l.moduleNumber !== 0,
+                  ).length
+                } self-paced`}
+              />
               <CourseMeta
                 label="Total time"
                 value="2–3 hours of course content"
               />
               <CourseMeta
                 label="Quizzes"
-                value={`${course.lessons.filter((l) => l.quiz.length > 0).length} module quizzes`}
+                value={`${
+                  course.lessons.filter((l) => l.kind === "module-quiz").length
+                } module quizzes`}
               />
               <CourseMeta label="Access" value="Lifetime" />
             </div>
@@ -141,7 +152,9 @@ export default async function CourseLandingPage({
         </div>
       </Section>
 
-      {/* Curriculum */}
+      {/* Curriculum — module-level summary only. The full
+          lesson-by-lesson list lives on /courses/[slug]/overview for
+          enrolled learners. */}
       <Section tone="blush">
         <div className="text-center max-w-2xl mx-auto">
           <Reveal>
@@ -151,7 +164,16 @@ export default async function CourseLandingPage({
             <Heading size="md">
               {course.modules && course.modules.length > 0 ? (
                 <>
-                  Six modules. <em>Twenty-three lessons.</em>
+                  Six modules.{" "}
+                  <em>
+                    {
+                      course.lessons.filter(
+                        (l) =>
+                          l.kind !== "module-quiz" && l.moduleNumber !== 0,
+                      ).length
+                    }{" "}
+                    lessons.
+                  </em>
                 </>
               ) : (
                 <>
@@ -163,113 +185,46 @@ export default async function CourseLandingPage({
         </div>
 
         {course.modules && course.modules.length > 0 ? (
-          <div className="mt-14 space-y-12">
-            {/* Welcome lessons (moduleNumber === 0) render above the
-                module groupings — no module number, marked "Start here". */}
-            {course.lessons
-              .filter((l) => l.moduleNumber === 0)
-              .map((lesson) => (
-                <Reveal key={lesson.slug}>
-                  <Link
-                    href={`/courses/${course.slug}/${lesson.slug}`}
-                    className="group block border border-gold bg-cream p-5 md:p-6 hover:bg-gold/[0.04] transition-colors"
-                  >
-                    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
-                      <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
-                        ✦ Start here
-                      </span>
-                      <div className="min-w-0">
-                        <p className="font-heading text-lg md:text-xl leading-heading">
-                          {lesson.title}
-                        </p>
-                      </div>
-                      <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
-                        {lesson.duration}
-                      </span>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
+          <Stagger className="mt-14 grid gap-4 md:grid-cols-2" stagger={0.05}>
             {course.modules.map((mod) => {
               const modLessons = course.lessons.filter(
-                (l) => l.moduleNumber === mod.number,
+                (l) =>
+                  l.moduleNumber === mod.number && l.kind !== "module-quiz",
+              );
+              const hasQuiz = course.lessons.some(
+                (l) =>
+                  l.moduleNumber === mod.number && l.kind === "module-quiz",
               );
               return (
-                <div key={mod.slug}>
-                  <Reveal>
-                    <div className="grid grid-cols-[auto_1fr] gap-5 md:gap-7 items-baseline mb-5">
-                      <span className="font-heading text-2xl md:text-3xl text-gold leading-none tabular-nums">
+                <StaggerItem key={mod.slug}>
+                  <div className="h-full flex flex-col border border-brand bg-cream p-6 md:p-7">
+                    <div className="flex items-baseline gap-4 mb-3">
+                      <span className="font-heading text-3xl md:text-4xl text-gold/70 leading-none tabular-nums">
                         {String(mod.number).padStart(2, "0")}
                       </span>
-                      <div>
-                        <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-1">
-                          Module {mod.number}
-                        </p>
-                        <p className="font-heading text-xl md:text-2xl leading-heading">
-                          {mod.title}
-                        </p>
-                        {mod.summary && (
-                          <p className="mt-2 text-sm text-warmgray leading-body max-w-2xl">
-                            {mod.summary}
-                          </p>
-                        )}
-                      </div>
+                      <p className="text-[10px] uppercase tracking-eyebrow text-gold">
+                        Module {mod.number}
+                      </p>
                     </div>
-                  </Reveal>
-                  {modLessons.length === 0 ? (
-                    <Reveal delay={0.1}>
-                      <div className="md:ml-12 border border-dashed border-brand/60 bg-cream/40 p-5 md:p-6 text-sm text-warmgray italic">
-                        Lessons coming soon — phase 2 build.
-                      </div>
-                    </Reveal>
-                  ) : (
-                    <Stagger className="md:ml-12 space-y-3" stagger={0.05}>
-                      {modLessons.map((lesson) => {
-                        const isQuiz = lesson.kind === "module-quiz";
-                        return (
-                          <StaggerItem key={lesson.slug}>
-                            <Link
-                              href={`/courses/${course.slug}/${lesson.slug}`}
-                              className={
-                                isQuiz
-                                  ? "group block border border-gold bg-gold/[0.06] p-5 md:p-6 hover:bg-gold/[0.10] transition-colors"
-                                  : "group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
-                              }
-                            >
-                              <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
-                                {isQuiz ? (
-                                  <span className="font-heading text-2xl md:text-3xl text-gold leading-none">
-                                    ✦
-                                  </span>
-                                ) : (
-                                  <span className="font-heading text-2xl md:text-3xl text-gold/60 leading-none tabular-nums">
-                                    {String(lesson.moduleLessonNumber).padStart(2, "0")}
-                                  </span>
-                                )}
-                                <div className="min-w-0">
-                                  {isQuiz && (
-                                    <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-1">
-                                      Module quiz · {lesson.quiz.length} questions
-                                    </p>
-                                  )}
-                                  <p className="font-heading text-lg md:text-xl leading-heading">
-                                    {lesson.title}
-                                  </p>
-                                </div>
-                                <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
-                                  {lesson.duration}
-                                </span>
-                              </div>
-                            </Link>
-                          </StaggerItem>
-                        );
-                      })}
-                    </Stagger>
-                  )}
-                </div>
+                    <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal">
+                      {mod.title}
+                    </p>
+                    {mod.summary && (
+                      <p className="mt-3 text-sm md:text-[15px] text-warmgray leading-body flex-1">
+                        {mod.summary}
+                      </p>
+                    )}
+                    <p className="mt-5 pt-4 border-t border-brand/40 text-[10px] uppercase tracking-eyebrow text-warmgray/70">
+                      {modLessons.length > 0
+                        ? `${modLessons.length} ${modLessons.length === 1 ? "lesson" : "lessons"}`
+                        : "Coming soon"}
+                      {hasQuiz && " · module quiz"}
+                    </p>
+                  </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </Stagger>
         ) : (
           <Stagger className="mt-14 space-y-3" stagger={0.05}>
             {course.lessons.map((lesson) => (

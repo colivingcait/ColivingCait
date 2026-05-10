@@ -361,7 +361,7 @@ export default function WhatIsColivingPage() {
               </div>
             </div>
             <span className="block text-[13px] text-warmgray-light mb-6">
-              6 modules · 24 lessons · 2–3 hours of course content
+              6 modules · 23 lessons · 2–3 hours of course content
             </span>
             <Link
               href="/courses/coliving-101"

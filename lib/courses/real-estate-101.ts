@@ -10,11 +10,11 @@ import type { Course } from "./types";
 export const realEstate101: Course = {
   slug: "real-estate-101",
   title: "Real Estate Investing 101",
-  tagline: "Every way to invest in residential real estate.",
+  tagline: "The 8 residential strategies.",
   description:
-    "Six modules. Twenty-eight lessons. Why real estate works, every major residential strategy, how to choose yours, the fundamentals every investor needs, the mistakes that cost the most, and your first move.",
+    "Six modules. Twenty-eight lessons. Every major residential strategy, how to choose yours, and your first move.",
   longDescription:
-    "A self-paced foundation in residential real estate investing. Six modules cover why real estate is the best wealth-building tool, every major residential strategy (house hacking, rentals, coliving, STR, BRRRR, fix & flip, arbitrage, passive), how to pick the right one for your life, the fundamentals (how to evaluate any deal, the metrics that matter, financing, due diligence), the mistakes that cost first-time investors most, and a clear framework for your first move. Twenty-eight lessons. Five module quizzes. Lifetime access.",
+    "A self-paced foundation in residential real estate. Six modules cover why real estate works, every major strategy, how to pick yours, the fundamentals every investor needs, the costliest mistakes, and your first move. Twenty-eight lessons. Five module quizzes. Lifetime access.",
   price: 99,
   originalPrice: 149,
   status: "available",

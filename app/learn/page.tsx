@@ -1,10 +1,11 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import { getCourse } from "@/lib/courses";
 
 export const metadata = {
   title: "Learn With Me — Coliving Cait",
   description:
-    "Whether you're new to coliving or scaling your portfolio, find the right level of guidance — from $37 mini courses to 1:1 coaching and ongoing consulting.",
+    "Whether you're new to coliving or scaling your portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
 };
 
 // Learn With Me — pixel-perfect rewrite of coliving-cait-learn.html.
@@ -12,22 +13,36 @@ export const metadata = {
 // · Phase 2 Builder (features + 8 pillars + price block) · Phase 3 Operator
 // (4-card grid + price/CTA bar) · Fascinations · Strategy Session · Final CTA.
 
+// Per-card lesson count = total entries minus the welcome and the
+// module quizzes, i.e. the count of actual module lessons. Matches the
+// number used in each course's marketing copy.
+function moduleLessonCount(slug: string): number {
+  const c = getCourse(slug);
+  if (!c) return 0;
+  return c.lessons.filter(
+    (l) => l.kind !== "module-quiz" && l.moduleNumber !== 0,
+  ).length;
+}
+
 const courses = [
   {
     icon: "$",
     title: "Real Estate Investing 101",
+    slug: "real-estate-101",
     copy: "The key terms and mindset every investor needs — regardless of strategy. Financing basics, deal evaluation, market selection, and a clear framework so you can speak the language and start thinking like an investor.",
     href: "/courses/real-estate-101",
   },
   {
     icon: "◈",
     title: "House Hacking 101",
+    slug: "house-hacking-101",
     copy: "Where most investors should start. Learn how to minimize your housing expenses, get your feet wet, and use the best leverage available to you — your primary residence — to start building wealth from day one.",
     href: "/courses/house-hacking-101",
   },
   {
     icon: "⌂",
     title: "Coliving 101",
+    slug: "coliving-101",
     copy: "A complete breakdown of the coliving model — how it works, who it serves, how the math works, and what to look for in your first property. Everything you need to understand the strategy of coliving.",
     href: "/courses/coliving-101",
   },
@@ -158,7 +173,8 @@ export default function LearnPage() {
                 </h3>
                 <p className="text-sm leading-[1.75] text-warmgray mb-6">{c.copy}</p>
                 <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-5">
-                  6 modules · 24 lessons · 2–3 hours of course content
+                  6 modules · {moduleLessonCount(c.slug)} lessons · 2–3 hours
+                  of course content
                 </span>
                 <div className="flex items-baseline gap-3 mb-5">
                   <span className="text-base text-warmgray-light line-through">
