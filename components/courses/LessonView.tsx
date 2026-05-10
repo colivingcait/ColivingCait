@@ -196,14 +196,14 @@ function LessonNavigation({
         </Link>
       ) : (
         <Link
-          href={`/courses/${courseSlug}`}
+          href={`/courses/${courseSlug}/overview`}
           className="group block border border-brand p-5 hover:border-gold transition-colors"
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/70">
             ← Course overview
           </p>
           <p className="mt-2 font-heading text-lg leading-heading">
-            Back to course
+            Back to overview
           </p>
         </Link>
       )}

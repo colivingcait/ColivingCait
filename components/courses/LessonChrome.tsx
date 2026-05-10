@@ -125,8 +125,14 @@ export function LessonSidebar({
 
   return (
     <nav aria-label="Course lessons" className="space-y-2">
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-4">
-        ✦ {course.title}
+      <Link
+        href={`/courses/${course.slug}/overview`}
+        className="block text-[10px] uppercase tracking-eyebrow text-gold mb-4 hover:text-charcoal transition-colors"
+      >
+        ← Course overview
+      </Link>
+      <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/60 mb-4">
+        {course.title}
       </p>
 
       {useModules ? (

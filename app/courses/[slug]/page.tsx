@@ -77,9 +77,7 @@ export default async function CourseLandingPage({
                   size="lg"
                   magnetic
                 >
-                  {firstLesson.moduleNumber === 0
-                    ? "Start with the welcome →"
-                    : "Start lesson 01 →"}
+                  Get started →
                 </Button>
               </div>
             </Reveal>
@@ -94,10 +92,7 @@ export default async function CourseLandingPage({
               <CourseMeta label="Lessons" value={`${course.lessons.length} self-paced`} />
               <CourseMeta
                 label="Total time"
-                value={`~${course.lessons.reduce(
-                  (sum, l) => sum + (parseInt(l.duration) || 0),
-                  0,
-                )} min`}
+                value="2–3 hours of course content"
               />
               <CourseMeta
                 label="Quizzes"
