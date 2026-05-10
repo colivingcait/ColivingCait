@@ -124,9 +124,6 @@ export default function LessonView({
             <h1 className="font-heading text-4xl md:text-6xl leading-heading text-charcoal">
               {lesson.title}
             </h1>
-            <p className="mt-5 text-warmgray leading-body text-[1.0625rem] md:text-[1.125rem] max-w-2xl">
-              {lesson.description}
-            </p>
           </header>
 
           {/* Lesson body — sections OR quiz, depending on kind */}
