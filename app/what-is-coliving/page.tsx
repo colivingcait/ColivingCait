@@ -351,10 +351,10 @@ export default function WhatIsColivingPage() {
           <div className="reveal reveal-d2 bg-cream p-12 lg:px-10 text-center border border-soft">
             <span className="eyebrow eyebrow-center justify-center">Coliving 101</span>
             <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-2">
-              $37
+              $99
             </div>
             <span className="block text-[13px] text-warmgray-light mb-6">
-              6 lessons · Self-paced · Certificate
+              6 modules · 23 lessons · Self-paced · Certificate
             </span>
             <Link
               href="/courses/coliving-101"

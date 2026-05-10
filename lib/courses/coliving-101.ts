@@ -1,879 +1,561 @@
 import type { Course } from "./types";
 
-// Coliving 101 — six self-paced lessons. Content here is the structured
-// outline + worked placeholder copy. Caitlyn fills in the full essays in
-// a later pass. Quiz questions and worksheets are real and shippable.
+// Coliving 101 — six modules, twenty-three self-paced lessons, five
+// module-end quizzes. Content sourced from the canonical course markdown
+// (Coliving_101_Complete_Course_FINAL.md, May 2026 edition).
+//
+// PHASE 1 status: Module 1 (4 lessons + 5-question quiz on the final
+// lesson) is fully written. Modules 2–6 are stubbed with metadata only —
+// they appear on the course landing page so module groupings render
+// correctly, but their lessons array is empty. Phase 2 fills them in.
+
+const placeholderWorksheet = {
+  title: "Coliving 101 Worksheet (placeholder)",
+  href: "/downloads/coliving-101-worksheet.pdf",
+};
 
 export const coliving101: Course = {
   slug: "coliving-101",
   title: "Coliving 101",
   tagline: "The model, the math, the move.",
   description:
-    "Six lessons. The full coliving model walk-through — built for women seriously considering coliving as their next move.",
+    "Six modules. Twenty-three lessons. Everything you need to understand the coliving model — from how it works to whether it's right for you.",
   longDescription:
-    "A self-paced introduction to the coliving model — what it is, why it works right now, how the math actually pencils, what to look for in a property, how to launch, how to operate, and which path fits you. Six lessons, ~90 minutes total. Worksheets and a knowledge-check quiz with every lesson. Lifetime access.",
-  price: 27,
+    "A self-paced introduction to general workforce housing coliving. Six modules cover what coliving is, why it's growing, the math that makes it work, how to find and evaluate a property, how to set it up and launch, the day-to-day operations, and the three paths into coliving. Twenty-three lessons. Five module quizzes. Lifetime access.",
+  price: 99,
   status: "available",
   symbol: "◈",
   outcomes: [
-    "Understand the coliving model end-to-end",
-    "Run the math on any property in under 5 minutes",
-    "Spot the 3 non-negotiables of a great coliving home",
-    "Know what to look for, what to avoid, and what to ask",
-    "Pick the path that fits where you actually are right now",
+    "Understand the coliving model end-to-end — what it is, who it serves, and how it's different from a traditional rental",
+    "Run the full math on any property — gross revenue, operating expenses, net cashflow, and 5-year wealth projection",
+    "Spot the three non-negotiables of a great coliving property before you sign a contract",
+    "See rooms that don't exist yet — dining rooms, basements, bonus rooms, offices",
+    "Launch a property: renovation order, furnishing, tech stack, listing, screening, and move-in",
+    "Operate without burning out — systems, resident issues, turnover, and community",
+    "Pick the path that fits where you actually are — active operator, arbitrage, or passive investor",
   ],
   audience: [
     "Women considering their first coliving deal",
-    "Investors transitioning from traditional rentals",
+    "Investors transitioning from traditional rentals because the math no longer pencils",
     "House hackers thinking about scaling into coliving",
-    "Anyone curious about the model before booking a coaching call",
+    "Anyone curious about coliving before booking a coaching call",
+  ],
+  modules: [
+    {
+      number: 1,
+      slug: "what-is-coliving",
+      title: "What is coliving & why it's having its moment",
+      summary:
+        "Coliving defined. Why now. Who actually lives in coliving. How it stacks up against a traditional rental.",
+    },
+    {
+      number: 2,
+      slug: "the-math",
+      title: "The math that makes coliving impossible to ignore",
+      summary:
+        "Revenue, expenses, occupancy, cashflow, risk diversification, and the 5-year wealth picture.",
+    },
+    {
+      number: 3,
+      slug: "finding-evaluating",
+      title: "Finding & evaluating a coliving property",
+      summary:
+        "The three non-negotiables. Floorplans that work. Seeing rooms that don't exist yet.",
+    },
+    {
+      number: 4,
+      slug: "setup-launch",
+      title: "Setting up & launching your coliving property",
+      summary:
+        "Renovation order. Furnishing. Tech stack. Photography. Listing, screening, and house rules.",
+    },
+    {
+      number: 5,
+      slug: "operations",
+      title: "Operations — the questions every new operator asks",
+      summary:
+        "How much time it really takes. Resident issues. Turnover and maintenance. Pricing and community.",
+    },
+    {
+      number: 6,
+      slug: "is-coliving-right",
+      title: "Is coliving right for you?",
+      summary:
+        "Three paths into coliving. How to choose. Your next step.",
+    },
   ],
   lessons: [
-    /* -------- LESSON 1 -------- */
+    /* ====================================================================
+     * MODULE 1 — WHAT IS COLIVING & WHY IT'S HAVING ITS MOMENT
+     * ==================================================================*/
     {
       slug: "what-is-coliving",
       number: 1,
-      title: "What is coliving & why it's having its moment",
+      moduleNumber: 1,
+      moduleTitle: "What is coliving & why it's having its moment",
+      moduleLessonNumber: 1,
+      title: "What is coliving?",
       description:
-        "Coliving defined. Why now. The dual mission. Who actually lives in coliving.",
-      duration: "12 min",
+        "Coliving defined. How long residents stay. Where it sits in the rental landscape.",
+      duration: "8 min",
       sections: [
-        { type: "video" },
         {
           type: "paragraph",
           content:
-            "Coliving is rent-by-the-room housing — a single home with six or more private bedrooms and shared common spaces. Residents lease their own room individually, on flexible terms, in a fully furnished space with utilities and internet included. It's not a hostel, not a boarding house, not a group rental. It's the most efficient way to house working professionals in the kind of homes they want to live in — and the rare investment strategy where the math actually works in 2026.",
-        },
-        { type: "heading", content: "Why coliving is having its moment" },
-        {
-          type: "paragraph",
-          content:
-            "Three forces converged at once. First: rents have outpaced wages for over a decade. Single-family rentals stopped pencilling for working people years ago. Second: the traditional path of \"rent alone or cosign\" is increasingly out of reach. A 3x income requirement on a $1,800 apartment is a wall most people can't climb. Third: there's a quiet loneliness epidemic. People want their own space — but they also want neighbors.",
+            "Coliving is rent-by-the-room — where residents rent a private bedroom in a larger shared home, with access to common areas like the kitchen, living room, and bathrooms.",
         },
         {
           type: "paragraph",
           content:
-            "Coliving solves all three at once. Lower per-room rent. Flexible lease. Built-in community for those who want it.",
+            "Each resident signs their own individual lease. They're only responsible for their own rent. They didn't cosign anything with their housemates. They can come and go independently.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "It's not a new concept. Boarding houses, rooming houses, shared housing — people have been living this way for centuries. What's new is the moment we're in right now.",
         },
         {
           type: "key-takeaway",
-          title: "The dual mission",
-          body: "Coliving is one of the most powerful tools we have right now to accomplish two missions at once: solving the affordable housing crisis AND helping everyday women build real wealth through real estate.",
+          title: "What coliving is",
+          body: "Coliving = private bedroom + shared common spaces + individual lease per resident.",
         },
-        { type: "heading", content: "Who actually lives in coliving" },
+        { type: "heading", content: "How long do residents actually stay?" },
         {
           type: "paragraph",
           content:
-            "The stereotypes about who lives in shared housing are out of date. Today's coliving residents are working professionals — often well-paid ones — choosing flexibility and affordability over a single-family lease.",
+            "This is one of the first questions everyone asks. The answer is: it depends on the operator and the market — but most coliving operators focus on mid-term residents, people looking to stay 3–6 months.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Some residents stay longer. Some stay shorter. But the sweet spot for most coliving operators is that 3–6 month window. These are people who need more than a hotel room or an Airbnb but aren't ready or willing to commit to a 12-month apartment lease.",
+        },
+        { type: "subheading", content: "How the rental world breaks down by length of stay" },
+        {
+          type: "bullets",
+          items: [
+            "Short-term (1–30 days) — Airbnb, VRBO, hotels. Highest revenue per night, constant turnover, heavy regulation. This is a hospitality business.",
+            "Mid-term (1–6 months) — where most coliving lives. Furnished rooms, flexible terms, weekly or monthly billing. Travelers, professionals, people in transition. Less turnover than short-term, higher rates than long-term.",
+            "Long-term (6–12+ months) — traditional leasing. Most stable, lowest turnover, lowest per-unit revenue, least flexibility for both sides.",
+          ],
+        },
+        {
+          type: "paragraph",
+          content:
+            "Most coliving operators — including myself — operate in the mid-term space. It hits the sweet spot between strong revenue, manageable turnover, and the flexibility that attracts quality residents.",
+        },
+        { type: "heading", content: "Coliving vs other types of housing" },
+        {
+          type: "paragraph",
+          content:
+            "Coliving is one model within a larger housing ecosystem. Here's where it sits relative to the other options:",
         },
         {
           type: "bullets",
           items: [
-            "Travel nurses on 13-week assignments",
-            "Software engineers, consultants, and remote workers in transition",
-            "Recent graduates entering the workforce",
-            "People going through a divorce or relationship change",
-            "Folks relocating for a new job before signing a long-term lease",
-            "Anyone for whom 12 months and a 3x income hurdle isn't a fit",
+            "Traditional single family rental (SFR) — one tenant or family rents the entire house on a long-term lease. One lease, one income stream, one risk.",
+            "Coliving (rent-by-the-room) — multiple residents share a larger home. Each rents their own private bedroom. Individual leases, multiple income streams, typically furnished.",
+            "Accessory dwelling unit (ADU) / basement apartment — a separate living space within or attached to a larger property. One tenant with their own entrance, kitchen, and bathroom. Often used in house hacking.",
+            "Studio / efficiency apartment — a small self-contained unit. One person or couple. No shared spaces.",
+            "Small multifamily (duplex, triplex, quadplex) — 2–4 separate self-contained units, each with its own kitchen, bathroom, and entrance.",
           ],
         },
         {
-          type: "fascination",
-          body: "Travel nurses alone make up 15–25% of residents in well-marketed coliving homes near major hospital systems.",
-        },
-        { type: "heading", content: "Coliving vs. traditional rental" },
-        {
-          type: "paragraph",
-          content:
-            "A traditional single-family rental has one tenant, one rent payment, one lease, one income stream. A coliving home has six to eight tenants, six to eight rent payments, six to eight individual leases, and a diversified income stream. When one room turns over, you don't lose 100% of your revenue — you lose 12-15%.",
+          type: "key-takeaway",
+          title: "Where coliving lives",
+          body: "Mid-term, rent-by-the-room, shared common spaces, individual leases. That's what makes it unique.",
         },
       ],
-      quiz: [
-        {
-          question: "What is the core definition of coliving?",
-          options: [
-            "A type of vacation rental",
-            "Rent-by-the-room housing where multiple unrelated residents share a single home with their own private bedrooms",
-            "Cohousing intentional communities",
-            "A short-term rental on Airbnb",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Coliving is rent-by-the-room — a single home divided into private bedrooms with shared common spaces. Each resident has their own lease.",
-        },
-        {
-          question: "Why is coliving 'having its moment' right now?",
-          options: [
-            "New construction has solved the housing shortage",
-            "Most people prefer to live alone",
-            "Rents have outpaced wages for a decade, traditional options are broken for working people, and there's a real desire for community",
-            "The government mandates it",
-          ],
-          correctIndex: 2,
-          explanation:
-            "Three forces converged: rising rents, broken traditional rental access (3x income, long leases), and a real demand for connection.",
-        },
-        {
-          question: "What is the dual mission of coliving?",
-          options: [
-            "Make a quick profit and exit",
-            "Solve the affordable housing crisis AND help everyday women build real wealth through real estate",
-            "Disrupt traditional real estate",
-            "Replace single-family homes",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Coliving uniquely accomplishes both missions at once — investor wealth + community housing supply.",
-        },
-        {
-          question: "Who typically lives in coliving?",
-          options: [
-            "College students only",
-            "Tourists and vacationers",
-            "Working professionals, travel nurses, recent grads, and people in life transitions",
-            "Families with young children",
-          ],
-          correctIndex: 2,
-          explanation:
-            "Coliving residents are overwhelmingly working professionals choosing flexibility and affordability.",
-        },
-        {
-          question: "Which of the following is NOT a core feature of coliving?",
-          options: [
-            "Furnished private bedroom",
-            "Shared common spaces",
-            "All-inclusive monthly pricing",
-            "Mandatory 12-month lease minimum",
-          ],
-          correctIndex: 3,
-          explanation:
-            "Coliving leases are typically month-to-month or weekly — flexibility is a defining feature, not a 12-month lock-in.",
-        },
-      ],
-      worksheet: {
-        title: "Coliving 101 Glossary + Market Assessment Checklist",
-        href: "/downloads/coliving-101-lesson-1-worksheet.pdf",
-      },
+      quiz: [],
+      worksheet: placeholderWorksheet,
     },
 
-    /* -------- LESSON 2 -------- */
     {
-      slug: "the-math",
+      slug: "why-its-having-its-moment",
       number: 2,
-      title: "The math that makes coliving impossible to ignore",
+      moduleNumber: 1,
+      moduleTitle: "What is coliving & why it's having its moment",
+      moduleLessonNumber: 2,
+      title: "Why it's having its moment",
       description:
-        "Why traditional rentals don't pencil anymore. The room-by-room revenue model. Real example: same property, different strategy.",
-      duration: "15 min",
+        "Three forces driving coliving's growth: housing costs, broken alternatives, and the loneliness epidemic.",
+      duration: "11 min",
       sections: [
-        { type: "video" },
         {
           type: "paragraph",
           content:
-            "If there's one lesson that turns coliving-curious into coliving-committed, it's this one. The math doesn't lie. And once you've seen the math, the strategy becomes obvious.",
+            "Coliving isn't new — but the conditions driving its growth right now are. Three things are happening simultaneously that have created the perfect storm for coliving to take off.",
         },
-        { type: "heading", content: "Why traditional rentals don't cashflow" },
+        { type: "heading", content: "1. Housing costs have exploded" },
         {
           type: "paragraph",
           content:
-            "A traditional single-family rental in most metros today: $1,800–$2,200 in gross rent. After mortgage, taxes, insurance, and maintenance, that's break-even at best — often negative cashflow. The numbers stopped working for traditional rentals a long time ago. Investors have been holding for appreciation only.",
-        },
-        { type: "heading", content: "The room-by-room revenue model" },
-        {
-          type: "paragraph",
-          content:
-            "In coliving, you stop renting the property as a unit and start renting the bedrooms as individual products. Each room is its own line of revenue. Most converted homes produce six to eight rooms.",
-        },
-        {
-          type: "key-takeaway",
-          title: "Standard room rates",
-          body: "Shared bathroom rooms rent for around $750/mo. Private bathroom (ensuite) rooms rent for around $1,000/mo. Always project at 85% occupancy — never 100% — because real-world turnover happens.",
-        },
-        { type: "heading", content: "Same property, different strategy" },
-        {
-          type: "paragraph",
-          content:
-            "Take a $325,000 home in the Atlanta metro. As a traditional rental, it leases for $1,950/mo. After expenses, you're cashflowing maybe $100/mo. Maybe.",
+            "The median home price in the US has more than doubled in the last decade. Rents have followed — and in many markets they've outpaced wage growth by a wide margin.",
         },
         {
           type: "paragraph",
           content:
-            "The same home, converted to a 7-room coliving (3 ensuite + 4 shared bath), grosses $5,800/mo. After all expenses — mortgage, taxes, insurance, utilities, platform fees, maintenance, and turnover — you're netting $1,200+/mo. The same property, with the same loan, producing 12x the cashflow.",
+            "Let's put numbers on it. The average one-bedroom apartment in Atlanta rents for roughly $1,500–$1,800/month. Most landlords require tenants to earn 3x the monthly rent to qualify. That means a single person needs to earn $54,000–$64,800/year just to qualify for a basic one-bedroom apartment. The median individual income in Atlanta? Around $40,000.",
         },
-        { type: "heading", content: "The full expense picture" },
         {
           type: "paragraph",
           content:
-            "Coliving has more expenses than a traditional rental. You cover utilities, internet, common-area cleaning, more maintenance (more people = more wear), and a platform fee if you're using one. Here's what to model:",
+            "That math doesn't work. And it's not just Atlanta — this gap exists in nearly every major metro. It's the reason millions of working adults are doubling up with roommates, moving back in with family, or commuting hours from affordable areas.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "The people being squeezed aren't unemployed. They're not on assistance. They're working full-time jobs — nurses, teachers, bus drivers, warehouse workers, restaurant staff, mechanics — and they still can't afford a safe, stable place to live on their own.",
+        },
+        {
+          type: "fascination",
+          body: "The people keeping our communities running — nurses, teachers, bus drivers, mechanics — are being priced out of safe, stable housing in the cities where they work. This isn't a fringe issue. This is a housing crisis affecting the people our communities depend on most.",
+        },
+        { type: "subheading", content: "Who are these people?" },
+        {
+          type: "paragraph",
+          content:
+            "They're not who you might expect. The typical coliving resident is a working adult between 25–45 who values quality, flexibility, and community over square footage.",
         },
         {
           type: "bullets",
           items: [
-            "Mortgage (P&I) — based on purchase price, down payment, rate, and term",
-            "Property taxes — typically 1.2% of purchase price annually",
-            "Insurance — about $250/mo flat for a coliving-rated landlord/dwelling fire policy",
-            "Utilities + internet — about $150/mo per room",
-            "Platform fee — 8% of gross revenue if using PadSplit",
-            "Maintenance reserve — 10% of gross revenue",
-            "Turnover allowance — about $100/mo at steady state",
+            "Working adults who need affordable housing — the biggest segment. Earning $30,000–$50,000/year, can't qualify for a one-bedroom alone, and need a safe, clean, stable place that doesn't eat their entire paycheck.",
+            "Working professionals new to a city — relocated for a job, don't know anyone yet, need a quality place to land fast without a 12-month commitment.",
+            "Travel nurses and healthcare workers on 3–6 month assignments — they need furnished housing near the hospital, not a hotel room.",
+            "People going through a life transition — divorce, relocation, career change, fresh start — who need flexibility and affordability while they figure out their next move.",
+            "Young professionals who want to save money — could stretch for a studio, but would rather pay less for a nicer home with built-in community.",
+            "Anyone who values connection over isolation — people who would rather come home to a shared house with other adults than an empty apartment.",
           ],
+        },
+        {
+          type: "paragraph",
+          content:
+            "What they all have in common: they need housing that's affordable, quality, move-in ready, and flexible — and coliving delivers all four.",
+        },
+        {
+          type: "key-takeaway",
+          title: "The #1 reason people choose coliving",
+          body: "Affordability. A private furnished room for $750–$1,000/month in a market where a one-bedroom apartment costs $1,500+. That's not a compromise. That's a better deal. They are not a last resort population. They are your neighbors — and they are choosing coliving because it works.",
+        },
+        { type: "heading", content: "2. The traditional options aren't working" },
+        {
+          type: "paragraph",
+          content:
+            "For someone earning $35,000–$50,000/year in a city where a one-bedroom apartment costs $1,500+, here are the current options:",
+        },
+        {
+          type: "bullets",
+          items: [
+            "Rent alone — needs 3x income, solid credit, first month + deposit, 12-month commitment. For many working adults this combination is simply out of reach.",
+            "Find a roommate and cosign — now legally responsible for the full rent. If your roommate stops paying, you owe everything. Not just a roommate — their financial risk.",
+            "Move somewhere cheaper — longer commute, fewer jobs, worse schools. For many people, moving isn't an option.",
+            "Move back home — works for some, but isn't available to everyone and isn't sustainable long-term.",
+          ],
+        },
+        {
+          type: "paragraph",
+          content:
+            "None of these options solve the core problem: there isn't enough affordable, quality, flexible housing for working adults who want to live independently in the cities where they work. Coliving does.",
+        },
+        { type: "heading", content: "3. People are lonelier than ever" },
+        {
+          type: "paragraph",
+          content:
+            "In 2023 the US Surgeon General declared loneliness a public health epidemic. Not a trend. Not a concern. An epidemic.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "And it makes sense. More people live alone than at any point in American history. Remote work has reduced daily social interaction for millions. Social media creates the illusion of connection while often deepening isolation.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "For a lot of people — especially people in their 20s, 30s, and 40s who are new to a city, recently divorced, or starting over — the hardest part of their day isn't the work. It's coming home to an empty apartment with no one to talk to.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Coliving addresses this in a way that no apartment complex amenity room or co-working space ever could. When you share a home with other people — a real home, not a hotel — you naturally build the kind of daily organic connection that most adults are missing. It's not forced community. It's proximity — and proximity creates connection in a way that nothing else can replicate.",
         },
         {
           type: "fascination",
-          body: "On a 7-room property at 85% occupancy, you're collecting roughly $4,930 in effective gross rent — enough to cover all operating expenses and still cashflow $1,000+ in most metros.",
+          body: "Coliving doesn't just solve a housing problem. It solves three problems simultaneously: affordability — quality housing at a fraction of renting alone; flexibility — no long-term lease trap; isolation — built-in community through shared living. No other housing model does all three.",
+        },
+        { type: "heading", content: "What this means for investors" },
+        {
+          type: "paragraph",
+          content:
+            "Demand for coliving is not a trend — it's a structural shift. As long as housing costs outpace wages, as long as traditional rental options fail working adults, and as long as people crave genuine connection — the demand for quality coliving housing will continue to grow.",
         },
         {
-          type: "padsplit",
-          body: "PadSplit is the platform I use to list and fill rooms across my portfolio. As a host you also get access to room-rate data by zip code, occupancy benchmarks, and furnishing guidelines.",
-          bullets: [
-            "Average room rates by zip code",
-            "Occupancy rates by market",
-            "Furnishing guidelines",
-            "Affordable housing newsletters",
-          ],
+          type: "paragraph",
+          content:
+            "And the investors who position themselves to meet that demand? They're building wealth while solving one of the most pressing problems in their communities. That's the moment we're in. And that's why you're here.",
         },
       ],
-      quiz: [
-        {
-          question:
-            "What is the standard occupancy assumption when projecting coliving revenue?",
-          options: ["100%", "95%", "85%", "75%"],
-          correctIndex: 2,
-          explanation:
-            "Always project at 85% — real-world turnover happens, and pretending it doesn't will burn you.",
-        },
-        {
-          question: "What is the typical rate for a shared-bathroom room?",
-          options: ["$500", "$750", "$1,000", "$1,500"],
-          correctIndex: 1,
-          explanation:
-            "Shared-bath rooms typically rent at around $750/mo. Adjust by market.",
-        },
-        {
-          question: "What is the typical rate for a private (ensuite) bathroom room?",
-          options: ["$500", "$750", "$1,000", "$1,500"],
-          correctIndex: 2,
-          explanation:
-            "Private-bath rooms command roughly $250/mo more than shared — about $1,000/mo.",
-        },
-        {
-          question: "Why don't traditional single-family rentals cashflow well in 2026?",
-          options: [
-            "Tenants don't pay rent anymore",
-            "Property values have dropped",
-            "Mortgage costs and operating expenses outpace single-tenant rent in most metros",
-            "Rental laws prohibit profit",
-          ],
-          correctIndex: 2,
-          explanation:
-            "Costs went up faster than rents. Single-tenant rent doesn't cover the operating budget anymore.",
-        },
-        {
-          question: "Which of these is NOT a typical coliving operating expense?",
-          options: [
-            "Mortgage, taxes, insurance",
-            "Utilities + internet",
-            "Platform fee + maintenance reserve",
-            "HOA dues",
-          ],
-          correctIndex: 3,
-          explanation:
-            "Coliving operators avoid HOA properties — HOA restrictions almost always conflict with rent-by-the-room operations.",
-        },
-      ],
-      worksheet: {
-        title: "Deal Analysis Template",
-        href: "/downloads/coliving-101-lesson-2-worksheet.pdf",
-      },
+      quiz: [],
+      worksheet: placeholderWorksheet,
     },
 
-    /* -------- LESSON 3 -------- */
     {
-      slug: "finding-properties",
+      slug: "why-investors-love-it",
       number: 3,
-      title: "Finding & evaluating coliving properties",
+      moduleNumber: 1,
+      moduleTitle: "What is coliving & why it's having its moment",
+      moduleLessonNumber: 3,
+      title: "Why investors are loving this model",
       description:
-        "The sweet spot. Parking. HOA red flags. The extra rooms hiding in plain sight.",
-      duration: "14 min",
+        "The cashflow problem coliving solves. Multiple income streams. Creative problem-solving. Doing well AND doing good.",
+      duration: "9 min",
       sections: [
-        { type: "video" },
         {
           type: "paragraph",
           content:
-            "Property selection is the single biggest determinant of whether your coliving deal works. Get this part right and operations becomes a manageable challenge. Get it wrong and no amount of operational excellence will save you.",
+            "We just talked about why coliving works for residents. Now let's flip it — because the investor side of this equation is just as compelling.",
         },
-        { type: "heading", content: "The sweet spot" },
+        { type: "heading", content: "Social impact IS the business model" },
         {
           type: "paragraph",
           content:
-            "Coliving works best at six or more rooms — and really shines at eight or more. The sweet spot is an 8-bedroom (or expandable-to-8-bedroom) home with 3-4 bathrooms and 2,000+ sqft of livable space. Multi-zone or tri-level layouts beat open-concept and single-story every time.",
+            "Every coliving home you operate is one more option for someone in your community who needs safe, stable, affordable housing. You're not just building wealth — you're expanding the affordable housing supply without a single dollar of government funding.",
         },
-        {
-          type: "key-takeaway",
-          title: "Three non-negotiables",
-          body: "1) No HOA. 2) Parking for at least 60% of room count. 3) A floorplan that supports privacy — not an open-concept layout. Break any of these three and the property is a hard pass, regardless of the price.",
-        },
-        { type: "heading", content: "Parking — the hidden constraint" },
         {
           type: "paragraph",
           content:
-            "In Atlanta, the rule of thumb is parking for at least 60% of your rooms. Less than that and neighbors get loud. Less than 40% and you risk shutdown by the city. Count driveway, garage, and on-street spots that residents can actually use.",
+            "But here's what most people miss: the social impact IS the business model. You're not choosing between doing good and making money. The same thing that makes coliving valuable to residents — affordable, flexible, quality housing — is exactly what makes it profitable for investors. The demand isn't going away.",
         },
-        { type: "heading", content: "HOAs — instant walk away" },
+        { type: "heading", content: "The cashflow problem coliving solves" },
         {
           type: "paragraph",
           content:
-            "Even when an HOA technically allows rentals, almost every HOA's covenants conflict with the realities of coliving — overnight guest restrictions, maximum unrelated occupants, parking rules, common-area enforcement. We strongly advise against coliving in HOA communities, period.",
+            "If you've looked at buying a traditional rental property lately, you already know — the math is brutal right now. Interest rates have climbed. Home prices are elevated. Insurance and property taxes keep rising. Run the numbers on renting a single family home to one tenant at market rate — you're breaking even at best. More likely you're negative.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "This is the reality for millions of real estate investors right now. They own properties that don't cashflow. Or they're sitting on the sidelines because they can't find a deal that makes sense.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Coliving changes the equation entirely. The same property that loses money as a traditional rental can generate $1,000+ per month as a coliving property. Not because the house changed — because the strategy did.",
+        },
+        { type: "heading", content: "Multiple income streams from one property" },
+        {
+          type: "paragraph",
+          content:
+            "With a traditional rental, you have one tenant. One lease. One check every month. If that tenant stops paying, you have zero income and a mortgage that's still due.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "With coliving, a single property generates 6, 8, even 10 individual income streams — each from a separate resident on their own lease. If one resident stops paying, the other 5–9 are still covering your expenses.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "This isn't just better cashflow. It's fundamentally better risk management. You're not dependent on one person's paycheck to cover your mortgage. That's the kind of resilience most real estate investors only get by owning multiple properties — and coliving gives it to you from property one.",
+        },
+        { type: "heading", content: "The creative problem-solving angle" },
+        {
+          type: "paragraph",
+          content:
+            "We have an affordable housing crisis. Politicians talk about it constantly. And the solution that always gets thrown around is \"we just need to build more houses.\" The thing is — building new housing takes years. Sometimes decades. Permits, zoning, construction, financing — it's a slow, expensive, politically complicated process.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "But we already have houses. Millions of them. They're just being underutilized. A 4-bedroom single family home rented to one tenant is housing one household. That same home reconfigured as a coliving property is housing 6–8 working adults — in their own private rooms, with quality furnishings, flexible terms, and built-in community.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "We didn't build a new house. We didn't wait for a politician to fund anything. We took what already existed and made it work better for the people who need it most.",
         },
         {
           type: "fascination",
-          body: "More than half of properties listed as 'investor-friendly' in metro Atlanta are actually in HOAs. Always check.",
+          body: "We don't need to wait decades for new housing to be built. We can reconfigure the housing we ALREADY HAVE to better serve the people who need it right now. That's not just a housing strategy. That's coliving.",
         },
-        { type: "heading", content: "Extra rooms hiding in plain sight" },
+        { type: "heading", content: "You can be a good investor AND do good" },
         {
           type: "paragraph",
           content:
-            "A 4-bedroom home isn't a 4-room coliving. It's potentially a 6, 7, or 8-room coliving, depending on the layout. Look for:",
+            "In most real estate strategies, you're optimizing for returns. Period. The tenant is a means to an end. The community impact is, at best, neutral.",
         },
-        {
-          type: "bullets",
-          items: [
-            "Formal dining room — easy bedroom conversion (+1 room)",
-            "Finished basement — +1 to +2 rooms depending on entrance",
-            "Sunroom / four-season room — +1 room with HVAC",
-            "Bonus room or loft — +1 room",
-            "Home office — often already a small room",
-            "In-law suite or ADU — +1 to +2 rooms, sometimes already plumbed",
-          ],
-        },
-        {
-          type: "callout",
-          tone: "blush",
-          body: "✦ One closet decision can make or cost you $40,000+ over the hold period. Closets — or thoughtful clothing-rack alternatives — separate a comfortable room from a regrettable one.",
-        },
-        { type: "heading", content: "What you can't see in photos" },
         {
           type: "paragraph",
           content:
-            "Online listings hide the things that matter most. Plumbing capacity, electrical capacity, HVAC capacity for added rooms — none of that shows up in MLS photos. That's why a good walk-through is non-negotiable. There's a $15,000 problem hiding in almost every coliving conversion, and it's not the one you expected.",
+            "Coliving is different. The better you run your coliving property — the cleaner the rooms, the more responsive you are, the higher quality the furnishings, the more intentional the community — the more your residents benefit AND the more profitable your business becomes.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Happy residents stay longer. Lower turnover means lower costs. Quality housing attracts quality residents. And every home you operate well is genuine, tangible impact in your community. You don't have to choose between building wealth and making a difference. With coliving, they're the same thing.",
+        },
+        {
+          type: "key-takeaway",
+          title: "Why investors are loving coliving right now",
+          body: "Social impact IS the business model — demand isn't going away. Solves the cashflow problem — makes single family homes profitable again. Multiple income streams — 6–10 per property instead of 1. Creative problem-solving — reconfigure existing housing instead of waiting for new construction. Do well AND do good — better operations = happier residents = more profitable business.",
         },
       ],
-      quiz: [
-        {
-          question:
-            "What's the sweet spot for a coliving property?",
-          options: [
-            "2BR/1BA, 800 sqft",
-            "4BR/2BA, 1,500 sqft single-story",
-            "8BR/3-4BA, 2,000+ sqft, multi-zone or tri-level",
-            "10BR/5BA, 4,000 sqft, fully open concept",
-          ],
-          correctIndex: 2,
-          explanation:
-            "The 8-bedroom (or convertible-to-8) tri-level / multi-zone home is the gold standard.",
-        },
-        {
-          question: "What's the parking rule of thumb in Atlanta?",
-          options: [
-            "One spot per house",
-            "At least 60% of room count",
-            "100% of room count",
-            "Parking doesn't matter",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Less than 60% causes neighbor friction. Less than 40% can lead to shutdown.",
-        },
-        {
-          question: "If a property is in an HOA…",
-          options: [
-            "It's the best option for coliving",
-            "It depends on rental rules",
-            "Walk away — instant Low confidence regardless of other factors",
-            "It increases the income",
-          ],
-          correctIndex: 2,
-          explanation:
-            "HOA covenants almost always conflict with coliving operations. We strongly advise against HOA properties, period.",
-        },
-        {
-          question: "Which floorplan style is BEST for coliving?",
-          options: [
-            "Wide-open concept with no doors",
-            "Studio apartment",
-            "Multi-zone or tri-level with separated bedroom wings",
-            "Single-story open layout",
-          ],
-          correctIndex: 2,
-          explanation:
-            "Coliving rewards privacy. Multi-zone homes give residents space and quiet.",
-        },
-        {
-          question: "Which of these is an extra room 'hiding in plain sight'?",
-          options: [
-            "The kitchen",
-            "The dining room, basement, or bonus room",
-            "The garage roof",
-            "The front porch",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Formal dining rooms, finished basements, sunrooms, and bonus rooms are the four most common 'hidden' rooms.",
-        },
-      ],
-      worksheet: {
-        title: "Property Evaluation Checklist",
-        href: "/downloads/coliving-101-lesson-3-worksheet.pdf",
-      },
+      quiz: [],
+      worksheet: placeholderWorksheet,
     },
 
-    /* -------- LESSON 4 -------- */
     {
-      slug: "setting-up-and-launching",
+      slug: "coliving-vs-traditional",
       number: 4,
-      title: "Setting up & launching your coliving property",
+      moduleNumber: 1,
+      moduleTitle: "What is coliving & why it's having its moment",
+      moduleLessonNumber: 4,
+      title: "Coliving vs traditional rental",
       description:
-        "The launch sequence. The non-negotiable tech stack. Listing platforms. Lease structure.",
-      duration: "16 min",
+        "Side-by-side comparison of the two models. Same house, same mortgage, completely different returns.",
+      duration: "6 min",
       sections: [
-        { type: "video" },
         {
           type: "paragraph",
           content:
-            "Buying the right property is half the battle. Launching it correctly is the other half. The order in which you do things matters more than most operators realize — get the sequence wrong and you'll pay for it twice.",
+            "Now that you understand what coliving is, why it's growing, and why investors are paying attention — let's put it side by side with a traditional rental so you can see exactly how different the two models are.",
         },
-        { type: "heading", content: "The launch sequence" },
+        { type: "subheading", content: "Lease structure" },
         {
-          type: "paragraph",
-          content:
-            "Every coliving launch follows the same six-step sequence. Out-of-order steps mean rework, delays, and money left on the table.",
-        },
-        {
-          type: "numbered",
+          type: "bullets",
           items: [
-            "Renovation — bedrooms, bathrooms, common spaces",
-            "Furnishing — beds, desks, dressers, common-area furniture",
-            "Tech — locks, internet, cameras, platform setup",
-            "Listing — photos, copy, marketing across platforms",
-            "Screening — applications, references, court records",
-            "Move-in — orientation, house rules, community building",
+            "Traditional rental: one lease, one tenant",
+            "Coliving: individual leases per room",
           ],
         },
-        { type: "heading", content: "The non-negotiable tech stack" },
+        { type: "subheading", content: "Furnishing & move-in" },
         {
-          type: "paragraph",
-          content:
-            "Three tech investments are non-negotiable for any coliving operation. Skip any of them and you'll regret it within the first sixty days.",
+          type: "bullets",
+          items: [
+            "Traditional rental: rarely furnished, move-in in weeks, 12-month minimum lease",
+            "Coliving: typically furnished, move-in in days, mid-term (3–6 months typical)",
+          ],
+        },
+        { type: "subheading", content: "Income & risk" },
+        {
+          type: "bullets",
+          items: [
+            "Traditional rental: one income stream per property; if the tenant stops paying, $0 income",
+            "Coliving: 6–10 income streams per property; if one resident stops paying, the rest are still paying",
+          ],
+        },
+        { type: "subheading", content: "Affordability for the resident" },
+        {
+          type: "bullets",
+          items: [
+            "Traditional 1BR apartment: $1,500+/month",
+            "Coliving private room: $750–$1,000/month",
+          ],
+        },
+        { type: "subheading", content: "Community" },
+        {
+          type: "bullets",
+          items: [
+            "Traditional rental: none built in",
+            "Coliving: built into the model",
+          ],
+        },
+        { type: "subheading", content: "Cashflow in today's market" },
+        {
+          type: "bullets",
+          items: [
+            "Traditional rental: often negative",
+            "Coliving: $1,000+/month potential",
+          ],
         },
         {
           type: "key-takeaway",
-          title: "The three non-negotiables",
-          body: "Smart locks on every bedroom and exterior door (no keys, ever). High-speed business-grade internet (residents work from home). Exterior cameras at all entry points (security and accountability).",
+          title: "Same house. Same mortgage. Same neighborhood.",
+          body: "Traditional rental: 1 tenant, 1 income stream, often negative cashflow. Coliving: 6–10 residents, 6–10 income streams, strong cashflow potential. The house didn't change. The strategy did.",
         },
-        { type: "heading", content: "Listing platforms" },
-        {
-          type: "paragraph",
-          content:
-            "You don't pick one platform. You list on multiple — different residents find rooms in different places.",
-        },
+        { type: "heading", content: "Module 1 recap" },
         {
           type: "bullets",
           items: [
-            "PadSplit — purpose-built for coliving, integrated screening",
-            "Facebook Marketplace — high traffic, low cost-per-lead",
-            "Furnished Finder — strong for travel nurses",
-            "Roomies — for the more traditional roommate market",
+            "Coliving is rent-by-the-room with individual leases per resident",
+            "Most coliving operates in the mid-term space — residents staying 3–6 months",
+            "It's having its moment because housing costs have exploded, traditional options aren't working, and people are lonelier than ever",
+            "The #1 reason residents choose coliving is affordability",
+            "Investors are loving coliving because it solves the cashflow problem, diversifies risk, and lets you do well and do good at the same time",
+            "It's fundamentally different from traditional rentals in every way that matters",
           ],
-        },
-        { type: "heading", content: "Lease structure" },
-        {
-          type: "paragraph",
-          content:
-            "Each room is leased individually. Don't let multiple residents go on a single shared lease — when one person stops paying, you don't want the other six holding the bag (or vice versa).",
-        },
-        {
-          type: "bullets",
-          items: [
-            "Individual lease per room — never group leases",
-            "Month-to-month or weekly terms",
-            "Room-specific (lease ties to the specific bedroom, not generic 'a room')",
-            "House rules attached as an addendum",
-          ],
-        },
-        {
-          type: "fascination",
-          body: "A single-phase renovation can affect your refinancing options by $25,000+ depending on how the appraiser values 'completed' vs 'in-progress' work.",
-        },
-        { type: "heading", content: "Furnishing strategy" },
-        {
-          type: "paragraph",
-          content:
-            "Operators choose between fully-furnished, partially-furnished, or unfurnished depending on market and strategy. If you furnish, budget $1,500–$2,500 per room. Standardize the furniture across all your properties — easier to reorder, replace, and inventory.",
-        },
-      ],
-      quiz: [
-        {
-          question: "What's the correct sequence of launching a coliving property?",
-          options: [
-            "Listing → Screening → Renovation → Move-in",
-            "Renovation → Furnishing → Tech → Listing → Screening → Move-in",
-            "Move-in → Renovation → Listing",
-            "Tech → Screening → Renovation → Listing",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Out-of-order means rework. Always: renovation → furnishing → tech → listing → screening → move-in.",
-        },
-        {
-          question: "Which is part of the non-negotiable tech stack?",
-          options: [
-            "Smart TV in every bedroom",
-            "Smart locks and high-speed business-grade internet",
-            "Surround sound in the living room",
-            "A doorbell camera only",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Smart locks + business-grade internet + exterior cameras are the three non-negotiables.",
-        },
-        {
-          question: "Which platform is purpose-built for coliving rooms?",
-          options: [
-            "Zillow only",
-            "PadSplit",
-            "LinkedIn",
-            "Google Maps",
-          ],
-          correctIndex: 1,
-          explanation:
-            "PadSplit is the dominant coliving-specific platform — but list on Facebook Marketplace, Furnished Finder, and Roomies too.",
-        },
-        {
-          question: "What lease structure works best for coliving?",
-          options: [
-            "One annual lease for the whole property",
-            "Individual leases per room, month-to-month or weekly",
-            "No lease at all — handshake deals",
-            "Verbal agreements with deposits only",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Individual leases per room protect every party. Group leases create messy shared liability.",
-        },
-        {
-          question: "Why do operators standardize furniture across their portfolio?",
-          options: [
-            "To get a discount from one vendor",
-            "Easier to reorder, replace, and inventory across multiple properties",
-            "Because it's required by law",
-            "To match Pinterest aesthetics",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Standardization saves operational time and turns furnishing from a project into a process.",
-        },
-      ],
-      worksheet: {
-        title: "Coliving Launch Checklist",
-        href: "/downloads/coliving-101-lesson-4-worksheet.pdf",
-      },
-    },
-
-    /* -------- LESSON 5 -------- */
-    {
-      slug: "operations",
-      number: 5,
-      title: "Operations — the questions every new operator asks",
-      description:
-        "Time commitment. Resident issues. Maintenance. Community. Legal basics.",
-      duration: "14 min",
-      sections: [
-        { type: "video" },
-        {
-          type: "paragraph",
-          content:
-            "Once the property is launched, the real work begins — and it's not what most new operators expect. Operations is part property management, part HR, part hospitality. Done well, it's the difference between a property that runs itself and one that runs you.",
-        },
-        { type: "heading", content: "Time commitment" },
-        {
-          type: "paragraph",
-          content:
-            "Plan on 10–15 hours per week during the launch and stabilization phase (first 90 days). Once the property is full and the systems are running, that drops to 2–5 hours per week per property. The work compresses dramatically once your screening, communication, and maintenance systems are in place.",
-        },
-        { type: "heading", content: "When a resident is late on rent" },
-        {
-          type: "key-takeaway",
-          title: "Address it day 1, not day 5",
-          body: "The single biggest mistake new operators make is letting non-payment slide. Every day past due is harder to recover. Friendly reminder day 1. Direct text day 3. Written notice day 7. Formal eviction process day 30+. The script doesn't change. The kindness doesn't change. The deadline doesn't change.",
-        },
-        { type: "heading", content: "When residents conflict" },
-        {
-          type: "paragraph",
-          content:
-            "Resident-on-resident conflicts are inevitable. Your job isn't to take sides. Your job is to listen, identify the behavior in question, and refer everyone back to the house rules. The rules do the work. You enforce them.",
-        },
-        { type: "heading", content: "Maintenance" },
-        {
-          type: "paragraph",
-          content:
-            "Coliving has more maintenance than a single-family rental — more bodies, more wear, more shared appliance use. The fix is preventive maintenance on a calendar, not reactive maintenance on a panic.",
-        },
-        {
-          type: "bullets",
-          items: [
-            "HVAC filter changes every 90 days",
-            "Quarterly plumbing inspection (drains, leaks, water pressure)",
-            "Smoke detector testing every 6 months",
-            "Common-area cleaning weekly (hire it out)",
-            "Exterior maintenance seasonally",
-          ],
-        },
-        {
-          type: "fascination",
-          body: "The #1 maintenance issue that sends residents packing is, surprisingly, slow internet. The second is unaddressed bathroom plumbing.",
-        },
-        { type: "heading", content: "Community — responsive, not forced" },
-        {
-          type: "paragraph",
-          content:
-            "Coliving residents come for the affordability and stay for the quality of the home. The community is a bonus, not a requirement. Don't force events. Don't mandate participation. Be responsive when residents want connection, intentional with the spaces they share, and respectful when they want privacy. The intentionality is what separates coliving from a boarding house.",
-        },
-        { type: "heading", content: "Legal basics" },
-        {
-          type: "paragraph",
-          content:
-            "Three legal essentials for any coliving operation:",
-        },
-        {
-          type: "bullets",
-          items: [
-            "Operating entity — LLC at minimum, separate from your personal name",
-            "Insurance — landlord/dwelling fire policy plus liability coverage rated for the use case",
-            "Local permits — check city and county rental registration / inspection requirements",
-          ],
-        },
-        {
-          type: "callout",
-          tone: "cream",
-          body: "✦ Talk to a CPA and a real estate attorney before your first property launches. Both are deductible business expenses, and both will save you a multiple of what they cost.",
         },
       ],
       quiz: [
         {
           question:
-            "What's the typical time commitment after stabilization?",
+            "In coliving, who is responsible for the rent if one resident stops paying?",
           options: [
-            "40+ hrs/week per property",
-            "20–30 hrs/week per property",
-            "10–15 hrs/week at launch, 2–5 hrs/week at steady state",
-            "Zero hours — coliving is fully passive",
+            "All residents equally",
+            "The property owner absorbs the loss",
+            "Only the resident who stopped paying",
+            "The property manager",
           ],
           correctIndex: 2,
           explanation:
-            "Plan for 10–15 hrs/wk during launch. Drops to 2–5 hrs/wk per property once systems are running.",
-        },
-        {
-          question: "When a resident is late on rent, the right move is:",
-          options: [
-            "Wait a week before saying anything",
-            "Address it day 1 — not day 5, not day 15",
-            "Immediately file for eviction",
-            "Forgive the payment",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Friendly reminder day 1. Direct text day 3. Written notice day 7. Don't let it slide.",
+            "Each resident signs their own individual lease and is only responsible for their own rent. This is one of coliving's biggest advantages over traditional shared housing.",
         },
         {
           question:
-            "What's the right operator move when two residents are in conflict?",
+            "Which of the following best describes why coliving is growing right now?",
           options: [
-            "Pick a side immediately",
-            "Listen, identify the behavior in question, and refer everyone back to the house rules",
-            "Evict both residents",
-            "Ignore it and hope it goes away",
+            "Interest rates are low making it easy to buy",
+            "Housing costs have risen while traditional options have failed to keep up",
+            "There is a surplus of large homes on the market",
+            "Government programs are funding coliving development",
           ],
           correctIndex: 1,
           explanation:
-            "The rules do the work. Your job is to enforce them consistently and listen well.",
+            "The combination of rising housing costs, inadequate traditional options, and the loneliness epidemic has created the perfect conditions for coliving.",
+        },
+        {
+          question: "What is the primary reason most residents choose coliving?",
+          options: [
+            "They want a luxury living experience",
+            "They're looking for short-term vacation housing",
+            "Affordability — a quality private room for a fraction of renting alone",
+            "They can't find any other housing at all",
+          ],
+          correctIndex: 2,
+          explanation:
+            "The #1 reason people choose coliving is affordability. A private furnished room for $750–$1,000/month in a market where a one-bedroom apartment costs $1,500+ is a better deal — not a compromise.",
+        },
+        {
+          question: "Where does coliving fall on the rental timeline?",
+          options: [
+            "Short-term (1–30 days) like Airbnb",
+            "Mid-term (3–6 months) — flexible, furnished, individual leases",
+            "Long-term (12+ months) like a traditional apartment lease",
+            "It only works as a week-to-week rental",
+          ],
+          correctIndex: 1,
+          explanation:
+            "Most coliving operators focus on mid-term residents — people staying 3–6 months. This hits the sweet spot between strong revenue, manageable turnover, and the flexibility that attracts quality residents.",
         },
         {
           question:
-            "What entity structure is recommended for a coliving operation?",
+            "What makes coliving unique for investors compared to other real estate strategies?",
           options: [
-            "Sole proprietorship under your own name",
-            "LLC plus appropriate insurance and local rental permits",
-            "Verbal partnership without paperwork",
-            "C-corp",
+            "It requires no capital to get started",
+            "It only works in large cities",
+            "It generates multiple income streams from one property while providing affordable housing",
+            "It eliminates all risk from real estate investing",
           ],
-          correctIndex: 1,
+          correctIndex: 2,
           explanation:
-            "LLC at minimum, plus the right insurance policy and any local rental registration requirements.",
-        },
-        {
-          question: "The community in a coliving home should be:",
-          options: [
-            "Mandatory and forced",
-            "Responsive and intentional, not forced",
-            "Non-existent — operators should be invisible",
-            "Run entirely by the residents themselves",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Be responsive when residents want connection, intentional with the spaces, and respectful of privacy.",
+            "Coliving is one of the only strategies where doing well for yourself and doing good for your community happen at the same time — strong cashflow from multiple income streams while expanding affordable housing supply.",
         },
       ],
-      worksheet: {
-        title: "Operations Quick Reference Guide",
-        href: "/downloads/coliving-101-lesson-5-worksheet.pdf",
-      },
+      worksheet: placeholderWorksheet,
     },
 
-    /* -------- LESSON 6 -------- */
-    {
-      slug: "is-coliving-right-for-you",
-      number: 6,
-      title: "Is coliving right for you? Your next steps",
-      description:
-        "The three paths in. Common mistakes. What to do next.",
-      duration: "10 min",
-      sections: [
-        { type: "video" },
-        {
-          type: "paragraph",
-          content:
-            "By now you've seen the model, run the math, evaluated properties on paper, mapped out a launch, and understood the operations. The last question: which path is right for you?",
-        },
-        { type: "heading", content: "Three paths into coliving" },
-        {
-          type: "paragraph",
-          content:
-            "There's no single right way to participate in coliving. There are three — and the right one for you depends on capital, time, experience, and where you are in your life.",
-        },
-        {
-          type: "key-takeaway",
-          title: "Path 01 — Active operator",
-          body: "You buy the property, convert it, and operate it yourself. Highest control, highest upside, highest time commitment. The right path for women who want to build a real portfolio and learn the model deeply.",
-        },
-        {
-          type: "key-takeaway",
-          title: "Path 02 — Arbitrage operator",
-          body: "You don't buy. You lease properties from other owners and operate them as coliving. Lower capital requirement, faster to scale, but margins are tighter and you don't capture appreciation. Best for women with operations experience but limited capital.",
-        },
-        {
-          type: "key-takeaway",
-          title: "Path 03 — Passive investor",
-          body: "You provide capital. Someone else does the work. You earn returns from a real cashflowing asset without operational responsibility. The right path for women with capital but limited time or limited interest in operations.",
-        },
-        { type: "heading", content: "Common mistakes" },
-        {
-          type: "paragraph",
-          content:
-            "Across hundreds of conversations with first-time operators, a few mistakes show up over and over:",
-        },
-        {
-          type: "bullets",
-          items: [
-            "Underestimating renovation costs by 20–30%",
-            "Skipping due diligence on plumbing, electrical, or HVAC capacity",
-            "Going it alone — not finding a coach, mentor, or community",
-            "Not treating it like a business — no entity, no books, no systems",
-            "Trying to time the market instead of starting where they are",
-            "Waiting for the perfect deal instead of getting good at evaluating any deal",
-          ],
-        },
-        { type: "heading", content: "Your next steps" },
-        {
-          type: "paragraph",
-          content:
-            "Whatever path you chose — there's something to do this week to move it forward. Pick one. Then take the next one.",
-        },
-        {
-          type: "callout",
-          tone: "gold",
-          body: "✦ The 1:1 Coaching Program ($3,000 · 8 weeks) is designed for women starting from scratch — building the roadmap, sourcing the deal, running the underwriting, walking through the conversion, and standing it up together. It's the fastest path from coliving-curious to coliving-operating.",
-        },
-        {
-          type: "callout",
-          tone: "blush",
-          body: "✦ The Advisory Retainer ($1,500/mo · month-to-month) is for women already operating who need a thinking partner — someone to bring the messy questions to. Deal reviews, ops troubleshooting, accountability.",
-        },
-        {
-          type: "callout",
-          tone: "cream",
-          body: "✦ Need a Realtor in Atlanta? I'm a working coliving operator AND a Keller Williams agent. I find investor-grade properties and I run the same numbers for your deal that I run for my own. Book a buy-and-sell discovery call.",
-        },
-        {
-          type: "callout",
-          tone: "cream",
-          body: "✦ Want to invest passively? I take on a small number of partners per year — private money lending, equity partnerships, or property arbitrage. Book a partnership discovery call.",
-        },
-        {
-          type: "callout",
-          tone: "blush",
-          body: "✦ Just want the community? She Leads Coliving is a free private Facebook group for women in coliving — at every stage. Join us.",
-        },
-        {
-          type: "quote",
-          content:
-            "Every coliving home any of us opens is one more option for someone in our community who needs a safe, stable, clean, high quality and affordable place to land.",
-          attribution: "Caitlyn Verdugo · Coliving Cait",
-        },
-      ],
-      quiz: [
-        {
-          question: "The three paths into coliving are:",
-          options: [
-            "Buy, sell, hold",
-            "Active operator, arbitrage operator, passive investor",
-            "Realtor, mortgage broker, contractor",
-            "Investor, lender, agent",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Active (own and operate), arbitrage (lease and operate), and passive (provide capital).",
-        },
-        {
-          question: "What's a common mistake first-time operators make?",
-          options: [
-            "Doing too much research before buying",
-            "Underestimating renovation costs and skipping due diligence",
-            "Spending too little on furnishings",
-            "Hiring help too early in the process",
-          ],
-          correctIndex: 1,
-          explanation:
-            "Underestimating costs by 20–30% and skipping due diligence on plumbing/electrical/HVAC are the two most common.",
-        },
-        {
-          question: "What is the price of Caitlyn's 1:1 coaching program?",
-          options: ["$500", "$1,500", "$3,000", "$10,000"],
-          correctIndex: 2,
-          explanation: "The Coaching Program is $3,000 for 8 weeks, 1:1.",
-        },
-        {
-          question: "What is the price of Caitlyn's monthly advisory retainer?",
-          options: ["$500/mo", "$1,500/mo", "$3,000/mo", "Free"],
-          correctIndex: 1,
-          explanation:
-            "The Advisory Retainer is $1,500/mo, month-to-month, for women already operating.",
-        },
-        {
-          question: "What is She Leads Coliving?",
-          options: [
-            "A paid mastermind",
-            "A free private community for women in coliving",
-            "A blog",
-            "A podcast",
-          ],
-          correctIndex: 1,
-          explanation:
-            "She Leads Coliving is a free private Facebook group for women at every stage of the coliving journey.",
-        },
-      ],
-      worksheet: {
-        title: "Which Coliving Path Self-Assessment",
-        href: "/downloads/coliving-101-lesson-6-worksheet.pdf",
-      },
-    },
+    /* Modules 2–6 will be filled in during Phase 2. They appear in the
+     * `modules` array above so the course landing page can render the
+     * module-by-module structure ("coming soon" empty states for now). */
   ],
 };

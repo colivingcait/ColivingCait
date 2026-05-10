@@ -30,17 +30,33 @@ export type LessonSection =
 export type Lesson = {
   slug: string;
   number: number;
+  /** Module this lesson belongs to (1-indexed). */
+  moduleNumber: number;
+  /** Display title of the module. */
+  moduleTitle: string;
+  /** Position within its module — "Lesson 2 of 4". */
+  moduleLessonNumber: number;
   title: string;
   description: string;
   /** Approximate read time, e.g. "12 min" */
   duration: string;
   sections: LessonSection[];
+  /** Module-end quizzes attach to the LAST lesson of each module. Empty
+   *  arrays mean no quiz on this lesson. */
   quiz: QuizQuestion[];
   worksheet: {
     title: string;
     /** PDF download path; placeholder until real PDFs are produced. */
     href: string;
   };
+};
+
+export type Module = {
+  number: number;
+  slug: string;
+  title: string;
+  /** Optional one-line summary used on the course landing page. */
+  summary?: string;
 };
 
 export type Course = {
@@ -57,5 +73,7 @@ export type Course = {
   outcomes: string[];
   /** Who the course is for */
   audience: string[];
+  /** Optional module grouping for courses that organize lessons by module. */
+  modules?: Module[];
   lessons: Lesson[];
 };

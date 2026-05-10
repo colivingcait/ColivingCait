@@ -13,7 +13,7 @@ export const courses: Course[] = [
       "Six lessons on every major house-hacking strategy — spare bedroom, basement / ADU, coliving house hack, and small multifamily.",
     longDescription:
       "Coming soon — full course content in production.",
-    price: 27,
+    price: 99,
     status: "coming-soon",
     symbol: "⌂",
     outcomes: [
@@ -37,7 +37,7 @@ export const courses: Course[] = [
       "Six lessons on the eight major residential investing strategies — and how to choose your first move.",
     longDescription:
       "Coming soon — full course content in production.",
-    price: 27,
+    price: 99,
     status: "coming-soon",
     symbol: "$",
     outcomes: [

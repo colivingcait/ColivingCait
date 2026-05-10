@@ -51,7 +51,7 @@ export default async function CourseLandingPage({
           <div>
             <Reveal>
               <Eyebrow className="mb-6">
-                Mini course · $${course.price}
+                Mini course · ${course.price}
               </Eyebrow>
             </Reveal>
             <Reveal delay={0.1}>
@@ -86,18 +86,21 @@ export default async function CourseLandingPage({
           {/* Course metadata */}
           <Reveal delay={0.3}>
             <div className="md:pl-12 md:border-l md:border-cream/15 grid grid-cols-2 md:grid-cols-1 gap-6">
+              {course.modules && course.modules.length > 0 ? (
+                <CourseMeta label="Modules" value={`${course.modules.length}`} />
+              ) : null}
               <CourseMeta label="Lessons" value={`${course.lessons.length} self-paced`} />
               <CourseMeta
                 label="Total time"
-                value={`~${Math.round(
-                  course.lessons.reduce(
-                    (sum, l) => sum + parseInt(l.duration) || 0,
-                    0,
-                  ),
+                value={`~${course.lessons.reduce(
+                  (sum, l) => sum + (parseInt(l.duration) || 0),
+                  0,
                 )} min`}
               />
-              <CourseMeta label="Quizzes" value={`${course.lessons.length} included`} />
-              <CourseMeta label="Worksheets" value={`${course.lessons.length} PDFs`} />
+              <CourseMeta
+                label="Quizzes"
+                value={`${course.lessons.filter((l) => l.quiz.length > 0).length} module quizzes`}
+              />
               <CourseMeta label="Access" value="Lifetime" />
             </div>
           </Reveal>
@@ -138,38 +141,122 @@ export default async function CourseLandingPage({
           </Reveal>
           <Reveal delay={0.1}>
             <Heading size="md">
-              Six lessons. <em>One model.</em>
+              {course.modules && course.modules.length > 0 ? (
+                <>
+                  Six modules. <em>Twenty-three lessons.</em>
+                </>
+              ) : (
+                <>
+                  Six lessons. <em>One model.</em>
+                </>
+              )}
             </Heading>
           </Reveal>
         </div>
 
-        <Stagger className="mt-14 space-y-3" stagger={0.05}>
-          {course.lessons.map((lesson) => (
-            <StaggerItem key={lesson.slug}>
-              <Link
-                href={`/courses/${course.slug}/${lesson.slug}`}
-                className="group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
-              >
-                <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
-                  <span className="font-heading text-3xl md:text-4xl text-gold/60 leading-none tabular-nums">
-                    {String(lesson.number).padStart(2, "0")}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="font-heading text-lg md:text-xl leading-heading">
-                      {lesson.title}
-                    </p>
-                    <p className="mt-1 text-sm text-warmgray leading-body">
-                      {lesson.description}
-                    </p>
-                  </div>
-                  <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
-                    {lesson.duration}
-                  </span>
+        {course.modules && course.modules.length > 0 ? (
+          <div className="mt-14 space-y-12">
+            {course.modules.map((mod) => {
+              const modLessons = course.lessons.filter(
+                (l) => l.moduleNumber === mod.number,
+              );
+              return (
+                <div key={mod.slug}>
+                  <Reveal>
+                    <div className="grid grid-cols-[auto_1fr] gap-5 md:gap-7 items-baseline mb-5">
+                      <span className="font-heading text-2xl md:text-3xl text-gold leading-none tabular-nums">
+                        {String(mod.number).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-1">
+                          Module {mod.number}
+                        </p>
+                        <p className="font-heading text-xl md:text-2xl leading-heading">
+                          {mod.title}
+                        </p>
+                        {mod.summary && (
+                          <p className="mt-2 text-sm text-warmgray leading-body max-w-2xl">
+                            {mod.summary}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </Reveal>
+                  {modLessons.length === 0 ? (
+                    <Reveal delay={0.1}>
+                      <div className="md:ml-12 border border-dashed border-brand/60 bg-cream/40 p-5 md:p-6 text-sm text-warmgray italic">
+                        Lessons coming soon — phase 2 build.
+                      </div>
+                    </Reveal>
+                  ) : (
+                    <Stagger className="md:ml-12 space-y-3" stagger={0.05}>
+                      {modLessons.map((lesson) => (
+                        <StaggerItem key={lesson.slug}>
+                          <Link
+                            href={`/courses/${course.slug}/${lesson.slug}`}
+                            className="group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
+                          >
+                            <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
+                              <span className="font-heading text-2xl md:text-3xl text-gold/60 leading-none tabular-nums">
+                                {String(lesson.moduleLessonNumber).padStart(2, "0")}
+                              </span>
+                              <div className="min-w-0">
+                                <p className="font-heading text-lg md:text-xl leading-heading">
+                                  {lesson.title}
+                                </p>
+                                <p className="mt-1 text-sm text-warmgray leading-body">
+                                  {lesson.description}
+                                </p>
+                              </div>
+                              <div className="flex flex-col items-end gap-1 whitespace-nowrap">
+                                <span className="text-[10px] uppercase tracking-eyebrow text-gold">
+                                  {lesson.duration}
+                                </span>
+                                {lesson.quiz.length > 0 && (
+                                  <span className="text-[10px] uppercase tracking-eyebrow text-warmgray">
+                                    Module quiz
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </Link>
+                        </StaggerItem>
+                      ))}
+                    </Stagger>
+                  )}
                 </div>
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
+              );
+            })}
+          </div>
+        ) : (
+          <Stagger className="mt-14 space-y-3" stagger={0.05}>
+            {course.lessons.map((lesson) => (
+              <StaggerItem key={lesson.slug}>
+                <Link
+                  href={`/courses/${course.slug}/${lesson.slug}`}
+                  className="group block border border-brand bg-cream p-5 md:p-6 hover:border-gold transition-colors"
+                >
+                  <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
+                    <span className="font-heading text-3xl md:text-4xl text-gold/60 leading-none tabular-nums">
+                      {String(lesson.number).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-heading text-lg md:text-xl leading-heading">
+                        {lesson.title}
+                      </p>
+                      <p className="mt-1 text-sm text-warmgray leading-body">
+                        {lesson.description}
+                      </p>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
+                      {lesson.duration}
+                    </span>
+                  </div>
+                </Link>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </Section>
 
       {/* Audience */}
@@ -206,7 +293,17 @@ export default async function CourseLandingPage({
           </Reveal>
           <Reveal delay={0.1}>
             <Heading size="xl" className="text-cream">
-              Six lessons. ${course.price}. <em className="text-gold-light">Lifetime access.</em>
+              {course.modules && course.modules.length > 0 ? (
+                <>
+                  {course.modules.length} modules. ${course.price}.{" "}
+                  <em className="text-gold-light">Lifetime access.</em>
+                </>
+              ) : (
+                <>
+                  {course.lessons.length} lessons. ${course.price}.{" "}
+                  <em className="text-gold-light">Lifetime access.</em>
+                </>
+              )}
             </Heading>
           </Reveal>
           <Reveal delay={0.25}>

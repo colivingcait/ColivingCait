@@ -161,7 +161,7 @@ export default function LearnPage() {
                   6 lessons · Quizzes · Worksheets · Certificate
                 </span>
                 <span className="font-heading font-medium text-[28px] text-charcoal mb-5 block">
-                  $37
+                  $99
                 </span>
                 <Link
                   href={c.href}
@@ -192,8 +192,8 @@ export default function LearnPage() {
               </div>
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-base text-warmgray-light line-through">$111</span>
-                  <span className="font-heading font-medium text-[32px] text-charcoal">$97</span>
+                  <span className="text-base text-warmgray-light line-through">$297</span>
+                  <span className="font-heading font-medium text-[32px] text-charcoal">$149</span>
                 </div>
                 <Link href="/courses?bundle=1" className="btn-primary">
                   Get the Bundle

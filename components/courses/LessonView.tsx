@@ -78,14 +78,38 @@ export default function LessonView({
             currentNumber={lesson.number}
             total={course.lessons.length}
             completedCount={progress.completed.length}
+            moduleNumber={
+              course.modules && course.modules.length > 0
+                ? lesson.moduleNumber
+                : undefined
+            }
+            moduleLessonNumber={
+              course.modules && course.modules.length > 0
+                ? lesson.moduleLessonNumber
+                : undefined
+            }
+            moduleLessonTotal={
+              course.modules && course.modules.length > 0
+                ? course.lessons.filter(
+                    (l) => l.moduleNumber === lesson.moduleNumber,
+                  ).length
+                : undefined
+            }
           />
 
           {/* Lesson header */}
           <header>
-            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-              ✦ Lesson {String(lesson.number).padStart(2, "0")} ·{" "}
-              {lesson.duration}
-            </p>
+            {course.modules && course.modules.length > 0 ? (
+              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                ✦ Module {lesson.moduleNumber} ·{" "}
+                <span className="text-warmgray">{lesson.moduleTitle}</span>
+              </p>
+            ) : (
+              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                ✦ Lesson {String(lesson.number).padStart(2, "0")} ·{" "}
+                {lesson.duration}
+              </p>
+            )}
             <h1 className="font-heading text-4xl md:text-6xl leading-heading text-charcoal">
               {lesson.title}
             </h1>
