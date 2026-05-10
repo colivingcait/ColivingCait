@@ -176,9 +176,6 @@ export default async function CourseLandingPage({
                         <p className="font-heading text-lg md:text-xl leading-heading">
                           {lesson.title}
                         </p>
-                        <p className="mt-1 text-sm text-warmgray leading-body">
-                          {lesson.description}
-                        </p>
                       </div>
                       <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
                         {lesson.duration}
@@ -252,9 +249,6 @@ export default async function CourseLandingPage({
                                   <p className="font-heading text-lg md:text-xl leading-heading">
                                     {lesson.title}
                                   </p>
-                                  <p className="mt-1 text-sm text-warmgray leading-body">
-                                    {lesson.description}
-                                  </p>
                                 </div>
                                 <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
                                   {lesson.duration}
@@ -285,9 +279,6 @@ export default async function CourseLandingPage({
                     <div className="min-w-0">
                       <p className="font-heading text-lg md:text-xl leading-heading">
                         {lesson.title}
-                      </p>
-                      <p className="mt-1 text-sm text-warmgray leading-body">
-                        {lesson.description}
                       </p>
                     </div>
                     <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
