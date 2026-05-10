@@ -14,6 +14,8 @@ type ProgressBarProps = {
   moduleNumber?: number;
   moduleLessonNumber?: number;
   moduleLessonTotal?: number;
+  /** Override label for non-module lessons (e.g. "Welcome"). */
+  label?: string;
 };
 
 export function LessonProgressBar({
@@ -23,6 +25,7 @@ export function LessonProgressBar({
   moduleNumber,
   moduleLessonNumber,
   moduleLessonTotal,
+  label,
 }: ProgressBarProps) {
   const pct = (completedCount / total) * 100;
   const useModule =
@@ -34,9 +37,11 @@ export function LessonProgressBar({
     <div className="mb-10">
       <div className="flex items-center justify-between text-[10px] uppercase tracking-eyebrow font-medium">
         <span className="text-gold">
-          {useModule
-            ? `Module ${moduleNumber} · Lesson ${moduleLessonNumber} of ${moduleLessonTotal}`
-            : `Lesson ${currentNumber} of ${total}`}
+          {label
+            ? label
+            : useModule
+              ? `Module ${moduleNumber} · Lesson ${moduleLessonNumber} of ${moduleLessonTotal}`
+              : `Lesson ${currentNumber} of ${total}`}
         </span>
         <span className="text-warmgray/70">
           {completedCount} / {total} complete
@@ -135,6 +140,29 @@ export function LessonSidebar({
 
       {useModules ? (
         <div className="space-y-6">
+          {/* Welcome / intro lessons (moduleNumber === 0) render above
+              the module groupings, with no module heading. */}
+          {(() => {
+            const welcomeLessons = course.lessons.filter(
+              (l) => l.moduleNumber === 0,
+            );
+            if (welcomeLessons.length === 0) return null;
+            return (
+              <div>
+                <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/70 mb-2">
+                  Start here
+                </p>
+                <ul className="space-y-1">
+                  {welcomeLessons.map((lesson) => {
+                    const globalIdx = course.lessons.findIndex(
+                      (l) => l.slug === lesson.slug,
+                    );
+                    return renderLesson(lesson, globalIdx);
+                  })}
+                </ul>
+              </div>
+            );
+          })()}
           {course.modules!.map((mod) => {
             const modLessons = course.lessons.filter(
               (l) => l.moduleNumber === mod.number,

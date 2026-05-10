@@ -86,11 +86,125 @@ export const coliving101: Course = {
   ],
   lessons: [
     /* ====================================================================
+     * COURSE WELCOME — sits before Module 1. moduleNumber: 0 marks it as
+     * the course intro; the lesson chrome and course landing render it
+     * differently from regular module lessons.
+     * ==================================================================*/
+    {
+      slug: "welcome",
+      number: 1,
+      moduleNumber: 0,
+      moduleTitle: "Welcome",
+      moduleLessonNumber: 1,
+      title: "Welcome to Coliving 101",
+      description:
+        "What you'll learn, how the course is scoped, why the Atlanta examples are universal, and the disclaimers worth reading first.",
+      duration: "5 min",
+      sections: [
+        {
+          type: "paragraph",
+          content:
+            "Welcome to Coliving 101! I'm excited you're here and taking the first step toward learning about this investment strategy.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Coliving is having its moment right now — and for good reason. As housing costs climb and traditional single family rentals struggle to cashflow, investors across the country are discovering that rent-by-the-room is one of the most powerful strategies available in today's market. It's solving the affordable housing crisis while generating returns that traditional rentals simply can't match anymore.",
+        },
+        { type: "heading", content: "What we'll work through" },
+        {
+          type: "bullets",
+          items: [
+            "Module 1 — What coliving is, why it's growing, who it serves, and how it's different from a traditional rental",
+            "Module 2 — The math behind coliving — revenue, expenses, risk diversification, and why the numbers are so compelling right now",
+            "Module 3 — How to find and evaluate a coliving property — the non-negotiables, what to look for, and the costly mistakes to avoid before you make an offer",
+            "Module 4 — Setting up and launching — renovation, furnishing, tech, listing, screening, and move-in day",
+            "Module 5 — Operations — the day-to-day reality of running a coliving property, the most common questions new operators ask, and how to build a community people want to stay in",
+            "Module 6 — Is coliving right for you? The three paths into coliving and how to choose the right one for your situation",
+          ],
+        },
+        { type: "heading", content: "Before you dive in — a few notes" },
+        { type: "subheading", content: "1. This course covers general workforce housing coliving only" },
+        {
+          type: "paragraph",
+          content:
+            "Coliving takes many forms. There are special purpose coliving models — group homes, sober living facilities, assisted living, transitional housing, and more. These are valuable housing solutions and important parts of the shared housing ecosystem. But they come with their own licensing requirements, regulations, liability considerations, and operational nuances that are beyond the scope of this course.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Coliving 101 focuses exclusively on general workforce housing coliving — market rate, rent-by-the-room homes for working adults. This is the model we know best, operate every day, and can teach with confidence. If you're interested in special purpose coliving — that's a conversation worth having, but it's not what we cover here.",
+        },
+        { type: "subheading", content: "2. Some examples are Atlanta-specific, but the principles are universal" },
+        {
+          type: "paragraph",
+          content:
+            "I'm based in Atlanta, Georgia — and while much of what we cover applies to any market, Atlanta has some unique characteristics that make it an especially strong coliving market right now. The price-to-wage ratio creates strong demand for affordable housing. The housing stock — particularly tri-level homes and homes with finished basements — lends itself exceptionally well to coliving conversions. And purchase prices still support strong underwriting and cashflow in today's interest rate environment.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "That said, Atlanta is far from the only market where coliving is thriving. Charlotte and Raleigh, NC. Dallas and Houston, TX. Orlando and Jacksonville, FL. Phoenix, AZ. Kansas City, KS. Indianapolis, IN. Columbus, OH. Nashville, TN. Denver, CO. Los Angeles, CA. Markets across the country are seeing strong coliving growth — anywhere there's a gap between what working people earn and what housing costs.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "The strategies in this course work everywhere. The specific numbers will vary by your market. Use the frameworks, adapt the numbers.",
+        },
+        { type: "subheading", content: "3. This course pairs with two others for the most comprehensive education" },
+        {
+          type: "paragraph",
+          content:
+            "Some terms we'll use — especially when discussing underwriting, financing, and deal analysis — may not be fully explained in this course alone. They're covered in more detail in the Real Estate Investing 101 mini course, which breaks down every major investing strategy, the key financial metrics, and how to evaluate any deal.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "I highly recommend pairing this course with Real Estate Investing 101 and House Hacking 101 for the most complete foundation. Together they give you everything you need to understand the landscape, choose your strategy, and take your first step — no matter where you're starting from.",
+        },
+        { type: "subheading", content: "4. A note on PadSplit" },
+        {
+          type: "padsplit",
+          body: "Throughout this course you'll hear me reference PadSplit. PadSplit is a platform and marketplace for coliving — similar to what Airbnb is for short-term rentals. It connects coliving operators with residents looking for affordable, furnished, rent-by-the-room housing. I use PadSplit to list and fill rooms across my own portfolio and it's the platform I recommend to most new operators. You don't have to use PadSplit to do coliving — but it's the tool I know best and the one I'll reference most often in this course.",
+        },
+        { type: "subheading", content: "5. Important disclaimers" },
+        {
+          type: "paragraph",
+          content:
+            "This course is educational in nature. I am not your attorney, CPA, or financial advisor. Always consult licensed professionals before making investment decisions.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Interest rates, room rates, property values, and financial projections used throughout this course are illustrative examples based on real experience. Your actual numbers will depend on your specific market, property, and current market conditions.",
+        },
+        {
+          type: "paragraph",
+          content:
+            "Results vary. The numbers and projections in this course are based on real operational experience but are not guarantees of future performance. Real estate investing carries risk — educate yourself, do your due diligence, and make informed decisions.",
+        },
+        { type: "heading", content: "One more thing" },
+        {
+          type: "paragraph",
+          content:
+            "This course is designed to be actionable — not theoretical. Every module includes key takeaway cards, real-world examples, and a quiz to reinforce what you learned. By the time you finish all six modules, you won't just understand coliving — you'll know whether it's right for you and exactly what your next step looks like.",
+        },
+        {
+          type: "key-takeaway",
+          title: "Let's get into it",
+          body: "Mark this welcome complete and head into Module 1 — What is coliving & why it's having its moment.",
+        },
+      ],
+      quiz: [],
+      worksheet: placeholderWorksheet,
+    },
+
+    /* ====================================================================
      * MODULE 1 — WHAT IS COLIVING & WHY IT'S HAVING ITS MOMENT
      * ==================================================================*/
     {
       slug: "what-is-coliving",
-      number: 1,
+      number: 2,
       moduleNumber: 1,
       moduleTitle: "What is coliving & why it's having its moment",
       moduleLessonNumber: 1,
@@ -172,7 +286,7 @@ export const coliving101: Course = {
 
     {
       slug: "why-its-having-its-moment",
-      number: 2,
+      number: 3,
       moduleNumber: 1,
       moduleTitle: "What is coliving & why it's having its moment",
       moduleLessonNumber: 2,
@@ -301,7 +415,7 @@ export const coliving101: Course = {
 
     {
       slug: "why-investors-love-it",
-      number: 3,
+      number: 4,
       moduleNumber: 1,
       moduleTitle: "What is coliving & why it's having its moment",
       moduleLessonNumber: 3,
@@ -406,7 +520,7 @@ export const coliving101: Course = {
 
     {
       slug: "coliving-vs-traditional",
-      number: 4,
+      number: 5,
       moduleNumber: 1,
       moduleTitle: "What is coliving & why it's having its moment",
       moduleLessonNumber: 4,

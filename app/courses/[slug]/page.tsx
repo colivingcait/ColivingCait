@@ -77,7 +77,9 @@ export default async function CourseLandingPage({
                   size="lg"
                   magnetic
                 >
-                  Start lesson 01 →
+                  {firstLesson.moduleNumber === 0
+                    ? "Start with the welcome →"
+                    : "Start lesson 01 →"}
                 </Button>
               </div>
             </Reveal>
@@ -156,6 +158,35 @@ export default async function CourseLandingPage({
 
         {course.modules && course.modules.length > 0 ? (
           <div className="mt-14 space-y-12">
+            {/* Welcome lessons (moduleNumber === 0) render above the
+                module groupings — no module number, marked "Start here". */}
+            {course.lessons
+              .filter((l) => l.moduleNumber === 0)
+              .map((lesson) => (
+                <Reveal key={lesson.slug}>
+                  <Link
+                    href={`/courses/${course.slug}/${lesson.slug}`}
+                    className="group block border border-gold bg-cream p-5 md:p-6 hover:bg-gold/[0.04] transition-colors"
+                  >
+                    <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4 md:gap-6">
+                      <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
+                        ✦ Start here
+                      </span>
+                      <div className="min-w-0">
+                        <p className="font-heading text-lg md:text-xl leading-heading">
+                          {lesson.title}
+                        </p>
+                        <p className="mt-1 text-sm text-warmgray leading-body">
+                          {lesson.description}
+                        </p>
+                      </div>
+                      <span className="text-[10px] uppercase tracking-eyebrow text-gold whitespace-nowrap">
+                        {lesson.duration}
+                      </span>
+                    </div>
+                  </Link>
+                </Reveal>
+              ))}
             {course.modules.map((mod) => {
               const modLessons = course.lessons.filter(
                 (l) => l.moduleNumber === mod.number,

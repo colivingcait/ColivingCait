@@ -79,20 +79,33 @@ export default function LessonView({
             total={course.lessons.length}
             completedCount={progress.completed.length}
             moduleNumber={
-              course.modules && course.modules.length > 0
+              course.modules &&
+              course.modules.length > 0 &&
+              lesson.moduleNumber > 0
                 ? lesson.moduleNumber
                 : undefined
             }
             moduleLessonNumber={
-              course.modules && course.modules.length > 0
+              course.modules &&
+              course.modules.length > 0 &&
+              lesson.moduleNumber > 0
                 ? lesson.moduleLessonNumber
                 : undefined
             }
             moduleLessonTotal={
-              course.modules && course.modules.length > 0
+              course.modules &&
+              course.modules.length > 0 &&
+              lesson.moduleNumber > 0
                 ? course.lessons.filter(
                     (l) => l.moduleNumber === lesson.moduleNumber,
                   ).length
+                : undefined
+            }
+            label={
+              course.modules &&
+              course.modules.length > 0 &&
+              lesson.moduleNumber === 0
+                ? "Welcome"
                 : undefined
             }
           />
@@ -100,10 +113,16 @@ export default function LessonView({
           {/* Lesson header */}
           <header>
             {course.modules && course.modules.length > 0 ? (
-              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-                ✦ Module {lesson.moduleNumber} ·{" "}
-                <span className="text-warmgray">{lesson.moduleTitle}</span>
-              </p>
+              lesson.moduleNumber === 0 ? (
+                <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                  ✦ Welcome · {lesson.duration}
+                </p>
+              ) : (
+                <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+                  ✦ Module {lesson.moduleNumber} ·{" "}
+                  <span className="text-warmgray">{lesson.moduleTitle}</span>
+                </p>
+              )
             ) : (
               <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
                 ✦ Lesson {String(lesson.number).padStart(2, "0")} ·{" "}
