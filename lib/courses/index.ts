@@ -1,38 +1,13 @@
 import type { Course } from "./types";
 import { coliving101 } from "./coliving-101";
 import { houseHacking101 } from "./house-hacking-101";
+import { realEstate101 } from "./real-estate-101";
 
-// All courses in the catalog. Real Estate Investing 101 is still a
-// stub awaiting full content (status: "coming-soon"); the other two
-// are fully written.
+// All three courses in the catalog are now fully written.
 export const courses: Course[] = [
   coliving101,
   houseHacking101,
-  {
-    slug: "real-estate-101",
-    title: "Real Estate Investing 101",
-    tagline: "Every way to invest in residential real estate.",
-    description:
-      "Six lessons on the eight major residential investing strategies — and how to choose your first move.",
-    longDescription:
-      "Coming soon — full course content in production.",
-    price: 99,
-    originalPrice: 149,
-    status: "coming-soon",
-    symbol: "$",
-    outcomes: [
-      "Understand 8 residential investing strategies end-to-end",
-      "Pick the right first strategy for your life",
-      "Run any deal through a 4-metric framework",
-      "Avoid the 7 mistakes that cost first-time investors most",
-    ],
-    audience: [
-      "Anyone considering real estate as their first investment",
-      "Investors deciding which strategy to commit to",
-      "Folks who want a high-level overview before going deep",
-    ],
-    lessons: [],
-  },
+  realEstate101,
 ];
 
 export function getCourse(slug: string): Course | undefined {
