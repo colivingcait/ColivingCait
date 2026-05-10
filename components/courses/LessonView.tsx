@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import type { Course, Lesson } from "@/lib/courses/types";
 import {
@@ -10,9 +9,7 @@ import {
 } from "./LessonChrome";
 import LessonSections from "./LessonSections";
 import QuizBlock from "./QuizBlock";
-import Button from "@/components/Button";
 import { useCourseProgress } from "./useCourseProgress";
-import { cn } from "@/lib/cn";
 
 type LessonViewProps = {
   course: Course;
@@ -22,15 +19,13 @@ type LessonViewProps = {
 };
 
 // LessonView — the full interactive lesson page client component. Owns:
-// - Sidebar navigation with lock / completion state
+// - Sidebar navigation
 // - Progress bar
-// - Section-rendered lesson content
-// - Mark Complete button
-// - Prev / Next navigation
+// - Section-rendered lesson content (or quiz, for module-quiz pages)
+// - Prev / Next navigation that auto-marks the current lesson complete
 //
-// When `lesson.kind === "module-quiz"` the page renders the quiz on its
-// own — no lesson sections, just intro chrome + the quiz block + the
-// mark-complete + nav.
+// Completion is tracked silently — clicking Next records the current
+// lesson as done. There's no explicit "Mark Complete" step.
 export default function LessonView({
   course,
   lesson,
@@ -38,21 +33,13 @@ export default function LessonView({
   next,
 }: LessonViewProps) {
   const progress = useCourseProgress(course.slug);
-  const [quizScore, setQuizScore] = useState<{
-    correct: number;
-    total: number;
-  } | null>(null);
 
-  const isLessonComplete = progress.isCompleted(lesson.slug);
   const isModuleQuiz = lesson.kind === "module-quiz";
   const useModules = !!course.modules && course.modules.length > 0;
   const isWelcome = useModules && lesson.moduleNumber === 0;
 
-  const handleMarkComplete = () => {
+  const handleAdvance = () => {
     progress.markComplete(lesson.slug);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
   };
 
   return (
@@ -67,11 +54,7 @@ export default function LessonView({
       <div className="grid gap-12 md:grid-cols-[260px_1fr] md:gap-16">
         {/* Desktop sidebar — sticky, scrollable when content overflows */}
         <aside className="hidden md:block">
-          <div
-            className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 -mr-2"
-            // -mr-2 + pr-2 keeps the scrollbar from cutting into the
-            // sidebar content while still letting it overflow cleanly.
-          >
+          <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 -mr-2">
             <LessonSidebar
               course={course}
               currentLessonSlug={lesson.slug}
@@ -159,16 +142,10 @@ export default function LessonView({
                 </p>
                 <p className="mt-3 text-warmgray text-sm leading-body">
                   Pick the answer you think fits best. Each question explains
-                  the correct answer once you choose. Aim for 4 out of{" "}
-                  {lesson.quiz.length} to move on.
+                  the correct answer once you choose.
                 </p>
               </div>
-              <QuizBlock
-                questions={lesson.quiz}
-                onAllAnswered={(correct, total) =>
-                  setQuizScore({ correct, total })
-                }
-              />
+              <QuizBlock questions={lesson.quiz} />
             </div>
           ) : (
             <div className="mt-10">
@@ -176,88 +153,14 @@ export default function LessonView({
             </div>
           )}
 
-          {/* Mark complete + nav */}
-          <MarkCompleteSection
-            isLessonComplete={isLessonComplete}
-            quizScore={quizScore}
-            isModuleQuiz={isModuleQuiz}
-            onMarkComplete={handleMarkComplete}
-            onMarkIncomplete={() => progress.markIncomplete(lesson.slug)}
-          />
-
-          {/* Prev / Next */}
+          {/* Prev / Next — clicking Next auto-marks this lesson complete */}
           <LessonNavigation
             courseSlug={course.slug}
             prev={prev}
             next={next}
-            nextUnlocked={isLessonComplete}
+            onAdvance={handleAdvance}
           />
         </article>
-      </div>
-    </div>
-  );
-}
-
-/* ----------- Mark complete section ----------- */
-type MarkCompleteSectionProps = {
-  isLessonComplete: boolean;
-  quizScore: { correct: number; total: number } | null;
-  isModuleQuiz: boolean;
-  onMarkComplete: () => void;
-  onMarkIncomplete: () => void;
-};
-
-function MarkCompleteSection({
-  isLessonComplete,
-  quizScore,
-  isModuleQuiz,
-  onMarkComplete,
-  onMarkIncomplete,
-}: MarkCompleteSectionProps) {
-  if (isLessonComplete) {
-    return (
-      <div className="my-12 border border-gold bg-gradient-to-b from-gold/[0.10] to-cream p-6 md:p-8 text-center">
-        <p className="text-gold text-3xl mb-3">✓</p>
-        <p className="font-heading text-2xl md:text-3xl leading-heading">
-          {isModuleQuiz ? "Module complete." : "Lesson complete."}
-        </p>
-        <p className="mt-3 text-warmgray text-sm">
-          {isModuleQuiz
-            ? "Onward to the next module."
-            : "The next lesson is unlocked. Keep going."}
-        </p>
-        <button
-          type="button"
-          onClick={onMarkIncomplete}
-          className="mt-4 text-[10px] uppercase tracking-button text-warmgray/70 hover:text-gold transition-colors"
-        >
-          Mark {isModuleQuiz ? "module" : "lesson"} incomplete
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <div className="my-12 border border-brand bg-cream p-6 md:p-8 text-center">
-      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
-        ✦ Ready to move on?
-      </p>
-      <p className="font-heading text-2xl md:text-3xl leading-heading">
-        {quizScore
-          ? `${quizScore.correct} / ${quizScore.total} on the quiz.`
-          : isModuleQuiz
-            ? "Mark this module complete."
-            : "Mark this lesson complete."}
-      </p>
-      <p className="mt-3 text-warmgray text-sm max-w-md mx-auto">
-        Marking it complete unlocks the next{" "}
-        {isModuleQuiz ? "module" : "lesson"} and adds it to your course
-        progress bar.
-      </p>
-      <div className="mt-6">
-        <Button onClick={onMarkComplete} variant="primary" size="lg" magnetic>
-          Mark {isModuleQuiz ? "Module" : "Lesson"} Complete →
-        </Button>
       </div>
     </div>
   );
@@ -268,17 +171,19 @@ type LessonNavigationProps = {
   courseSlug: string;
   prev: Lesson | null;
   next: Lesson | null;
-  nextUnlocked: boolean;
+  /** Called when the user clicks Next or "Course complete" — marks the
+   *  current lesson done before navigating. */
+  onAdvance: () => void;
 };
 
 function LessonNavigation({
   courseSlug,
   prev,
   next,
-  nextUnlocked,
+  onAdvance,
 }: LessonNavigationProps) {
   return (
-    <div className="mt-12 grid gap-4 sm:grid-cols-2 border-t border-brand pt-8">
+    <div className="mt-16 grid gap-4 sm:grid-cols-2 border-t border-brand pt-8">
       {prev ? (
         <Link
           href={`/courses/${courseSlug}/${prev.slug}`}
@@ -308,26 +213,14 @@ function LessonNavigation({
 
       {next ? (
         <Link
-          href={
-            nextUnlocked ? `/courses/${courseSlug}/${next.slug}` : "#"
-          }
-          aria-disabled={!nextUnlocked}
-          onClick={(e) => {
-            if (!nextUnlocked) e.preventDefault();
-          }}
-          className={cn(
-            "group block border p-5 transition-colors text-right",
-            nextUnlocked
-              ? "border-gold bg-gold/[0.06] hover:border-gold hover:bg-gold/[0.12]"
-              : "border-brand/40 bg-cream/50 opacity-60 cursor-not-allowed",
-          )}
+          href={`/courses/${courseSlug}/${next.slug}`}
+          onClick={onAdvance}
+          className="group block border border-gold bg-gold/[0.06] p-5 hover:bg-gold/[0.12] transition-colors text-right"
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-gold">
-            {nextUnlocked
-              ? next.kind === "module-quiz"
-                ? "Take the module quiz →"
-                : "Next lesson →"
-              : "🔒 Locked — complete this first"}
+            {next.kind === "module-quiz"
+              ? "Take the module quiz →"
+              : "Next lesson →"}
           </p>
           <p className="mt-2 font-heading text-lg leading-heading">
             {next.title}
@@ -336,7 +229,8 @@ function LessonNavigation({
       ) : (
         <Link
           href="/learn"
-          className="group block border border-gold bg-gold/[0.06] p-5 hover:border-gold hover:bg-gold/[0.12] transition-colors text-right"
+          onClick={onAdvance}
+          className="group block border border-gold bg-gold/[0.06] p-5 hover:bg-gold/[0.12] transition-colors text-right"
         >
           <p className="text-[10px] uppercase tracking-eyebrow text-gold">
             Course complete · Next →

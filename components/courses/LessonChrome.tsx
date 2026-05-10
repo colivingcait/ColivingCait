@@ -75,13 +75,13 @@ export function LessonSidebar({
   function renderLesson(lesson: (typeof course.lessons)[number], globalIdx: number) {
     const isCurrent = lesson.slug === currentLessonSlug;
     const isComplete = completed.includes(lesson.slug);
-    const prevSlug = globalIdx > 0 ? course.lessons[globalIdx - 1].slug : null;
-    const isLocked =
-      globalIdx > 0 && prevSlug !== null && !completed.includes(prevSlug);
+    const isQuiz = lesson.kind === "module-quiz";
 
-    const labelNumber = useModules
-      ? String(lesson.moduleLessonNumber).padStart(2, "0")
-      : String(globalIdx + 1).padStart(2, "0");
+    const labelNumber = isQuiz
+      ? "✦"
+      : useModules
+        ? String(lesson.moduleLessonNumber).padStart(2, "0")
+        : String(globalIdx + 1).padStart(2, "0");
 
     const inner = (
       <span className="flex items-start gap-3 py-3 pr-3 pl-3 -mx-3 border-l-2 transition-colors text-sm">
@@ -89,14 +89,13 @@ export function LessonSidebar({
           aria-hidden
           className="shrink-0 w-5 h-5 mt-0.5 border border-current flex items-center justify-center text-[10px] font-medium tabular-nums"
         >
-          {isComplete ? "✓" : isLocked ? "🔒" : labelNumber}
+          {isComplete ? "✓" : labelNumber}
         </span>
         <span className="flex-1">
           <span
             className={cn(
               "block font-sans text-sm leading-snug",
               isCurrent && "text-gold",
-              isLocked && "text-warmgray/50",
             )}
           >
             {lesson.title}
@@ -107,7 +106,7 @@ export function LessonSidebar({
               isCurrent ? "text-gold/80" : "text-warmgray/50",
             )}
           >
-            {lesson.duration}
+            {isQuiz ? `Module quiz · ${lesson.duration}` : lesson.duration}
           </span>
         </span>
       </span>
@@ -115,19 +114,11 @@ export function LessonSidebar({
 
     const stateClass = isCurrent
       ? "border-gold text-gold"
-      : isComplete
-        ? "border-brand/40 text-charcoal hover:border-gold"
-        : isLocked
-          ? "border-brand/20 text-warmgray/60 cursor-not-allowed"
-          : "border-brand/40 text-charcoal hover:border-gold";
+      : "border-brand/40 text-charcoal hover:border-gold";
 
     return (
       <li key={lesson.slug} className={cn("block", stateClass)}>
-        {isLocked ? (
-          <div aria-disabled="true">{inner}</div>
-        ) : (
-          <Link href={`/courses/${course.slug}/${lesson.slug}`}>{inner}</Link>
-        )}
+        <Link href={`/courses/${course.slug}/${lesson.slug}`}>{inner}</Link>
       </li>
     );
   }
