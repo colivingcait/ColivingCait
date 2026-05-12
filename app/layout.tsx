@@ -25,6 +25,11 @@ export const metadata: Metadata = {
   title: "Coliving Cait — Building wealth through intentional coliving",
   description:
     "Caitlyn Verdugo is an Atlanta-based coliving investor, Realtor, and women's coliving coach helping women build wealth through real estate.",
+  icons: {
+    icon: "/images/colivingcait-favicon.png",
+    shortcut: "/images/colivingcait-favicon.png",
+    apple: "/images/colivingcait-favicon.png",
+  },
 };
 
 export default function RootLayout({
