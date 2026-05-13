@@ -14,7 +14,6 @@ const links = [
   { href: "/learn", label: "Learn With Me" },
   { href: "/partner-with-me", label: "Partner" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
-  { href: "/strategy-session", label: "Strategy Session" },
   { href: "/community", label: "Community" },
 ];
 

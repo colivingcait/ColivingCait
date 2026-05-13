@@ -3,7 +3,8 @@ import Link from "next/link";
 // Footer mirrors Section 8 of the playbook v2:
 //   col 1: ColivingCait logo + tagline
 //   col 2: Navigate
-//   col 3: Connect (community, contact, socials)
+//   col 3: Work With Me
+//   col 4: Connect (community, contact, socials)
 // Bottom bar: copyright + email
 const navigate = [
   { href: "/about", label: "About" },
@@ -12,6 +13,13 @@ const navigate = [
   { href: "/partner-with-me", label: "Partner With Me" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
   { href: "/calculator", label: "Calculators" },
+];
+
+const workWithMe = [
+  { href: "/learn", label: "Get Coaching" },
+  { href: "/strategy-session", label: "Strategy Session" },
+  { href: "/partner-with-me", label: "Partner With Me" },
+  { href: "/buy-and-sell", label: "Buy & Sell" },
 ];
 
 const connect = [
@@ -27,7 +35,7 @@ const connect = [
 export default function Footer() {
   return (
     <footer className="bg-charcoal px-8 lg:px-[60px] border-t border-white/[0.04]">
-      <div className="mx-auto grid w-full max-w-[1320px] gap-10 py-14 md:gap-[60px] md:grid-cols-[1.2fr_1fr_1fr]">
+      <div className="mx-auto grid w-full max-w-[1320px] gap-10 py-14 md:gap-[60px] md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <Link
             href="/"
@@ -46,6 +54,24 @@ export default function Footer() {
           </h4>
           <ul className="flex flex-col gap-3 list-none">
             {navigate.map((l) => (
+              <li key={l.label}>
+                <Link
+                  href={l.href}
+                  className="text-[13px] text-warmgray-light hover:text-white transition-colors duration-200"
+                >
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="mb-5 text-[10px] font-medium uppercase tracking-[0.15em] text-gold">
+            Work With Me
+          </h4>
+          <ul className="flex flex-col gap-3 list-none">
+            {workWithMe.map((l) => (
               <li key={l.label}>
                 <Link
                   href={l.href}

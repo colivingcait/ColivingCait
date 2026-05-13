@@ -391,6 +391,17 @@ export default function LearnPage() {
               </a>
             </div>
           </div>
+
+          <div className="reveal mt-10 text-center">
+            <a
+              href="https://calendly.com/colivingcait/strategy-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[13px] text-warmgray hover:text-charcoal transition-colors duration-200 inline-flex items-center gap-1.5"
+            >
+              Just need one call? Book a one-time Strategy Session →
+            </a>
+          </div>
         </div>
       </section>
 
