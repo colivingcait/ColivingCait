@@ -79,7 +79,7 @@ export default function PartnerPage() {
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
             <a
-              href="https://calendly.com/coliving-cait/coaching-discovery-call"
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -187,7 +187,7 @@ export default function PartnerPage() {
                   ))}
                 </ul>
                 <a
-                  href="https://calendly.com/coliving-cait/coaching-discovery-call"
+                  href="https://calendly.com/colivingcait/coaching-discovery-call"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-sm self-start"
@@ -379,7 +379,7 @@ export default function PartnerPage() {
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
             <a
-              href="https://calendly.com/coliving-cait/coaching-discovery-call"
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold"

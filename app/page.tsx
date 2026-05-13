@@ -47,7 +47,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
               <a
-                href="https://calendly.com/coliving-cait/coaching-discovery-call"
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary"
@@ -474,7 +474,7 @@ export default function HomePage() {
             Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
           </p>
           <a
-            href="https://calendly.com/coliving-cait/coaching-discovery-call"
+            href="https://calendly.com/colivingcait/coaching-discovery-call"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"

@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 
 const STRATEGY_URL = "https://calendly.com/colivingcait/strategy-session";
-const COACHING_URL = "https://calendly.com/coliving-cait/coaching-discovery-call";
+const COACHING_URL = "https://calendly.com/colivingcait/coaching-discovery-call";
 
 export const metadata = {
   title: "Strategy Session — Coliving Cait",

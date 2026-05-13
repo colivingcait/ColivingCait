@@ -80,7 +80,7 @@ export default function Nav() {
           })}
           <li>
             <a
-              href="https://calendly.com/coliving-cait/coaching-discovery-call"
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
@@ -118,7 +118,7 @@ export default function Nav() {
               </Link>
             ))}
             <a
-              href="https://calendly.com/coliving-cait/coaching-discovery-call"
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}

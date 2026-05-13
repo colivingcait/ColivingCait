@@ -87,7 +87,7 @@ export default function BuyAndSellPage() {
               ))}
             </div>
             <a
-              href="https://calendly.com/coliving-cait/coaching-discovery-call"
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -375,7 +375,7 @@ export default function BuyAndSellPage() {
             Whether you&apos;re buying, selling, or house hacking — it starts with one conversation.
           </p>
           <a
-            href="https://calendly.com/coliving-cait/coaching-discovery-call"
+            href="https://calendly.com/colivingcait/coaching-discovery-call"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
