@@ -7,6 +7,12 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 import { courses, getCourse } from "@/lib/courses";
 
+const STRIPE_CHECKOUT: Record<string, string> = {
+  "coliving-101": "https://buy.stripe.com/8x29AU5D13qf7SYbdIaZi01",
+  "house-hacking-101": "https://buy.stripe.com/aFaaEYaXl1i7c9edlQaZi02",
+  "real-estate-101": "https://buy.stripe.com/9B6fZi3uTf8X8X25ToaZi03",
+};
+
 // Pre-generate static params for every available course
 export async function generateStaticParams() {
   return courses
@@ -42,6 +48,7 @@ export default async function CourseLandingPage({
   }
 
   const firstLesson = course.lessons[0];
+  const checkoutUrl = STRIPE_CHECKOUT[course.slug];
 
   return (
     <>
@@ -81,15 +88,21 @@ export default async function CourseLandingPage({
               </p>
             </Reveal>
             <Reveal delay={0.4}>
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap gap-4 items-center">
                 <Button
-                  href={`/courses/${course.slug}/${firstLesson.slug}`}
+                  href={checkoutUrl ?? `/courses/${course.slug}/${firstLesson.slug}`}
                   variant="primary"
                   size="lg"
                   magnetic
                 >
-                  Get started →
+                  Buy Now — ${course.price}
                 </Button>
+                <Link
+                  href={`/courses/${course.slug}/${firstLesson.slug}`}
+                  className="text-[11px] uppercase tracking-button text-cream/70 hover:text-gold-light transition-colors"
+                >
+                  Preview lesson 01 →
+                </Link>
               </div>
             </Reveal>
           </div>
@@ -310,20 +323,19 @@ export default async function CourseLandingPage({
           </Reveal>
           <Reveal delay={0.25}>
             <p className="mt-6 text-cream/70 leading-body max-w-xl mx-auto">
-              Start with lesson 01 right now — no checkout while we&apos;re
-              in development. The Stripe paywall will be added before
-              public launch.
+              Secure checkout via Stripe. You&apos;ll get instant access to
+              every lesson, quiz, and worksheet — yours for life.
             </p>
           </Reveal>
           <Reveal delay={0.4}>
             <div className="mt-10">
               <Button
-                href={`/courses/${course.slug}/${firstLesson.slug}`}
+                href={checkoutUrl ?? `/courses/${course.slug}/${firstLesson.slug}`}
                 variant="primary"
                 size="lg"
                 magnetic
               >
-                Start lesson 01 →
+                Buy Now — ${course.price}
               </Button>
             </div>
           </Reveal>

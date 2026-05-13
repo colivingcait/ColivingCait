@@ -363,15 +363,13 @@ export default function WhatIsColivingPage() {
             <span className="block text-[13px] text-warmgray-light mb-6">
               6 modules · 23 lessons · 2–3 hours of course content
             </span>
-            <a
-              href="https://buy.stripe.com/8x29AU5D13qf7SYbdIaZi01"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/courses/coliving-101"
               className="btn-gold w-full text-center mb-3"
               style={{ display: "block" }}
             >
-              Buy Now
-            </a>
+              View Course →
+            </Link>
             <Link
               href="/learn#foundations"
               className="text-[13px] text-warmgray hover:text-charcoal transition-colors duration-300"

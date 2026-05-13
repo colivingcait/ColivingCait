@@ -1,3 +1,4 @@
+import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import { getCourse } from "@/lib/courses";
 
@@ -29,21 +30,21 @@ const courses = [
     title: "Real Estate Investing 101",
     slug: "real-estate-101",
     copy: "The key terms and mindset every investor needs — regardless of strategy. Financing basics, deal evaluation, market selection, and a clear framework so you can speak the language and start thinking like an investor.",
-    href: "https://buy.stripe.com/9B6fZi3uTf8X8X25ToaZi03",
+    href: "/courses/real-estate-101",
   },
   {
     icon: "◈",
     title: "House Hacking 101",
     slug: "house-hacking-101",
     copy: "Where most investors should start. Learn how to minimize your housing expenses, get your feet wet, and use the best leverage available to you — your primary residence — to start building wealth from day one.",
-    href: "https://buy.stripe.com/aFaaEYaXl1i7c9edlQaZi02",
+    href: "/courses/house-hacking-101",
   },
   {
     icon: "⌂",
     title: "Coliving 101",
     slug: "coliving-101",
     copy: "A complete breakdown of the coliving model — how it works, who it serves, how the math works, and what to look for in your first property. Everything you need to understand the strategy of coliving.",
-    href: "https://buy.stripe.com/8x29AU5D13qf7SYbdIaZi01",
+    href: "/courses/coliving-101",
   },
 ];
 
@@ -186,15 +187,13 @@ export default function LearnPage() {
                     Limited
                   </span>
                 </div>
-                <a
+                <Link
                   href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="btn-gold w-full text-center"
                   style={{ display: "block" }}
                 >
-                  Buy Now
-                </a>
+                  View Course →
+                </Link>
               </div>
             ))}
           </div>
