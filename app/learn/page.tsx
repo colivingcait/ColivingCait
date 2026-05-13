@@ -295,7 +295,7 @@ export default function LearnPage() {
                 3 months · 1:1 · Limited spots
               </span>
               <a
-                href="https://calendly.com/colivingcait/consulting-session"
+                href="https://calendly.com/colivingcait/coliving-consultation"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gold w-full text-center mt-7"
@@ -307,7 +307,7 @@ export default function LearnPage() {
                 Payment plan available at checkout
               </p>
               <a
-                href="https://calendly.com/colivingcait/consulting-session"
+                href="https://calendly.com/colivingcait/coliving-consultation"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-text mt-5 flex justify-center"
@@ -363,7 +363,7 @@ export default function LearnPage() {
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
               <a
-                href="https://calendly.com/colivingcait/consulting-session"
+                href="https://calendly.com/colivingcait/coliving-consultation"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-gold"
@@ -371,7 +371,7 @@ export default function LearnPage() {
                 Start Now — $1,000/mo
               </a>
               <a
-                href="https://calendly.com/colivingcait/consulting-session"
+                href="https://calendly.com/colivingcait/coliving-consultation"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-text"
@@ -399,7 +399,7 @@ export default function LearnPage() {
               These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
             </p>
             <a
-              href="https://calendly.com/colivingcait/consulting-session"
+              href="https://calendly.com/colivingcait/coliving-consultation"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -473,7 +473,7 @@ export default function LearnPage() {
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
           <a
-            href="https://calendly.com/colivingcait/consulting-session"
+            href="https://calendly.com/colivingcait/coliving-consultation"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
