@@ -253,13 +253,13 @@ export default function PartnerPage() {
             strategy="Arbitrage"
             delay={2}
             images={[
-              "/images/meadow/meadowfront.jpg",
-              "/images/meadow/meadow2.jpg",
-              "/images/meadow/meadow3.jpg",
-              "/images/meadow/meadow4.jpg",
-              "/images/meadow/meadow5.jpg",
-              "/images/meadow/meadow6.jpg",
-              "/images/meadow/meadow7.jpg",
+              "/images/Meadow/meadowfront.jpg",
+              "/images/Meadow/meadow2.jpg",
+              "/images/Meadow/meadow3.jpg",
+              "/images/Meadow/meadow4.jpg",
+              "/images/Meadow/meadow5.jpg",
+              "/images/Meadow/meadow6.jpg",
+              "/images/Meadow/meadow7.jpg",
             ]}
           >
             Converted the living rooms, dining room and basement into{" "}
