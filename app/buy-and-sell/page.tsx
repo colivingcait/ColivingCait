@@ -95,7 +95,7 @@ export default function BuyAndSellPage() {
               Schedule a Call →
             </a>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}

@@ -54,7 +54,7 @@ export default function PropertyCard({
       <div className="grid lg:grid-cols-2">
         {/* Image / carousel */}
         <div
-          className="relative flex items-center justify-center text-sm text-warmgray-light overflow-hidden bg-blush"
+          className="relative w-full flex items-center justify-center text-sm text-warmgray-light overflow-hidden bg-blush"
           style={{ aspectRatio: "16 / 10" }}
         >
           <span className="absolute top-4 left-4 z-20 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-3 py-1.5">

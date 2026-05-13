@@ -60,7 +60,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative self-end opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
+          <div className="relative self-end w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "3 / 4" }}
