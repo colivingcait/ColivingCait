@@ -222,14 +222,9 @@ export default function LearnPage() {
                     $298 off
                   </span>
                 </div>
-                <a
-                  href="https://buy.stripe.com/3cI14oc1p0e35KQa9EaZi00"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary"
-                >
-                  Get the Bundle
-                </a>
+                <Link href="/courses/bundle" className="btn-primary">
+                  View the Bundle →
+                </Link>
               </div>
             </div>
           </div>
