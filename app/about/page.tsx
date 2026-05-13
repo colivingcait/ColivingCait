@@ -188,7 +188,14 @@ export default function AboutPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
               500+ members · Free to join
             </span>
-            <a href="#" className="btn-sm">Join on Facebook →</a>
+            <a
+              href="https://www.facebook.com/groups/1407759770477235"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sm"
+            >
+              Join on Facebook →
+            </a>
           </div>
 
           <div className="reveal reveal-d2 p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
@@ -202,7 +209,14 @@ export default function AboutPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
               Oct 16–17, 2026 · Atlanta · ~150 attendees
             </span>
-            <a href="#" className="btn-sm">Reserve Your Seat →</a>
+            <a
+              href="https://www.eventbrite.com/e/the-womens-coliving-summit-atlanta-2026-tickets-1986277433272?aff=ebdsoporgprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sm"
+            >
+              Reserve Your Seat →
+            </a>
           </div>
         </div>
       </section>
@@ -258,7 +272,15 @@ export default function AboutPage() {
             </h2>
             <p className="text-[13px] text-warmgray-light">
               <span className="text-gold tracking-[2px]">★★★★★</span>
-              &nbsp;&nbsp;5.0 on Zillow
+              &nbsp;&nbsp;
+              <a
+                href="https://zillow.com/caitlynverdugo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold transition-colors"
+              >
+                5.0 on Zillow
+              </a>
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2">
@@ -327,7 +349,14 @@ export default function AboutPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a
+            href="https://calendly.com/colivingcait/coliving-consultation"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+          >
+            Book a Discovery Call
+          </a>
         </div>
       </section>
     </>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import { getCourse } from "@/lib/courses";
 
@@ -30,21 +29,21 @@ const courses = [
     title: "Real Estate Investing 101",
     slug: "real-estate-101",
     copy: "The key terms and mindset every investor needs — regardless of strategy. Financing basics, deal evaluation, market selection, and a clear framework so you can speak the language and start thinking like an investor.",
-    href: "/courses/real-estate-101",
+    href: "https://buy.stripe.com/9B6fZi3uTf8X8X25ToaZi03",
   },
   {
     icon: "◈",
     title: "House Hacking 101",
     slug: "house-hacking-101",
     copy: "Where most investors should start. Learn how to minimize your housing expenses, get your feet wet, and use the best leverage available to you — your primary residence — to start building wealth from day one.",
-    href: "/courses/house-hacking-101",
+    href: "https://buy.stripe.com/aFaaEYaXl1i7c9edlQaZi02",
   },
   {
     icon: "⌂",
     title: "Coliving 101",
     slug: "coliving-101",
     copy: "A complete breakdown of the coliving model — how it works, who it serves, how the math works, and what to look for in your first property. Everything you need to understand the strategy of coliving.",
-    href: "/courses/coliving-101",
+    href: "https://buy.stripe.com/8x29AU5D13qf7SYbdIaZi01",
   },
 ];
 
@@ -187,13 +186,15 @@ export default function LearnPage() {
                     Limited
                   </span>
                 </div>
-                <Link
+                <a
                   href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-gold w-full text-center"
                   style={{ display: "block" }}
                 >
                   Buy Now
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -222,9 +223,14 @@ export default function LearnPage() {
                     $298 off
                   </span>
                 </div>
-                <Link href="/courses?bundle=1" className="btn-primary">
+                <a
+                  href="https://buy.stripe.com/3cI14oc1p0e35KQa9EaZi00"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                >
                   Get the Bundle
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -288,18 +294,22 @@ export default function LearnPage() {
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
               </span>
-              <Link
-                href="/contact?topic=coaching"
+              <a
+                href="https://calendly.com/colivingcait/consulting-session"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-gold w-full text-center mt-7"
                 style={{ display: "block" }}
               >
                 Enroll Now
-              </Link>
+              </a>
               <p className="text-[13px] text-warmgray-light mt-3 text-center">
                 Payment plan available at checkout
               </p>
               <a
-                href="/contact?topic=coaching"
+                href="https://calendly.com/colivingcait/consulting-session"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-text mt-5 flex justify-center"
               >
                 Have questions? Book a Discovery Call →
@@ -352,10 +362,20 @@ export default function LearnPage() {
               </span>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
-              <Link href="/contact?topic=coaching" className="btn-gold">
+              <a
+                href="https://calendly.com/colivingcait/consulting-session"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-gold"
+              >
                 Start Now — $1,000/mo
-              </Link>
-              <a href="/contact?topic=coaching" className="btn-text">
+              </a>
+              <a
+                href="https://calendly.com/colivingcait/consulting-session"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-text"
+              >
                 Have questions? Book a Discovery Call →
               </a>
             </div>
@@ -378,9 +398,14 @@ export default function LearnPage() {
             <p className="text-[15px] text-warmgray mb-8">
               These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
             </p>
-            <Link href="/contact?topic=coaching" className="btn-primary">
+            <a
+              href="https://calendly.com/colivingcait/consulting-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
               Book a Discovery Call
-            </Link>
+            </a>
           </div>
 
           <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
@@ -418,9 +443,14 @@ export default function LearnPage() {
             <span className="block text-[15px] text-warmgray-light mb-6">
               One session · 60 minutes
             </span>
-            <Link href="/contact?topic=strategy-session" className="btn-gold">
+            <a
+              href="https://calendly.com/colivingcait/consulting-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
               Book a Session — $250
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -442,7 +472,14 @@ export default function LearnPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a
+            href="https://calendly.com/colivingcait/consulting-session"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+          >
+            Book a Discovery Call
+          </a>
         </div>
       </section>
     </>

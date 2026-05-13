@@ -97,7 +97,14 @@ export default function CommunityPage() {
                 </li>
               ))}
             </ul>
-            <a href="#" className="btn-primary">Join She Leads on Facebook →</a>
+            <a
+              href="https://www.facebook.com/groups/1407759770477235"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Join She Leads on Facebook →
+            </a>
           </div>
 
           <div className="reveal reveal-d2 bg-white border border-soft p-12 lg:p-11 transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
@@ -110,7 +117,14 @@ export default function CommunityPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.06em] mb-6">
               500+ members · Free · Private Facebook group · Nationwide
             </span>
-            <a href="#" className="btn-sm">Join Now →</a>
+            <a
+              href="https://www.facebook.com/groups/1407759770477235"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-sm"
+            >
+              Join Now →
+            </a>
             <p className="font-heading italic text-lg text-charcoal leading-[1.45] pt-6 mt-6 border-t border-soft">
               “I joined She Leads not knowing a single person in coliving. Six months later I closed my first deal — and I had a whole community cheering me on.”
             </p>
@@ -150,7 +164,14 @@ export default function CommunityPage() {
                 </div>
               ))}
             </div>
-            <a href="#" className="btn-primary">RSVP on Eventbrite →</a>
+            <a
+              href="https://www.eventbrite.com/cc/women-real-estate-investors-atl-monthly-meetups-4833857?utm-campaign=social&utm-content=creatorshare&utm-medium=discovery&utm-term=odclsxcollection&utm-source=cp&aff=escb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              RSVP on Eventbrite →
+            </a>
           </div>
 
           <div className="reveal reveal-d2 bg-cream p-10 lg:p-11 border border-soft">
@@ -223,7 +244,12 @@ export default function CommunityPage() {
                 </div>
               ))}
             </div>
-            <a href="#" className="btn-outline-light">
+            <a
+              href="https://www.eventbrite.com/e/the-womens-coliving-summit-atlanta-2026-tickets-1986277433272?aff=ebdsoporgprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-light"
+            >
               Reserve Your Seat on Eventbrite →
             </a>
           </div>
@@ -324,8 +350,22 @@ export default function CommunityPage() {
             Join the community, show up to a meetup, or reserve your seat at the summit. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
-            <a href="#" className="btn-gold">Join She Leads →</a>
-            <a href="#" className="btn-outline-light">Reserve WCS Seat →</a>
+            <a
+              href="https://www.facebook.com/groups/1407759770477235"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
+              Join She Leads →
+            </a>
+            <a
+              href="https://www.eventbrite.com/e/the-womens-coliving-summit-atlanta-2026-tickets-1986277433272?aff=ebdsoporgprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-light"
+            >
+              Reserve WCS Seat →
+            </a>
           </div>
         </div>
       </section>

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
 
@@ -79,9 +78,14 @@ export default function PartnerPage() {
             <p className="text-base leading-[1.85] text-warmgray max-w-[480px] mx-auto lg:mx-0 mb-9">
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
-            <Link href="/contact?topic=partnership" className="btn-primary">
+            <a
+              href="https://calendly.com/colivingcait/capital-partners"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
               Schedule a Discovery Call →
-            </Link>
+            </a>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
@@ -182,9 +186,14 @@ export default function PartnerPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/contact?topic=partnership" className="btn-sm self-start">
+                <a
+                  href="https://calendly.com/colivingcait/capital-partners"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-sm self-start"
+                >
                   Schedule a Call →
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -369,9 +378,14 @@ export default function PartnerPage() {
             Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
-            <Link href="/contact?topic=partnership" className="btn-gold">
+            <a
+              href="https://calendly.com/colivingcait/capital-partners"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
               Schedule a Discovery Call
-            </Link>
+            </a>
           </div>
         </div>
       </section>

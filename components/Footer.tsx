@@ -18,9 +18,10 @@ const connect = [
   { href: "/community", label: "Community", external: false },
   { href: "/contact", label: "Contact", external: false },
   { href: "https://instagram.com/colivingcait", label: "Instagram", external: true },
-  { href: "#", label: "YouTube", external: true },
-  { href: "#", label: "Facebook", external: true },
-  { href: "#", label: "LinkedIn", external: true },
+  { href: "https://youtube.com/colivingcait", label: "YouTube", external: true },
+  { href: "https://facebook.com/colivingcait", label: "Facebook", external: true },
+  { href: "https://www.linkedin.com/in/coliving-cait/", label: "LinkedIn", external: true },
+  { href: "https://tiktok.com/@colivingcait", label: "TikTok", external: true },
 ];
 
 export default function Footer() {

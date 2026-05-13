@@ -26,10 +26,10 @@ const info = [
 
 const socials = [
   { label: "IG", title: "Instagram", href: "https://instagram.com/colivingcait" },
-  { label: "YT", title: "YouTube", href: "#" },
-  { label: "FB", title: "Facebook", href: "#" },
-  { label: "LI", title: "LinkedIn", href: "#" },
-  { label: "TT", title: "TikTok", href: "#" },
+  { label: "YT", title: "YouTube", href: "https://youtube.com/colivingcait" },
+  { label: "FB", title: "Facebook", href: "https://facebook.com/colivingcait" },
+  { label: "LI", title: "LinkedIn", href: "https://www.linkedin.com/in/coliving-cait/" },
+  { label: "TT", title: "TikTok", href: "https://tiktok.com/@colivingcait" },
 ];
 
 export default function ContactPage() {
