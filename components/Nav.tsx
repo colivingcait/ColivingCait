@@ -14,6 +14,7 @@ const links = [
   { href: "/learn", label: "Learn With Me" },
   { href: "/partner-with-me", label: "Partner" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
+  { href: "/strategy-session", label: "Strategy Session" },
   { href: "/community", label: "Community" },
 ];
 
@@ -79,7 +80,7 @@ export default function Nav() {
           })}
           <li>
             <a
-              href="https://calendly.com/colivingcait/coliving-consultation"
+              href="https://calendly.com/coliving-cait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
@@ -117,7 +118,7 @@ export default function Nav() {
               </Link>
             ))}
             <a
-              href="https://calendly.com/colivingcait/coliving-consultation"
+              href="https://calendly.com/coliving-cait/coaching-discovery-call"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setOpen(false)}

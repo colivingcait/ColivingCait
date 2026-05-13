@@ -6,7 +6,7 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 import { courses } from "@/lib/courses";
 
-const STRATEGY_CALL_URL = "https://calendly.com/colivingcait/coliving-consultation";
+const STRATEGY_CALL_URL = "https://calendly.com/coliving-cait/coaching-discovery-call";
 
 export const metadata = {
   title: "Welcome to the Explorer Bundle — Coliving Cait",
