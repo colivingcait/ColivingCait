@@ -7,10 +7,29 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 const STRATEGY_URL = "https://calendly.com/colivingcait/strategy-session";
 const COACHING_URL = "https://calendly.com/colivingcait/coaching-discovery-call";
 
+const OG_TITLE = "Got a coliving question? Let's answer it.";
+const OG_SUBTITLE =
+  "A focused 60-minute 1:1 with someone operating 50+ coliving rooms across the Atlanta metro.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Book a Strategy Session")}&subtitle=${encodeURIComponent(OG_SUBTITLE)}`;
+
 export const metadata = {
-  title: "Strategy Session — Coliving Cait",
+  title: "Strategy Session",
   description:
     "A focused 60-minute 1:1 strategy session with Caitlyn Verdugo — talk through your floor plan, pressure-test a deal, or solve an operational headache. $250.",
+  openGraph: {
+    title: "Strategy Session — Coliving Cait",
+    description:
+      "A focused 60-minute 1:1 strategy session — talk through your floor plan, pressure-test a deal, or solve an operational headache.",
+    url: "https://colivingcait.com/strategy-session",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Strategy Session — Coliving Cait",
+    description:
+      "A focused 60-minute 1:1 strategy session with Caitlyn Verdugo.",
+    images: [OG_IMAGE],
+  },
 };
 
 const audience = [

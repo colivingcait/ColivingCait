@@ -2,10 +2,26 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import ContactFormV2 from "@/components/ContactFormV2";
 
+const OG_TITLE = "Let's connect.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Contact")}`;
+
 export const metadata = {
-  title: "Contact — Coliving Cait",
+  title: "Contact",
   description:
     "Get in touch with Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. General inquiries, coaching, partnerships, speaking, and media.",
+  openGraph: {
+    title: "Contact — Coliving Cait",
+    description:
+      "General inquiries, coaching, partnerships, speaking, and media.",
+    url: "https://colivingcait.com/contact",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact — Coliving Cait",
+    description: "Get in touch with Caitlyn Verdugo.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Contact — pixel-perfect rewrite of coliving-cait-contact.html.

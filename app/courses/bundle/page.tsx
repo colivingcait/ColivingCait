@@ -9,10 +9,27 @@ const BUNDLE_STRIPE_URL = "https://buy.stripe.com/3cI14oc1p0e35KQa9EaZi00";
 const BUNDLE_PRICE = 149;
 const BUNDLE_ORIGINAL = 447;
 
+const OG_TITLE = "The Complete Explorer Bundle.";
+const OG_SUBTITLE = "All three courses + a free 30-minute strategy call.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("$149 · 3 courses · 1 call")}&subtitle=${encodeURIComponent(OG_SUBTITLE)}`;
+
 export const metadata = {
-  title: "The Complete Explorer Bundle — Coliving Cait",
+  title: "The Complete Explorer Bundle",
   description:
     "All three Explorer mini courses — Coliving 101, House Hacking 101, and Real Estate Investing 101 — plus a free 30-minute strategy call. $149 (a $447 value).",
+  openGraph: {
+    title: "The Complete Explorer Bundle — Coliving Cait",
+    description:
+      "All three Explorer mini courses plus a free 30-minute strategy call. Lifetime access. $149 (a $447 value).",
+    url: "https://colivingcait.com/courses/bundle",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Complete Explorer Bundle — Coliving Cait",
+    description: "All three Explorer courses + a free 30-min strategy call.",
+    images: [OG_IMAGE],
+  },
 };
 
 export default function BundlePage() {

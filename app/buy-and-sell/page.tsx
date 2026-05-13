@@ -2,10 +2,27 @@ import Image from "next/image";
 import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 
+const OG_TITLE = "A Realtor who thinks like an investor.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Buy & Sell With Me")}`;
+
 export const metadata = {
-  title: "Buy & Sell With Me — Coliving Cait | Atlanta Investment Properties & House Hacking",
+  title: "Buy & Sell With Me",
   description:
     "Work with an Atlanta Realtor who thinks like an investor. Caitlyn Verdugo specializes in investment properties, coliving conversions, and house hacking across Decatur, Atlanta, Snellville, Stone Mountain, and the greater Atlanta metro.",
+  openGraph: {
+    title: "Buy & Sell With Me — Coliving Cait",
+    description:
+      "An Atlanta Realtor who thinks like an investor. Investment properties, coliving conversions, and house hacking across the Atlanta metro.",
+    url: "https://colivingcait.com/buy-and-sell",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Buy & Sell With Me — Coliving Cait",
+    description:
+      "An Atlanta Realtor specializing in investment properties and coliving conversions.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Buy & Sell With Me — pixel-perfect rewrite of coliving-cait-buy-sell.html.

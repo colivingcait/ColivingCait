@@ -28,9 +28,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = getCourse(slug);
   if (!course) return {};
+  const ogImage = `/api/og?title=${encodeURIComponent(course.title)}&eyebrow=${encodeURIComponent(`Mini course · $${course.price}`)}&subtitle=${encodeURIComponent(course.tagline)}`;
   return {
-    title: `${course.title} — Coliving Cait`,
+    title: course.title,
     description: course.description,
+    openGraph: {
+      title: `${course.title} — Coliving Cait`,
+      description: course.description,
+      url: `https://colivingcait.com/courses/${course.slug}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: course.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${course.title} — Coliving Cait`,
+      description: course.description,
+      images: [ogImage],
+    },
   };
 }
 

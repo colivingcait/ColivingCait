@@ -22,13 +22,43 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Coliving Cait — Building wealth through intentional coliving",
+  metadataBase: new URL("https://colivingcait.com"),
+  title: {
+    default: "Coliving Cait — Building wealth through intentional coliving",
+    template: "%s — Coliving Cait",
+  },
   description:
     "Caitlyn Verdugo is an Atlanta-based coliving investor, Realtor, and women's coliving coach helping women build wealth through real estate.",
   icons: {
     icon: "/images/colivingcait-favicon.png",
     shortcut: "/images/colivingcait-favicon.png",
     apple: "/images/colivingcait-favicon.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "Coliving Cait",
+    title: "Coliving Cait — Building wealth through intentional coliving",
+    description:
+      "Atlanta-based coliving investor, Realtor, and women's coliving coach. Courses, coaching, partnerships, and a community for women building wealth through real estate.",
+    url: "https://colivingcait.com",
+    images: [
+      {
+        url: "/api/og?title=Building+wealth+through+intentional+coliving.&eyebrow=ColivingCait.com",
+        width: 1200,
+        height: 630,
+        alt: "Coliving Cait — Building wealth through intentional coliving",
+      },
+    ],
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Coliving Cait — Building wealth through intentional coliving",
+    description:
+      "Atlanta-based coliving investor, Realtor, and women's coliving coach.",
+    images: [
+      "/api/og?title=Building+wealth+through+intentional+coliving.&eyebrow=ColivingCait.com",
+    ],
   },
 };
 

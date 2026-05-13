@@ -2,10 +2,27 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import { getCourse } from "@/lib/courses";
 
+const OG_TITLE = "Wherever you are, there's a next step here.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Learn With Me")}`;
+
 export const metadata = {
-  title: "Learn With Me — Coliving Cait",
+  title: "Learn With Me",
   description:
     "Whether you're new to coliving or scaling your portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+  openGraph: {
+    title: "Learn With Me — Coliving Cait",
+    description:
+      "Self-paced courses, 1:1 coaching, and ongoing consulting for women building coliving portfolios.",
+    url: "https://colivingcait.com/learn",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learn With Me — Coliving Cait",
+    description:
+      "Courses, coaching, and consulting for women building coliving portfolios.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Learn With Me — pixel-perfect rewrite of coliving-cait-learn.html.

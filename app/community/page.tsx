@@ -2,10 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 
+const OG_TITLE = "You don't have to figure this out alone.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Community")}`;
+
 export const metadata = {
-  title: "Community — Coliving Cait",
+  title: "Community",
   description:
     "Join She Leads Coliving, attend the Atlanta Women's Monthly Meetup, and reserve your seat at the Women's Coliving Summit 2026.",
+  openGraph: {
+    title: "Community — Coliving Cait",
+    description:
+      "She Leads Coliving (online, nationwide), the Atlanta Women's Monthly Meetup, and the Women's Coliving Summit 2026.",
+    url: "https://colivingcait.com/community",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Community — Coliving Cait",
+    description:
+      "Three women-only communities built around coliving.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Community — pixel-perfect rewrite of coliving-cait-community.html.

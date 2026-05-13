@@ -2,10 +2,27 @@ import Image from "next/image";
 import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
 
+const OG_TITLE = "Your money working while you live your life.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Partner With Me")}`;
+
 export const metadata = {
-  title: "Partner With Me — Coliving Cait",
+  title: "Partner With Me",
   description:
     "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
+  openGraph: {
+    title: "Partner With Me — Coliving Cait",
+    description:
+      "Put your capital to work in Atlanta's coliving market. You invest, I operate — with full transparency, legal protections, and a verifiable track record.",
+    url: "https://colivingcait.com/partner-with-me",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Partner With Me — Coliving Cait",
+    description:
+      "Three coliving partnership models: private lending, equity partnerships, and arbitrage.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Partner With Me — pixel-perfect rewrite of coliving-cait-partner.html.
