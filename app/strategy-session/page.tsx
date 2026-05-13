@@ -142,7 +142,7 @@ export default function StrategySessionPage() {
           <Reveal delay={0.4}>
             <div className="mt-10">
               <Button href={STRATEGY_URL} variant="primary" size="lg" magnetic>
-                Book Your Strategy Session — $250
+                Book Your Strategy Session
               </Button>
             </div>
           </Reveal>
@@ -158,7 +158,7 @@ export default function StrategySessionPage() {
             </Reveal>
             <Reveal delay={0.1}>
               <Heading size="lg">
-                One hour. Your questions.{" "}
+                Your questions.{" "}
                 <em>Real answers.</em>
               </Heading>
             </Reveal>
@@ -303,7 +303,7 @@ export default function StrategySessionPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <Heading size="lg">
-              $250 for 60 minutes of{" "}
+              One hour of{" "}
               <em>focused expertise.</em>
             </Heading>
           </Reveal>
@@ -314,7 +314,7 @@ export default function StrategySessionPage() {
               mistakes, learned from them, and can help you avoid the ones
               that cost real money. $250 is not a large number relative to
               the decisions you&apos;re making. A single bad acquisition can
-              cost $30,000. One hour now can prevent that.
+              cost $30,000+. One hour now can prevent that.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
