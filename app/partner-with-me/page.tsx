@@ -89,7 +89,7 @@ export default function PartnerPage() {
               style={{ aspectRatio: "4 / 3" }}
             >
               <Image
-                src="/images/villa-candace/IMG_0190.JPG"
+                src="/images/villacandace-after.png"
                 alt="Villa Candace — Atlanta metro coliving property"
                 fill
                 priority
@@ -216,11 +216,8 @@ export default function PartnerPage() {
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villa-candace/IMG_0190.JPG",
-              "/images/villa-candace/candacekitchen.jpg",
-              "/images/villa-candace/IMG_4109.jpeg",
-              "/images/villa-candace/12.png",
-              "/images/villa-candace/18.png",
+              "/images/villacandace-before.png",
+              "/images/villacandace-after.png",
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
