@@ -6,10 +6,10 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 function SignInForm() {
-  const [email, setEmail] = useState("");
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState(searchParams.get("email") || "");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const handleSubmit = async (e: React.MouseEvent) => {

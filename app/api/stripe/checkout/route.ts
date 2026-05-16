@@ -5,11 +5,6 @@ import { stripe, COURSE_PRICES, BUNDLE_PRICE_ID, BUNDLE_SLUGS } from "@/lib/stri
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
-
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-  }
-
   const { courseSlug } = await req.json();
 
   // Determine if this is a bundle or single course purchase
@@ -23,21 +18,23 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const userId = (session.user as any).id;
   const origin = req.headers.get("origin") || process.env.NEXTAUTH_URL;
+
+  // If user is signed in, pre-fill their email and attach user_id
+  const userId = session?.user ? (session.user as any).id : undefined;
+  const customerEmail = session?.user?.email || undefined;
 
   const checkoutSession = await stripe.checkout.sessions.create({
     mode: "payment",
     payment_method_types: ["card"],
     allow_promotion_codes: true,
-    customer_email: session.user.email,
+    ...(customerEmail ? { customer_email: customerEmail } : {}),
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${origin}/courses/${isBundle ? "coliving-101" : courseSlug}/overview?purchased=1`,
-    cancel_url: `${origin}/courses/${isBundle ? "" : courseSlug}?cancelled=1`,
+    success_url: `${origin}/purchase/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/${isBundle ? "learn" : `courses/${courseSlug}`}?cancelled=1`,
     metadata: {
-      user_id: userId,
+      ...(userId ? { user_id: userId } : {}),
       course_slug: courseSlug,
-      // For bundles, store all course slugs so the webhook can grant access to all
       course_slugs: isBundle ? BUNDLE_SLUGS.join(",") : courseSlug,
     },
   });
