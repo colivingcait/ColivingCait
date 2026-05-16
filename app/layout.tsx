@@ -3,6 +3,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import AuthProvider from "@/components/AuthProvider";
 
 // Brand fonts loaded once at the root and exposed via CSS variables so they
 // can be referenced by Tailwind's font-heading / font-sans utilities.
@@ -40,9 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body className="bg-white text-warmgray">
-        <Nav />
-        <main>{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

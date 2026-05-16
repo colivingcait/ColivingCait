@@ -6,6 +6,10 @@ import Button from "@/components/Button";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 import { courses, getCourse } from "@/lib/courses";
+import { getCurrentUser, hasAccess } from "@/lib/auth/helpers";
+import BuyButton from "@/components/courses/BuyButton";
+
+export const dynamic = "force-dynamic";
 
 // Pre-generate static params for every available course
 export async function generateStaticParams() {
@@ -40,6 +44,10 @@ export default async function CourseLandingPage({
   if (!course || course.status !== "available") {
     notFound();
   }
+
+  // Check if user already has access
+  const user = await getCurrentUser();
+  const purchased = user ? await hasAccess(user.id, slug) : false;
 
   const firstLesson = course.lessons[0];
 
@@ -82,14 +90,23 @@ export default async function CourseLandingPage({
             </Reveal>
             <Reveal delay={0.4}>
               <div className="mt-8">
-                <Button
-                  href={`/courses/${course.slug}/${firstLesson.slug}`}
-                  variant="primary"
-                  size="lg"
-                  magnetic
-                >
-                  Get started →
-                </Button>
+                {purchased ? (
+                  <Button
+                    href={`/courses/${course.slug}/${firstLesson.slug}`}
+                    variant="primary"
+                    size="lg"
+                    magnetic
+                  >
+                    Start learning →
+                  </Button>
+                ) : (
+                  <BuyButton
+                    courseSlug={course.slug}
+                    className="inline-block bg-gold text-charcoal px-8 py-3 text-sm uppercase tracking-eyebrow hover:bg-gold/90 transition-colors"
+                  >
+                    Purchase course — ${course.price} →
+                  </BuyButton>
+                )}
               </div>
             </Reveal>
           </div>
@@ -310,21 +327,30 @@ export default async function CourseLandingPage({
           </Reveal>
           <Reveal delay={0.25}>
             <p className="mt-6 text-cream/70 leading-body max-w-xl mx-auto">
-              Start with lesson 01 right now — no checkout while we&apos;re
-              in development. The Stripe paywall will be added before
-              public launch.
+              {purchased
+                ? "You have lifetime access to this course. Pick up where you left off."
+                : "One-time payment. Lifetime access. Start learning at your own pace."}
             </p>
           </Reveal>
           <Reveal delay={0.4}>
             <div className="mt-10">
-              <Button
-                href={`/courses/${course.slug}/${firstLesson.slug}`}
-                variant="primary"
-                size="lg"
-                magnetic
-              >
-                Start lesson 01 →
-              </Button>
+              {purchased ? (
+                <Button
+                  href={`/courses/${course.slug}/${firstLesson.slug}`}
+                  variant="primary"
+                  size="lg"
+                  magnetic
+                >
+                  Continue learning →
+                </Button>
+              ) : (
+                <BuyButton
+                  courseSlug={course.slug}
+                  className="inline-block bg-gold text-charcoal px-8 py-3 text-sm uppercase tracking-eyebrow hover:bg-gold/90 transition-colors"
+                >
+                  Purchase course — ${course.price} →
+                </BuyButton>
+              )}
             </div>
           </Reveal>
         </div>
