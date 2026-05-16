@@ -6,7 +6,7 @@ import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import { cn } from "@/lib/cn";
 
-const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/discovery";
+const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/coaching-discovery-call";
 
 type ResultsDashboardProps = {
   results: Results;

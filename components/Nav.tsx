@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -40,20 +39,29 @@ export default function Nav() {
       )}
     >
       <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between py-5">
-        {/* Wordmark */}
+        {/* Wordmark — "Coliving" auto-inverts against the underlying hero
+            via mix-blend-difference so the logo stays visible on both
+            light and charcoal sections when the nav is transparent.
+            Once scrolled, the nav has a solid white backdrop and the
+            text switches to a plain charcoal fill. */}
         <Link
           href="/"
           aria-label="ColivingCait — home"
-          className="inline-flex items-center hover:opacity-70 transition-opacity"
+          className="inline-flex items-center hover:opacity-70 transition-opacity leading-none"
         >
-          <Image
-            src="/images/colivingcait-logo.png"
-            alt="ColivingCait"
-            width={200}
-            height={40}
-            priority
-            className="h-7 w-auto"
-          />
+          <span className="font-heading text-xl font-normal">
+            <span
+              className={cn(
+                "transition-colors duration-200",
+                scrolled
+                  ? "text-charcoal"
+                  : "text-white [mix-blend-mode:difference]",
+              )}
+            >
+              Coliving
+            </span>
+            <em className="italic font-light text-gold-light">Cait</em>
+          </span>
         </Link>
 
         {/* Desktop links */}
@@ -82,12 +90,14 @@ export default function Nav() {
             <AuthNav />
           </li>
           <li>
-            <Link
-              href="/contact"
+            <a
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
             >
               Book a Call
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -125,13 +135,15 @@ export default function Nav() {
             >
               My Courses
             </Link>
-            <Link
-              href="/contact"
+            <a
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="mt-3 bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] text-center hover:bg-gold transition-colors"
             >
               Book a Call
-            </Link>
+            </a>
           </nav>
         </div>
       )}

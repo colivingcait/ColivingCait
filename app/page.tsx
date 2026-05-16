@@ -46,14 +46,21 @@ export default function HomePage() {
               I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro. Now I coach women through doing the same — from first deal to full portfolio. Whether you want to learn, invest, or buy, there&apos;s a seat at this table for you.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
-              <Link href="/contact" className="btn-primary">Book a Discovery Call</Link>
+              <a
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Book a Discovery Call
+              </a>
               <Link href="/what-is-coliving" className="btn-text">
                 Learn about coliving <span>→</span>
               </Link>
             </div>
           </div>
 
-          <div className="relative self-end opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
+          <div className="relative self-end w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "3 / 4" }}
@@ -337,7 +344,15 @@ export default function HomePage() {
             </h2>
             <p className="text-[13px] text-warmgray-light tracking-[0.06em]">
               <span className="text-gold tracking-[2px]">★★★★★</span>
-              &nbsp;&nbsp;5.0 on Zillow
+              &nbsp;&nbsp;
+              <a
+                href="https://zillow.com/caitlynverdugo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-gold transition-colors"
+              >
+                5.0 on Zillow
+              </a>
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2">
@@ -379,7 +394,7 @@ export default function HomePage() {
                 copy: "A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.",
                 detail: "500+ members · Free to join",
                 cta: "Join on Facebook →",
-                href: "#",
+                href: "https://www.facebook.com/groups/1407759770477235",
               },
               {
                 icon: "◈",
@@ -387,7 +402,7 @@ export default function HomePage() {
                 copy: "Real conversations, real connections, every month. Join us the last Tuesday of every month in Atlanta. Bring your questions, your deals, and your ambition.",
                 detail: "Last Tuesday · Atlanta · Free",
                 cta: "RSVP on Eventbrite →",
-                href: "#",
+                href: "https://www.eventbrite.com/cc/women-real-estate-investors-atl-monthly-meetups-4833857?utm-campaign=social&utm-content=creatorshare&utm-medium=discovery&utm-term=odclsxcollection&utm-source=cp&aff=escb",
               },
               {
                 icon: "★",
@@ -395,7 +410,7 @@ export default function HomePage() {
                 copy: "The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won't find anywhere else.",
                 detail: "Oct 16–17, 2026 · Atlanta · ~150 attendees",
                 cta: "Reserve Your Seat →",
-                href: "#",
+                href: "https://www.eventbrite.com/e/the-womens-coliving-summit-atlanta-2026-tickets-1986277433272?aff=ebdsoporgprofile",
               },
             ].map((c, i) => (
               <div
@@ -412,7 +427,14 @@ export default function HomePage() {
                 <span className="block text-[11px] text-warmgray-light tracking-[0.06em] mb-6">
                   {c.detail}
                 </span>
-                <a href={c.href} className="btn-sm">{c.cta}</a>
+                <a
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-sm"
+                >
+                  {c.cta}
+                </a>
               </div>
             ))}
           </div>
@@ -451,7 +473,14 @@ export default function HomePage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a
+            href="https://calendly.com/colivingcait/coaching-discovery-call"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+          >
+            Book a Discovery Call
+          </a>
         </div>
       </section>
     </>

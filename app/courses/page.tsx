@@ -6,10 +6,26 @@ import Link from "next/link";
 import { courses } from "@/lib/courses";
 import { cn } from "@/lib/cn";
 
+const OG_TITLE = "Learn it on your time.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Mini Courses · $99 each")}`;
+
 export const metadata = {
-  title: "Mini Courses — Coliving Cait",
+  title: "Mini Courses",
   description:
     "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+  openGraph: {
+    title: "Mini Courses — Coliving Cait",
+    description:
+      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle.",
+    url: "https://colivingcait.com/courses",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mini Courses — Coliving Cait",
+    description: "Three self-paced mini courses. Lifetime access.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Course marketplace — three cards, $99 each ($149 bundle). Coliving 101
