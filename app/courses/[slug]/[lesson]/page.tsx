@@ -60,12 +60,15 @@ export default async function LessonPage({
     );
   }
 
+  const isLastLesson = data.next === null;
+
   return (
     <LessonView
       course={data.course}
       lesson={data.lesson}
       prev={data.prev}
       next={data.next}
+      isLastLesson={isLastLesson}
     />
   );
 }

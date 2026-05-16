@@ -10,12 +10,14 @@ import {
 import LessonSections from "./LessonSections";
 import QuizBlock from "./QuizBlock";
 import { useCourseProgress } from "./useCourseProgress";
+import UpsellSection from "./UpsellSection";
 
 type LessonViewProps = {
   course: Course;
   lesson: Lesson;
   prev: Lesson | null;
   next: Lesson | null;
+  isLastLesson?: boolean;
 };
 
 // LessonView — the full interactive lesson page client component. Owns:
@@ -31,6 +33,7 @@ export default function LessonView({
   lesson,
   prev,
   next,
+  isLastLesson = false,
 }: LessonViewProps) {
   const progress = useCourseProgress(course.slug);
 
@@ -157,6 +160,9 @@ export default function LessonView({
             next={next}
             onAdvance={handleAdvance}
           />
+
+          {/* Upsells on the final lesson of a course */}
+          {isLastLesson && <UpsellSection />}
         </article>
       </div>
     </div>

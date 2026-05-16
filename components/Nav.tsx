@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import AuthNav from "./AuthNav";
 
 // Primary site navigation — frosted glass, transparent → solid on scroll.
 // Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
@@ -78,6 +79,9 @@ export default function Nav() {
             );
           })}
           <li>
+            <AuthNav />
+          </li>
+          <li>
             <Link
               href="/contact"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
@@ -114,6 +118,13 @@ export default function Nav() {
                 {l.label}
               </Link>
             ))}
+            <Link
+              href="/dashboard"
+              onClick={() => setOpen(false)}
+              className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+            >
+              My Courses
+            </Link>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
