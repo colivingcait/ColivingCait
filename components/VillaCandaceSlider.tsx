@@ -74,7 +74,7 @@ export default function VillaCandaceSlider() {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={BEFORE_SRC}
-            alt="Villa Candace — Original 5BR/3BA floorplan"
+            alt="Villa C — Original 5BR/3BA floorplan"
             draggable={false}
             onError={() => setHasBefore(false)}
             className="w-full h-auto block pointer-events-none"
@@ -101,7 +101,7 @@ export default function VillaCandaceSlider() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={AFTER_SRC}
-              alt="Villa Candace — Coliving conversion 8 rooms"
+              alt="Villa C — Coliving conversion 8 rooms"
               draggable={false}
               onError={() => setHasAfter(false)}
               className="absolute top-0 left-0 h-full w-auto min-w-full object-cover pointer-events-none"

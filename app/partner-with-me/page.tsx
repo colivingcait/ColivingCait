@@ -90,7 +90,7 @@ export default function PartnerPage() {
             >
               <Image
                 src="/images/villacandace-after.png"
-                alt="Villa Candace — Atlanta metro coliving property"
+                alt="Villa C — Atlanta metro coliving property"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 600px"
@@ -209,15 +209,18 @@ export default function PartnerPage() {
           </div>
 
           <PropertyCard
-            name="Villa Candace"
+            name="Villa C"
             location="Atlanta Metro, Georgia"
             original="5 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villacandace-before.png",
-              "/images/villacandace-after.png",
+              "/images/villa-candace/candacekitchen.jpg",
+              "/images/villa-candace/12.png",
+              "/images/villa-candace/18.png",
+              "/images/villa-candace/IMG_0190.JPG",
+              "/images/villa-candace/IMG_4109.jpeg",
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
@@ -225,7 +228,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Raven"
+            name="Sparrow"
             location="Stone Mountain, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -245,7 +248,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Meadow"
+            name="Honeysuckle"
             location="Snellville, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"

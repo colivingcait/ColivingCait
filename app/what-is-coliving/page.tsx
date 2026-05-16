@@ -189,7 +189,7 @@ export default function WhatIsColivingPage() {
               </div>
               <div>
                 <p className="text-[15px] text-warmgray leading-[1.8]">
-                  This is Villa Candace. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
+                  This is Villa C. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
                 </p>
               </div>
             </div>
