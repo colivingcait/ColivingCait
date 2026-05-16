@@ -31,12 +31,12 @@ const upsells: UpsellItem[] = [
     tone: "cream",
   },
   {
-    eyebrow: "✦ Free Strategy Call",
+    eyebrow: "✦ 1-Hour Deep Dive",
     title: "Strategy Session",
     description:
-      "Not sure where to start? Book a free 30-minute call and we\u2019ll map out your next move together.",
-    cta: "Book a call →",
-    href: "/strategy-session",
+      "Book a 1-hour session with Cait to map out your coliving strategy, analyze deals, or troubleshoot your portfolio.",
+    cta: "Book a session — $250",
+    href: "https://calendly.com/colivingcait/strategy-session",
     tone: "blush",
   },
   {
