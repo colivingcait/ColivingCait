@@ -1,6 +1,7 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import { getCourse } from "@/lib/courses";
+import BuyButton from "@/components/courses/BuyButton";
 
 export const metadata = {
   title: "Learn With Me — Coliving Cait",
@@ -187,12 +188,17 @@ export default function LearnPage() {
                     Limited
                   </span>
                 </div>
-                <Link
-                  href={c.href}
-                  className="btn-gold w-full text-center"
-                  style={{ display: "block" }}
+                <BuyButton
+                  courseSlug={c.slug}
+                  className="btn-gold w-full text-center block"
                 >
                   Buy Now
+                </BuyButton>
+                <Link
+                  href={c.href}
+                  className="block text-center text-[11px] text-warmgray/60 hover:text-charcoal mt-2 transition-colors"
+                >
+                  View details →
                 </Link>
               </div>
             ))}
@@ -222,9 +228,9 @@ export default function LearnPage() {
                     $298 off
                   </span>
                 </div>
-                <Link href="/courses?bundle=1" className="btn-primary">
+                <BuyButton courseSlug="bundle" className="btn-primary">
                   Get the Bundle
-                </Link>
+                </BuyButton>
               </div>
             </div>
           </div>
