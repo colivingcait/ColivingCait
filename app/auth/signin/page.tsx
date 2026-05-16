@@ -10,7 +10,7 @@ function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/learn";
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
