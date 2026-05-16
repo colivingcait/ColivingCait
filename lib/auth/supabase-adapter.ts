@@ -13,7 +13,7 @@ export function SupabaseAdapter(): Adapter {
       return {
         id: data.id,
         email: data.email,
-        emailVerified: null,
+        emailVerified: data.email_verified ? new Date(data.email_verified) : null,
         name: data.name,
       };
     },
@@ -28,7 +28,7 @@ export function SupabaseAdapter(): Adapter {
       return {
         id: data.id,
         email: data.email,
-        emailVerified: null,
+        emailVerified: data.email_verified ? new Date(data.email_verified) : null,
         name: data.name,
       };
     },
@@ -43,7 +43,7 @@ export function SupabaseAdapter(): Adapter {
       return {
         id: data.id,
         email: data.email,
-        emailVerified: null,
+        emailVerified: data.email_verified ? new Date(data.email_verified) : null,
         name: data.name,
       };
     },
@@ -65,15 +65,40 @@ export function SupabaseAdapter(): Adapter {
       return {
         id: user.id,
         email: user.email,
-        emailVerified: null,
+        emailVerified: user.email_verified ? new Date(user.email_verified) : null,
         name: user.name,
       };
     },
 
     async updateUser(user) {
+      const updates: Record<string, any> = {};
+      if (user.name !== undefined) updates.name = user.name;
+      if (user.emailVerified !== undefined)
+        updates.email_verified = user.emailVerified
+          ? user.emailVerified.toISOString()
+          : null;
+
+      // If nothing to update, just fetch and return the existing user
+      if (Object.keys(updates).length === 0) {
+        const { data } = await supabase
+          .from("users")
+          .select()
+          .eq("id", user.id!)
+          .single();
+        if (!data) throw new Error("User not found");
+        return {
+          id: data.id,
+          email: data.email,
+          emailVerified: data.email_verified
+            ? new Date(data.email_verified)
+            : null,
+          name: data.name,
+        };
+      }
+
       const { data, error } = await supabase
         .from("users")
-        .update({ name: user.name ?? undefined })
+        .update(updates)
         .eq("id", user.id!)
         .select()
         .single();
@@ -81,7 +106,9 @@ export function SupabaseAdapter(): Adapter {
       return {
         id: data.id,
         email: data.email,
-        emailVerified: null,
+        emailVerified: data.email_verified
+          ? new Date(data.email_verified)
+          : null,
         name: data.name,
       };
     },
@@ -154,7 +181,7 @@ export function SupabaseAdapter(): Adapter {
         user: {
           id: user.id,
           email: user.email,
-          emailVerified: null,
+          emailVerified: user.email_verified ? new Date(user.email_verified) : null,
           name: user.name,
         },
       };
