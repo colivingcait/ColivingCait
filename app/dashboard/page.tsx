@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentUser, getUserPurchases } from "@/lib/auth/helpers";
 import { getCourse, courses } from "@/lib/courses";
 import { supabase } from "@/lib/supabase";
+import BuyButton from "@/components/courses/BuyButton";
 import UpsellSection from "@/components/courses/UpsellSection";
 
 export const dynamic = "force-dynamic";
@@ -32,9 +33,8 @@ export default async function DashboardPage() {
     progressMap[row.course_slug].push(row.lesson_slug);
   }
 
-  const purchasedCourses = purchasedSlugs
-    .map((slug) => getCourse(slug))
-    .filter(Boolean);
+  // Show all available courses
+  const availableCourses = courses.filter((c) => c.status === "available");
 
   // Determine which upsells to exclude
   const excludeUpsells: string[] = [];
@@ -54,24 +54,25 @@ export default async function DashboardPage() {
         Pick up where you left off or start something new.
       </p>
 
-      {purchasedCourses.length > 0 ? (
-        <div className="space-y-4">
-          {purchasedCourses.map((course) => {
-            if (!course) return null;
-            const completed = progressMap[course.slug] ?? [];
-            const totalLessons = course.lessons.length;
-            const pct = totalLessons > 0
+      <div className="space-y-4">
+        {availableCourses.map((course) => {
+          const purchased = purchasedSlugs.includes(course.slug);
+          const completed = progressMap[course.slug] ?? [];
+          const totalLessons = course.lessons.length;
+          const pct =
+            totalLessons > 0
               ? Math.round((completed.length / totalLessons) * 100)
               : 0;
 
-            // Find next incomplete lesson
-            const nextLesson = course.lessons.find(
-              (l) => !completed.includes(l.slug),
-            );
-            const resumeHref = nextLesson
-              ? `/courses/${course.slug}/${nextLesson.slug}`
-              : `/courses/${course.slug}/overview`;
+          // Find next incomplete lesson
+          const nextLesson = course.lessons.find(
+            (l) => !completed.includes(l.slug),
+          );
+          const resumeHref = nextLesson
+            ? `/courses/${course.slug}/${nextLesson.slug}`
+            : `/courses/${course.slug}/overview`;
 
+          if (purchased) {
             return (
               <Link
                 key={course.slug}
@@ -80,12 +81,12 @@ export default async function DashboardPage() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/60 mb-2">
+                    <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
                       {pct === 100
                         ? "✦ Completed"
                         : pct > 0
                           ? `✦ ${pct}% complete`
-                          : "✦ Not started"}
+                          : "✦ Purchased · Not started"}
                     </p>
                     <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal group-hover:text-gold transition-colors">
                       {course.title}
@@ -118,27 +119,107 @@ export default async function DashboardPage() {
                 </div>
               </Link>
             );
-          })}
-        </div>
-      ) : (
-        <div className="border border-brand bg-cream/30 p-8 text-center">
-          <p className="font-heading text-xl text-charcoal mb-2">
-            No courses yet.
-          </p>
-          <p className="text-warmgray text-sm mb-6">
-            Browse our courses and start your coliving education.
-          </p>
-          <Link
-            href="/learn"
-            className="inline-block bg-charcoal text-cream px-6 py-3 text-sm uppercase tracking-eyebrow hover:bg-charcoal/90 transition-colors"
-          >
-            Browse courses →
-          </Link>
-        </div>
-      )}
+          }
 
-      {/* Upsell section */}
-      <UpsellSection exclude={excludeUpsells} />
+          // Not purchased — show course info + buy button
+          return (
+            <div
+              key={course.slug}
+              className="border border-brand p-6"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/50 mb-2">
+                    ✦ Not yet purchased
+                  </p>
+                  <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal">
+                    {course.title}
+                  </p>
+                  <p className="mt-1 text-sm text-warmgray">
+                    {course.tagline}
+                  </p>
+                  <p className="mt-1 text-sm text-warmgray/60">
+                    {totalLessons} lessons
+                  </p>
+                </div>
+                <div className="flex-shrink-0 flex items-center justify-center w-14 h-14 border border-brand bg-cream/30">
+                  <span className="font-heading text-lg text-warmgray/50">
+                    {course.symbol}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <div>
+                  {course.originalPrice ? (
+                    <p className="font-heading text-lg text-charcoal">
+                      <span className="line-through text-warmgray/40 text-sm mr-1">
+                        ${course.originalPrice}
+                      </span>
+                      ${course.price}
+                    </p>
+                  ) : (
+                    <p className="font-heading text-lg text-charcoal">
+                      ${course.price}
+                    </p>
+                  )}
+                </div>
+                <div className="flex gap-3 items-center">
+                  <Link
+                    href={`/courses/${course.slug}`}
+                    className="text-sm text-warmgray hover:text-charcoal transition-colors"
+                  >
+                    Details
+                  </Link>
+                  <BuyButton
+                    courseSlug={course.slug}
+                    className="bg-charcoal text-cream px-5 py-2.5 text-[11px] uppercase tracking-eyebrow hover:bg-gold transition-colors"
+                  >
+                    Purchase →
+                  </BuyButton>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Bundle offer — only if they don't own all three */}
+        {!ownsAll && (
+          <div className="border border-gold bg-gold/[0.06] p-6 mt-2">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
+                  ✦ Save with the bundle
+                </p>
+                <p className="font-heading text-xl md:text-2xl leading-heading text-charcoal">
+                  Explorer Bundle
+                </p>
+                <p className="mt-1 text-sm text-warmgray">
+                  Get all three courses together at a discount. The complete
+                  foundation for your coliving journey.
+                </p>
+              </div>
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+              <p className="font-heading text-lg text-charcoal">
+                <span className="line-through text-warmgray/40 text-sm mr-1">
+                  $297
+                </span>
+                $149
+              </p>
+              <BuyButton
+                courseSlug="bundle"
+                className="bg-gold text-charcoal px-5 py-2.5 text-[11px] uppercase tracking-eyebrow hover:bg-gold/80 transition-colors"
+              >
+                Purchase bundle →
+              </BuyButton>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Upsell section — coaching, consulting, strategy */}
+      <UpsellSection exclude={[...excludeUpsells, "Explorer Bundle"]} />
     </div>
   );
 }
