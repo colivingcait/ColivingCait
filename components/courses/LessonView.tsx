@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import type { Course, Lesson } from "@/lib/courses/types";
 import {
@@ -26,8 +27,7 @@ type LessonViewProps = {
 // - Section-rendered lesson content (or quiz, for module-quiz pages)
 // - Prev / Next navigation that auto-marks the current lesson complete
 //
-// Completion is tracked silently — clicking Next records the current
-// lesson as done. There's no explicit "Mark Complete" step.
+// Completion is tracked automatically — viewing a lesson marks it done.
 export default function LessonView({
   course,
   lesson,
@@ -40,6 +40,15 @@ export default function LessonView({
   const isModuleQuiz = lesson.kind === "module-quiz";
   const useModules = !!course.modules && course.modules.length > 0;
   const isWelcome = useModules && lesson.moduleNumber === 0;
+
+  // Auto-mark this lesson as complete when the user views it
+  useEffect(() => {
+    if (progress.isLoaded && !progress.isCompleted(lesson.slug)) {
+      progress.markComplete(lesson.slug);
+    }
+    // Only run when the lesson changes or progress loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson.slug, progress.isLoaded]);
 
   const handleAdvance = () => {
     progress.markComplete(lesson.slug);
