@@ -216,8 +216,11 @@ export default function PartnerPage() {
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villacandace-before.png",
-              "/images/villacandace-after.png",
+              "/images/villa-candace/candacekitchen.jpg",
+              "/images/villa-candace/12.png",
+              "/images/villa-candace/18.png",
+              "/images/villa-candace/IMG_0190.JPG",
+              "/images/villa-candace/IMG_4109.jpeg",
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
