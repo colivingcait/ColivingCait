@@ -241,10 +241,7 @@ export default async function DashboardPage() {
           </Link>
 
           {/* The Builder (featured) */}
-          <Link
-            href="/learn#the-builder"
-            className="group bg-charcoal p-5 flex flex-col hover:bg-charcoal/90 transition-all duration-300"
-          >
+          <div className="bg-charcoal p-5 flex flex-col">
             <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
               ✦ For serious investors
             </p>
@@ -262,16 +259,25 @@ export default async function DashboardPage() {
               your market, your pace — with Cait in your corner every step of
               the way.
             </p>
-            <span className="block text-center text-[11px] uppercase tracking-eyebrow bg-gold py-2.5 text-charcoal">
-              Apply now →
-            </span>
-          </Link>
+            <div className="space-y-2">
+              <BuyButton
+                courseSlug="builder"
+                className="block w-full text-center text-[11px] uppercase tracking-eyebrow bg-gold py-2.5 text-charcoal hover:bg-gold/80 transition-colors"
+              >
+                Enroll now →
+              </BuyButton>
+              <Link
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
+                target="_blank"
+                className="block w-full text-center text-[11px] uppercase tracking-eyebrow border border-cream/20 py-2.5 text-cream/60 hover:text-cream hover:border-cream/40 transition-colors"
+              >
+                Book a discovery call →
+              </Link>
+            </div>
+          </div>
 
           {/* The Operator */}
-          <Link
-            href="/learn#the-operator"
-            className="group border border-brand p-5 flex flex-col hover:border-gold transition-all duration-300"
-          >
+          <div className="border border-brand p-5 flex flex-col">
             <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
               ✦ Ongoing consulting
             </p>
@@ -288,10 +294,22 @@ export default async function DashboardPage() {
               profitability. Includes on-call access and strategic planning
               sessions.
             </p>
-            <span className="block text-center text-[11px] uppercase tracking-eyebrow border border-brand py-2.5 text-charcoal group-hover:border-gold transition-colors">
-              Learn more →
-            </span>
-          </Link>
+            <div className="space-y-2">
+              <BuyButton
+                courseSlug="operator"
+                className="block w-full text-center text-[11px] uppercase tracking-eyebrow bg-charcoal text-cream py-2.5 hover:bg-charcoal/80 transition-colors"
+              >
+                Enroll now →
+              </BuyButton>
+              <Link
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
+                target="_blank"
+                className="block w-full text-center text-[11px] uppercase tracking-eyebrow border border-brand py-2.5 text-warmgray hover:text-charcoal hover:border-gold transition-colors"
+              >
+                Book a discovery call →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>
