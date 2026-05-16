@@ -232,18 +232,6 @@ export function SupabaseAdapter(): Adapter {
     },
 
     async useVerificationToken({ identifier, token }) {
-      // Debug: check what tokens exist for this identifier
-      const { data: existing } = await supabase
-        .from("verification_tokens")
-        .select()
-        .eq("identifier", identifier);
-      console.log("[auth] useVerificationToken lookup:", {
-        identifier,
-        tokenPrefix: token.substring(0, 10),
-        existingCount: existing?.length ?? 0,
-        existingTokenPrefixes: existing?.map((t) => t.token.substring(0, 10)),
-      });
-
       const { data, error } = await supabase
         .from("verification_tokens")
         .delete()
@@ -251,12 +239,6 @@ export function SupabaseAdapter(): Adapter {
         .eq("token", token)
         .select()
         .single();
-
-      console.log("[auth] useVerificationToken result:", {
-        found: !!data,
-        error: error?.message,
-      });
-
       if (error || !data) return null;
       return {
         identifier: data.identifier,
