@@ -367,7 +367,7 @@ export default function AboutPage() {
             Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
           </p>
           <a
-            href="https://calendly.com/colivingcait/coaching-discovery-call"
+            href="https://calendly.com/colivingcait/chatwithcaitlyn"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold"
