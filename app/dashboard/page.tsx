@@ -214,53 +214,83 @@ export default async function DashboardPage() {
           Ready for the next step?
         </h2>
 
-        <div className="space-y-3">
-          <Link
-            href="/learn#the-builder"
-            className="group flex items-center gap-4 bg-charcoal p-4 hover:bg-charcoal/90 transition-colors"
-          >
-            <div className="flex-1">
-              <p className="font-heading text-base text-cream">The Builder</p>
-              <p className="text-[11px] text-cream/60 mt-0.5">
-                1:1 coaching · Build your portfolio in 3 months
-              </p>
-            </div>
-            <span className="text-sm text-gold whitespace-nowrap">
-              $4,500 →
-            </span>
-          </Link>
-
-          <Link
-            href="/learn#the-operator"
-            className="group flex items-center gap-4 border border-brand p-4 hover:border-gold transition-colors"
-          >
-            <div className="flex-1">
-              <p className="font-heading text-base text-charcoal">
-                The Operator
-              </p>
-              <p className="text-[11px] text-warmgray/60 mt-0.5">
-                Monthly consulting · Scale and optimize your portfolio
-              </p>
-            </div>
-            <span className="text-sm text-gold whitespace-nowrap">
-              $1,000/mo →
-            </span>
-          </Link>
-
+        <div className="grid gap-4 sm:grid-cols-3">
+          {/* Strategy Session */}
           <Link
             href="https://calendly.com/colivingcait/strategy-session"
             target="_blank"
-            className="group flex items-center gap-4 border border-brand p-4 hover:border-gold transition-colors"
+            className="group border border-brand p-5 flex flex-col hover:border-gold transition-all duration-300"
           >
-            <div className="flex-1">
-              <p className="font-heading text-base text-charcoal">
-                Strategy Session
-              </p>
-              <p className="text-[11px] text-warmgray/60 mt-0.5">
-                1 hour with Cait · Map out your next move
-              </p>
-            </div>
-            <span className="text-sm text-gold whitespace-nowrap">$250 →</span>
+            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
+              ✦ 1-hour deep dive
+            </p>
+            <p className="font-heading text-lg leading-heading text-charcoal">
+              Strategy Session
+            </p>
+            <p className="font-heading text-2xl text-charcoal mt-1">$250</p>
+            <p className="text-[11px] text-warmgray/50 mb-3">One session</p>
+            <p className="text-sm text-warmgray leading-relaxed mb-auto pb-4">
+              One hour with Cait to map out your coliving strategy. Whether
+              you&apos;re evaluating your first deal, optimizing an existing
+              portfolio, or deciding if coliving is right for you — walk away
+              with a clear action plan.
+            </p>
+            <span className="block text-center text-[11px] uppercase tracking-eyebrow border border-brand py-2.5 text-charcoal group-hover:border-gold transition-colors">
+              Book a session →
+            </span>
+          </Link>
+
+          {/* The Builder (featured) */}
+          <Link
+            href="/learn#the-builder"
+            className="group bg-charcoal p-5 flex flex-col hover:bg-charcoal/90 transition-all duration-300"
+          >
+            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
+              ✦ For serious investors
+            </p>
+            <p className="font-heading text-lg leading-heading text-cream">
+              The Builder
+            </p>
+            <p className="font-heading text-2xl text-cream mt-1">$4,500</p>
+            <p className="text-[11px] text-cream/40 mb-3">
+              3 months of 1:1 coaching
+            </p>
+            <p className="text-sm text-cream/60 leading-relaxed mb-auto pb-4">
+              For investors ready to build their coliving portfolio. Weekly 1:1
+              calls, live deal analysis, custom underwriting, done-for-you
+              templates, and real-time support between sessions. Your strategy,
+              your market, your pace — with Cait in your corner every step of
+              the way.
+            </p>
+            <span className="block text-center text-[11px] uppercase tracking-eyebrow bg-gold py-2.5 text-charcoal">
+              Apply now →
+            </span>
+          </Link>
+
+          {/* The Operator */}
+          <Link
+            href="/learn#the-operator"
+            className="group border border-brand p-5 flex flex-col hover:border-gold transition-all duration-300"
+          >
+            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
+              ✦ Ongoing consulting
+            </p>
+            <p className="font-heading text-lg leading-heading text-charcoal">
+              The Operator
+            </p>
+            <p className="font-heading text-2xl text-charcoal mt-1">
+              $1,000/mo
+            </p>
+            <p className="text-[11px] text-warmgray/50 mb-3">Month-to-month</p>
+            <p className="text-sm text-warmgray leading-relaxed mb-auto pb-4">
+              Already operating? Monthly consulting to scale your portfolio,
+              optimize operations, troubleshoot issues, and increase
+              profitability. Includes on-call access and strategic planning
+              sessions.
+            </p>
+            <span className="block text-center text-[11px] uppercase tracking-eyebrow border border-brand py-2.5 text-charcoal group-hover:border-gold transition-colors">
+              Learn more →
+            </span>
           </Link>
         </div>
       </section>
