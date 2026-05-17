@@ -6,13 +6,13 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 // Map course slugs to Stripe Price IDs.
 export const COURSE_PRICES: Record<string, string> = {
-  "coliving-101": "price_1TWTezJXTgKEkUxDyNOZBo2b",
-  "house-hacking-101": "price_1TWTekJXTgKEkUxDcgmi0bL8",
-  "real-estate-101": "price_1TWTeSJXTgKEkUxDJdx40aUD",
+  "coliving-101": "price_1TY5k4JXTgKEkUxDK1cT5w3D",
+  "house-hacking-101": "price_1TY5kzJXTgKEkUxDWvnSMFfH",
+  "real-estate-101": "price_1TY5lbJXTgKEkUxDDPoZpQdq",
 };
 
 // Bundle: all three courses
-export const BUNDLE_PRICE_ID = "price_1TWTfPJXTgKEkUxDVfgpElFA";
+export const BUNDLE_PRICE_ID = "price_1TY5j5JXTgKEkUxDUPdWbtYz";
 export const BUNDLE_SLUGS = [
   "coliving-101",
   "house-hacking-101",
