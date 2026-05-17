@@ -239,10 +239,10 @@ export default function LearnPage() {
               </div>
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-base text-warmgray-light line-through">$147</span>
+                  <span className="text-base text-warmgray-light line-through">$297</span>
                   <span className="font-heading font-medium text-[32px] text-charcoal">$99</span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    $48 off
+                    $198 off
                   </span>
                 </div>
                 <BuyButton courseSlug="bundle" className="btn-primary">
