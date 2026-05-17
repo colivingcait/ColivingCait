@@ -23,111 +23,157 @@ export async function GET(req: Request) {
           height: "100%",
           width: "100%",
           display: "flex",
-          flexDirection: "column",
           backgroundColor: "#1C1917",
           color: "#FAF7F2",
           fontFamily: "Georgia, serif",
-          padding: "72px 80px",
           position: "relative",
         }}
       >
-        {/* Subtle gold rule along the top */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 80,
-            right: 80,
-            height: 2,
-            background: "linear-gradient(90deg, #C4955A 0%, rgba(196,149,90,0) 100%)",
-          }}
-        />
-
-        {/* Eyebrow */}
+        {/* Left content area */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: 14,
-            fontSize: 18,
-            letterSpacing: 4,
-            textTransform: "uppercase",
-            color: "#E8D5B5",
-            fontFamily: "system-ui, sans-serif",
-            fontWeight: 500,
+            flexDirection: "column",
+            padding: "72px 60px",
+            width: "65%",
           }}
         >
-          <span style={{ color: "#C4955A" }}>✦</span>
-          <span>{eyebrow}</span>
-        </div>
-
-        {/* Spacer */}
-        <div style={{ flex: 1, display: "flex" }} />
-
-        {/* Headline */}
-        <div
-          style={{
-            fontSize: 76,
-            lineHeight: 1.05,
-            letterSpacing: -1.5,
-            color: "#FAF7F2",
-            maxWidth: 980,
-            display: "flex",
-          }}
-        >
-          {title}
-        </div>
-
-        {subtitle ? (
+          {/* Subtle gold rule along the top */}
           <div
             style={{
-              marginTop: 28,
-              fontSize: 26,
-              lineHeight: 1.4,
-              color: "rgba(250,247,242,0.7)",
-              fontFamily: "system-ui, sans-serif",
-              maxWidth: 900,
-              display: "flex",
+              position: "absolute",
+              top: 0,
+              left: 60,
+              width: 400,
+              height: 2,
+              background: "linear-gradient(90deg, #C4955A 0%, rgba(196,149,90,0) 100%)",
             }}
-          >
-            {subtitle}
-          </div>
-        ) : null}
+          />
 
-        {/* Bottom row — wordmark */}
-        <div
-          style={{
-            marginTop: 56,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingTop: 28,
-            borderTop: "1px solid rgba(232,213,181,0.18)",
-          }}
-        >
+          {/* Eyebrow */}
           <div
             style={{
-              fontSize: 32,
-              color: "#FAF7F2",
               display: "flex",
-              alignItems: "baseline",
-              gap: 2,
-            }}
-          >
-            <span>Coliving</span>
-            <span style={{ color: "#E8D5B5", fontStyle: "italic" }}>Cait</span>
-          </div>
-          <div
-            style={{
-              fontSize: 16,
-              letterSpacing: 3,
+              alignItems: "center",
+              gap: 14,
+              fontSize: 18,
+              letterSpacing: 4,
               textTransform: "uppercase",
-              color: "rgba(232,213,181,0.6)",
+              color: "#E8D5B5",
               fontFamily: "system-ui, sans-serif",
+              fontWeight: 500,
             }}
           >
-            Atlanta · Investor · Coach · Realtor
+            <span style={{ color: "#C4955A" }}>✦</span>
+            <span>{eyebrow}</span>
           </div>
+
+          {/* Spacer */}
+          <div style={{ flex: 1, display: "flex" }} />
+
+          {/* Headline */}
+          <div
+            style={{
+              fontSize: 62,
+              lineHeight: 1.05,
+              letterSpacing: -1.5,
+              color: "#FAF7F2",
+              maxWidth: 600,
+              display: "flex",
+            }}
+          >
+            {title}
+          </div>
+
+          {subtitle ? (
+            <div
+              style={{
+                marginTop: 24,
+                fontSize: 22,
+                lineHeight: 1.4,
+                color: "rgba(250,247,242,0.7)",
+                fontFamily: "system-ui, sans-serif",
+                maxWidth: 560,
+                display: "flex",
+              }}
+            >
+              {subtitle}
+            </div>
+          ) : null}
+
+          {/* Bottom row — wordmark */}
+          <div
+            style={{
+              marginTop: 48,
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              paddingTop: 24,
+              borderTop: "1px solid rgba(232,213,181,0.18)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 28,
+                color: "#FAF7F2",
+                display: "flex",
+                alignItems: "baseline",
+                gap: 2,
+              }}
+            >
+              <span>Coliving</span>
+              <span style={{ color: "#E8D5B5", fontStyle: "italic" }}>Cait</span>
+            </div>
+            <div
+              style={{
+                fontSize: 14,
+                letterSpacing: 3,
+                textTransform: "uppercase",
+                color: "rgba(232,213,181,0.5)",
+                fontFamily: "system-ui, sans-serif",
+              }}
+            >
+              Investor · Coach · Realtor
+            </div>
+          </div>
+        </div>
+
+        {/* Right side — photo */}
+        <div
+          style={{
+            width: "35%",
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
+          {/* Diagonal overlay to blend photo into dark background */}
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: 120,
+              background: "linear-gradient(90deg, #1C1917 0%, transparent 100%)",
+              zIndex: 1,
+            }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://www.colivingcait.com/og-image.png"
+            alt=""
+            width={420}
+            height={630}
+            style={{
+              objectFit: "cover",
+              objectPosition: "right center",
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </div>
       </div>
     ),
