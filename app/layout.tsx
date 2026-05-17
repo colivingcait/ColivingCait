@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Coliving Cait",
-    title: "Coliving Cait — Real estate education, coaching, and community — built by women, for women.",
+    title: "Coliving Cait — Real estate education and community — built by women, for women.",
     description:
       "Courses, coaching, and community for women building wealth through real estate.",
     url: "https://colivingcait.com",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coliving Cait — Real estate education, coaching, and community — built by women, for women.",
+    title: "Coliving Cait — Real estate education and community — built by women, for women.",
     description:
       "Courses, coaching, and community for women building wealth through real estate.",
     images: [
