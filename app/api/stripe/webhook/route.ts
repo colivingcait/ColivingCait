@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
+import { subscribeToConvertKit, CK_TAGS } from "@/lib/convertkit";
 
 export const dynamic = "force-dynamic";
 
@@ -84,6 +85,39 @@ export async function POST(req: NextRequest) {
       if (error) {
         console.error(`Failed to record purchase for ${slug}:`, error);
       }
+    }
+
+    // Tag in ConvertKit (fire and forget)
+    const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
+    const isBundle = courseSlugs.includes(",");
+
+    // Always tag as course-buyer
+    subscribeToConvertKit({
+      email: customerEmail,
+      firstName,
+      tagName: CK_TAGS.COURSE_BUYER,
+    });
+
+    // Tag per course
+    for (const slug of slugs) {
+      const tagMap: Record<string, string> = {
+        "coliving-101": CK_TAGS.COLIVING_101_PURCHASED,
+        "house-hacking-101": CK_TAGS.HOUSE_HACKING_101_PURCHASED,
+        "real-estate-101": CK_TAGS.REAL_ESTATE_101_PURCHASED,
+      };
+      const tag = tagMap[slug.trim()];
+      if (tag) {
+        subscribeToConvertKit({ email: customerEmail, firstName, tagName: tag });
+      }
+    }
+
+    // Tag bundle buyers
+    if (isBundle) {
+      subscribeToConvertKit({
+        email: customerEmail,
+        firstName,
+        tagName: CK_TAGS.EXPLORER_BUNDLE,
+      });
     }
 
     console.log(`[webhook] Purchase complete: ${customerEmail} → ${courseSlugs}`);
