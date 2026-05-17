@@ -196,10 +196,10 @@ export default function LearnPage() {
                 </span>
                 <div className="flex items-baseline gap-3 mb-5">
                   <span className="text-base text-warmgray-light line-through">
-                    $149
+                    $99
                   </span>
                   <span className="font-heading font-medium text-[28px] text-charcoal block">
-                    $99
+                    $49
                   </span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
                     Limited
@@ -239,10 +239,10 @@ export default function LearnPage() {
               </div>
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-base text-warmgray-light line-through">$447</span>
-                  <span className="font-heading font-medium text-[32px] text-charcoal">$149</span>
+                  <span className="text-base text-warmgray-light line-through">$147</span>
+                  <span className="font-heading font-medium text-[32px] text-charcoal">$99</span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    $298 off
+                    $48 off
                   </span>
                 </div>
                 <BuyButton courseSlug="bundle" className="btn-primary">

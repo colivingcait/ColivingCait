@@ -68,9 +68,9 @@ export default async function DashboardPage() {
             <div className="flex items-center gap-4">
               <p className="font-heading text-lg text-charcoal">
                 <span className="line-through text-warmgray/40 text-sm mr-1">
-                  $297
+                  $147
                 </span>
-                $149
+                $99
               </p>
               <BuyButton
                 courseSlug="bundle"
