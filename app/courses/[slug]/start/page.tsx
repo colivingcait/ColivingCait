@@ -117,10 +117,10 @@ export default async function CourseWelcomePage({
               <p className="mt-2 text-warmgray text-sm leading-body">
                 Email{" "}
                 <a
-                  href="mailto:colivingcait@gmail.com"
+                  href="mailto:hello@colivingcait.com"
                   className="text-gold-dark border-b border-brand hover:text-gold transition-colors"
                 >
-                  colivingcait@gmail.com
+                  hello@colivingcait.com
                 </a>{" "}
                 and I&apos;ll sort it within 48 hours.
               </p>

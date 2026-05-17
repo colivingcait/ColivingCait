@@ -34,7 +34,7 @@ const quickLinks = [
 ];
 
 const info = [
-  { icon: "✉", label: "Email", val: <a href="mailto:colivingcait@gmail.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait@gmail.com</a> },
+  { icon: "✉", label: "Email", val: <a href="mailto:hello@colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">hello@colivingcait.com</a> },
   { icon: "◈", label: "Location", val: "Atlanta Metro, Georgia" },
   { icon: "⌂", label: "Brokerage", val: "Keller Williams Metro Atlanta" },
   { icon: "★", label: "Website", val: <a href="https://colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait.com</a> },

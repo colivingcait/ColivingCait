@@ -3,7 +3,7 @@ import { CK_TAGS, subscribeToConvertKit } from "@/lib/convertkit";
 
 // Contact form endpoint. Maps the form's topic dropdown to a specific
 // ConvertKit tag, subscribes the visitor, and (TODO) sends an email
-// notification to colivingcait@gmail.com via Resend once that key lands.
+// notification to hello@colivingcait.com via Resend once that key lands.
 const TOPIC_TO_TAG: Record<string, string> = {
   general: CK_TAGS.CONTACT_FORM_SUBMITTED,
   coaching: CK_TAGS.COACHING_INTERESTED,
@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       console.warn("[contact] CK subscribe failed", result.error);
     }
 
-    // TODO: Email notification to colivingcait@gmail.com via Resend.
+    // TODO: Email notification to hello@colivingcait.com via Resend.
     console.log("[contact]", {
       firstName,
       lastName,

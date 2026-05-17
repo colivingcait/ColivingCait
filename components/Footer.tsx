@@ -121,10 +121,10 @@ export default function Footer() {
           © 2026 Coliving Cait · Lustra House LLC
         </span>
         <a
-          href="mailto:colivingcait@gmail.com"
+          href="mailto:hello@colivingcait.com"
           className="text-[11px] text-warmgray-light hover:text-gold transition-colors duration-200"
         >
-          colivingcait@gmail.com
+          hello@colivingcait.com
         </a>
       </div>
     </footer>
