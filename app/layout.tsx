@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Coliving Cait",
-    title: "Coliving Cait — Investor. Coach. Realtor. Community Builder.",
+    title: "Coliving Cait — Real estate education, coaching, and community — built by women, for women.",
     description:
-      "Atlanta-based coliving investor, Realtor, and women's coliving coach. Courses, coaching, partnerships, and a community for women building wealth through real estate.",
+      "Courses, coaching, and community for women building wealth through real estate.",
     url: "https://colivingcait.com",
     images: [
       {
@@ -54,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coliving Cait — Investor. Coach. Realtor. Community Builder.",
+    title: "Coliving Cait — Real estate education, coaching, and community — built by women, for women.",
     description:
-      "Atlanta-based coliving investor, Realtor, and women's coliving coach.",
+      "Courses, coaching, and community for women building wealth through real estate.",
     images: [
       "/og-image.png",
     ],
