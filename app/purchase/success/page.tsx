@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth/helpers";
 import { stripe } from "@/lib/stripe";
+import PixelPurchase from "@/components/PixelPurchase";
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +21,13 @@ export default async function PurchaseSuccessPage({
   // Try to get course info from the Stripe session
   let courseName = "your course";
   let customerEmail = "";
+  let purchaseAmount = 0;
   if (session_id) {
     try {
       const session = await stripe.checkout.sessions.retrieve(session_id);
       customerEmail =
         session.customer_details?.email || session.customer_email || "";
+      purchaseAmount = (session.amount_total ?? 0) / 100;
       const slugs = session.metadata?.course_slugs || "";
       if (slugs.includes(",")) {
         courseName = "the Explorer Bundle";
@@ -48,6 +51,7 @@ export default async function PurchaseSuccessPage({
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-6">
+      <PixelPurchase value={purchaseAmount} contentName={courseName} />
       <div className="w-full max-w-lg text-center">
         <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-4">
           ✦ Purchase complete
