@@ -22,6 +22,13 @@ export async function POST(request: Request) {
       tagName: tag,
     });
 
+    // Also add to community for nurture sequence
+    await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: "community",
+    });
+
     if (!result.ok) {
       return NextResponse.json({ error: result.error }, { status: 502 });
     }

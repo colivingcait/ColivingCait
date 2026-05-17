@@ -91,11 +91,17 @@ export async function POST(req: NextRequest) {
     const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
     const isBundle = courseSlugs.includes(",");
 
-    // Always tag as course-buyer
+    // Always tag as course-buyer and community
     subscribeToConvertKit({
       email: customerEmail,
       firstName,
       tagName: CK_TAGS.COURSE_BUYER,
+    });
+
+    subscribeToConvertKit({
+      email: customerEmail,
+      firstName,
+      tagName: CK_TAGS.COMMUNITY,
     });
 
     // Tag per course

@@ -42,6 +42,13 @@ export async function POST(request: Request) {
       },
     });
 
+    // Also add to community for nurture sequence
+    await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: CK_TAGS.COMMUNITY,
+    });
+
     if (!result.ok) {
       // Don't fail the user even if CK errors — log and continue, since
       // we still want the message itself to land in Caitlyn's inbox.

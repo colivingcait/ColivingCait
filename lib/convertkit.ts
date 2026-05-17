@@ -26,6 +26,7 @@ export const CK_TAGS = {
   SELLER_LEAD: "seller-lead",
   HOUSE_HACKER_LEAD: "house-hacker-lead",
   COMMUNITY_MEMBER: "community-member",
+  COMMUNITY: "community",
   CONTACT_FORM_SUBMITTED: "contact-form-submitted",
   WCS_INTERESTED: "wcs-interested",
   SHE_LEADS_INTERESTED: "she-leads-interested",
