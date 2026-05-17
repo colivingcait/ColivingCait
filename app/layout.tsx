@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: "https://colivingcait.com",
     images: [
       {
-        url: "/api/og?title=Helping+women+build+wealth+through+intentional+coliving.&eyebrow=ColivingCait.com",
+        url: "/api/og?title=Investor.+Coach.+Realtor.+Community+Builder.&eyebrow=ColivingCait.com",
         width: 1200,
         height: 630,
         alt: "Coliving Cait — Helping women build wealth through intentional coliving",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     description:
       "Atlanta-based coliving investor, Realtor, and women's coliving coach.",
     images: [
-      "/api/og?title=Helping+women+build+wealth+through+intentional+coliving.&eyebrow=ColivingCait.com",
+      "/api/og?title=Investor.+Coach.+Realtor.+Community+Builder.&eyebrow=ColivingCait.com",
     ],
   },
 };

@@ -12,7 +12,7 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const title =
     searchParams.get("title") ??
-    "Building wealth through intentional coliving.";
+    "Investor. Coach. Realtor. Community Builder.";
   const eyebrow = searchParams.get("eyebrow") ?? "ColivingCait.com";
   const subtitle = searchParams.get("subtitle");
 
