@@ -29,6 +29,10 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Pages with dark (charcoal) hero sections need a light logo when not scrolled
+  const darkHeroPages = ["/courses/"];
+  const hasDarkHero = darkHeroPages.some((p) => pathname.startsWith(p)) && pathname !== "/courses";
+
   return (
     <header
       className={cn(
@@ -39,11 +43,9 @@ export default function Nav() {
       )}
     >
       <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between py-5">
-        {/* Wordmark — "Coliving" auto-inverts against the underlying hero
-            via mix-blend-difference so the logo stays visible on both
-            light and charcoal sections when the nav is transparent.
-            Once scrolled, the nav has a solid white backdrop and the
-            text switches to a plain charcoal fill. */}
+        {/* Wordmark — "Coliving" switches between charcoal (light pages)
+            and cream (dark hero pages) when the nav is transparent.
+            Once scrolled, always charcoal against the white backdrop. */}
         <Link
           href="/"
           aria-label="ColivingCait — home"
@@ -53,12 +55,19 @@ export default function Nav() {
             <span
               className={cn(
                 "transition-colors duration-200",
-                "text-charcoal",
+                scrolled || !hasDarkHero
+                  ? "text-charcoal"
+                  : "text-cream",
               )}
             >
               Coliving
             </span>
-            <em className="italic font-light text-gold-light">Cait</em>
+            <em className={cn(
+              "italic font-light transition-colors duration-200",
+              scrolled || !hasDarkHero
+                ? "text-gold-light"
+                : "text-gold",
+            )}>Cait</em>
           </span>
         </Link>
 
@@ -75,8 +84,12 @@ export default function Nav() {
                     "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
                     "after:transition-[width] after:duration-[350ms] after:ease-brand",
                     active
-                      ? "text-charcoal font-medium after:w-full"
-                      : "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full",
+                      ? scrolled || !hasDarkHero
+                        ? "text-charcoal font-medium after:w-full"
+                        : "text-cream font-medium after:w-full"
+                      : scrolled || !hasDarkHero
+                        ? "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full"
+                        : "text-cream/70 font-normal after:w-0 hover:text-cream hover:after:w-full",
                   )}
                 >
                   {l.label}
