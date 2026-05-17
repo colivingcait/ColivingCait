@@ -53,9 +53,7 @@ export default function Nav() {
             <span
               className={cn(
                 "transition-colors duration-200",
-                scrolled
-                  ? "text-charcoal"
-                  : "text-white [mix-blend-mode:difference]",
+                "text-charcoal",
               )}
             >
               Coliving
