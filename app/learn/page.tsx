@@ -311,15 +311,12 @@ export default function LearnPage() {
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
               </span>
-              <a
-                href="https://calendly.com/colivingcait/coaching-discovery-call"
-                target="_blank"
-                rel="noopener noreferrer"
+              <BuyButton
+                courseSlug="builder"
                 className="btn-gold w-full text-center mt-7"
-                style={{ display: "block" }}
               >
                 Enroll Now
-              </a>
+              </BuyButton>
               <p className="text-[13px] text-warmgray-light mt-3 text-center">
                 Payment plan available at checkout
               </p>
@@ -379,14 +376,12 @@ export default function LearnPage() {
               </span>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
-              <a
-                href="https://calendly.com/colivingcait/coaching-discovery-call"
-                target="_blank"
-                rel="noopener noreferrer"
+              <BuyButton
+                courseSlug="operator"
                 className="btn-gold"
               >
                 Start Now — $1,000/mo
-              </a>
+              </BuyButton>
               <a
                 href="https://calendly.com/colivingcait/coaching-discovery-call"
                 target="_blank"
