@@ -380,7 +380,7 @@ export default function LearnPage() {
                 courseSlug="operator"
                 className="btn-gold"
               >
-                Start Now — $1,000/mo
+                Enroll Now
               </BuyButton>
               <a
                 href="https://calendly.com/colivingcait/coaching-discovery-call"
@@ -391,17 +391,6 @@ export default function LearnPage() {
                 Have questions? Book a Discovery Call →
               </a>
             </div>
-          </div>
-
-          <div className="reveal mt-10 text-center">
-            <a
-              href="https://calendly.com/colivingcait/strategy-session"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[13px] text-warmgray hover:text-charcoal transition-colors duration-200 inline-flex items-center gap-1.5"
-            >
-              Just need one call? Book a one-time Strategy Session →
-            </a>
           </div>
         </div>
       </section>
