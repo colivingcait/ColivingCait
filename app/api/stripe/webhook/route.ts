@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
 import { subscribeToConvertKit, CK_TAGS } from "@/lib/convertkit";
+import { sendWelcomeEmail } from "@/lib/emails/welcome";
 
 export const dynamic = "force-dynamic";
 
@@ -91,17 +92,12 @@ export async function POST(req: NextRequest) {
     const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
     const isBundle = courseSlugs.includes(",");
 
-    // Always tag as course-buyer and community
+    // Always tag as course-buyer (triggers post-purchase sequence in Kit)
+    // NOTE: Do NOT add community tag here — course buyers get their own sequence
     subscribeToConvertKit({
       email: customerEmail,
       firstName,
       tagName: CK_TAGS.COURSE_BUYER,
-    });
-
-    subscribeToConvertKit({
-      email: customerEmail,
-      firstName,
-      tagName: CK_TAGS.COMMUNITY,
     });
 
     // Tag per course
@@ -125,6 +121,27 @@ export async function POST(req: NextRequest) {
         tagName: CK_TAGS.EXPLORER_BUNDLE,
       });
     }
+
+    // Send welcome email via Resend
+    const courseNameMap: Record<string, string> = {
+      "coliving-101": "Coliving 101",
+      "house-hacking-101": "House Hacking 101",
+      "real-estate-101": "Real Estate Investing 101",
+      "builder": "The Builder",
+      "operator": "The Operator",
+    };
+    const purchasedCourseName = isBundle
+      ? "Explorer Bundle"
+      : courseNameMap[slugs[0]?.trim()] || "your course";
+
+    const origin = process.env.NEXTAUTH_URL || "https://www.colivingcait.com";
+    sendWelcomeEmail({
+      to: customerEmail,
+      firstName,
+      courseName: purchasedCourseName,
+      isBundle,
+      siteUrl: origin,
+    });
 
     console.log(`[webhook] Purchase complete: ${customerEmail} → ${courseSlugs}`);
   }
