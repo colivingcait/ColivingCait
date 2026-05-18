@@ -248,20 +248,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 5. LEAD MAGNET #1 ===== */}
-      <LeadMagnet
-        eyebrow="Free Guide"
-        title={
-          <>
-            Not ready to book a call? Grab the free{" "}
-            <em className="italic text-gold font-light">Coliving Starter Guide.</em>
-          </>
-        }
-        copy="Everything you need to understand the coliving model, the math, and how to evaluate your first deal — in one quick read."
-        button="Send It"
-        bg="bg-blush"
-      />
-
       {/* ===== 6. WHY COLIVING ===== */}
       <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
         <div className="mx-auto max-w-[1320px]">
