@@ -1,19 +1,16 @@
 import { NextResponse } from "next/server";
-import { CK_TAGS, subscribeToConvertKit } from "@/lib/convertkit";
+import { createOrUpdateContact, FUB_TAGS } from "@/lib/followupboss";
 
-// Contact form endpoint. Maps the form's topic dropdown to a specific
-// ConvertKit tag, subscribes the visitor, and (TODO) sends an email
-// notification to hello@colivingcait.com via Resend once that key lands.
-const TOPIC_TO_TAG: Record<string, string> = {
-  general: CK_TAGS.CONTACT_FORM_SUBMITTED,
-  coaching: CK_TAGS.COACHING_INTERESTED,
-  partnership: CK_TAGS.PASSIVE_INVESTOR,
-  "buy-sell": CK_TAGS.BUYER_LEAD,
-  "house-hacking": CK_TAGS.HOUSE_HACKER_LEAD,
-  speaking: CK_TAGS.MEDIA_INQUIRY,
-  wcs: CK_TAGS.WCS_INTERESTED,
-  "she-leads": CK_TAGS.SHE_LEADS_INTERESTED,
-  other: CK_TAGS.CONTACT_FORM_SUBMITTED,
+const TOPIC_TO_TAGS: Record<string, string[]> = {
+  general: ["contact-form"],
+  coaching: ["coaching-interested"],
+  partnership: ["passive-investor", "partner-inquiry"],
+  "buy-sell": ["buyer-lead"],
+  "house-hacking": ["contact-form"],
+  speaking: ["contact-form"],
+  wcs: ["wcs-interested"],
+  "she-leads": ["she-leads-coliving"],
+  other: ["contact-form"],
 };
 
 export async function POST(request: Request) {
@@ -28,43 +25,22 @@ export async function POST(request: Request) {
       );
     }
 
-    const tagName = TOPIC_TO_TAG[topic] ?? CK_TAGS.CONTACT_FORM_SUBMITTED;
+    const tags = [
+      ...(TOPIC_TO_TAGS[topic] ?? ["contact-form"]),
+      FUB_TAGS.COMMUNITY,
+    ];
 
-    const result = await subscribeToConvertKit({
+    createOrUpdateContact({
       email,
-      firstName,
-      tagName,
-      fields: {
-        last_name: lastName,
-        phone: phone ?? "",
-        contact_topic: topic,
-        last_message: message?.slice(0, 500), // bounded
-      },
-    });
-
-    // Also add to community for nurture sequence
-    await subscribeToConvertKit({
-      email,
-      firstName,
-      tagName: CK_TAGS.COMMUNITY,
-    });
-
-    if (!result.ok) {
-      // Don't fail the user even if CK errors — log and continue, since
-      // we still want the message itself to land in Caitlyn's inbox.
-      console.warn("[contact] CK subscribe failed", result.error);
-    }
-
-    // TODO: Email notification to hello@colivingcait.com via Resend.
-    console.log("[contact]", {
       firstName,
       lastName,
-      email,
       phone,
-      topic,
-      message,
+      tags,
+      source: "ColivingCait.com - Contact Form",
+      message: `Topic: ${topic}\n\n${message}`,
     });
 
+    console.log("[contact]", { firstName, lastName, email, phone, topic, message });
     return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });

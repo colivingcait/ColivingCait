@@ -1,75 +1,28 @@
 import { NextResponse } from "next/server";
-import { CK_TAGS, subscribeToConvertKit } from "@/lib/convertkit";
+import { createOrUpdateContact, FUB_TAGS } from "@/lib/followupboss";
 
-// Buyer / investor inquiry endpoint. Two side effects:
-//   1. ConvertKit subscribe with `buyer-lead` tag (live now via lib)
-//   2. Forward to Follow Up Boss via Zapier webhook (TODO — needs
-//      ZAPIER_BUYER_HOOK env var)
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { name, email, phone, lookingFor, priceRange } = body ?? {};
 
-    if (!name || !email || !phone || !lookingFor || !priceRange) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
-      );
+    if (!name || !email) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // First name from full name (best-effort split; Caitlyn can clean
-    // these up in CK if needed)
-    const firstName = name.split(/\s+/)[0];
+    const [firstName, ...rest] = name.split(" ");
+    const lastName = rest.join(" ") || undefined;
 
-    const ck = await subscribeToConvertKit({
+    const tags = [FUB_TAGS.BUYER_LEAD, FUB_TAGS.COMMUNITY];
+
+    createOrUpdateContact({
       email,
       firstName,
-      tagName: CK_TAGS.BUYER_LEAD,
-      fields: {
-        full_name: name,
-        phone,
-        looking_for: lookingFor,
-        price_range: priceRange,
-      },
-    });
-
-    // Also add to community for nurture sequence
-    await subscribeToConvertKit({
-      email,
-      firstName,
-      tagName: CK_TAGS.COMMUNITY,
-    });
-
-    if (!ck.ok) {
-      console.warn("[buyer-inquiry] CK subscribe failed", ck.error);
-    }
-
-    // TODO: forward to Follow Up Boss via Zapier hook.
-    const zapHook = process.env.ZAPIER_BUYER_HOOK;
-    if (zapHook) {
-      try {
-        await fetch(zapHook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name,
-            email,
-            phone,
-            lookingFor,
-            priceRange,
-          }),
-        });
-      } catch (err) {
-        console.warn("[buyer-inquiry] Zapier forward failed", err);
-      }
-    }
-
-    console.log("[buyer-inquiry]", {
-      name,
-      email,
+      lastName,
       phone,
-      lookingFor,
-      priceRange,
+      tags,
+      source: "ColivingCait.com - Buyer Inquiry",
+      message: `Looking for: ${lookingFor || "Not specified"}\nPrice range: ${priceRange || "Not specified"}`,
     });
 
     return NextResponse.json({ ok: true });
