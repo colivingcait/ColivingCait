@@ -63,7 +63,7 @@ export default function BuyAndSellPage() {
       <RevealObserver />
 
       {/* ===== 1. HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-[180px] lg:pb-[100px] bg-white">
+      <section className="px-8 lg:px-[60px] pt-28 lg:pt-32 pb-16 lg:pb-20 bg-white">
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-16 items-center lg:grid-cols-[1.1fr_0.9fr] text-center lg:text-left">
           <div className="opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]">
             <span className="eyebrow lg:inline-flex">Buy &amp; Sell With Me</span>

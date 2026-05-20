@@ -34,11 +34,11 @@ export default function CaseStudyOptInForm() {
         placeholder="Your email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 bg-cream border border-[rgba(196,149,90,0.25)] px-4 py-3.5 text-[14px] text-charcoal placeholder:text-warmgray-light focus:outline-none focus:border-gold transition-colors"
+        className="flex-1 bg-cream border border-[rgba(196,149,90,0.25)] px-3.5 py-2.5 text-[13px] text-charcoal placeholder:text-warmgray-light focus:outline-none focus:border-gold transition-colors"
       />
       <button
         type="submit"
-        className="bg-charcoal text-white px-6 py-3.5 text-[11px] font-medium uppercase tracking-[0.12em] whitespace-nowrap hover:bg-gold transition-colors duration-300"
+        className="bg-charcoal text-white px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.12em] whitespace-nowrap hover:bg-gold transition-colors duration-300"
       >
         Get the free case study
       </button>

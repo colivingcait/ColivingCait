@@ -95,7 +95,7 @@ export default function LearnPage() {
       <RevealObserver />
 
       {/* ===== HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-40 lg:pb-[100px] bg-white text-center relative">
+      <section className="px-8 lg:px-[60px] pt-28 lg:pt-32 pb-16 lg:pb-20 bg-white text-center relative">
         <div className="mx-auto max-w-[760px]">
           <span className="eyebrow eyebrow-center">Learn With Me</span>
           <h1
@@ -112,28 +112,28 @@ export default function LearnPage() {
             Choose your starting point ↓
           </p>
 
-          <div className="flex flex-wrap justify-center items-end gap-6 lg:gap-12 mt-14 opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
+          <div className="flex flex-wrap lg:flex-nowrap justify-center items-end gap-4 lg:gap-6 mt-12 opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
             {[
               { href: "#start-free", label: "I'm Just Curious", name: "Start for Free", free: true },
               { href: "#foundations", label: "I'm New to This", name: "The Explorer" },
               { href: "#builder", label: "I'm Ready to Build", name: "The Builder" },
               { href: "#operator", label: "I'm Already Operating", name: "The Operator" },
             ].map((step, i, arr) => (
-              <span key={step.href} className="flex items-end gap-6 lg:gap-12">
+              <span key={step.href} className="flex items-end gap-4 lg:gap-6">
                 <a
                   href={step.href}
-                  className="group relative pb-4 text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-gold after:transition-[width] after:duration-[350ms] after:ease-brand hover:after:w-full"
+                  className="group relative pb-4 text-center whitespace-nowrap after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-gold after:transition-[width] after:duration-[350ms] after:ease-brand hover:after:w-full"
                 >
                   {step.free && (
-                    <span className="inline-block text-[9px] font-medium uppercase tracking-[0.15em] text-white bg-gold px-2 py-0.5 mb-2">
+                    <span className="inline-block text-[9px] font-medium uppercase tracking-[0.15em] text-white bg-gold px-2 py-0.5 mb-1.5">
                       Free
                     </span>
                   )}
-                  <span className="block text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-2">
+                  <span className="block text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-1.5">
                     {step.label}
                   </span>
                   <span
-                    className={`block font-heading font-medium text-2xl ${
+                    className={`block font-heading font-medium text-xl lg:text-[22px] ${
                       step.free ? "text-gold" : "text-charcoal"
                     } group-hover:text-gold-dark transition-colors duration-300`}
                   >
@@ -150,55 +150,53 @@ export default function LearnPage() {
       </section>
 
       {/* ===== FREE CASE STUDY OPT-IN ===== */}
-      <section id="start-free" className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-cream scroll-mt-24">
-        <div className="mx-auto max-w-[1100px]">
-          <div className="reveal text-center mb-10">
+      <section id="start-free" className="px-8 lg:px-[60px] pt-16 lg:pt-20 pb-4 lg:pb-5 bg-cream scroll-mt-24">
+        <div className="mx-auto max-w-[1000px]">
+          <div className="reveal text-center mb-6">
             <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.15em] text-gold-dark bg-[rgba(196,149,90,0.1)] px-4 py-2">
               ✦ Start Here — Free
             </span>
           </div>
 
-          <div className="reveal bg-white border-[1.5px] border-gold flex flex-col lg:flex-row">
+          <div className="reveal bg-white border-[1.5px] border-gold flex flex-col lg:flex-row lg:max-h-[340px]">
             {/* LEFT — preview */}
-            <div className="relative bg-blush lg:basis-[40%] lg:shrink-0 min-h-[280px] flex items-center justify-center overflow-hidden">
-              <span className="absolute top-4 left-4 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-2.5 py-1">
+            <div className="relative bg-blush lg:basis-[40%] lg:shrink-0 min-h-[200px] lg:min-h-0 flex items-center justify-center overflow-hidden">
+              <span className="absolute top-3 left-3 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-2.5 py-1">
                 Free
               </span>
-              <div className="grid grid-cols-2 gap-2 p-8 w-full max-w-[320px]">
-                <div className="aspect-[4/5] bg-[rgba(28,25,23,0.08)]" />
-                <div className="aspect-[4/5] bg-[rgba(28,25,23,0.08)]" />
-                <div className="aspect-[4/5] bg-[rgba(28,25,23,0.08)]" />
-                <div className="aspect-[4/5] bg-[rgba(28,25,23,0.08)]" />
+              <div className="grid grid-cols-2 gap-2 p-6 w-full max-w-[280px]">
+                <div className="aspect-[3/4] bg-[rgba(28,25,23,0.08)]" />
+                <div className="aspect-[3/4] bg-[rgba(28,25,23,0.08)]" />
               </div>
             </div>
 
             {/* RIGHT — content */}
-            <div className="lg:basis-[60%] p-10 lg:p-12">
-              <span className="block text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-4">
+            <div className="lg:basis-[60%] p-6 lg:p-7">
+              <span className="block text-[10px] font-medium uppercase tracking-[0.15em] text-gold mb-2">
                 Start Here — Free
               </span>
               <h3
-                className="font-heading font-normal tracking-[-0.01em] text-charcoal leading-[1.2] mb-4"
-                style={{ fontSize: "clamp(22px, 2vw, 26px)" }}
+                className="font-heading font-normal tracking-[-0.01em] text-charcoal leading-[1.2] mb-2"
+                style={{ fontSize: "clamp(20px, 1.6vw, 24px)" }}
               >
                 How I Turned My Basement Into a{" "}
                 <em className="italic text-gold font-light">$1,500/Month Asset</em>
               </h3>
-              <p className="text-[14px] leading-[1.8] text-warmgray mb-7">
-                Before I operated 50+ coliving rooms, I house hacked my own home — $15K down, a $12K renovation with my dad, and a rental model that cut my housing cost in half. Real photos, real math.
+              <p className="text-[13px] leading-[1.6] text-warmgray mb-4">
+                Before I operated 50+ coliving rooms, I house hacked my own home — $15K down, a $12K reno with my dad, and a rental model that cut my housing cost in half. Real photos, real math.
               </p>
 
-              <div className="grid grid-cols-3 gap-4 border-b border-soft pb-5 mb-7">
+              <div className="grid grid-cols-3 gap-2 border-b border-soft pb-3 mb-4">
                 {[
                   { num: "$300K", label: "Purchase price" },
                   { num: "$12K", label: "Reno cost" },
                   { num: "$1,500", label: "Monthly income" },
                 ].map((s) => (
                   <div key={s.label}>
-                    <div className="font-heading font-medium text-[22px] lg:text-[26px] text-charcoal leading-none mb-1.5">
+                    <div className="font-heading font-medium text-[18px] lg:text-[20px] text-charcoal leading-none mb-1">
                       {s.num}
                     </div>
-                    <span className="block text-[11px] uppercase tracking-[0.08em] text-warmgray-light">
+                    <span className="block text-[10px] uppercase tracking-[0.08em] text-warmgray-light">
                       {s.label}
                     </span>
                   </div>
@@ -207,15 +205,15 @@ export default function LearnPage() {
 
               <CaseStudyOptInForm />
 
-              <p className="text-[12px] text-warmgray-light mt-4">
+              <p className="text-[11px] text-warmgray-light mt-2">
                 Instant PDF. No spam, unsubscribe anytime.
               </p>
             </div>
           </div>
 
           {/* transition divider */}
-          <div className="reveal text-center mt-14">
-            <span aria-hidden className="block mx-auto w-[50px] h-px bg-gold mb-4" />
+          <div className="reveal text-center mt-6">
+            <span aria-hidden className="block mx-auto w-[50px] h-px bg-gold mb-3" />
             <p className="text-[13px] text-warmgray-light">
               Ready to go deeper? Pick your path.
             </p>
@@ -224,7 +222,7 @@ export default function LearnPage() {
       </section>
 
       {/* ===== TIER 1: FOUNDATIONS ===== */}
-      <section id="foundations" className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream scroll-mt-24">
+      <section id="foundations" className="px-8 lg:px-[60px] pt-6 lg:pt-8 pb-20 lg:pb-[120px] bg-cream scroll-mt-24">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal mb-16">
             <div>
