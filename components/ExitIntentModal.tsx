@@ -28,6 +28,23 @@ export default function ExitIntentModal() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Debug hooks: `?exit=1` (or `?exit=force`) bypasses the timer and
+    // storage checks for testing the modal UI. Expose a manual trigger
+    // on window so we can verify the listener is mounted from devtools.
+    const url = new URL(window.location.href);
+    const forceOpen =
+      url.searchParams.get("exit") === "1" ||
+      url.searchParams.get("exit") === "force";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__exitIntentMounted = true;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).__exitIntentOpen = () => setOpen(true);
+
+    if (forceOpen) {
+      setOpen(true);
+      return;
+    }
+
     // Skip touch devices — exit intent doesn't work there.
     const isTouch =
       "ontouchstart" in window ||
@@ -48,24 +65,40 @@ export default function ExitIntentModal() {
       armed = true;
     }, ARM_DELAY_MS);
 
-    const onMouseLeave = (e: MouseEvent) => {
-      if (!armed) return;
-      // Only trigger when the cursor crosses out the TOP of the viewport.
-      // `clientY <= 0` means the pointer left through the top edge.
-      if (e.clientY > 0) return;
+    const trigger = () => {
       try {
         sessionStorage.setItem(SESSION_SHOWN_KEY, "1");
       } catch {
         /* ignore */
       }
       setOpen(true);
-      document.removeEventListener("mouseleave", onMouseLeave);
+      document.documentElement.removeEventListener("mouseleave", onDocLeave);
+      document.removeEventListener("mouseout", onMouseOut);
     };
 
-    document.addEventListener("mouseleave", onMouseLeave);
+    const onDocLeave = (e: MouseEvent) => {
+      if (!armed) return;
+      // Only fire when the cursor crosses the TOP of the viewport.
+      if (e.clientY > 0) return;
+      trigger();
+    };
+
+    // Fallback: `mouseout` on document with relatedTarget === null also
+    // signals the cursor left the window. More reliable across browsers
+    // than relying on mouseleave alone.
+    const onMouseOut = (e: MouseEvent) => {
+      if (!armed) return;
+      if (e.relatedTarget !== null) return;
+      if (e.clientY > 0) return;
+      trigger();
+    };
+
+    document.documentElement.addEventListener("mouseleave", onDocLeave);
+    document.addEventListener("mouseout", onMouseOut);
     return () => {
       clearTimeout(armTimer);
-      document.removeEventListener("mouseleave", onMouseLeave);
+      document.documentElement.removeEventListener("mouseleave", onDocLeave);
+      document.removeEventListener("mouseout", onMouseOut);
     };
   }, []);
 
