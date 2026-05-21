@@ -269,6 +269,16 @@
   100% { transform: translateX(-50%); }
 }
 
+/* Exit-intent modal entrance — backdrop fade + card rise. */
+@keyframes exitIntentFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes exitIntentRise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

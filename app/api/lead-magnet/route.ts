@@ -1,24 +1,39 @@
 import { NextResponse } from "next/server";
-import { createOrUpdateContact, FUB_TAGS } from "@/lib/followupboss";
+import { subscribeToConvertKit } from "@/lib/convertkit";
 
+// Lead-magnet endpoint. Used by every LeadMagnetForm + the calculator
+// email gate. Posts directly to ConvertKit via the shared helper —
+// applies the tag passed in the request body.
 export async function POST(request: Request) {
   try {
-    const { email, firstName, tag } = await request.json();
+    const body = await request.json();
+    const { firstName, email, tag } = body ?? {};
 
-    if (!email) {
-      return NextResponse.json({ error: "Email required" }, { status: 400 });
+    if (!email || !tag) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
     }
 
-    const tags = [tag || "lead-magnet", FUB_TAGS.COMMUNITY];
-
-    createOrUpdateContact({
+    const result = await subscribeToConvertKit({
       email,
       firstName,
-      tags,
-      source: "ColivingCait.com - Lead Magnet",
+      tagName: tag,
     });
 
-    return NextResponse.json({ ok: true });
+    // Also add to community for nurture sequence
+    await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: "community",
+    });
+
+    if (!result.ok) {
+      return NextResponse.json({ error: result.error }, { status: 502 });
+    }
+
+    return NextResponse.json({ ok: true, mode: result.mode });
   } catch (err) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }

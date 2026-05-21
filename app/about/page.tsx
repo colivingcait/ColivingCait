@@ -79,7 +79,7 @@ export default function AboutPage() {
       <RevealObserver />
 
       {/* ===== 1. HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-28 lg:pt-32 pb-16 lg:pb-20 bg-white">
+      <section className="px-8 lg:px-[60px] pt-20 lg:pt-24 pb-10 lg:pb-12 bg-white">
         <div className="mx-auto grid w-full max-w-[1320px] items-center gap-10 lg:gap-16 lg:grid-cols-2 text-center lg:text-left">
           <div className="opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]">
             <span className="eyebrow lg:inline-flex">About Caitlyn</span>

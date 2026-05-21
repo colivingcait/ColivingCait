@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import ExitIntentModal from "@/components/ExitIntentModal";
 
 // Homepage — pixel-perfect rewrite of coliving-cait-homepage.html.
 // Sections: Hero · Stats Ticker · Service Cards · Coliving Math · Lead Magnet 1
@@ -29,9 +30,10 @@ export default function HomePage() {
   return (
     <>
       <RevealObserver />
+      <ExitIntentModal />
 
       {/* ===== 1. HERO ===== */}
-      <section className="pt-28 lg:pt-32 pb-16 lg:pb-20 px-8 lg:px-[60px] bg-white relative">
+      <section className="pt-20 lg:pt-24 pb-10 lg:pb-12 px-8 lg:px-[60px] bg-white relative">
         <div className="mx-auto grid w-full max-w-[1320px] items-end gap-10 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="lg:pb-24 z-[2] text-center lg:text-left">
             <span className="eyebrow lg:inline-flex">Investor · Coach · Realtor</span>
