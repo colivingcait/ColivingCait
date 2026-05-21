@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import CaseStudyOptInForm from "@/components/CaseStudyOptInForm";
+import ExitIntentModal from "@/components/ExitIntentModal";
 import { getCourse } from "@/lib/courses";
 import BuyButton from "@/components/courses/BuyButton";
 
@@ -112,6 +113,7 @@ export default function LearnPage() {
   return (
     <>
       <RevealObserver />
+      <ExitIntentModal />
 
       {/* ===== HERO ===== */}
       <section className="px-8 lg:px-[60px] pt-20 lg:pt-24 pb-10 lg:pb-12 bg-white text-center relative">

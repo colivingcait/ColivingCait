@@ -37,6 +37,12 @@ export default function CaseStudyOptInForm() {
         throw new Error(data?.error || "Submission failed");
       }
       setStatus("success");
+      // Suppress the exit-intent modal once the user has converted here.
+      try {
+        localStorage.setItem("coliving-cait:case-study-submitted", "1");
+      } catch {
+        /* ignore */
+      }
     } catch (err) {
       setStatus("error");
       setError(
