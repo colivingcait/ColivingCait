@@ -29,6 +29,10 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Standalone landing pages (e.g. /ncc conference handout) render their
+  // own minimal header instead of the site nav.
+  if (pathname?.startsWith("/ncc")) return null;
+
   return (
     <header
       className={cn(
