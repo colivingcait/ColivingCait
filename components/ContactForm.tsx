@@ -10,7 +10,7 @@ import { rememberVisitor } from "@/lib/visitor";
 //
 // Once API keys land, /api/contact will:
 //   1. Tag the subscriber in ConvertKit by dropdown selection
-//   2. Send an email notification to colivingcait@gmail.com
+//   2. Send an email notification to hello@colivingcait.com
 const TOPIC_OPTIONS: { value: string; label: string; tag: string }[] = [
   { value: "general", label: "General inquiry", tag: "contact-general" },
   { value: "coaching", label: "Coaching program", tag: "coaching-interested" },

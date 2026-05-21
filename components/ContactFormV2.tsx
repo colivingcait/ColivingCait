@@ -95,7 +95,7 @@ export default function ContactFormV2() {
       </button>
       {status === "error" && (
         <p className="text-xs text-[#C07070] text-center">
-          Something went wrong — please try again or email colivingcait@gmail.com.
+          Something went wrong — please try again or email hello@colivingcait.com.
         </p>
       )}
     </form>

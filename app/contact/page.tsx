@@ -2,10 +2,26 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import ContactFormV2 from "@/components/ContactFormV2";
 
+const OG_TITLE = "Let's connect.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Contact")}`;
+
 export const metadata = {
-  title: "Contact — Coliving Cait",
+  title: "Contact",
   description:
     "Get in touch with Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. General inquiries, coaching, partnerships, speaking, and media.",
+  openGraph: {
+    title: "Contact — Coliving Cait",
+    description:
+      "General inquiries, coaching, partnerships, speaking, and media.",
+    url: "https://colivingcait.com/contact",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact — Coliving Cait",
+    description: "Get in touch with Caitlyn Verdugo.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Contact — pixel-perfect rewrite of coliving-cait-contact.html.
@@ -18,7 +34,7 @@ const quickLinks = [
 ];
 
 const info = [
-  { icon: "✉", label: "Email", val: <a href="mailto:colivingcait@gmail.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait@gmail.com</a> },
+  { icon: "✉", label: "Email", val: <a href="mailto:hello@colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">hello@colivingcait.com</a> },
   { icon: "◈", label: "Location", val: "Atlanta Metro, Georgia" },
   { icon: "⌂", label: "Brokerage", val: "Keller Williams Metro Atlanta" },
   { icon: "★", label: "Website", val: <a href="https://colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait.com</a> },
@@ -26,10 +42,10 @@ const info = [
 
 const socials = [
   { label: "IG", title: "Instagram", href: "https://instagram.com/colivingcait" },
-  { label: "YT", title: "YouTube", href: "#" },
-  { label: "FB", title: "Facebook", href: "#" },
-  { label: "LI", title: "LinkedIn", href: "#" },
-  { label: "TT", title: "TikTok", href: "#" },
+  { label: "YT", title: "YouTube", href: "https://youtube.com/colivingcait" },
+  { label: "FB", title: "Facebook", href: "https://facebook.com/colivingcait" },
+  { label: "LI", title: "LinkedIn", href: "https://www.linkedin.com/in/coliving-cait/" },
+  { label: "TT", title: "TikTok", href: "https://tiktok.com/@colivingcait" },
 ];
 
 export default function ContactPage() {

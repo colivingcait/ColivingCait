@@ -26,6 +26,7 @@ export const CK_TAGS = {
   SELLER_LEAD: "seller-lead",
   HOUSE_HACKER_LEAD: "house-hacker-lead",
   COMMUNITY_MEMBER: "community-member",
+  COMMUNITY: "community",
   CONTACT_FORM_SUBMITTED: "contact-form-submitted",
   WCS_INTERESTED: "wcs-interested",
   SHE_LEADS_INTERESTED: "she-leads-interested",
@@ -39,13 +40,26 @@ export const CK_TAGS = {
   COLIVING_DEAL_MARGINAL: "coliving-deal-marginal",
   COLIVING_DEAL_WEAK: "coliving-deal-weak",
 
-  // Course purchases / completions (forward-looking; wired with Stripe)
-  COLIVING_101_PURCHASED: "coliving-101-purchased",
+  // Course purchases / completions
+  COURSE_BUYER: "course-buyer",
+  COLIVING_101_PURCHASED: "coliving-101",
   COLIVING_101_COMPLETED: "coliving-101-completed",
-  HOUSE_HACKING_101_PURCHASED: "house-hacking-101-purchased",
+  HOUSE_HACKING_101_PURCHASED: "house-hacking-101",
   HOUSE_HACKING_101_COMPLETED: "house-hacking-101-completed",
-  REAL_ESTATE_101_PURCHASED: "real-estate-101-purchased",
+  REAL_ESTATE_101_PURCHASED: "real-estate-101",
   REAL_ESTATE_101_COMPLETED: "real-estate-101-completed",
+  EXPLORER_BUNDLE: "explorer-bundle",
+
+  // Forms & inquiries
+  LEAD_MAGNET: "lead-magnet",
+  NEWSLETTER: "newsletter",
+  PARTNER_INQUIRY: "partner-inquiry",
+  BUYER_SELLER_INQUIRY: "buyer-seller-inquiry",
+
+  // Events
+  MEETUP_ATLANTA: "meetup-atlanta",
+  WCS_ATTENDEE: "wcs-attendee",
+  CONFERENCE: "conference",
 } as const;
 
 export type CKTagName = (typeof CK_TAGS)[keyof typeof CK_TAGS];

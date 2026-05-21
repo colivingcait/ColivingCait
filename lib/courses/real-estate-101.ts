@@ -15,8 +15,8 @@ export const realEstate101: Course = {
     "Six modules. Twenty-eight lessons. Every major residential strategy, how to choose yours, and your first move.",
   longDescription:
     "A self-paced foundation in residential real estate. Six modules cover why real estate works, every major strategy, how to pick yours, the fundamentals every investor needs, the costliest mistakes, and your first move. Twenty-eight lessons. Five module quizzes. Lifetime access.",
-  price: 99,
-  originalPrice: 149,
+  price: 49,
+  originalPrice: 99,
   status: "available",
   symbol: "$",
   outcomes: [

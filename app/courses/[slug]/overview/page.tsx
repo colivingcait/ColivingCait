@@ -1,6 +1,9 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { courses, getCourse } from "@/lib/courses";
 import CourseOverviewMap from "@/components/courses/CourseOverviewMap";
+import { getCurrentUser, hasAccess } from "@/lib/auth/helpers";
+
+export const dynamic = "force-dynamic";
 
 // Pre-generate static params for every available course
 export async function generateStaticParams() {
@@ -23,11 +26,8 @@ export async function generateMetadata({
   };
 }
 
-// Course overview — learner-focused course map. Shows every lesson in
-// order, grouped by module, with completion checkmarks + a "Continue"
-// CTA pointing to the next un-completed lesson. Distinct from the
-// marketing-oriented /courses/[slug] landing page; this is what
-// learners use to orient themselves between sessions.
+// Course overview — gated behind purchase. Redirects to the course
+// landing page if the user hasn't bought it.
 export default async function CourseOverviewPage({
   params,
 }: {
@@ -37,6 +37,13 @@ export default async function CourseOverviewPage({
   const course = getCourse(slug);
   if (!course || course.status !== "available") {
     notFound();
+  }
+
+  const user = await getCurrentUser();
+  const purchased = user ? await hasAccess(user.id, slug) : false;
+
+  if (!purchased) {
+    redirect(`/courses/${slug}`);
   }
 
   return (

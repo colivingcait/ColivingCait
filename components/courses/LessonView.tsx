@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import type { Course, Lesson } from "@/lib/courses/types";
 import {
@@ -10,12 +11,14 @@ import {
 import LessonSections from "./LessonSections";
 import QuizBlock from "./QuizBlock";
 import { useCourseProgress } from "./useCourseProgress";
+import UpsellSection from "./UpsellSection";
 
 type LessonViewProps = {
   course: Course;
   lesson: Lesson;
   prev: Lesson | null;
   next: Lesson | null;
+  isLastLesson?: boolean;
 };
 
 // LessonView — the full interactive lesson page client component. Owns:
@@ -24,19 +27,28 @@ type LessonViewProps = {
 // - Section-rendered lesson content (or quiz, for module-quiz pages)
 // - Prev / Next navigation that auto-marks the current lesson complete
 //
-// Completion is tracked silently — clicking Next records the current
-// lesson as done. There's no explicit "Mark Complete" step.
+// Completion is tracked automatically — viewing a lesson marks it done.
 export default function LessonView({
   course,
   lesson,
   prev,
   next,
+  isLastLesson = false,
 }: LessonViewProps) {
   const progress = useCourseProgress(course.slug);
 
   const isModuleQuiz = lesson.kind === "module-quiz";
   const useModules = !!course.modules && course.modules.length > 0;
   const isWelcome = useModules && lesson.moduleNumber === 0;
+
+  // Auto-mark this lesson as complete when the user views it
+  useEffect(() => {
+    if (progress.isLoaded && !progress.isCompleted(lesson.slug)) {
+      progress.markComplete(lesson.slug);
+    }
+    // Only run when the lesson changes or progress loads
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson.slug, progress.isLoaded]);
 
   const handleAdvance = () => {
     progress.markComplete(lesson.slug);
@@ -157,6 +169,9 @@ export default function LessonView({
             next={next}
             onAdvance={handleAdvance}
           />
+
+          {/* Upsells on the final lesson of a course */}
+          {isLastLesson && <UpsellSection />}
         </article>
       </div>
     </div>
