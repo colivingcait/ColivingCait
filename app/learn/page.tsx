@@ -114,7 +114,7 @@ export default function LearnPage() {
       <RevealObserver />
 
       {/* ===== HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-28 lg:pt-32 pb-16 lg:pb-20 bg-white text-center relative">
+      <section className="px-8 lg:px-[60px] pt-20 lg:pt-24 pb-10 lg:pb-12 bg-white text-center relative">
         <div className="mx-auto max-w-[760px]">
           <span className="eyebrow eyebrow-center">Learn With Me</span>
           <h1
