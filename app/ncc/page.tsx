@@ -112,15 +112,15 @@ export default function NccPage() {
           </p>
 
           {/*
-            TODO: confirm the Calendly URL once Cait shares the correct
-            event link. Using the strategy-session slug as a placeholder.
+            TODO: confirm the Calendly account URL. Pointing at the general
+            event list so visitors can pick whichever call type fits them.
           */}
-          <div className="mx-auto max-w-[700px]">
+          <div className="mx-auto max-w-[560px]">
             <iframe
-              src="https://calendly.com/colivingcait/strategy-session?hide_gdpr_banner=1"
+              src="https://calendly.com/colivingcait?hide_gdpr_banner=1&hide_landing_page_details=1"
               title="Book a call with Caitlyn"
               className="block w-full border-0"
-              style={{ height: "650px" }}
+              style={{ height: "520px" }}
               loading="lazy"
             />
           </div>
@@ -243,13 +243,23 @@ export default function NccPage() {
             </h2>
           </div>
 
+          <p className="text-center text-[13px] text-warmgray-light mb-8">
+            <span className="inline-block text-[10px] font-medium uppercase tracking-[0.15em] text-white bg-gold px-2 py-0.5 mr-2 align-middle">
+              NCC Discount
+            </span>
+            Special pricing for everyone I met at NCC 2026.
+          </p>
+
           <div className="grid gap-5 lg:grid-cols-2">
             <div className="bg-white border border-soft p-8 lg:p-10 flex flex-col">
               <span className="block text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-3">
                 The Builder
               </span>
-              <div className="font-heading font-medium text-[36px] leading-none text-charcoal mb-1">
-                $4,500
+              <div className="flex items-baseline gap-3 mb-1">
+                <span className="font-heading font-medium text-[36px] leading-none text-charcoal">
+                  $3,000
+                </span>
+                <span className="text-[18px] text-warmgray-light line-through">$4,500</span>
               </div>
               <span className="text-[13px] text-warmgray-light mb-5">3 months · 1:1</span>
               <p className="text-[14px] leading-[1.7] text-warmgray mb-7 flex-1">
@@ -264,8 +274,11 @@ export default function NccPage() {
               <span className="block text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-3">
                 The Operator
               </span>
-              <div className="font-heading font-medium text-[36px] leading-none text-charcoal mb-1">
-                $1,000<span className="text-[18px] text-warmgray-light font-normal">/mo</span>
+              <div className="flex items-baseline gap-3 mb-1">
+                <span className="font-heading font-medium text-[36px] leading-none text-charcoal">
+                  $750<span className="text-[18px] text-warmgray-light font-normal">/mo</span>
+                </span>
+                <span className="text-[18px] text-warmgray-light line-through">$1,000</span>
               </div>
               <span className="text-[13px] text-warmgray-light mb-5">Month to month · cancel anytime</span>
               <p className="text-[14px] leading-[1.7] text-warmgray mb-7 flex-1">
