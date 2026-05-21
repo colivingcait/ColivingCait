@@ -31,7 +31,7 @@ export default function HomePage() {
       <RevealObserver />
 
       {/* ===== 1. HERO ===== */}
-      <section className="min-h-screen flex items-end pt-[140px] px-8 lg:px-[60px] bg-white relative">
+      <section className="pt-28 lg:pt-32 pb-16 lg:pb-20 px-8 lg:px-[60px] bg-white relative">
         <div className="mx-auto grid w-full max-w-[1320px] items-end gap-10 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="lg:pb-24 z-[2] text-center lg:text-left">
             <span className="eyebrow lg:inline-flex">Investor · Coach · Realtor</span>
