@@ -257,7 +257,7 @@ export default function NccPage() {
               </span>
               <div className="flex items-baseline gap-3 mb-1">
                 <span className="font-heading font-medium text-[36px] leading-none text-charcoal">
-                  $3,000
+                  $2,999
                 </span>
                 <span className="text-[18px] text-warmgray-light line-through">$4,500</span>
               </div>
@@ -276,7 +276,7 @@ export default function NccPage() {
               </span>
               <div className="flex items-baseline gap-3 mb-1">
                 <span className="font-heading font-medium text-[36px] leading-none text-charcoal">
-                  $750<span className="text-[18px] text-warmgray-light font-normal">/mo</span>
+                  $749<span className="text-[18px] text-warmgray-light font-normal">/mo</span>
                 </span>
                 <span className="text-[18px] text-warmgray-light line-through">$1,000</span>
               </div>
