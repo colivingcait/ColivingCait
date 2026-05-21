@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
-import { createOrUpdateContact, FUB_TAGS } from "@/lib/followupboss";
+import { subscribeToConvertKit, CK_TAGS } from "@/lib/convertkit";
 import { sendWelcomeEmail } from "@/lib/emails/welcome";
 
 export const dynamic = "force-dynamic";
@@ -88,36 +88,39 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Tag in Follow Up Boss (fire and forget)
+    // Tag in ConvertKit (fire and forget)
     const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
-    const lastName = session.customer_details?.name?.split(" ").slice(1).join(" ") || undefined;
     const isBundle = courseSlugs.includes(",");
 
-    // Build tags array
-    const tags: string[] = [FUB_TAGS.COURSE_BUYER];
-
-    for (const slug of slugs) {
-      const tagMap: Record<string, string> = {
-        "coliving-101": FUB_TAGS.COLIVING_101,
-        "house-hacking-101": FUB_TAGS.HOUSE_HACKING_101,
-        "real-estate-101": FUB_TAGS.REAL_ESTATE_101,
-      };
-      const tag = tagMap[slug.trim()];
-      if (tag) tags.push(tag);
-    }
-
-    if (isBundle) {
-      tags.push(FUB_TAGS.EXPLORER_BUNDLE);
-    }
-
-    createOrUpdateContact({
+    // Always tag as course-buyer (triggers post-purchase sequence in Kit)
+    // NOTE: Do NOT add community tag here — course buyers get their own sequence
+    subscribeToConvertKit({
       email: customerEmail,
       firstName,
-      lastName,
-      tags,
-      source: "ColivingCait.com - Course Purchase",
-      message: `Purchased: ${isBundle ? "Explorer Bundle" : slugs.join(", ")}`,
+      tagName: CK_TAGS.COURSE_BUYER,
     });
+
+    // Tag per course
+    for (const slug of slugs) {
+      const tagMap: Record<string, string> = {
+        "coliving-101": CK_TAGS.COLIVING_101_PURCHASED,
+        "house-hacking-101": CK_TAGS.HOUSE_HACKING_101_PURCHASED,
+        "real-estate-101": CK_TAGS.REAL_ESTATE_101_PURCHASED,
+      };
+      const tag = tagMap[slug.trim()];
+      if (tag) {
+        subscribeToConvertKit({ email: customerEmail, firstName, tagName: tag });
+      }
+    }
+
+    // Tag bundle buyers
+    if (isBundle) {
+      subscribeToConvertKit({
+        email: customerEmail,
+        firstName,
+        tagName: CK_TAGS.EXPLORER_BUNDLE,
+      });
+    }
 
     // Send welcome email via Resend
     const courseNameMap: Record<string, string> = {
