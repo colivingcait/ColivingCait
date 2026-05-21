@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react";
 // shared /api/subscribe route which tags the subscriber in Kit and
 // triggers the matching email sequence. Tag must exist in Kit and be
 // wired to a sequence that sends the actual PDF.
-const KIT_TAG = "house-hacking-playbook-downloaded";
+const KIT_TAG = "House-hacking-case-study";
 
 export default function CaseStudyOptInForm() {
   const [email, setEmail] = useState("");
