@@ -179,14 +179,12 @@ export default function LearnPage() {
 
           <div className="reveal bg-white border-[1.5px] border-gold flex flex-col lg:flex-row lg:max-h-[340px]">
             {/* LEFT — preview */}
-            {/* TODO: swap for an actual basement before/after photo
-                once available. Using caitlyn-staircase as a stand-in. */}
             <div className="relative bg-blush lg:basis-[40%] lg:shrink-0 min-h-[220px] lg:min-h-0 overflow-hidden">
               <span className="absolute top-3 left-3 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-2.5 py-1">
                 Free
               </span>
               <Image
-                src="/images/caitlyn-staircase.jpg"
+                src="/images/caitlyn-basement.jpg"
                 alt="Caitlyn's first house hack — basement turned $1,500/month asset"
                 fill
                 sizes="(max-width: 1024px) 100vw, 400px"
