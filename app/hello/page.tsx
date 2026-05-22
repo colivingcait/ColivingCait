@@ -130,8 +130,8 @@ export default function HelloPage() {
               key={r.id}
               aria-hidden
               initial={{ scaleY: 0, opacity: 0 }}
-              animate={{ scaleY: [0, 1, 0.7], opacity: [0, 0.5, 0.15] }}
-              transition={{ duration: 1.6, ease, delay: r.delay }}
+              animate={{ scaleY: [0, 1, 0.8], opacity: [0, 0.5, 0] }}
+              transition={{ duration: 1.8, ease, delay: r.delay }}
               className="absolute left-1/2 top-1/2 -translate-x-1/2 origin-top"
               style={{
                 width: 2,
@@ -300,7 +300,7 @@ export default function HelloPage() {
       />
 
       {/* ===== CONTENT ===== */}
-      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 flex h-full w-full flex-col items-center justify-center overflow-y-auto px-6 py-12 text-center">
         {/* Ornament */}
         <motion.span
           aria-hidden
@@ -363,8 +363,8 @@ export default function HelloPage() {
           transition={{ duration: 0.8, ease, delay: 1.6 }}
           className="mt-9 max-w-[440px] text-[15px] leading-[1.85] text-warmgray-light"
         >
-          Realtor, coliving investor, and your seat at the table.
-          I help women build wealth through intentional coliving — and I&apos;m
+          Realtor, coliving investor, and educator. I help people build wealth
+          through intentional coliving and real estate investing — and I&apos;m
           so glad we crossed paths.
         </motion.p>
 
@@ -471,20 +471,6 @@ export default function HelloPage() {
           </a>
         </motion.div>
 
-        {/* Signature */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease, delay: 2.4 }}
-          className="absolute bottom-10 left-0 right-0 flex flex-col items-center gap-2"
-        >
-          <span className="font-heading italic text-gold-light/80 text-lg">
-            Caitlyn Verdugo
-          </span>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-warmgray-light/60">
-            Coliving · Cait
-          </span>
-        </motion.div>
       </div>
 
       <CalendlyModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
