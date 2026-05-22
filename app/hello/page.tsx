@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+import CalendlyModal from "@/components/CalendlyModal";
 
 // /hello — destination of the QR code on Caitlyn's business card.
 // Fullscreen, chrome-free, celebratory. The show starts the instant the
@@ -61,6 +62,8 @@ const DRIFTERS = Array.from({ length: 18 }).map((_, i) => ({
 export default function HelloPage() {
   const reduced = useReducedMotion();
   const [coords, setCoords] = useState({ x: 0.5, y: 0.5 });
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [diveOpen, setDiveOpen] = useState(false);
 
   useEffect(() => {
     if (reduced) return;
@@ -365,15 +368,16 @@ export default function HelloPage() {
           so glad we crossed paths.
         </motion.p>
 
-        {/* Primary CTA */}
+        {/* Primary CTA — opens Calendly modal */}
         <motion.div
           initial={{ opacity: 0, y: 12, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, ease, delay: 1.9 }}
           className="mt-11"
         >
-          <Link
-            href="/contact"
+          <button
+            type="button"
+            onClick={() => setBookingOpen(true)}
             className="group relative inline-flex items-center gap-4 border border-gold/40 bg-transparent px-9 py-[18px] text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-all duration-500 hover:border-gold hover:bg-gold hover:text-charcoal hover:shadow-[0_16px_40px_rgba(196,149,90,0.45)]"
           >
             <motion.span
@@ -392,7 +396,7 @@ export default function HelloPage() {
             <span className="relative inline-block h-px w-8 bg-gold-light transition-all duration-500 group-hover:w-12 group-hover:bg-charcoal">
               <span className="absolute -top-[3px] right-0 h-[7px] w-[7px] rotate-45 border-r border-t border-gold-light transition-colors duration-500 group-hover:border-charcoal" />
             </span>
-          </Link>
+          </button>
         </motion.div>
 
         {/* Secondary options */}
@@ -400,22 +404,69 @@ export default function HelloPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease, delay: 2.15 }}
-          className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-9 gap-y-4"
+          className="mt-7 flex flex-col items-center gap-3"
         >
-          <Link
-            href="/learn"
-            className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
-          >
-            Learn about real estate investing
-            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-          </Link>
-          <span aria-hidden className="hidden sm:inline-block text-warmgray-light/30">·</span>
+          {/* Dive deeper — inline disclosure */}
+          <div className="flex flex-col items-center">
+            <button
+              type="button"
+              onClick={() => setDiveOpen((v) => !v)}
+              aria-expanded={diveOpen}
+              aria-controls="dive-deeper-options"
+              className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
+            >
+              Dive deeper
+              <span
+                aria-hidden
+                className={`transition-transform duration-300 ${diveOpen ? "rotate-180" : ""}`}
+              >
+                ↓
+              </span>
+            </button>
+
+            <AnimatePresence initial={false}>
+              {diveOpen && (
+                <motion.ul
+                  id="dive-deeper-options"
+                  initial={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                  animate={reduced ? { opacity: 1 } : { opacity: 1, height: "auto" }}
+                  exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
+                  transition={{ duration: 0.4, ease }}
+                  className="mt-4 flex flex-col items-center gap-3 overflow-hidden"
+                >
+                  {[
+                    { label: "All things coliving", href: "/courses/coliving-101" },
+                    { label: "House hacking handbook", href: "/courses/house-hacking-101" },
+                    { label: "Real estate roadmap", href: "/courses/real-estate-101" },
+                  ].map((opt, i) => (
+                    <motion.li
+                      key={opt.href}
+                      initial={reduced ? { opacity: 0 } : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, ease, delay: 0.08 + i * 0.08 }}
+                    >
+                      <Link
+                        href={opt.href}
+                        className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
+                      >
+                        <span aria-hidden className="text-gold/50">·</span>
+                        {opt.label}
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                      </Link>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Save vCard */}
           <a
             href="/caitlyn-verdugo.vcf"
             download="caitlyn-verdugo.vcf"
             className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
           >
-            Save my contact
+            Save my contact info
             <span className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
           </a>
         </motion.div>
@@ -435,6 +486,8 @@ export default function HelloPage() {
           </span>
         </motion.div>
       </div>
+
+      <CalendlyModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
     </div>
   );
 }
