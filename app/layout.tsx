@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import AuthProvider from "@/components/AuthProvider";
 
 // Brand fonts loaded once at the root and exposed via CSS variables so they
@@ -44,7 +44,7 @@ export default function RootLayout({
         <AuthProvider>
           <Nav />
           <main>{children}</main>
-          <Footer />
+          <ConditionalFooter />
         </AuthProvider>
       </body>
     </html>

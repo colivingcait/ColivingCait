@@ -29,6 +29,8 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  if (pathname === "/hello") return null;
+
   return (
     <header
       className={cn(
