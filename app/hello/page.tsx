@@ -415,11 +415,11 @@ export default function HelloPage() {
           {diveOpen && (
             <motion.ul
               id="dive-deeper-options"
-              initial={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-              animate={reduced ? { opacity: 1 } : { opacity: 1, height: "auto" }}
-              exit={reduced ? { opacity: 0 } : { opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease }}
-              className="mt-6 flex w-full max-w-[760px] flex-col items-center gap-3 overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease }}
+              className="mt-6 flex w-full max-w-[760px] flex-col items-center gap-3"
             >
               {[
                 { label: "All things coliving", href: "/courses/coliving-101" },
@@ -430,7 +430,7 @@ export default function HelloPage() {
                   key={opt.href}
                   initial={reduced ? { opacity: 0 } : { opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, ease, delay: 0.08 + i * 0.08 }}
+                  transition={{ duration: 0.4, ease, delay: 0.05 + i * 0.08 }}
                 >
                   <Link
                     href={opt.href}
