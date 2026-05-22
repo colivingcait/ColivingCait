@@ -365,7 +365,7 @@ export default function HelloPage() {
           so glad we crossed paths.
         </motion.p>
 
-        {/* CTA */}
+        {/* Primary CTA */}
         <motion.div
           initial={{ opacity: 0, y: 12, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -388,11 +388,36 @@ export default function HelloPage() {
               }}
               transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
             />
-            Book a Discovery Call
+            Continue the Conversation
             <span className="relative inline-block h-px w-8 bg-gold-light transition-all duration-500 group-hover:w-12 group-hover:bg-charcoal">
               <span className="absolute -top-[3px] right-0 h-[7px] w-[7px] rotate-45 border-r border-t border-gold-light transition-colors duration-500 group-hover:border-charcoal" />
             </span>
           </Link>
+        </motion.div>
+
+        {/* Secondary options */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease, delay: 2.15 }}
+          className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-9 gap-y-4"
+        >
+          <Link
+            href="/learn"
+            className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
+          >
+            Learn about real estate investing
+            <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </Link>
+          <span aria-hidden className="hidden sm:inline-block text-warmgray-light/30">·</span>
+          <a
+            href="/caitlyn-verdugo.vcf"
+            download="caitlyn-verdugo.vcf"
+            className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
+          >
+            Save my contact
+            <span className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+          </a>
         </motion.div>
 
         {/* Signature */}
