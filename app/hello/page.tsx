@@ -158,7 +158,7 @@ export default function HelloPage() {
           className="font-heading font-light text-white leading-[1.05] tracking-[-0.02em]"
           style={{ fontSize: "clamp(56px, 12vw, 132px)" }}
         >
-          {["Hello,", "I'm", "Caitlyn."].map((word, i) => (
+          {["Hi,", "I'm", "Caitlyn!"].map((word, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
