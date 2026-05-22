@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import AuthNav from "./AuthNav";
 
 // Primary site navigation — frosted glass, transparent → solid on scroll.
 // Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
@@ -29,7 +29,14 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Standalone landing pages (e.g. /ncc conference handout, /hello QR
+  // welcome) render their own minimal layout instead of the site nav.
   if (pathname === "/hello") return null;
+  if (pathname?.startsWith("/ncc")) return null;
+
+  // Pages with dark (charcoal) hero sections need a light logo when not scrolled
+  const darkHeroPages = ["/courses/"];
+  const hasDarkHero = darkHeroPages.some((p) => pathname.startsWith(p)) && pathname !== "/courses";
 
   return (
     <header
@@ -41,20 +48,32 @@ export default function Nav() {
       )}
     >
       <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between py-5">
-        {/* Wordmark */}
+        {/* Wordmark — "Coliving" switches between charcoal (light pages)
+            and cream (dark hero pages) when the nav is transparent.
+            Once scrolled, always charcoal against the white backdrop. */}
         <Link
           href="/"
           aria-label="ColivingCait — home"
-          className="inline-flex items-center hover:opacity-70 transition-opacity"
+          className="inline-flex items-center hover:opacity-70 transition-opacity leading-none"
         >
-          <Image
-            src="/images/colivingcait-logo.png"
-            alt="ColivingCait"
-            width={200}
-            height={40}
-            priority
-            className="h-7 w-auto"
-          />
+          <span className="font-heading text-xl font-normal">
+            <span
+              className={cn(
+                "transition-colors duration-200",
+                scrolled || !hasDarkHero
+                  ? "text-charcoal"
+                  : "text-cream",
+              )}
+            >
+              Coliving
+            </span>
+            <em className={cn(
+              "italic font-light transition-colors duration-200",
+              scrolled || !hasDarkHero
+                ? "text-gold-light"
+                : "text-gold",
+            )}>Cait</em>
+          </span>
         </Link>
 
         {/* Desktop links */}
@@ -70,8 +89,12 @@ export default function Nav() {
                     "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
                     "after:transition-[width] after:duration-[350ms] after:ease-brand",
                     active
-                      ? "text-charcoal font-medium after:w-full"
-                      : "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full",
+                      ? scrolled || !hasDarkHero
+                        ? "text-charcoal font-medium after:w-full"
+                        : "text-cream font-medium after:w-full"
+                      : scrolled || !hasDarkHero
+                        ? "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full"
+                        : "text-cream/70 font-normal after:w-0 hover:text-cream hover:after:w-full",
                   )}
                 >
                   {l.label}
@@ -80,12 +103,17 @@ export default function Nav() {
             );
           })}
           <li>
-            <Link
-              href="/contact"
+            <AuthNav />
+          </li>
+          <li>
+            <a
+              href="https://calendly.com/colivingcait/chatwithcaitlyn"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
             >
               Book a Call
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -117,12 +145,21 @@ export default function Nav() {
               </Link>
             ))}
             <Link
-              href="/contact"
+              href="/dashboard"
+              onClick={() => setOpen(false)}
+              className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+            >
+              My Courses
+            </Link>
+            <a
+              href="https://calendly.com/colivingcait/chatwithcaitlyn"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => setOpen(false)}
               className="mt-3 bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] text-center hover:bg-gold transition-colors"
             >
               Book a Call
-            </Link>
+            </a>
           </nav>
         </div>
       )}

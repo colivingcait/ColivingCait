@@ -26,6 +26,7 @@ export const CK_TAGS = {
   SELLER_LEAD: "seller-lead",
   HOUSE_HACKER_LEAD: "house-hacker-lead",
   COMMUNITY_MEMBER: "community-member",
+  COMMUNITY: "community",
   CONTACT_FORM_SUBMITTED: "contact-form-submitted",
   WCS_INTERESTED: "wcs-interested",
   SHE_LEADS_INTERESTED: "she-leads-interested",
@@ -39,13 +40,26 @@ export const CK_TAGS = {
   COLIVING_DEAL_MARGINAL: "coliving-deal-marginal",
   COLIVING_DEAL_WEAK: "coliving-deal-weak",
 
-  // Course purchases / completions (forward-looking; wired with Stripe)
-  COLIVING_101_PURCHASED: "coliving-101-purchased",
+  // Course purchases / completions
+  COURSE_BUYER: "course-buyer",
+  COLIVING_101_PURCHASED: "coliving-101",
   COLIVING_101_COMPLETED: "coliving-101-completed",
-  HOUSE_HACKING_101_PURCHASED: "house-hacking-101-purchased",
+  HOUSE_HACKING_101_PURCHASED: "house-hacking-101",
   HOUSE_HACKING_101_COMPLETED: "house-hacking-101-completed",
-  REAL_ESTATE_101_PURCHASED: "real-estate-101-purchased",
+  REAL_ESTATE_101_PURCHASED: "real-estate-101",
   REAL_ESTATE_101_COMPLETED: "real-estate-101-completed",
+  EXPLORER_BUNDLE: "explorer-bundle",
+
+  // Forms & inquiries
+  LEAD_MAGNET: "lead-magnet",
+  NEWSLETTER: "newsletter",
+  PARTNER_INQUIRY: "partner-inquiry",
+  BUYER_SELLER_INQUIRY: "buyer-seller-inquiry",
+
+  // Events
+  MEETUP_ATLANTA: "meetup-atlanta",
+  WCS_ATTENDEE: "wcs-attendee",
+  CONFERENCE: "conference",
 } as const;
 
 export type CKTagName = (typeof CK_TAGS)[keyof typeof CK_TAGS];
@@ -95,6 +109,44 @@ async function getTagId(tagName: string): Promise<number | null> {
   }
 }
 
+// Create a tag in ConvertKit and return its id. Requires
+// CONVERTKIT_API_SECRET (the v3 tag-create endpoint won't accept the
+// public api_key). Called as a fallback by subscribeToConvertKit when a
+// tag in the CK_TAGS taxonomy hasn't been created in the dashboard yet.
+async function createTag(tagName: string): Promise<number | null> {
+  const apiSecret = process.env.CONVERTKIT_API_SECRET;
+  if (!apiSecret) {
+    console.warn(
+      `[convertkit] cannot auto-create tag "${tagName}" — CONVERTKIT_API_SECRET not set. Create the tag manually in the dashboard or add the secret.`,
+    );
+    return null;
+  }
+
+  try {
+    const res = await fetch(`${CK_API_BASE}/tags`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_secret: apiSecret,
+        tag: { name: tagName },
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      console.warn("[convertkit] tag create failed", res.status, text);
+      return null;
+    }
+    const data = (await res.json()) as { id?: number; name?: string };
+    if (!data?.id) return null;
+    // Prime the cache so the next lookup is a hit.
+    if (tagCache) tagCache.byName.set(tagName, data.id);
+    return data.id;
+  } catch (err) {
+    console.warn("[convertkit] tag create threw", err);
+    return null;
+  }
+}
+
 export type SubscribeInput = {
   email: string;
   firstName?: string;
@@ -127,11 +179,14 @@ export async function subscribeToConvertKit(
     return { ok: true, mode: "dev-stub", tagApplied: tagName };
   }
 
-  const tagId = await getTagId(tagName);
+  let tagId = await getTagId(tagName);
   if (!tagId) {
-    console.warn(
-      `[convertkit] tag "${tagName}" not found in ConvertKit. Create it manually in the CK dashboard or via the API. Skipping.`,
-    );
+    // Fall back to creating the tag on the fly. Requires
+    // CONVERTKIT_API_SECRET; otherwise this returns null and we surface
+    // a clear error to the caller.
+    tagId = await createTag(tagName);
+  }
+  if (!tagId) {
     return {
       ok: false,
       error: `Tag "${tagName}" not configured in ConvertKit`,

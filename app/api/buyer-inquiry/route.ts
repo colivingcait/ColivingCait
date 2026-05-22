@@ -33,6 +33,13 @@ export async function POST(request: Request) {
       },
     });
 
+    // Also add to community for nurture sequence
+    await subscribeToConvertKit({
+      email,
+      firstName,
+      tagName: CK_TAGS.COMMUNITY,
+    });
+
     if (!ck.ok) {
       console.warn("[buyer-inquiry] CK subscribe failed", ck.error);
     }

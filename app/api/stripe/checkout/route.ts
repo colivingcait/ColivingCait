@@ -1,43 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/config";
-import { stripe, COURSE_PRICES, BUNDLE_PRICE_ID, BUNDLE_SLUGS } from "@/lib/stripe";
+import { stripe, COURSE_PRICES, BUNDLE_PRICE_ID, BUNDLE_SLUGS, BUILDER_PRICE_ID, OPERATOR_PRICE_ID } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
-
-  if (!session?.user?.email) {
-    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-  }
-
   const { courseSlug } = await req.json();
 
-  // Determine if this is a bundle or single course purchase
+  // Determine price ID and checkout mode
   const isBundle = courseSlug === "bundle";
-  const priceId = isBundle ? BUNDLE_PRICE_ID : COURSE_PRICES[courseSlug];
+  const isBuilder = courseSlug === "builder";
+  const isOperator = courseSlug === "operator";
+  const isSubscription = isOperator;
 
-  if (!priceId || priceId === "REPLACE_WITH_STRIPE_PRICE_ID" || priceId === "REPLACE_WITH_STRIPE_BUNDLE_PRICE_ID") {
+  let priceId: string | undefined;
+  if (isBundle) priceId = BUNDLE_PRICE_ID;
+  else if (isBuilder) priceId = BUILDER_PRICE_ID;
+  else if (isOperator) priceId = OPERATOR_PRICE_ID;
+  else priceId = COURSE_PRICES[courseSlug];
+
+  if (!priceId) {
     return NextResponse.json(
-      { error: "Course not configured for purchase yet" },
+      { error: "Product not configured for purchase yet" },
       { status: 400 },
     );
   }
 
-  const userId = (session.user as any).id;
   const origin = req.headers.get("origin") || process.env.NEXTAUTH_URL;
 
+  // If user is signed in, pre-fill their email and attach user_id
+  const userId = session?.user ? (session.user as any).id : undefined;
+  const customerEmail = session?.user?.email || undefined;
+
+  // Determine cancel URL
+  let cancelUrl = `${origin}/learn?cancelled=1`;
+  if (!isBundle && !isBuilder && !isOperator) {
+    cancelUrl = `${origin}/courses/${courseSlug}?cancelled=1`;
+  }
+
   const checkoutSession = await stripe.checkout.sessions.create({
-    mode: "payment",
+    mode: isSubscription ? "subscription" : "payment",
     payment_method_types: ["card"],
     allow_promotion_codes: true,
-    customer_email: session.user.email,
+    ...(customerEmail ? { customer_email: customerEmail } : {}),
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${origin}/courses/${isBundle ? "coliving-101" : courseSlug}/overview?purchased=1`,
-    cancel_url: `${origin}/courses/${isBundle ? "" : courseSlug}?cancelled=1`,
+    success_url: `${origin}/purchase/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: cancelUrl,
     metadata: {
-      user_id: userId,
+      ...(userId ? { user_id: userId } : {}),
       course_slug: courseSlug,
-      // For bundles, store all course slugs so the webhook can grant access to all
       course_slugs: isBundle ? BUNDLE_SLUGS.join(",") : courseSlug,
     },
   });

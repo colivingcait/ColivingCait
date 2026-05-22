@@ -2,10 +2,27 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import VillaCandaceSlider from "@/components/VillaCandaceSlider";
 
+const OG_TITLE = "The math that makes coliving impossible to ignore.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("What Is Coliving")}`;
+
 export const metadata = {
-  title: "What Is Coliving — Coliving Cait",
+  title: "What Is Coliving",
   description:
     "Coliving transforms single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works.",
+  openGraph: {
+    title: "What Is Coliving — Coliving Cait",
+    description:
+      "Coliving transforms a single-family home into multiple income streams — affordable housing for residents, stronger cashflow for investors.",
+    url: "https://colivingcait.com/what-is-coliving",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "What Is Coliving — Coliving Cait",
+    description:
+      "The coliving model — how it works, who it serves, and why the math is hard to ignore.",
+    images: [OG_IMAGE],
+  },
 };
 
 // What Is Coliving — pixel-perfect rewrite of coliving-cait-what-is-coliving.html.
@@ -189,7 +206,7 @@ export default function WhatIsColivingPage() {
               </div>
               <div>
                 <p className="text-[15px] text-warmgray leading-[1.8]">
-                  This is Villa Candace. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
+                  This is Villa C. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
                 </p>
               </div>
             </div>
@@ -368,7 +385,7 @@ export default function WhatIsColivingPage() {
               className="btn-gold w-full text-center mb-3"
               style={{ display: "block" }}
             >
-              Buy Now
+              View Course →
             </Link>
             <Link
               href="/learn#foundations"

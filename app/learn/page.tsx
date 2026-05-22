@@ -1,11 +1,32 @@
+import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import CaseStudyOptInForm from "@/components/CaseStudyOptInForm";
+import ExitIntentModal from "@/components/ExitIntentModal";
 import { getCourse } from "@/lib/courses";
+import BuyButton from "@/components/courses/BuyButton";
+
+const OG_TITLE = "Wherever you are, there's a next step here.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Learn With Me")}`;
 
 export const metadata = {
-  title: "Learn With Me — Coliving Cait",
+  title: "Learn With Me",
   description:
     "Whether you're new to coliving or scaling your portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+  openGraph: {
+    title: "Learn With Me — Coliving Cait",
+    description:
+      "Self-paced courses, 1:1 coaching, and ongoing consulting for women building coliving portfolios.",
+    url: "https://colivingcait.com/learn",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learn With Me — Coliving Cait",
+    description:
+      "Courses, coaching, and consulting for women building coliving portfolios.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Learn With Me — pixel-perfect rewrite of coliving-cait-learn.html.
@@ -92,9 +113,10 @@ export default function LearnPage() {
   return (
     <>
       <RevealObserver />
+      <ExitIntentModal />
 
       {/* ===== HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-40 lg:pb-[100px] bg-white text-center relative">
+      <section className="px-8 lg:px-[60px] pt-20 lg:pt-24 pb-10 lg:pb-12 bg-white text-center relative">
         <div className="mx-auto max-w-[760px]">
           <span className="eyebrow eyebrow-center">Learn With Me</span>
           <h1
@@ -111,21 +133,31 @@ export default function LearnPage() {
             Choose your starting point ↓
           </p>
 
-          <div className="flex flex-wrap justify-center items-end gap-6 lg:gap-12 mt-14 opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
+          <div className="flex flex-wrap lg:flex-nowrap justify-center items-end gap-4 lg:gap-6 mt-12 opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
             {[
+              { href: "#start-free", label: "I'm Just Curious", name: "Start for Free", free: true },
               { href: "#foundations", label: "I'm New to This", name: "The Explorer" },
               { href: "#builder", label: "I'm Ready to Build", name: "The Builder" },
               { href: "#operator", label: "I'm Already Operating", name: "The Operator" },
             ].map((step, i, arr) => (
-              <span key={step.href} className="flex items-end gap-6 lg:gap-12">
+              <span key={step.href} className="flex items-end gap-4 lg:gap-6">
                 <a
                   href={step.href}
-                  className="group relative pb-4 text-center after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-gold after:transition-[width] after:duration-[350ms] after:ease-brand hover:after:w-full"
+                  className="group relative pb-4 text-center whitespace-nowrap after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-gold after:transition-[width] after:duration-[350ms] after:ease-brand hover:after:w-full"
                 >
-                  <span className="block text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-2">
+                  {step.free && (
+                    <span className="inline-block text-[9px] font-medium uppercase tracking-[0.15em] text-white bg-gold px-2 py-0.5 mb-1.5">
+                      Free
+                    </span>
+                  )}
+                  <span className="block text-[10px] lg:text-[11px] font-medium uppercase tracking-[0.15em] text-gold mb-1.5">
                     {step.label}
                   </span>
-                  <span className="block font-heading font-medium text-2xl text-charcoal group-hover:text-gold-dark transition-colors duration-300">
+                  <span
+                    className={`block font-heading font-medium text-xl lg:text-[22px] ${
+                      step.free ? "text-gold" : "text-charcoal"
+                    } group-hover:text-gold-dark transition-colors duration-300`}
+                  >
                     {step.name}
                   </span>
                 </a>
@@ -138,8 +170,83 @@ export default function LearnPage() {
         </div>
       </section>
 
+      {/* ===== FREE CASE STUDY OPT-IN ===== */}
+      <section id="start-free" className="px-8 lg:px-[60px] pt-16 lg:pt-20 pb-4 lg:pb-5 bg-cream scroll-mt-24">
+        <div className="mx-auto max-w-[1000px]">
+          <div className="reveal text-center mb-6">
+            <span className="inline-flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.15em] text-gold-dark bg-[rgba(196,149,90,0.1)] px-4 py-2">
+              ✦ Start Here — Free
+            </span>
+          </div>
+
+          <div className="reveal bg-white border-[1.5px] border-gold flex flex-col lg:flex-row lg:max-h-[340px]">
+            {/* LEFT — preview */}
+            <div className="relative bg-blush lg:basis-[40%] lg:shrink-0 min-h-[220px] lg:min-h-0 overflow-hidden">
+              <span className="absolute top-3 left-3 z-10 text-[10px] font-medium uppercase tracking-[0.12em] text-white bg-charcoal px-2.5 py-1">
+                Free
+              </span>
+              <Image
+                src="/images/caitlyn-basement.jpg"
+                alt="Caitlyn's first house hack — basement turned $1,500/month asset"
+                fill
+                sizes="(max-width: 1024px) 100vw, 400px"
+                className="object-cover"
+              />
+            </div>
+
+            {/* RIGHT — content */}
+            <div className="lg:basis-[60%] p-6 lg:p-7">
+              <span className="block text-[10px] font-medium uppercase tracking-[0.15em] text-gold mb-2">
+                Start Here — Free
+              </span>
+              <h3
+                className="font-heading font-normal tracking-[-0.01em] text-charcoal leading-[1.2] mb-2"
+                style={{ fontSize: "clamp(20px, 1.6vw, 24px)" }}
+              >
+                How I Turned My Basement Into a{" "}
+                <em className="italic text-gold font-light">$1,500/Month Asset</em>
+              </h3>
+              <p className="text-[13px] leading-[1.6] text-warmgray mb-4">
+                Before I operated 50+ coliving rooms, I house hacked my own home — $15K down, a $12K reno with my dad, and a rental model that cut my housing cost in half. Real photos, real math.
+              </p>
+
+              <div className="grid grid-cols-3 gap-2 border-b border-soft pb-3 mb-4">
+                {[
+                  { num: "$300K", label: "Purchase price" },
+                  { num: "$12K", label: "Reno cost" },
+                  { num: "$1,500", label: "Monthly income" },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div className="font-heading font-medium text-[18px] lg:text-[20px] text-charcoal leading-none mb-1">
+                      {s.num}
+                    </div>
+                    <span className="block text-[10px] uppercase tracking-[0.08em] text-warmgray-light">
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <CaseStudyOptInForm />
+
+              <p className="text-[11px] text-warmgray-light mt-2">
+                Instant PDF. No spam, unsubscribe anytime.
+              </p>
+            </div>
+          </div>
+
+          {/* transition divider */}
+          <div className="reveal text-center mt-6">
+            <span aria-hidden className="block mx-auto w-[50px] h-px bg-gold mb-3" />
+            <p className="text-[13px] text-warmgray-light">
+              Ready to go deeper? Pick your path.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ===== TIER 1: FOUNDATIONS ===== */}
-      <section id="foundations" className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream scroll-mt-24">
+      <section id="foundations" className="px-8 lg:px-[60px] pt-6 lg:pt-8 pb-20 lg:pb-[120px] bg-cream scroll-mt-24">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal mb-16">
             <div>
@@ -178,21 +285,26 @@ export default function LearnPage() {
                 </span>
                 <div className="flex items-baseline gap-3 mb-5">
                   <span className="text-base text-warmgray-light line-through">
-                    $149
+                    $99
                   </span>
                   <span className="font-heading font-medium text-[28px] text-charcoal block">
-                    $99
+                    $49
                   </span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
                     Limited
                   </span>
                 </div>
-                <Link
-                  href={c.href}
-                  className="btn-gold w-full text-center"
-                  style={{ display: "block" }}
+                <BuyButton
+                  courseSlug={c.slug}
+                  className="btn-gold w-full text-center block"
                 >
                   Buy Now
+                </BuyButton>
+                <Link
+                  href={c.href}
+                  className="block text-center text-[11px] text-warmgray/60 hover:text-charcoal mt-2 transition-colors"
+                >
+                  View details →
                 </Link>
               </div>
             ))}
@@ -216,15 +328,15 @@ export default function LearnPage() {
               </div>
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-base text-warmgray-light line-through">$447</span>
-                  <span className="font-heading font-medium text-[32px] text-charcoal">$149</span>
+                  <span className="text-base text-warmgray-light line-through">$297</span>
+                  <span className="font-heading font-medium text-[32px] text-charcoal">$99</span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    $298 off
+                    $198 off
                   </span>
                 </div>
-                <Link href="/courses?bundle=1" className="btn-primary">
+                <BuyButton courseSlug="bundle" className="btn-primary">
                   Get the Bundle
-                </Link>
+                </BuyButton>
               </div>
             </div>
           </div>
@@ -288,18 +400,19 @@ export default function LearnPage() {
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
               </span>
-              <Link
-                href="/contact?topic=coaching"
+              <BuyButton
+                courseSlug="builder"
                 className="btn-gold w-full text-center mt-7"
-                style={{ display: "block" }}
               >
                 Enroll Now
-              </Link>
+              </BuyButton>
               <p className="text-[13px] text-warmgray-light mt-3 text-center">
                 Payment plan available at checkout
               </p>
               <a
-                href="/contact?topic=coaching"
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-text mt-5 flex justify-center"
               >
                 Have questions? Book a Discovery Call →
@@ -352,10 +465,18 @@ export default function LearnPage() {
               </span>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
-              <Link href="/contact?topic=coaching" className="btn-gold">
-                Start Now — $1,000/mo
-              </Link>
-              <a href="/contact?topic=coaching" className="btn-text">
+              <BuyButton
+                courseSlug="operator"
+                className="btn-gold"
+              >
+                Enroll Now
+              </BuyButton>
+              <a
+                href="https://calendly.com/colivingcait/coaching-discovery-call"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-text"
+              >
                 Have questions? Book a Discovery Call →
               </a>
             </div>
@@ -378,9 +499,14 @@ export default function LearnPage() {
             <p className="text-[15px] text-warmgray mb-8">
               These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
             </p>
-            <Link href="/contact?topic=coaching" className="btn-primary">
+            <a
+              href="https://calendly.com/colivingcait/coaching-discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
               Book a Discovery Call
-            </Link>
+            </a>
           </div>
 
           <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
@@ -418,9 +544,14 @@ export default function LearnPage() {
             <span className="block text-[15px] text-warmgray-light mb-6">
               One session · 60 minutes
             </span>
-            <Link href="/contact?topic=strategy-session" className="btn-gold">
+            <a
+              href="https://calendly.com/colivingcait/strategy-session"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
               Book a Session — $250
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -442,7 +573,14 @@ export default function LearnPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a
+            href="https://calendly.com/colivingcait/coaching-discovery-call"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+          >
+            Book a Discovery Call
+          </a>
         </div>
       </section>
     </>

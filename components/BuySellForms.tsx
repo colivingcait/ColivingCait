@@ -109,7 +109,7 @@ function BuyerForm() {
           {status === "ok" ? "Sent — talk soon!" : status === "submitting" ? "Sending..." : "Submit →"}
         </button>
         {status === "error" && (
-          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email colivingcait@gmail.com.</p>
+          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email hello@colivingcait.com.</p>
         )}
       </div>
     </form>
@@ -193,7 +193,7 @@ function SellerForm() {
           {status === "ok" ? "Sent — talk soon!" : status === "submitting" ? "Sending..." : "Submit →"}
         </button>
         {status === "error" && (
-          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email colivingcait@gmail.com.</p>
+          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email hello@colivingcait.com.</p>
         )}
       </div>
     </form>

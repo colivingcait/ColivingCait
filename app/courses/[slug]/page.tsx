@@ -11,6 +11,12 @@ import BuyButton from "@/components/courses/BuyButton";
 
 export const dynamic = "force-dynamic";
 
+const STRIPE_CHECKOUT: Record<string, string> = {
+  "coliving-101": "https://buy.stripe.com/8x29AU5D13qf7SYbdIaZi01",
+  "house-hacking-101": "https://buy.stripe.com/aFaaEYaXl1i7c9edlQaZi02",
+  "real-estate-101": "https://buy.stripe.com/9B6fZi3uTf8X8X25ToaZi03",
+};
+
 // Pre-generate static params for every available course
 export async function generateStaticParams() {
   return courses
@@ -26,9 +32,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = getCourse(slug);
   if (!course) return {};
+  const ogImage = `/api/og?title=${encodeURIComponent(course.title)}&eyebrow=${encodeURIComponent(`Mini course · $${course.price}`)}&subtitle=${encodeURIComponent(course.tagline)}`;
   return {
-    title: `${course.title} — Coliving Cait`,
+    title: course.title,
     description: course.description,
+    openGraph: {
+      title: `${course.title} — Coliving Cait`,
+      description: course.description,
+      url: `https://colivingcait.com/courses/${course.slug}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: course.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${course.title} — Coliving Cait`,
+      description: course.description,
+      images: [ogImage],
+    },
   };
 }
 
@@ -50,6 +69,7 @@ export default async function CourseLandingPage({
   const purchased = user ? await hasAccess(user.id, slug) : false;
 
   const firstLesson = course.lessons[0];
+  const checkoutUrl = STRIPE_CHECKOUT[course.slug];
 
   return (
     <>

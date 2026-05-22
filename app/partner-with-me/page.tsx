@@ -1,12 +1,28 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
 
+const OG_TITLE = "Your money working while you live your life.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Partner With Me")}`;
+
 export const metadata = {
-  title: "Partner With Me — Coliving Cait",
+  title: "Partner With Me",
   description:
     "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
+  openGraph: {
+    title: "Partner With Me — Coliving Cait",
+    description:
+      "Put your capital to work in Atlanta's coliving market. You invest, I operate — with full transparency, legal protections, and a verifiable track record.",
+    url: "https://colivingcait.com/partner-with-me",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Partner With Me — Coliving Cait",
+    description:
+      "Three coliving partnership models: private lending, equity partnerships, and arbitrage.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Partner With Me — pixel-perfect rewrite of coliving-cait-partner.html.
@@ -79,18 +95,23 @@ export default function PartnerPage() {
             <p className="text-base leading-[1.85] text-warmgray max-w-[480px] mx-auto lg:mx-0 mb-9">
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
-            <Link href="/contact?topic=partnership" className="btn-primary">
+            <a
+              href="https://calendly.com/colivingcait/capital-partners"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
               Schedule a Discovery Call →
-            </Link>
+            </a>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}
             >
               <Image
                 src="/images/villacandace-after.png"
-                alt="Villa Candace — Atlanta metro coliving property"
+                alt="Villa C — Atlanta metro coliving property"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 600px"
@@ -182,9 +203,14 @@ export default function PartnerPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/contact?topic=partnership" className="btn-sm self-start">
+                <a
+                  href="https://calendly.com/colivingcait/capital-partners"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-sm self-start"
+                >
                   Schedule a Call →
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -209,15 +235,18 @@ export default function PartnerPage() {
           </div>
 
           <PropertyCard
-            name="Villa Candace"
+            name="Villa C"
             location="Atlanta Metro, Georgia"
             original="5 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villacandace-before.png",
-              "/images/villacandace-after.png",
+              "/images/villa-candace/candacekitchen.jpg",
+              "/images/villa-candace/12.png",
+              "/images/villa-candace/18.png",
+              "/images/villa-candace/IMG_0190.JPG",
+              "/images/villa-candace/IMG_4109.jpeg",
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
@@ -225,7 +254,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Raven"
+            name="Sparrow"
             location="Stone Mountain, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -245,7 +274,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Meadow"
+            name="Honeysuckle"
             location="Snellville, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -369,9 +398,14 @@ export default function PartnerPage() {
             Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
-            <Link href="/contact?topic=partnership" className="btn-gold">
+            <a
+              href="https://calendly.com/colivingcait/capital-partners"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-gold"
+            >
               Schedule a Discovery Call
-            </Link>
+            </a>
           </div>
         </div>
       </section>

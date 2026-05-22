@@ -6,7 +6,15 @@ export const authOptions: NextAuthOptions = {
   adapter: SupabaseAdapter(),
   providers: [
     EmailProvider({
-      server: process.env.EMAIL_SERVER!,
+      server: {
+        host: "smtp.resend.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "resend",
+          pass: process.env.RESEND_API_KEY!,
+        },
+      },
       from: process.env.EMAIL_FROM!,
     }),
   ],

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
 
 type BuyButtonProps = {
   courseSlug: string;
@@ -9,26 +8,17 @@ type BuyButtonProps = {
   className?: string;
 };
 
-// Client component that handles the full purchase flow:
-// 1. If not signed in → redirect to sign in
-// 2. If signed in → create Stripe checkout session → redirect to Stripe
+// Client component that sends the user straight to Stripe Checkout.
+// No login required — Stripe collects their email, and the webhook
+// creates their account + grants access after payment.
 export default function BuyButton({
   courseSlug,
   children,
   className = "",
 }: BuyButtonProps) {
-  const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    // Not signed in — redirect to sign in, then back to this page
-    if (status !== "authenticated") {
-      signIn("email", {
-        callbackUrl: window.location.href,
-      });
-      return;
-    }
-
     setLoading(true);
     try {
       const res = await fetch("/api/stripe/checkout", {

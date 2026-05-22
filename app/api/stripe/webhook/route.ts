@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { supabase } from "@/lib/supabase";
+import { subscribeToConvertKit, CK_TAGS } from "@/lib/convertkit";
+import { sendWelcomeEmail } from "@/lib/emails/welcome";
 
-// Stripe sends the raw body, so we need to disable Next.js body parsing
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
@@ -28,15 +29,48 @@ export async function POST(req: NextRequest) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
-    const userId = session.metadata?.user_id;
     const courseSlugs = session.metadata?.course_slugs;
+    const customerEmail = session.customer_details?.email || session.customer_email;
 
-    if (!userId || !courseSlugs) {
-      console.error("Missing metadata on checkout session:", session.id);
+    if (!courseSlugs || !customerEmail) {
+      console.error("Missing metadata or email on checkout session:", session.id);
       return NextResponse.json({ received: true });
     }
 
-    // Grant access to each course (handles both single and bundle)
+    // Find or create the user
+    let userId = session.metadata?.user_id;
+
+    if (!userId) {
+      // Check if user already exists by email
+      const { data: existingUser } = await supabase
+        .from("users")
+        .select("id")
+        .eq("email", customerEmail)
+        .single();
+
+      if (existingUser) {
+        userId = existingUser.id;
+      } else {
+        // Create new user from Stripe checkout email
+        const { data: newUser, error: createError } = await supabase
+          .from("users")
+          .insert({
+            email: customerEmail,
+            name: session.customer_details?.name || null,
+            email_verified: new Date().toISOString(),
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error("Failed to create user:", createError);
+          return NextResponse.json({ received: true });
+        }
+        userId = newUser.id;
+      }
+    }
+
+    // Grant access to each course
     const slugs = courseSlugs.split(",");
     for (const slug of slugs) {
       const { error } = await supabase.from("purchases").upsert(
@@ -53,6 +87,63 @@ export async function POST(req: NextRequest) {
         console.error(`Failed to record purchase for ${slug}:`, error);
       }
     }
+
+    // Tag in ConvertKit (fire and forget)
+    const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
+    const isBundle = courseSlugs.includes(",");
+
+    // Always tag as course-buyer (triggers post-purchase sequence in Kit)
+    // NOTE: Do NOT add community tag here — course buyers get their own sequence
+    subscribeToConvertKit({
+      email: customerEmail,
+      firstName,
+      tagName: CK_TAGS.COURSE_BUYER,
+    });
+
+    // Tag per course
+    for (const slug of slugs) {
+      const tagMap: Record<string, string> = {
+        "coliving-101": CK_TAGS.COLIVING_101_PURCHASED,
+        "house-hacking-101": CK_TAGS.HOUSE_HACKING_101_PURCHASED,
+        "real-estate-101": CK_TAGS.REAL_ESTATE_101_PURCHASED,
+      };
+      const tag = tagMap[slug.trim()];
+      if (tag) {
+        subscribeToConvertKit({ email: customerEmail, firstName, tagName: tag });
+      }
+    }
+
+    // Tag bundle buyers
+    if (isBundle) {
+      subscribeToConvertKit({
+        email: customerEmail,
+        firstName,
+        tagName: CK_TAGS.EXPLORER_BUNDLE,
+      });
+    }
+
+    // Send welcome email via Resend
+    const courseNameMap: Record<string, string> = {
+      "coliving-101": "Coliving 101",
+      "house-hacking-101": "House Hacking 101",
+      "real-estate-101": "Real Estate Investing 101",
+      "builder": "The Builder",
+      "operator": "The Operator",
+    };
+    const purchasedCourseName = isBundle
+      ? "Explorer Bundle"
+      : courseNameMap[slugs[0]?.trim()] || "your course";
+
+    const origin = process.env.NEXTAUTH_URL || "https://www.colivingcait.com";
+    sendWelcomeEmail({
+      to: customerEmail,
+      firstName,
+      courseName: purchasedCourseName,
+      isBundle,
+      siteUrl: origin,
+    });
+
+    console.log(`[webhook] Purchase complete: ${customerEmail} → ${courseSlugs}`);
   }
 
   return NextResponse.json({ received: true });

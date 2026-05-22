@@ -1,12 +1,28 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 
+const OG_TITLE = "A Realtor who thinks like an investor.";
+const OG_IMAGE = `/api/og?title=${encodeURIComponent(OG_TITLE)}&eyebrow=${encodeURIComponent("Buy & Sell With Me")}`;
+
 export const metadata = {
-  title: "Buy & Sell With Me — Coliving Cait | Atlanta Investment Properties & House Hacking",
+  title: "Buy & Sell With Me",
   description:
     "Work with an Atlanta Realtor who thinks like an investor. Caitlyn Verdugo specializes in investment properties, coliving conversions, and house hacking across Decatur, Atlanta, Snellville, Stone Mountain, and the greater Atlanta metro.",
+  openGraph: {
+    title: "Buy & Sell With Me — Coliving Cait",
+    description:
+      "An Atlanta Realtor who thinks like an investor. Investment properties, coliving conversions, and house hacking across the Atlanta metro.",
+    url: "https://colivingcait.com/buy-and-sell",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: OG_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Buy & Sell With Me — Coliving Cait",
+    description:
+      "An Atlanta Realtor specializing in investment properties and coliving conversions.",
+    images: [OG_IMAGE],
+  },
 };
 
 // Buy & Sell With Me — pixel-perfect rewrite of coliving-cait-buy-sell.html.
@@ -63,7 +79,7 @@ export default function BuyAndSellPage() {
       <RevealObserver />
 
       {/* ===== 1. HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-[180px] lg:pb-[100px] bg-white">
+      <section className="px-8 lg:px-[60px] pt-20 lg:pt-24 pb-10 lg:pb-12 bg-white">
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-16 items-center lg:grid-cols-[1.1fr_0.9fr] text-center lg:text-left">
           <div className="opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]">
             <span className="eyebrow lg:inline-flex">Buy &amp; Sell With Me</span>
@@ -87,11 +103,16 @@ export default function BuyAndSellPage() {
                 </span>
               ))}
             </div>
-            <Link href="/contact?topic=buy-sell" className="btn-primary">
+            <a
+              href="https://calendly.com/colivingcait/buyer-or-seller-discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
               Schedule a Call →
-            </Link>
+            </a>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}
@@ -370,9 +391,14 @@ export default function BuyAndSellPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re buying, selling, or house hacking — it starts with one conversation.
           </p>
-          <Link href="/contact?topic=buy-sell" className="btn-gold">
+          <a
+            href="https://calendly.com/colivingcait/buyer-or-seller-discovery-call"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold"
+          >
             Schedule a Discovery Call
-          </Link>
+          </a>
         </div>
       </section>
     </>

@@ -2,9 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 
-// Course progress is tracked client-side via localStorage until Clerk +
-// Supabase land. The shape (an array of completed lesson slugs per
-// course) translates 1:1 to the eventual `user_progress` table.
 const KEY_PREFIX = "coliving-cait:progress:";
 
 type ProgressApi = {
@@ -20,32 +17,64 @@ export function useCourseProgress(courseSlug: string): ProgressApi {
   const [completed, setCompleted] = useState<string[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load on mount
+  // Load progress from API (falls back to localStorage if not signed in)
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    try {
-      const raw = window.localStorage.getItem(`${KEY_PREFIX}${courseSlug}`);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) setCompleted(parsed);
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch(`/api/progress?course=${courseSlug}`);
+        const data = await res.json();
+        if (!cancelled && Array.isArray(data.completed) && data.completed.length > 0) {
+          setCompleted(data.completed);
+          setIsLoaded(true);
+          return;
+        }
+      } catch (err) {
+        // API unavailable — fall through to localStorage
       }
-    } catch (err) {
-      // Corrupt storage — silently reset
+
+      // Fallback to localStorage
+      if (!cancelled) {
+        try {
+          const raw = window.localStorage.getItem(`${KEY_PREFIX}${courseSlug}`);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) setCompleted(parsed);
+          }
+        } catch (err) {
+          // Corrupt storage — silently reset
+        }
+        setIsLoaded(true);
+      }
     }
-    setIsLoaded(true);
+
+    load();
+    return () => { cancelled = true; };
   }, [courseSlug]);
 
   const persist = useCallback(
-    (next: string[]) => {
+    (next: string[], lessonSlug: string, action: "complete" | "incomplete") => {
       setCompleted(next);
+
+      // Save to localStorage as fallback
       try {
         window.localStorage.setItem(
           `${KEY_PREFIX}${courseSlug}`,
           JSON.stringify(next),
         );
       } catch (err) {
-        // localStorage might be unavailable in private mode — ignore
+        // localStorage might be unavailable — ignore
       }
+
+      // Save to API (fire and forget)
+      fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ courseSlug, lessonSlug, action }),
+      }).catch(() => {
+        // Silently fail if not signed in or API unavailable
+      });
     },
     [courseSlug],
   );
@@ -58,21 +87,28 @@ export function useCourseProgress(courseSlug: string): ProgressApi {
   const markComplete = useCallback(
     (lessonSlug: string) => {
       if (completed.includes(lessonSlug)) return;
-      persist([...completed, lessonSlug]);
+      persist([...completed, lessonSlug], lessonSlug, "complete");
     },
     [completed, persist],
   );
 
   const markIncomplete = useCallback(
     (lessonSlug: string) => {
-      persist(completed.filter((s) => s !== lessonSlug));
+      persist(
+        completed.filter((s) => s !== lessonSlug),
+        lessonSlug,
+        "incomplete",
+      );
     },
     [completed, persist],
   );
 
   const reset = useCallback(() => {
-    persist([]);
-  }, [persist]);
+    setCompleted([]);
+    try {
+      window.localStorage.removeItem(`${KEY_PREFIX}${courseSlug}`);
+    } catch (err) {}
+  }, [courseSlug]);
 
   return { completed, isLoaded, isCompleted, markComplete, markIncomplete, reset };
 }
