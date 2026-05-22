@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 type Props = { open: boolean; onClose: () => void };
 
 const CALENDLY_URL =
-  "https://calendly.com/colivingcait/discovery?hide_gdpr_banner=1&primary_color=c4955a";
+  "https://calendly.com/colivingcait?hide_gdpr_banner=1&primary_color=c4955a";
 
 export default function CalendlyModal({ open, onClose }: Props) {
   const reduced = useReducedMotion();
