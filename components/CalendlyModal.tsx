@@ -3,16 +3,35 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-// Modal overlay that loads Calendly inline so the visitor never leaves /hello.
-// Self-contained: backdrop, panel, ESC + outside-click close, body scroll lock,
-// and reduced-motion fallback.
+// Modal overlay that loads Calendly inline so the visitor never leaves
+// the page they came from. Self-contained: backdrop, panel, ESC +
+// outside-click close, body scroll lock, reduced-motion fallback.
+// Pass `url` to point at a specific event type (e.g. the hidden
+// chip-strategy session); defaults to the generic profile URL.
 
-type Props = { open: boolean; onClose: () => void };
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  url?: string;
+  label?: string;
+};
 
-const CALENDLY_URL =
+const DEFAULT_URL =
   "https://calendly.com/colivingcait?hide_gdpr_banner=1&primary_color=c4955a";
 
-export default function CalendlyModal({ open, onClose }: Props) {
+const PARAMS = "hide_gdpr_banner=1&primary_color=c4955a";
+
+function withBrandParams(rawUrl: string) {
+  const hasQuery = rawUrl.includes("?");
+  return `${rawUrl}${hasQuery ? "&" : "?"}${PARAMS}`;
+}
+
+export default function CalendlyModal({
+  open,
+  onClose,
+  url,
+  label = "Book a call with Caitlyn",
+}: Props) {
   const reduced = useReducedMotion();
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -61,7 +80,7 @@ export default function CalendlyModal({ open, onClose }: Props) {
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-label="Book a discovery call with Caitlyn"
+            aria-label={label}
             className="relative w-full max-w-4xl h-[90vh] sm:h-[82vh] bg-charcoal border border-gold/30 shadow-2xl shadow-gold/20 overflow-hidden"
           >
             <button
@@ -85,8 +104,8 @@ export default function CalendlyModal({ open, onClose }: Props) {
             </button>
 
             <iframe
-              src={CALENDLY_URL}
-              title="Schedule a discovery call"
+              src={url ? withBrandParams(url) : DEFAULT_URL}
+              title={label}
               className="w-full h-full border-0 bg-white"
             />
           </motion.div>

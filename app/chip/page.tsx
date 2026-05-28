@@ -457,7 +457,12 @@ export default function ChipPage() {
         )}
       </AnimatePresence>
 
-      <CalendlyModal open={bookingOpen} onClose={() => setBookingOpen(false)} />
+      <CalendlyModal
+        open={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+        url="https://calendly.com/colivingcait/strategy-session-chip"
+        label="Claim your free 45-minute strategy session with Caitlyn"
+      />
     </div>
   );
 }
