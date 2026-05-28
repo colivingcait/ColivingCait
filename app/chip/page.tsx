@@ -534,14 +534,16 @@ function ChipFace({ face }: { face: "front" | "back" }) {
 
         {face === "front" ? (
           <>
-            {/* Caitlyn photo — large, shifted up so only the face fills the
-                circle (matches the tight headshot on the physical chip). */}
+            {/* Caitlyn photo — zoomed and offset so just the face fills
+                the inner circle, matching the tight headshot on the
+                physical chip. Source is 1080x1080; scaled ~2.2x and
+                shifted up so the face lands at the clip center. */}
             <image
               href="/images/caitlyn-yellow-blazer.jpg"
-              x="20"
-              y="-20"
-              width="240"
-              height="240"
+              x="-110"
+              y="-40"
+              width="500"
+              height="500"
               clipPath={`url(#photo-clip-${face})`}
               preserveAspectRatio="xMidYMid slice"
             />
