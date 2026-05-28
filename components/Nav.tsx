@@ -29,8 +29,11 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Standalone landing pages (e.g. /ncc conference handout) render their
-  // own minimal header instead of the site nav.
+  // Standalone landing pages (e.g. /ncc conference handout, /hello QR
+  // welcome, /chip poker-chip welcome) render their own minimal layout
+  // instead of the site nav.
+  if (pathname === "/hello") return null;
+  if (pathname === "/chip") return null;
   if (pathname?.startsWith("/ncc")) return null;
 
   // Pages with dark (charcoal) hero sections need a light logo when not scrolled

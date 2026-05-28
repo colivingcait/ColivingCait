@@ -96,7 +96,7 @@ export default function HomePage() {
               <span className="font-heading font-medium text-base tracking-[0.04em] text-charcoal">
                 {text}
               </span>
-              <span className="text-gold text-[10px]">✦</span>
+              <span className="sparkle text-gold text-[10px]">✦</span>
             </div>
           ))}
         </div>

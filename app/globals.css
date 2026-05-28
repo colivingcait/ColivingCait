@@ -57,8 +57,23 @@
 
   h1 em, h2 em, h3 em, h4 em {
     font-style: italic;
-    color: var(--gold);
     font-weight: 300;
+    /* Metallic gold — gradient text with a slow shimmer sweep so the
+       italic accent words read as actual gold, not flat tan. */
+    background: linear-gradient(
+      100deg,
+      var(--gold-dark) 0%,
+      var(--gold) 25%,
+      var(--gold-light) 50%,
+      var(--gold) 75%,
+      var(--gold-dark) 100%
+    );
+    background-size: 220% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: goldShimmer 9s ease-in-out infinite;
   }
 
   ::selection {
@@ -277,6 +292,68 @@
 @keyframes exitIntentRise {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Metallic gold shimmer — used by italic <em> tags inside headings to
+   give the brand-gold accent words a moving sheen instead of flat color. */
+@keyframes goldShimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Sparkle twinkle — apply via .sparkle utility on decorative ✦ marks. */
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0.55; transform: scale(0.9) rotate(0deg); }
+  50%      { opacity: 1;    transform: scale(1.15) rotate(180deg); }
+}
+
+.sparkle {
+  display: inline-block;
+  animation: sparkleTwinkle 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(232, 213, 181, 0.55));
+}
+.sparkle-d1 { animation-delay: 0.4s; }
+.sparkle-d2 { animation-delay: 0.9s; }
+.sparkle-d3 { animation-delay: 1.6s; }
+
+/* Button shine — diagonal highlight that sweeps across on hover.
+   Applies to all the primary brand buttons. The buttons already define
+   transitions, so this just adds a moving pseudo-element on top. */
+.btn-primary,
+.btn-gold,
+.btn-white {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-primary::after,
+.btn-gold::after,
+.btn-white::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-110%);
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+.btn-primary:hover::after,
+.btn-gold:hover::after,
+.btn-white:hover::after {
+  transform: translateX(110%);
+}
+.btn-primary > *,
+.btn-gold > *,
+.btn-white > * {
+  position: relative;
+  z-index: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
