@@ -564,9 +564,9 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             {/* COLIVING CAIT curved at bottom */}
             <text
               fill="white"
-              fontSize="13"
+              fontSize="18"
               fontWeight="700"
-              letterSpacing="2"
+              letterSpacing="3"
               textAnchor="middle"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
@@ -580,9 +580,9 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             {/* EDUCATION & COACHING curved at top */}
             <text
               fill="white"
-              fontSize="13"
+              fontSize="16"
               fontWeight="700"
-              letterSpacing="1.5"
+              letterSpacing="2"
               textAnchor="middle"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
@@ -630,9 +630,9 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             {/* REAL ESTATE SERVICES curved at bottom */}
             <text
               fill="white"
-              fontSize="13"
+              fontSize="16"
               fontWeight="700"
-              letterSpacing="1.5"
+              letterSpacing="2"
               textAnchor="middle"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
