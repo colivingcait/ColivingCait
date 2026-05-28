@@ -353,11 +353,24 @@ export default function ChipPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease, delay: 1.7 }}
-                className="mt-9 max-w-[460px] text-[15px] leading-[1.85] text-warmgray-light"
+                className="mt-9 max-w-[480px] text-[15px] leading-[1.85] text-warmgray-light"
               >
-                Chips only go to the people I&apos;d love to keep
-                talking to. Make your move — whatever feels right.
+                Your chip is worth a{" "}
+                <span className="text-gold-light">free 45-minute strategy
+                session</span>{" "}
+                with me. Bring your questions, your deals, your goals —
+                we&apos;ll map your next move.
               </motion.p>
+
+              {/* Offering detail */}
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, ease, delay: 1.85 }}
+                className="mt-4 text-[10px] uppercase tracking-[0.32em] text-warmgray-light/70"
+              >
+                45 minutes · Free · One-on-one with Caitlyn
+              </motion.span>
 
               {/* Three equal options */}
               <motion.div
@@ -371,7 +384,7 @@ export default function ChipPage() {
                   onClick={() => setBookingOpen(true)}
                   className="group relative inline-flex items-center justify-center gap-3 border border-gold/40 bg-transparent px-6 py-[18px] text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-all duration-500 hover:border-gold hover:bg-gold hover:text-charcoal hover:shadow-[0_16px_40px_rgba(196,149,90,0.45)]"
                 >
-                  Cash In Your Chip
+                  Claim Your Session
                   <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
@@ -481,12 +494,12 @@ function ChipFace({ face }: { face: "front" | "back" }) {
           </clipPath>
           <path
             id={`curve-bottom-${face}`}
-            d="M 70,160 A 70,70 0 0,0 210,160"
+            d="M 78,168 A 64,64 0 0,0 202,168"
             fill="none"
           />
           <path
             id={`curve-top-${face}`}
-            d="M 70,120 A 70,70 0 0,1 210,120"
+            d="M 78,112 A 64,64 0 0,1 202,112"
             fill="none"
           />
         </defs>
@@ -516,13 +529,14 @@ function ChipFace({ face }: { face: "front" | "back" }) {
 
         {face === "front" ? (
           <>
-            {/* Caitlyn photo */}
+            {/* Caitlyn photo — large, shifted up so only the face fills the
+                circle (matches the tight headshot on the physical chip). */}
             <image
               href="/images/caitlyn-yellow-blazer.jpg"
-              x="78"
-              y="58"
-              width="124"
-              height="124"
+              x="20"
+              y="-20"
+              width="240"
+              height="240"
               clipPath={`url(#photo-clip-${face})`}
               preserveAspectRatio="xMidYMid slice"
             />
