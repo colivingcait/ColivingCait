@@ -511,7 +511,7 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             id={`curve-bottom-${face}`}
             d={
               face === "front"
-                ? "M 80,210 A 115,115 0 0,0 200,210"
+                ? "M 75,205 A 126,126 0 0,0 205,205"
                 : "M 75,190 A 72,72 0 0,0 205,190"
             }
             fill="none"
@@ -575,10 +575,12 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             {/* Two small alignment dots just outside the photo edge */}
             <circle cx="73" cy="138" r="2" fill="white" />
             <circle cx="207" cy="138" r="2" fill="white" />
-            {/* COLIVING CAIT curved at bottom */}
+            {/* COLIVING CAIT curved at bottom. Font/letterSpacing tuned
+                so the C and T fit inside the inner black circle on the
+                widened curve (arc length ~137 at radius 126). */}
             <text
               fill="white"
-              fontSize="16"
+              fontSize="15"
               fontWeight="700"
               letterSpacing="2"
               textAnchor="middle"
