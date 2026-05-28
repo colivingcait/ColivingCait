@@ -30,8 +30,10 @@ export default function Nav() {
   }, []);
 
   // Standalone landing pages (e.g. /ncc conference handout, /hello QR
-  // welcome) render their own minimal layout instead of the site nav.
+  // welcome, /chip poker-chip welcome) render their own minimal layout
+  // instead of the site nav.
   if (pathname === "/hello") return null;
+  if (pathname === "/chip") return null;
   if (pathname?.startsWith("/ncc")) return null;
 
   // Pages with dark (charcoal) hero sections need a light logo when not scrolled
