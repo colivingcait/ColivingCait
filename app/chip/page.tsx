@@ -474,19 +474,45 @@ export default function ChipPage() {
 }
 
 // ─────────────────────────────────────────────────────────────
-// ChipFace — one side of the poker chip (SVG so the yellow ring,
-// white edge notches, photo, and curved text all match the real chip).
-// `face="front"` shows the photo + COLIVING CAIT; `face="back"` shows
-// EDUCATION & COACHING · ✦ · REAL ESTATE SERVICES.
+// ChipFace — one side of the poker chip.
+// Front face uses the actual chip artwork (PNG from Canva) so the
+// photo, ring, notches, sparkles, and COLIVING CAIT text all match
+// the physical chip exactly.
+// Back face stays as a generic gold chip silhouette for now (only
+// visible briefly during the flip animation).
 // ─────────────────────────────────────────────────────────────
 function ChipFace({ face }: { face: "front" | "back" }) {
+  if (face === "front") {
+    return (
+      <div
+        className="absolute inset-0"
+        style={{
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
+        }}
+      >
+        {/* Using a plain <img> rather than next/image because the
+            chip is rendered inside a 3D-transformed container and
+            we want it to scale crisply with the wrapper, not the
+            DPR-aware optimization next/image does. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/chip-front.png"
+          alt="Coliving Cait poker chip"
+          className="w-full h-full object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,0.55)]"
+          draggable={false}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="absolute inset-0"
       style={{
         backfaceVisibility: "hidden",
         WebkitBackfaceVisibility: "hidden",
-        transform: face === "back" ? "rotateX(180deg)" : undefined,
+        transform: "rotateX(180deg)",
       }}
     >
       <svg viewBox="0 0 280 280" className="w-full h-full drop-shadow-[0_24px_40px_rgba(0,0,0,0.55)]">
@@ -500,20 +526,9 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             <stop offset="60%" stopColor="#1A1A1A" />
             <stop offset="100%" stopColor="#000000" />
           </radialGradient>
-          <clipPath id={`photo-clip-${face}`}>
-            <circle cx="140" cy="138" r="64" />
-          </clipPath>
-          {/* Front uses a flatter, lower arc so COLIVING CAIT sits
-              cleanly below the bigger photo. Back keeps the original
-              tighter curve so REAL ESTATE SERVICES has enough arc
-              length to fit. */}
           <path
             id={`curve-bottom-${face}`}
-            d={
-              face === "front"
-                ? "M 75,205 A 126,126 0 0,0 205,205"
-                : "M 75,190 A 72,72 0 0,0 205,190"
-            }
+            d="M 75,190 A 72,72 0 0,0 205,190"
             fill="none"
           />
           <path
@@ -546,118 +561,69 @@ function ChipFace({ face }: { face: "front" | "back" }) {
         {/* Inner black circle */}
         <circle cx="140" cy="140" r="92" fill={`url(#black-${face})`} />
 
-        {face === "front" ? (
-          <>
-            {/* Caitlyn headshot — bigger circle (r=64), slightly zoomed
-                out, face centered. Source is 1080x1080; the 220px box
-                gives a modest zoom so we see hair + face + shoulders
-                rather than just the face. */}
-            <image
-              href="/images/caitlyn-yellow-blazer.jpg"
-              x="30"
-              y="74"
-              width="220"
-              height="220"
-              clipPath={`url(#photo-clip-${face})`}
-              preserveAspectRatio="xMidYMid slice"
-            />
-            {/* Thin white border around the photo, matching the
-                physical chip's printed circle. */}
-            <circle
-              cx="140"
-              cy="138"
-              r="64"
-              fill="none"
-              stroke="white"
+        {/* EDUCATION & COACHING curved at top */}
+        <text
+          fill="white"
+          fontSize="16"
+          fontWeight="700"
+          letterSpacing="2"
+          textAnchor="middle"
+          style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+        >
+          <textPath href={`#curve-top-${face}`} startOffset="50%">
+            EDUCATION &amp; COACHING
+          </textPath>
+        </text>
+
+        {/* Inner white "sprinkle" disc — stand-in for the QR */}
+        <circle cx="140" cy="140" r="50" fill="white" />
+        {/* Subtle sprinkle marks (decorative dashes) */}
+        {Array.from({ length: 18 }).map((_, i) => {
+          const angle = (i / 18) * Math.PI * 2;
+          const r = 40;
+          const x1 = 140 + Math.cos(angle) * r;
+          const y1 = 140 + Math.sin(angle) * r;
+          const x2 = 140 + Math.cos(angle) * (r - 4);
+          const y2 = 140 + Math.sin(angle) * (r - 4);
+          return (
+            <line
+              key={i}
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              stroke="#1A1A1A"
               strokeWidth="1.5"
-              opacity="0.9"
+              opacity={0.4}
             />
-            {/* Two small alignment dots just outside the photo edge */}
-            <circle cx="73" cy="138" r="2" fill="white" />
-            <circle cx="207" cy="138" r="2" fill="white" />
-            {/* COLIVING CAIT curved at bottom. Font/letterSpacing tuned
-                so the C and T fit inside the inner black circle on the
-                widened curve (arc length ~137 at radius 126). */}
-            <text
-              fill="white"
-              fontSize="15"
-              fontWeight="700"
-              letterSpacing="2"
-              textAnchor="middle"
-              style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              <textPath href={`#curve-bottom-${face}`} startOffset="50%">
-                COLIVING CAIT
-              </textPath>
-            </text>
-          </>
-        ) : (
-          <>
-            {/* EDUCATION & COACHING curved at top */}
-            <text
-              fill="white"
-              fontSize="16"
-              fontWeight="700"
-              letterSpacing="2"
-              textAnchor="middle"
-              style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              <textPath href={`#curve-top-${face}`} startOffset="50%">
-                EDUCATION &amp; COACHING
-              </textPath>
-            </text>
+          );
+        })}
+        {/* Central monogram */}
+        <text
+          x="140"
+          y="152"
+          fill="#1A1A1A"
+          fontSize="40"
+          fontWeight="500"
+          textAnchor="middle"
+          style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: "italic" }}
+        >
+          CC
+        </text>
 
-            {/* Inner white "sprinkle" disc — stand-in for the QR */}
-            <circle cx="140" cy="140" r="50" fill="white" />
-            {/* Subtle sprinkle marks (decorative dashes) */}
-            {Array.from({ length: 18 }).map((_, i) => {
-              const angle = (i / 18) * Math.PI * 2;
-              const r = 40;
-              const x1 = 140 + Math.cos(angle) * r;
-              const y1 = 140 + Math.sin(angle) * r;
-              const x2 = 140 + Math.cos(angle) * (r - 4);
-              const y2 = 140 + Math.sin(angle) * (r - 4);
-              return (
-                <line
-                  key={i}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                  stroke="#1A1A1A"
-                  strokeWidth="1.5"
-                  opacity={0.4}
-                />
-              );
-            })}
-            {/* Central monogram */}
-            <text
-              x="140"
-              y="152"
-              fill="#1A1A1A"
-              fontSize="40"
-              fontWeight="500"
-              textAnchor="middle"
-              style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: "italic" }}
-            >
-              CC
-            </text>
-
-            {/* REAL ESTATE SERVICES curved at bottom */}
-            <text
-              fill="white"
-              fontSize="16"
-              fontWeight="700"
-              letterSpacing="2"
-              textAnchor="middle"
-              style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
-            >
-              <textPath href={`#curve-bottom-${face}`} startOffset="50%">
-                REAL ESTATE SERVICES
-              </textPath>
-            </text>
-          </>
-        )}
+        {/* REAL ESTATE SERVICES curved at bottom */}
+        <text
+          fill="white"
+          fontSize="16"
+          fontWeight="700"
+          letterSpacing="2"
+          textAnchor="middle"
+          style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+        >
+          <textPath href={`#curve-bottom-${face}`} startOffset="50%">
+            REAL ESTATE SERVICES
+          </textPath>
+        </text>
       </svg>
     </div>
   );
