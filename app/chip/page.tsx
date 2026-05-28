@@ -495,16 +495,16 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             <stop offset="100%" stopColor="#000000" />
           </radialGradient>
           <clipPath id={`photo-clip-${face}`}>
-            <circle cx="140" cy="135" r="54" />
+            <circle cx="140" cy="138" r="64" />
           </clipPath>
           <path
             id={`curve-bottom-${face}`}
-            d="M 78,180 A 65,65 0 0,0 202,180"
+            d="M 75,190 A 72,72 0 0,0 205,190"
             fill="none"
           />
           <path
             id={`curve-top-${face}`}
-            d="M 78,100 A 65,65 0 0,1 202,100"
+            d="M 75,90 A 72,72 0 0,1 205,90"
             fill="none"
           />
         </defs>
@@ -534,18 +534,16 @@ function ChipFace({ face }: { face: "front" | "back" }) {
 
         {face === "front" ? (
           <>
-            {/* Caitlyn headshot — sits centered in the inner black
-                circle, matching the framing on the physical chip
-                (hair top, face mid, shoulders bottom). Source is
-                1080x1080; the SVG box is offset so the upper third
-                of the photo (her face) lands at the clip center
-                (140, 135). */}
+            {/* Caitlyn headshot — bigger circle (r=64), slightly zoomed
+                out, face centered. Source is 1080x1080; the 220px box
+                gives a modest zoom so we see hair + face + shoulders
+                rather than just the face. */}
             <image
               href="/images/caitlyn-yellow-blazer.jpg"
-              x="20"
-              y="55"
-              width="240"
-              height="240"
+              x="30"
+              y="74"
+              width="220"
+              height="220"
               clipPath={`url(#photo-clip-${face})`}
               preserveAspectRatio="xMidYMid slice"
             />
@@ -553,16 +551,16 @@ function ChipFace({ face }: { face: "front" | "back" }) {
                 physical chip's printed circle. */}
             <circle
               cx="140"
-              cy="135"
-              r="54"
+              cy="138"
+              r="64"
               fill="none"
               stroke="white"
               strokeWidth="1.5"
               opacity="0.9"
             />
-            {/* Two small alignment dots either side of photo */}
-            <circle cx="88" cy="135" r="2" fill="white" />
-            <circle cx="192" cy="135" r="2" fill="white" />
+            {/* Two small alignment dots just outside the photo edge */}
+            <circle cx="73" cy="138" r="2" fill="white" />
+            <circle cx="207" cy="138" r="2" fill="white" />
             {/* COLIVING CAIT curved at bottom */}
             <text
               fill="white"
