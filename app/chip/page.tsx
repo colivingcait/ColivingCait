@@ -324,14 +324,14 @@ export default function ChipPage() {
                   textShadow: "0 0 40px rgba(196,149,90,0.25)",
                 }}
               >
-                {["Saved", "you", "a", "seat."].map((word, i) => (
+                {["Now", "we're", "talking."].map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 30, scale: 0.7, filter: "blur(10px)" }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
                     transition={{ duration: 0.9, ease, delay: 0.6 + i * 0.15 }}
-                    className={`inline-block mr-[0.25em] ${i === 3 ? "italic" : ""}`}
-                    style={i === 3 ? { color: "#C4955A" } : undefined}
+                    className={`inline-block mr-[0.25em] ${i === 2 ? "italic" : ""}`}
+                    style={i === 2 ? { color: "#C4955A" } : undefined}
                   >
                     {word}
                   </motion.span>
