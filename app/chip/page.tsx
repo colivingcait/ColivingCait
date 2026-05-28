@@ -324,7 +324,7 @@ export default function ChipPage() {
                   textShadow: "0 0 40px rgba(196,149,90,0.25)",
                 }}
               >
-                {["Welcome", "to", "the", "table."].map((word, i) => (
+                {["Saved", "you", "a", "seat."].map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 30, scale: 0.7, filter: "blur(10px)" }}
@@ -348,56 +348,64 @@ export default function ChipPage() {
                 style={{ boxShadow: "0 0 12px rgba(196,149,90,0.7)" }}
               />
 
-              {/* Sub */}
+              {/* Sub — intentionally vague; the reveal happens
+                  inside the modal once they tap Redeem My Chip. */}
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease, delay: 1.7 }}
-                className="mt-9 max-w-[480px] text-[15px] leading-[1.85] text-warmgray-light"
+                className="mt-9 max-w-[460px] text-[15px] leading-[1.85] text-warmgray-light"
               >
-                Your chip is worth a{" "}
-                <span className="text-gold-light">free 45-minute strategy
-                session</span>{" "}
-                with me. Bring your questions, your deals, your goals —
-                we&apos;ll map your next move.
+                Hold onto that chip — it&apos;s worth more than you think.
+                Tap to redeem yours.
               </motion.p>
 
-              {/* Offering detail */}
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, ease, delay: 1.85 }}
-                className="mt-4 text-[10px] uppercase tracking-[0.32em] text-warmgray-light/70"
-              >
-                45 minutes · Free · One-on-one with Caitlyn
-              </motion.span>
-
-              {/* Three equal options */}
+              {/* Primary — Redeem My Chip with a pulsing gold halo */}
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease, delay: 2.0 }}
-                className="mt-11 grid w-full max-w-[760px] grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4"
+                initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease, delay: 1.95 }}
+                className="mt-10"
               >
                 <button
                   type="button"
                   onClick={() => setBookingOpen(true)}
-                  className="group relative inline-flex items-center justify-center gap-3 border border-gold/40 bg-transparent px-6 py-[18px] text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-all duration-500 hover:border-gold hover:bg-gold hover:text-charcoal hover:shadow-[0_16px_40px_rgba(196,149,90,0.45)]"
+                  className="group relative inline-flex items-center gap-4 bg-gold px-10 py-[20px] text-[12px] font-medium uppercase tracking-[0.2em] text-charcoal transition-all duration-500 hover:bg-gold-dark hover:text-white hover:-translate-y-0.5 hover:shadow-[0_20px_44px_rgba(196,149,90,0.55)]"
                 >
-                  Claim Your Session
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 -z-10"
+                    animate={{
+                      boxShadow: [
+                        "0 0 0 rgba(196,149,90,0)",
+                        "0 0 44px rgba(245,208,52,0.55)",
+                        "0 0 0 rgba(196,149,90,0)",
+                      ],
+                    }}
+                    transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut", delay: 2.4 }}
+                  />
+                  Redeem My Chip
                   <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
                     →
                   </span>
                 </button>
+              </motion.div>
 
+              {/* Quiet secondary options */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease, delay: 2.2 }}
+                className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-x-9 gap-y-3"
+              >
                 <button
                   type="button"
                   onClick={() => setDiveOpen((v) => !v)}
                   aria-expanded={diveOpen}
                   aria-controls="chip-dive-options"
-                  className="group relative inline-flex items-center justify-center gap-3 border border-gold/40 bg-transparent px-6 py-[18px] text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-all duration-500 hover:border-gold hover:bg-gold hover:text-charcoal hover:shadow-[0_16px_40px_rgba(196,149,90,0.45)]"
+                  className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
                 >
-                  Dive Deeper
+                  Dive deeper
                   <span
                     aria-hidden
                     className={`transition-transform duration-300 ${diveOpen ? "rotate-180" : ""}`}
@@ -405,16 +413,14 @@ export default function ChipPage() {
                     ↓
                   </span>
                 </button>
-
+                <span aria-hidden className="hidden sm:inline-block text-warmgray-light/30">·</span>
                 <a
                   href="/caitlyn-verdugo.vcf"
                   download="caitlyn-verdugo.vcf"
-                  className="group relative inline-flex items-center justify-center gap-3 border border-gold/40 bg-transparent px-6 py-[18px] text-[11px] font-medium uppercase tracking-[0.18em] text-white transition-all duration-500 hover:border-gold hover:bg-gold hover:text-charcoal hover:shadow-[0_16px_40px_rgba(196,149,90,0.45)]"
+                  className="group inline-flex items-center gap-2 text-[12px] tracking-[0.06em] text-warmgray-light hover:text-gold-light transition-colors duration-300"
                 >
-                  Save My Contact
-                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">
-                    ↓
-                  </span>
+                  Save my contact info
+                  <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
                 </a>
               </motion.div>
 
@@ -497,9 +503,17 @@ function ChipFace({ face }: { face: "front" | "back" }) {
           <clipPath id={`photo-clip-${face}`}>
             <circle cx="140" cy="138" r="64" />
           </clipPath>
+          {/* Front uses a flatter, lower arc so COLIVING CAIT sits
+              cleanly below the bigger photo. Back keeps the original
+              tighter curve so REAL ESTATE SERVICES has enough arc
+              length to fit. */}
           <path
             id={`curve-bottom-${face}`}
-            d="M 75,190 A 72,72 0 0,0 205,190"
+            d={
+              face === "front"
+                ? "M 80,210 A 115,115 0 0,0 200,210"
+                : "M 75,190 A 72,72 0 0,0 205,190"
+            }
             fill="none"
           />
           <path
@@ -564,9 +578,9 @@ function ChipFace({ face }: { face: "front" | "back" }) {
             {/* COLIVING CAIT curved at bottom */}
             <text
               fill="white"
-              fontSize="18"
+              fontSize="16"
               fontWeight="700"
-              letterSpacing="3"
+              letterSpacing="2"
               textAnchor="middle"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
