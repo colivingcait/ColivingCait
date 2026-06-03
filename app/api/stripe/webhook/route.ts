@@ -88,17 +88,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Tag in ConvertKit (fire and forget)
     const firstName = session.customer_details?.name?.split(" ")[0] || undefined;
     const isBundle = courseSlugs.includes(",");
 
+    // Collect all external side-effects (Kit tagging + welcome email). These
+    // MUST be awaited: on Vercel's serverless runtime the function is frozen
+    // the instant we return a response, which aborts any in-flight fetch. That
+    // was silently killing the Resend API call ("request could not be
+    // resolved") and the ConvertKit tag requests.
+    const sideEffects: Promise<unknown>[] = [];
+
     // Always tag as course-buyer (triggers post-purchase sequence in Kit)
     // NOTE: Do NOT add community tag here — course buyers get their own sequence
-    subscribeToConvertKit({
-      email: customerEmail,
-      firstName,
-      tagName: CK_TAGS.COURSE_BUYER,
-    });
+    sideEffects.push(
+      subscribeToConvertKit({
+        email: customerEmail,
+        firstName,
+        tagName: CK_TAGS.COURSE_BUYER,
+      }),
+    );
 
     // Tag per course
     for (const slug of slugs) {
@@ -109,17 +117,21 @@ export async function POST(req: NextRequest) {
       };
       const tag = tagMap[slug.trim()];
       if (tag) {
-        subscribeToConvertKit({ email: customerEmail, firstName, tagName: tag });
+        sideEffects.push(
+          subscribeToConvertKit({ email: customerEmail, firstName, tagName: tag }),
+        );
       }
     }
 
     // Tag bundle buyers
     if (isBundle) {
-      subscribeToConvertKit({
-        email: customerEmail,
-        firstName,
-        tagName: CK_TAGS.EXPLORER_BUNDLE,
-      });
+      sideEffects.push(
+        subscribeToConvertKit({
+          email: customerEmail,
+          firstName,
+          tagName: CK_TAGS.EXPLORER_BUNDLE,
+        }),
+      );
     }
 
     // Send welcome email via Resend
@@ -135,13 +147,23 @@ export async function POST(req: NextRequest) {
       : courseNameMap[slugs[0]?.trim()] || "your course";
 
     const origin = process.env.NEXTAUTH_URL || "https://www.colivingcait.com";
-    sendWelcomeEmail({
-      to: customerEmail,
-      firstName,
-      courseName: purchasedCourseName,
-      isBundle,
-      siteUrl: origin,
-    });
+    sideEffects.push(
+      sendWelcomeEmail({
+        to: customerEmail,
+        firstName,
+        courseName: purchasedCourseName,
+        isBundle,
+        siteUrl: origin,
+      }),
+    );
+
+    // Wait for the email + tags to finish before returning, so the runtime
+    // doesn't freeze the function mid-request.
+    const results = await Promise.allSettled(sideEffects);
+    const failed = results.filter((r) => r.status === "rejected");
+    if (failed.length > 0) {
+      console.error(`[webhook] ${failed.length} side-effect(s) failed:`, failed);
+    }
 
     console.log(`[webhook] Purchase complete: ${customerEmail} → ${courseSlugs}`);
   }
