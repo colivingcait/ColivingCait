@@ -57,14 +57,21 @@ Cait
 P.S. If you run into any issues signing in, just reply to this email and I'll get you sorted.`;
 
   try {
-    const result = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: process.env.EMAIL_FROM || "Coliving Cait <hello@colivingcait.com>",
       to,
       subject,
       text: body,
     });
-    console.log(`[welcome-email] Sent to ${to}:`, result);
-    return result;
+    // The Resend SDK returns errors in the response object rather than
+    // throwing, so we must check `error` explicitly — otherwise a rejected
+    // send gets mislabeled as "Sent".
+    if (error) {
+      console.error(`[welcome-email] Resend rejected for ${to}:`, error);
+      return null;
+    }
+    console.log(`[welcome-email] Sent to ${to}: ${data?.id}`);
+    return data;
   } catch (err) {
     console.error(`[welcome-email] Failed for ${to}:`, err);
     return null;
