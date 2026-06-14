@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/cn";
 
 // Primary site navigation — frosted glass, transparent → solid on scroll.
@@ -21,6 +22,19 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const { status } = useSession();
+  const authed = status === "authenticated";
+
+  // Shared desktop link styling (gold underline grows on hover / active).
+  const linkClass = (active: boolean) =>
+    cn(
+      "relative text-[13px] tracking-[0.02em] transition-colors duration-200",
+      "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
+      "after:transition-[width] after:duration-[350ms] after:ease-brand",
+      active
+        ? "text-charcoal font-medium after:w-full"
+        : "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full",
+    );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -57,26 +71,46 @@ export default function Nav() {
 
         {/* Desktop links */}
         <ul className="hidden lg:flex items-center gap-9 list-none">
-          {links.map((l) => {
-            const active = pathname === l.href;
-            return (
-              <li key={l.href}>
+          {links.map((l) => (
+            <li key={l.href}>
+              <Link href={l.href} className={linkClass(pathname === l.href)}>
+                {l.label}
+              </Link>
+            </li>
+          ))}
+
+          {/* Account — sign in, or jump to purchased courses */}
+          {authed ? (
+            <>
+              <li>
                 <Link
-                  href={l.href}
-                  className={cn(
-                    "relative text-[13px] tracking-[0.02em] transition-colors duration-200",
-                    "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
-                    "after:transition-[width] after:duration-[350ms] after:ease-brand",
-                    active
-                      ? "text-charcoal font-medium after:w-full"
-                      : "text-warmgray font-normal after:w-0 hover:text-charcoal hover:after:w-full",
-                  )}
+                  href="/courses"
+                  className={linkClass(pathname.startsWith("/courses"))}
                 >
-                  {l.label}
+                  My Courses
                 </Link>
               </li>
-            );
-          })}
+              <li>
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="text-[13px] tracking-[0.02em] text-warmgray/70 hover:text-charcoal transition-colors"
+                >
+                  Sign Out
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link
+                href="/auth/signin?callbackUrl=/courses"
+                className={linkClass(pathname.startsWith("/auth"))}
+              >
+                Sign In
+              </Link>
+            </li>
+          )}
+
           <li>
             <Link
               href="/contact"
@@ -114,6 +148,38 @@ export default function Nav() {
                 {l.label}
               </Link>
             ))}
+
+            {/* Account */}
+            {authed ? (
+              <>
+                <Link
+                  href="/courses"
+                  onClick={() => setOpen(false)}
+                  className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+                >
+                  My Courses
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="py-3 text-left text-[13px] tracking-[0.02em] text-warmgray/70 hover:text-gold"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/auth/signin?callbackUrl=/courses"
+                onClick={() => setOpen(false)}
+                className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+              >
+                Sign In
+              </Link>
+            )}
+
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
