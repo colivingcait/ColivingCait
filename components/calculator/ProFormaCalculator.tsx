@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
+import Button from "@/components/Button";
 import { cn } from "@/lib/cn";
 import {
   type DollarOrPct,
@@ -23,6 +24,7 @@ import {
 // number is a starting point the operator can override.
 export default function ProFormaCalculator() {
   const [inputs, setInputs] = useState<ProFormaInputs>(DEFAULT_PROFORMA);
+  const [propertyLabel, setPropertyLabel] = useState("");
 
   const results = useMemo(() => calculateProForma(inputs), [inputs]);
 
@@ -31,13 +33,34 @@ export default function ProFormaCalculator() {
     value: ProFormaInputs[K],
   ) => setInputs((prev) => ({ ...prev, [key]: value }));
 
-  const reset = () => setInputs(DEFAULT_PROFORMA);
+  const reset = () => {
+    setInputs(DEFAULT_PROFORMA);
+    setPropertyLabel("");
+  };
+
+  const downloadPdf = () => {
+    if (typeof window !== "undefined") window.print();
+  };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-16">
       <div className="grid gap-10 lg:grid-cols-[1fr_minmax(340px,400px)] lg:gap-12">
         {/* ---------------- Inputs ---------------- */}
         <div className="space-y-12">
+          {/* Optional label — shows up as the heading on the PDF report */}
+          <label className="block">
+            <span className="text-[10px] uppercase tracking-eyebrow text-charcoal/70">
+              Property label (optional)
+            </span>
+            <input
+              type="text"
+              value={propertyLabel}
+              onChange={(e) => setPropertyLabel(e.target.value)}
+              placeholder="123 Main St — 8-room coliving"
+              className="mt-2 w-full border border-brand bg-white px-4 py-3 text-sm font-sans text-charcoal placeholder:text-warmgray/50 focus:outline-none focus:border-gold transition-colors"
+            />
+          </label>
+
           {/* Property & financing */}
           <Group eyebrow="Property & financing" title="The purchase">
             <div className="grid gap-5 sm:grid-cols-2">
@@ -182,20 +205,36 @@ export default function ProFormaCalculator() {
             />
           </Group>
 
-          <button
-            type="button"
-            onClick={reset}
-            className="text-xs uppercase tracking-button text-warmgray hover:text-gold transition-colors"
-          >
-            ↺ Clear all
-          </button>
+          <div className="flex flex-wrap items-center gap-5">
+            <Button onClick={downloadPdf} variant="primary" size="md">
+              ↓ Download PDF
+            </Button>
+            <button
+              type="button"
+              onClick={reset}
+              className="text-xs uppercase tracking-button text-warmgray hover:text-gold transition-colors"
+            >
+              ↺ Clear all
+            </button>
+          </div>
         </div>
 
         {/* ---------------- Pro forma panel ---------------- */}
         <div className="lg:sticky lg:top-8 lg:self-start">
           <ProFormaPanel r={results} />
+          <p className="mt-3 text-center text-xs text-warmgray/60">
+            Tap <span className="text-gold">Download PDF</span> and choose
+            “Save as PDF” to keep a copy.
+          </p>
         </div>
       </div>
+
+      {/* Print-only report — hidden on screen, the sole content when printing */}
+      <PrintableReport
+        inputs={inputs}
+        r={results}
+        label={propertyLabel}
+      />
     </div>
   );
 }
@@ -698,6 +737,224 @@ function SubMetric({ label, value }: { label: string; value: string }) {
     <div className="flex items-baseline justify-between gap-2 border-b border-cream/10 pb-1">
       <span>{label}</span>
       <span className="tabular-nums text-cream/80">{value}</span>
+    </div>
+  );
+}
+
+/* ================================================================ */
+/* Printable report — hidden on screen, the only content when the    */
+/* browser print dialog runs. Plain black-on-white so it reads as a  */
+/* clean one-page document and doesn't burn ink on dark panels.      */
+/* ================================================================ */
+function PrintableReport({
+  inputs,
+  r,
+  label,
+}: {
+  inputs: ProFormaInputs;
+  r: ProFormaResults;
+  label: string;
+}) {
+  // Set the date client-side only, to avoid an SSR/CSR hydration mismatch.
+  const [date, setDate] = useState("");
+  useEffect(() => {
+    setDate(
+      new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    );
+  }, []);
+
+  const cf = r.netCashFlow;
+
+  return (
+    <div className="print-report hidden text-[#1C1917]">
+      {/* Header */}
+      <div className="flex items-end justify-between border-b-2 border-[#1C1917] pb-3">
+        <div>
+          <p className="text-3xl font-heading leading-none">Pro Forma</p>
+          {label && <p className="mt-1 text-sm">{label}</p>}
+        </div>
+        <div className="text-right text-xs">
+          <p className="font-semibold uppercase tracking-[0.2em] text-[#8B6535]">
+            Coliving Cait
+          </p>
+          {date && <p className="mt-0.5">{date}</p>}
+        </div>
+      </div>
+
+      <div className="mt-6 grid grid-cols-2 gap-10">
+        {/* Assumptions */}
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6535]">
+            Assumptions
+          </p>
+          <div className="mt-2">
+            <PRow label="Purchase price" value={fmtMoney(inputs.purchasePrice)} />
+            <PRow
+              label={`Down payment (${fmtPercent(inputs.downPaymentPct)})`}
+              value={fmtMoney(r.downPayment)}
+            />
+            <PRow
+              label={`Closing costs (${fmtPercent(inputs.closingCostPct)})`}
+              value={fmtMoney(r.closingCosts)}
+            />
+            <PRow label="Rehab / renovation" value={fmtMoney(inputs.rehabBudget)} />
+            <PRow label="Loan amount" value={fmtMoney(r.loanAmount)} />
+            <PRow
+              label="Interest rate"
+              value={fmtPercent(inputs.interestRate)}
+            />
+            <PRow label="Loan term" value={`${inputs.loanTermYears} yrs`} />
+            <PRow
+              label="Vacancy"
+              value={fmtPercent(inputs.vacancyPct)}
+            />
+            <PRow
+              label="Platform / PM fee"
+              value={fmtPercent(inputs.managementPct)}
+            />
+            <PRow
+              label="All-in cash invested"
+              value={fmtMoney(r.totalCashInvested)}
+              bold
+            />
+          </div>
+        </div>
+
+        {/* Statement */}
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8B6535]">
+            Monthly statement
+          </p>
+          <div className="mt-2">
+            <PRow label="Gross rent" value={fmtMoney(r.grossRent)} />
+            <PRow label="Less vacancy" value={`(${fmtMoney(r.vacancy)})`} indent />
+            <PRow
+              label="Less platform fee"
+              value={`(${fmtMoney(r.managementFee)})`}
+              indent
+            />
+            <PRow
+              label="Effective income"
+              value={fmtMoney(r.effectiveIncome)}
+              bold
+              rule
+            />
+            <PRow
+              label="Taxes & insurance"
+              value={`(${fmtMoney(r.taxesInsurance)})`}
+              indent
+            />
+            <PRow
+              label="Utilities (all-in)"
+              value={`(${fmtMoney(r.utilities)})`}
+              indent
+            />
+            <PRow
+              label="Cleaning & lawn"
+              value={`(${fmtMoney(r.cleaningLawn)})`}
+              indent
+            />
+            <PRow
+              label="Maintenance"
+              value={`(${fmtMoney(r.maintenance)})`}
+              indent
+            />
+            <PRow
+              label="CapEx reserve"
+              value={`(${fmtMoney(r.capexReserve)})`}
+              indent
+            />
+            {r.otherExpense > 0 && (
+              <PRow
+                label="Other"
+                value={`(${fmtMoney(r.otherExpense)})`}
+                indent
+              />
+            )}
+            <PRow
+              label="Net operating income"
+              value={fmtMoney(r.noi)}
+              bold
+              rule
+            />
+            <PRow
+              label="Debt service (P&I)"
+              value={`(${fmtMoney(r.debtService)})`}
+              indent
+            />
+            <PRow
+              label="Net cash flow / month"
+              value={fmtMoneySigned(cf)}
+              bold
+              rule
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* KPI strip */}
+      <div className="mt-8 grid grid-cols-3 gap-6 border-t-2 border-[#1C1917] pt-5 text-center">
+        <PKpi label="Cap rate" value={fmtPercent(r.capRate)} />
+        <PKpi label="Cash-on-cash" value={fmtPercent(r.cashOnCash)} />
+        <PKpi label="Cash flow / mo" value={fmtMoneySigned(cf)} />
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-6 text-center text-xs">
+        <PRow label="DSCR" value={r.dscr.toFixed(2)} />
+        <PRow label="Annual cash flow" value={fmtMoneySigned(r.annualNetCashFlow)} />
+        <PRow
+          label="Breakeven occupancy"
+          value={fmtPercent(r.breakevenOccupancy)}
+        />
+      </div>
+
+      <p className="mt-8 border-t border-[#1C1917]/20 pt-3 text-[10px] text-[#6B6560]">
+        Generated with the Coliving Cait Pro Forma calculator · colivingcait.com
+        · Estimates only — not financial advice.
+      </p>
+    </div>
+  );
+}
+
+function PRow({
+  label,
+  value,
+  indent,
+  bold,
+  rule,
+}: {
+  label: string;
+  value: string;
+  indent?: boolean;
+  bold?: boolean;
+  rule?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-baseline justify-between gap-4 py-1 text-sm",
+        indent && "pl-3",
+        rule && "border-t border-[#1C1917]/30 mt-1 pt-1.5",
+        bold && "font-semibold",
+      )}
+    >
+      <span>{label}</span>
+      <span className="tabular-nums">{value}</span>
+    </div>
+  );
+}
+
+function PKpi({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="font-heading text-2xl leading-none">{value}</p>
+      <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-[#6B6560]">
+        {label}
+      </p>
     </div>
   );
 }
