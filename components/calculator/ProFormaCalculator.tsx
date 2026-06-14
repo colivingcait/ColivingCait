@@ -11,7 +11,9 @@ import {
   type ProFormaInputs,
   type ProFormaResults,
   DEFAULT_PROFORMA,
+  SUGGESTION_RATES,
   calculateProForma,
+  suggestExpenses,
 } from "@/lib/proforma-calculator";
 import {
   fmtMoney,
@@ -41,6 +43,11 @@ export default function ProFormaCalculator() {
   const downloadPdf = () => {
     if (typeof window !== "undefined") window.print();
   };
+
+  // Fill the expense fields with estimates derived from the property. The
+  // operator opts in by clicking, and every value stays editable after.
+  const applySuggestedExpenses = () =>
+    setInputs((prev) => ({ ...prev, ...suggestExpenses(prev) }));
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-16">
@@ -114,18 +121,78 @@ export default function ProFormaCalculator() {
             </div>
           </Group>
 
-          {/* Income */}
+          {/* Income — built from the room mix */}
           <Group eyebrow="Income" title="What it rents for">
+            <p className="-mt-2 mb-6 text-sm text-warmgray leading-body">
+              Set the rate and number of rooms for each bathroom type. We&apos;ll
+              total the gross rent for you.
+            </p>
+
+            {/* Private-bath rooms */}
+            <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+              Private-bath rooms
+            </p>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field
-                label="Gross rent (monthly)"
+                label="Rate per room"
                 prefix="$"
-                step={50}
-                value={inputs.grossRent}
-                onChange={(v) => set("grossRent", v)}
-                className="sm:col-span-2"
-                hint={`${fmtPercent(results.grossYield)} gross yield on price`}
+                suffix="/mo"
+                step={25}
+                value={inputs.privateRoomRate}
+                onChange={(v) => set("privateRoomRate", v)}
               />
+              <Field
+                label="Number of rooms"
+                step={1}
+                value={inputs.privateRoomCount}
+                onChange={(v) => set("privateRoomCount", v)}
+                hint={`= ${fmtMoney(results.privateRent)}/mo`}
+              />
+            </div>
+
+            {/* Shared-bath rooms */}
+            <p className="mt-8 text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+              Shared-bath rooms
+            </p>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                label="Rate per room"
+                prefix="$"
+                suffix="/mo"
+                step={25}
+                value={inputs.sharedRoomRate}
+                onChange={(v) => set("sharedRoomRate", v)}
+              />
+              <Field
+                label="Number of rooms"
+                step={1}
+                value={inputs.sharedRoomCount}
+                onChange={(v) => set("sharedRoomCount", v)}
+                hint={`= ${fmtMoney(results.sharedRent)}/mo`}
+              />
+            </div>
+
+            {/* Computed gross rent */}
+            <div className="mt-7 flex items-baseline justify-between border border-brand bg-blush/40 px-5 py-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-eyebrow text-charcoal/60">
+                  Gross rent ({results.totalRooms}{" "}
+                  {results.totalRooms === 1 ? "room" : "rooms"})
+                </p>
+                {results.grossRent > 0 && (
+                  <p className="mt-1 text-xs text-warmgray/70">
+                    {fmtPercent(results.grossYield)} gross yield on price
+                  </p>
+                )}
+              </div>
+              <p className="font-heading text-3xl text-charcoal leading-heading tabular-nums">
+                {fmtMoney(results.grossRent)}
+                <span className="text-sm text-warmgray/70 font-sans"> / mo</span>
+              </p>
+            </div>
+
+            {/* Vacancy + platform fee */}
+            <div className="mt-7 grid gap-5 sm:grid-cols-2">
               <Field
                 label="Vacancy"
                 suffix="%"
@@ -149,6 +216,29 @@ export default function ProFormaCalculator() {
 
           {/* Operating expenses */}
           <Group eyebrow="Operating expenses" title="What it costs to run">
+            <div className="mb-6 border border-gold/40 bg-gold/[0.06] px-4 py-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs text-warmgray leading-body max-w-md">
+                  Not sure where to start? We&apos;ll suggest expenses from your
+                  room count and price — then tweak anything.
+                </p>
+                <button
+                  type="button"
+                  onClick={applySuggestedExpenses}
+                  className="shrink-0 text-xs uppercase tracking-button text-gold-dark hover:text-charcoal transition-colors border border-gold/60 px-3 py-1.5"
+                >
+                  ✦ Suggest expenses
+                </button>
+              </div>
+              <p className="mt-2 text-[11px] text-warmgray/70 leading-body">
+                Rules of thumb: ${SUGGESTION_RATES.utilitiesPerRoom}/room utilities ·
+                ${SUGGESTION_RATES.servicesPerRoom}/room cleaning &amp; lawn ·{" "}
+                {SUGGESTION_RATES.maintenancePctOfGross}% maintenance ·{" "}
+                {SUGGESTION_RATES.capexPctOfGross}% CapEx ·{" "}
+                {SUGGESTION_RATES.taxInsuranceAnnualPctOfPrice}%/yr taxes &amp;
+                insurance.
+              </p>
+            </div>
             <div className="grid gap-5 sm:grid-cols-2">
               <MonthlyAnnualField
                 label="Taxes & insurance"
@@ -183,14 +273,12 @@ export default function ProFormaCalculator() {
                 label="Maintenance"
                 field={inputs.maintenance}
                 onChange={(v) => set("maintenance", v)}
-                grossRent={inputs.grossRent}
                 resolvedMonthly={results.maintenance}
               />
               <DollarPctField
                 label="CapEx reserve"
                 field={inputs.capexReserve}
                 onChange={(v) => set("capexReserve", v)}
-                grossRent={inputs.grossRent}
                 resolvedMonthly={results.capexReserve}
               />
             </div>
@@ -365,13 +453,11 @@ function DollarPctField({
   label,
   field,
   onChange,
-  grossRent,
   resolvedMonthly,
 }: {
   label: string;
   field: DollarOrPct;
   onChange: (v: DollarOrPct) => void;
-  grossRent: number;
   resolvedMonthly: number;
 }) {
   return (
@@ -808,6 +894,14 @@ function PrintableReport({
               value={fmtPercent(inputs.interestRate)}
             />
             <PRow label="Loan term" value={`${inputs.loanTermYears} yrs`} />
+            <PRow
+              label={`Private rooms (${inputs.privateRoomCount} × ${fmtMoney(inputs.privateRoomRate)})`}
+              value={fmtMoney(r.privateRent)}
+            />
+            <PRow
+              label={`Shared rooms (${inputs.sharedRoomCount} × ${fmtMoney(inputs.sharedRoomRate)})`}
+              value={fmtMoney(r.sharedRent)}
+            />
             <PRow
               label="Vacancy"
               value={fmtPercent(inputs.vacancyPct)}

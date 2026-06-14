@@ -21,8 +21,12 @@ export type ProFormaInputs = {
   closingCostPct: number;
   rehabBudget: number;
 
-  // Income (monthly)
-  grossRent: number;
+  // Income — gross rent is *derived* from the room mix below, not entered
+  // directly. Operator sets a rate and a count for each bathroom type.
+  privateRoomRate: number; // $/mo per private-bath room
+  privateRoomCount: number;
+  sharedRoomRate: number; // $/mo per shared-bath room
+  sharedRoomCount: number;
   vacancyPct: number;
   managementPct: number; // platform / PM fee, % of gross rent
 
@@ -40,6 +44,9 @@ export type ProFormaInputs = {
 
 export type ProFormaResults = {
   // Income waterfall (monthly)
+  privateRent: number;
+  sharedRent: number;
+  totalRooms: number;
   grossRent: number;
   vacancy: number;
   managementFee: number;
@@ -90,7 +97,10 @@ export const DEFAULT_PROFORMA: ProFormaInputs = {
   closingCostPct: 0,
   rehabBudget: 0,
 
-  grossRent: 0,
+  privateRoomRate: 0,
+  privateRoomCount: 0,
+  sharedRoomRate: 0,
+  sharedRoomCount: 0,
   vacancyPct: 0,
   managementPct: 0,
 
@@ -131,8 +141,14 @@ function monthlyMortgage(
 // Master calculation                                                 //
 // ---------------------------------------------------------------- //
 export function calculateProForma(i: ProFormaInputs): ProFormaResults {
-  // Income waterfall
-  const grossRent = Math.max(i.grossRent, 0);
+  // Income waterfall — gross rent is built from the room mix.
+  const privateRent =
+    Math.max(i.privateRoomRate, 0) * Math.max(i.privateRoomCount, 0);
+  const sharedRent =
+    Math.max(i.sharedRoomRate, 0) * Math.max(i.sharedRoomCount, 0);
+  const totalRooms =
+    Math.max(i.privateRoomCount, 0) + Math.max(i.sharedRoomCount, 0);
+  const grossRent = privateRent + sharedRent;
   const vacancy = grossRent * (i.vacancyPct / 100);
   const managementFee = grossRent * (i.managementPct / 100);
   const effectiveIncome = grossRent - vacancy - managementFee;
@@ -192,6 +208,9 @@ export function calculateProForma(i: ProFormaInputs): ProFormaResults {
       : 0;
 
   return {
+    privateRent: Math.round(privateRent),
+    sharedRent: Math.round(sharedRent),
+    totalRooms,
     grossRent: Math.round(grossRent),
     vacancy: Math.round(vacancy),
     managementFee: Math.round(managementFee),
@@ -221,5 +240,46 @@ export function calculateProForma(i: ProFormaInputs): ProFormaResults {
     dscr: Math.round(dscr * 100) / 100,
     grossYield: Math.round(grossYield * 10) / 10,
     breakevenOccupancy: Math.round(breakevenOccupancy * 10) / 10,
+  };
+}
+
+// ---------------------------------------------------------------- //
+// Suggested expenses                                                 //
+//                                                                    //
+// These are *opt-in* rules of thumb — nothing is applied unless the  //
+// operator asks for a suggestion, and every value stays editable     //
+// afterward. They're derived from the property the operator already  //
+// entered (room count, gross rent, purchase price) so the estimate   //
+// scales with the deal instead of being a fixed figure.              //
+// ---------------------------------------------------------------- //
+export const SUGGESTION_RATES = {
+  utilitiesPerRoom: 150, // all-in (power, water, gas, internet, trash) per room
+  servicesPerRoom: 40, // common-area cleaning + lawn per room
+  maintenancePctOfGross: 5, // % of gross rent
+  capexPctOfGross: 5, // % of gross rent
+  taxInsuranceAnnualPctOfPrice: 1.4, // taxes + insurance, % of price per year
+};
+
+export type SuggestedExpenses = Pick<
+  ProFormaInputs,
+  "taxesInsurance" | "utilities" | "cleaningLawn" | "maintenance" | "capexReserve"
+>;
+
+export function suggestExpenses(i: ProFormaInputs): SuggestedExpenses {
+  const totalRooms =
+    Math.max(i.privateRoomCount, 0) + Math.max(i.sharedRoomCount, 0);
+  const s = SUGGESTION_RATES;
+
+  return {
+    taxesInsurance: {
+      value: Math.round(
+        (i.purchasePrice * (s.taxInsuranceAnnualPctOfPrice / 100)) / 12,
+      ),
+      mode: "monthly",
+    },
+    utilities: Math.round(totalRooms * s.utilitiesPerRoom),
+    cleaningLawn: Math.round(totalRooms * s.servicesPerRoom),
+    maintenance: { value: s.maintenancePctOfGross, mode: "percent" },
+    capexReserve: { value: s.capexPctOfGross, mode: "percent" },
   };
 }
