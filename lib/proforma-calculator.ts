@@ -76,26 +76,29 @@ export type ProFormaResults = {
 };
 
 // ---------------------------------------------------------------- //
-// Defaults — mirror the sample Pro Forma so the first paint matches  //
-// the reference deal ($400k, 8-room coliving home).                  //
+// Starting points — the line-item *structure* only. No figures are    //
+// pre-loaded; the operator enters every number for their own deal.    //
+// Loan term defaults to 30yr purely so the mortgage math has a valid   //
+// denominator before the user touches it — it's a structural          //
+// constant, not a deal figure, and is fully editable.                 //
 // ---------------------------------------------------------------- //
 export const DEFAULT_PROFORMA: ProFormaInputs = {
-  purchasePrice: 400000,
-  downPaymentPct: 20,
-  interestRate: 7,
+  purchasePrice: 0,
+  downPaymentPct: 0,
+  interestRate: 0,
   loanTermYears: 30,
-  closingCostPct: 3,
+  closingCostPct: 0,
   rehabBudget: 0,
 
-  grossRent: 9507,
-  vacancyPct: 15,
-  managementPct: 15,
+  grossRent: 0,
+  vacancyPct: 0,
+  managementPct: 0,
 
-  taxesInsurance: { value: 650, mode: "monthly" },
-  utilities: 700,
-  cleaningLawn: 240,
-  maintenance: { value: 500, mode: "dollar" },
-  capexReserve: { value: 500, mode: "dollar" },
+  taxesInsurance: { value: 0, mode: "monthly" },
+  utilities: 0,
+  cleaningLawn: 0,
+  maintenance: { value: 0, mode: "dollar" },
+  capexReserve: { value: 0, mode: "dollar" },
   otherExpense: 0,
 
   debtServiceOverride: null,

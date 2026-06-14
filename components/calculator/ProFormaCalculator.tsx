@@ -187,7 +187,7 @@ export default function ProFormaCalculator() {
             onClick={reset}
             className="text-xs uppercase tracking-button text-warmgray hover:text-gold transition-colors"
           >
-            ↺ Reset to starting points
+            ↺ Clear all
           </button>
         </div>
 

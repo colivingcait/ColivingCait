@@ -29,10 +29,11 @@ export default function ProFormaCalculatorPage() {
           </Reveal>
           <Reveal delay={0.25}>
             <p className="mt-8 text-cream/75 leading-body text-[1.0625rem]">
-              No locked assumptions. Start from sensible defaults, then toggle
-              everything — rent, vacancy, platform fee, utilities, maintenance,
-              CapEx, taxes, and financing — and the pro forma recalculates as
-              you type, the way the Zillow mortgage calculator does.
+              No locked assumptions, no preloaded figures. Enter your own
+              numbers for everything — rent, vacancy, platform fee, utilities,
+              maintenance, CapEx, taxes, and financing — and the pro forma
+              recalculates as you type, the way the Zillow mortgage calculator
+              does.
             </p>
           </Reveal>
         </div>
