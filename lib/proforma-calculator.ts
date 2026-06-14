@@ -23,10 +23,11 @@ export type ProFormaInputs = {
 
   // Income — gross rent is *derived* from the room mix below, not entered
   // directly. Operator sets a rate and a count for each bathroom type.
-  privateRoomRate: number; // $/mo per private-bath room
+  privateRoomRate: number; // per private-bath room, in rentFrequency units
   privateRoomCount: number;
-  sharedRoomRate: number; // $/mo per shared-bath room
+  sharedRoomRate: number; // per shared-bath room, in rentFrequency units
   sharedRoomCount: number;
+  rentFrequency: "weekly" | "monthly"; // how the room rates are entered
   vacancyPct: number;
   managementPct: number; // platform / PM fee, % of gross rent
 
@@ -101,6 +102,7 @@ export const DEFAULT_PROFORMA: ProFormaInputs = {
   privateRoomCount: 0,
   sharedRoomRate: 0,
   sharedRoomCount: 0,
+  rentFrequency: "monthly",
   vacancyPct: 0,
   managementPct: 0,
 
@@ -141,11 +143,13 @@ function monthlyMortgage(
 // Master calculation                                                 //
 // ---------------------------------------------------------------- //
 export function calculateProForma(i: ProFormaInputs): ProFormaResults {
-  // Income waterfall — gross rent is built from the room mix.
+  // Income waterfall — gross rent is built from the room mix. Weekly rates
+  // are normalized to monthly (52 weeks / 12 months).
+  const freqMult = i.rentFrequency === "weekly" ? 52 / 12 : 1;
   const privateRent =
-    Math.max(i.privateRoomRate, 0) * Math.max(i.privateRoomCount, 0);
+    Math.max(i.privateRoomRate, 0) * Math.max(i.privateRoomCount, 0) * freqMult;
   const sharedRent =
-    Math.max(i.sharedRoomRate, 0) * Math.max(i.sharedRoomCount, 0);
+    Math.max(i.sharedRoomRate, 0) * Math.max(i.sharedRoomCount, 0) * freqMult;
   const totalRooms =
     Math.max(i.privateRoomCount, 0) + Math.max(i.sharedRoomCount, 0);
   const grossRent = privateRent + sharedRent;
@@ -253,8 +257,17 @@ export function calculateProForma(i: ProFormaInputs): ProFormaResults {
 // scales with the deal instead of being a fixed figure.              //
 // ---------------------------------------------------------------- //
 export const SUGGESTION_RATES = {
-  utilitiesPerRoom: 150, // all-in (power, water, gas, internet, trash) per room
-  servicesPerRoom: 40, // common-area cleaning + lawn per room
+  // Utilities = electric + water + gas + internet.
+  // Electric scales with the house (~$300 for an 8bd up to ~$600 for 8–10bd),
+  // so it's modeled per room; water/gas/internet are flat house-level costs.
+  electricPerRoom: 50,
+  waterMonthly: 50,
+  gasMonthly: 100,
+  internetMonthly: 100,
+  // Services are flat house-level costs, not per room.
+  cleaningMonthly: 200, // biweekly cleans
+  lawnMonthly: 140, // biweekly lawn
+  pestMonthly: 50, // pest control, folded into services
   maintenancePctOfGross: 5, // % of gross rent
   capexPctOfGross: 5, // % of gross rent
   taxInsuranceAnnualPctOfPrice: 1.4, // taxes + insurance, % of price per year
@@ -277,8 +290,15 @@ export function suggestExpenses(i: ProFormaInputs): SuggestedExpenses {
       ),
       mode: "monthly",
     },
-    utilities: Math.round(totalRooms * s.utilitiesPerRoom),
-    cleaningLawn: Math.round(totalRooms * s.servicesPerRoom),
+    // Electric scales with rooms; water/gas/internet are flat.
+    utilities: Math.round(
+      totalRooms * s.electricPerRoom +
+        s.waterMonthly +
+        s.gasMonthly +
+        s.internetMonthly,
+    ),
+    // Flat house-level services: cleaning + lawn + pest control.
+    cleaningLawn: s.cleaningMonthly + s.lawnMonthly + s.pestMonthly,
     maintenance: { value: s.maintenancePctOfGross, mode: "percent" },
     capexReserve: { value: s.capexPctOfGross, mode: "percent" },
   };

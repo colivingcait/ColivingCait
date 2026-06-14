@@ -16,24 +16,21 @@ export const metadata = {
 export default function ProFormaCalculatorPage() {
   return (
     <>
-      <Section tone="charcoal" className="relative grain overflow-hidden">
-        <div className="text-center max-w-3xl mx-auto">
+      <Section tone="charcoal" compact className="relative grain overflow-hidden">
+        <div className="max-w-3xl">
           <Reveal>
-            <Eyebrow className="mb-6">The Pro Forma Calculator</Eyebrow>
+            <Eyebrow className="mb-3">The Pro Forma Calculator</Eyebrow>
           </Reveal>
           <Reveal delay={0.1}>
-            <Heading level={1} size="display" className="text-cream">
+            <Heading level={1} size="sm" className="text-cream">
               Every number is{" "}
               <em className="text-gold-light">yours to set.</em>
             </Heading>
           </Reveal>
-          <Reveal delay={0.25}>
-            <p className="mt-8 text-cream/75 leading-body text-[1.0625rem]">
-              No locked assumptions, no preloaded figures. Enter your own
-              numbers for everything — rent, vacancy, platform fee, utilities,
-              maintenance, CapEx, taxes, and financing — and the pro forma
-              recalculates as you type, the way the Zillow mortgage calculator
-              does.
+          <Reveal delay={0.2}>
+            <p className="mt-3 text-cream/70 leading-body text-sm max-w-xl">
+              No locked assumptions, no preloaded figures — enter your own
+              numbers and the pro forma recalculates as you type.
             </p>
           </Reveal>
         </div>
