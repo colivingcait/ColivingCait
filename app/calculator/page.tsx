@@ -29,12 +29,12 @@ const calculators: Calc[] = [
     status: "available",
   },
   {
-    symbol: "⌂",
+    symbol: "▦",
     label: "Calculator 02",
-    title: "House Hacking",
-    body: "Project your effective monthly housing cost across all four house-hack types — spare bedroom, basement / ADU, coliving house hack, and small multifamily.",
-    href: "/calculator/house-hacking",
-    status: "coming-soon",
+    title: "Pro Forma",
+    body: "A fully-editable rental pro forma — toggle every number from rent and vacancy to platform fee, utilities, maintenance, CapEx, and financing. Cap rate, cash-on-cash, and monthly cash flow update live as you type.",
+    href: "/calculator/pro-forma",
+    status: "available",
   },
   {
     symbol: "$",
