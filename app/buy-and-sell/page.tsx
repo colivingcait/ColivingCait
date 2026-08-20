@@ -78,7 +78,7 @@ export default function BuyAndSellPage() {
               I don&apos;t just help you find a property — I help you find the right one. Whether you&apos;re buying your first investment, selling a property, or house hacking your way to financial freedom, you&apos;ll work with someone who&apos;s done all three.
             </p>
             <div className="flex flex-wrap gap-6 mb-9 justify-center lg:justify-start">
-              {["7 Years Experience", "5.0 Zillow", "Top Realtor in DeKalb County"].map((c) => (
+              {["Licensed GA REALTOR® Since 2020", "5.0 Zillow", "Keller Williams Metro Atlanta"].map((c) => (
                 <span
                   key={c}
                   className="text-xs font-medium tracking-[0.04em] text-charcoal bg-cream px-4 py-2"

@@ -5,7 +5,7 @@ import RevealObserver from "@/components/RevealObserver";
 export const metadata = {
   title: "About Caitlyn — Coliving Cait",
   description:
-    "Meet Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. From founding a swim school at 17 to building 50+ coliving rooms across Atlanta.",
+    "Meet Caitlyn Verdugo — licensed Georgia REALTOR® with Keller Williams Metro Atlanta, investor, and coliving operator. From founding a swim school at 17 to building a coliving portfolio across the Atlanta metro.",
 };
 
 // About page — pixel-perfect rewrite of coliving-cait-about.html.
@@ -13,9 +13,9 @@ export const metadata = {
 // · Triple CTA · Final CTA. Reveal animations driven by RevealObserver.
 
 const stats = [
-  { val: "$2.5M", label: "AUM" },
-  { val: "50+", label: "Rooms" },
+  { val: "GA", label: "Licensed REALTOR®" },
   { val: "100+", label: "Residents" },
+  { val: "500+", label: "She Leads Members" },
   { val: "5.0", label: "Zillow" },
 ];
 
@@ -25,16 +25,16 @@ const storyParagraphs = [
   "After graduating I decided I wanted to live my life and travel a little more — so I booked one-way tickets to places I'd never been. I spent a year living in Hawaii, backpacking South America, then Asheville North Carolina, then St. Pete Florida, where I fell in love with marathon swimming and real estate in 2019/2020 — right as the pandemic was just getting started. Perfect timing.",
   "I moved to Atlanta to be closer to family and pretty quickly felt the pull toward investing. I started attending real estate investing meetups. In 2022 I converted my basement into a studio apartment, rented it out, and felt the click of something falling into place. A few months later, I unknowingly walked into a PadSplit meetup — and that was it. I knew coliving was the strategy I'd been looking for.",
   "Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday women build real wealth through real estate. And what I love most about it is that it's the ultimate creative solution. We don't have enough housing for the people who need it — but rather than just throwing our hands up and saying “we need to build more,” which takes decades, we can reconfigure the housing we already have to better serve the people who need it right now.",
-  "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving and the Women's Coliving Summit, and built a coaching program to help women do exactly what I did — but faster, smarter, and with someone in their corner.",
+  "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving and the Women's Coliving Summit, and built a coaching program to help others do exactly what I did — but faster, smarter, and with someone in their corner.",
   "Because real estate is the entrepreneur's dream. You can make it as big as you want. There's no ceiling, no set path. And I'm proof of that.",
 ];
 
 const roles = [
-  { icon: "$", title: "Investor", copy: "50+ rooms across the Atlanta metro" },
-  { icon: "◈", title: "Coach", copy: "Helping women build their first portfolios" },
-  { icon: "♀", title: "She Leads Co-Founder", copy: "500+ women in coliving community" },
-  { icon: "★", title: "WCS Co-Founder", copy: "The first summit for women in coliving" },
-  { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
+  { icon: "⌂", title: "REALTOR®", copy: "Keller Williams Metro Atlanta" },
+  { icon: "$", title: "Investor", copy: "Rental and coliving portfolio across the Atlanta metro" },
+  { icon: "◈", title: "Operator", copy: "Sources, converts, and runs coliving homes via Lustra House LLC" },
+  { icon: "♀", title: "Community Leader", copy: "Co-founder, Atlanta Women Investors & She Leads Coliving" },
+  { icon: "★", title: "Coach", copy: "1:1 coaching and self-paced courses" },
 ];
 
 const media = [
@@ -74,7 +74,7 @@ export default function AboutPage() {
               <em className="italic text-gold font-light">Here to help.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
-              I&apos;m an Atlanta-based coliving investor, Keller Williams Realtor, and women&apos;s coliving coach. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro, and I&apos;m on a mission to help women do the same.
+              I&apos;m a licensed Georgia REALTOR® with Keller Williams Metro Atlanta, an investor, and a coliving operator. I&apos;ve built a portfolio of coliving homes across the Atlanta metro, and I&apos;m on a mission to help others do the same.
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-9">
               {stats.map((s) => (
@@ -117,8 +117,8 @@ export default function AboutPage() {
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-9 leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              From a backyard pool in California to{" "}
-              <em className="italic text-gold font-light">50+ coliving rooms in Atlanta.</em>
+              From a backyard pool in California to a{" "}
+              <em className="italic text-gold font-light">coliving portfolio across Atlanta.</em>
             </h2>
             {storyParagraphs.map((p, i) => (
               <p key={i} className="text-[15.5px] leading-[1.9] text-warmgray mb-6 last:mb-0">
@@ -197,12 +197,11 @@ export default function AboutPage() {
               Women&apos;s Coliving Summit
             </h3>
             <p className="text-sm leading-[1.8] text-warmgray mb-2">
-              The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won&apos;t find anywhere else.
+              The first live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won&apos;t find anywhere else.
             </p>
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
-              Oct 16–17, 2026 · Atlanta · ~150 attendees
+              Founded by Caitlyn in 2025 · Atlanta
             </span>
-            <a href="#" className="btn-sm">Reserve Your Seat →</a>
           </div>
         </div>
       </section>

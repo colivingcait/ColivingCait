@@ -1,11 +1,12 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import ContactFormV2 from "@/components/ContactFormV2";
+import { nap } from "@/lib/entity";
 
 export const metadata = {
   title: "Contact — Coliving Cait",
   description:
-    "Get in touch with Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. General inquiries, coaching, partnerships, speaking, and media.",
+    "Get in touch with Caitlyn Verdugo — licensed Georgia REALTOR® with Keller Williams Metro Atlanta, investor, and coliving operator. General inquiries, coaching, partnerships, speaking, and media.",
 };
 
 // Contact — pixel-perfect rewrite of coliving-cait-contact.html.
@@ -18,18 +19,16 @@ const quickLinks = [
 ];
 
 const info = [
-  { icon: "✉", label: "Email", val: <a href="mailto:colivingcait@gmail.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait@gmail.com</a> },
+  { icon: "✉", label: "Email", val: <a href={`mailto:${nap.email}`} className="text-charcoal hover:text-gold-dark transition-colors duration-300">{nap.email}</a> },
+  { icon: "☎", label: "Phone", val: <a href={`tel:${nap.phone.replace(/[^\d+]/g, "")}`} className="text-charcoal hover:text-gold-dark transition-colors duration-300">{nap.phone}</a> },
   { icon: "◈", label: "Location", val: "Atlanta Metro, Georgia" },
-  { icon: "⌂", label: "Brokerage", val: "Keller Williams Metro Atlanta" },
-  { icon: "★", label: "Website", val: <a href="https://colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait.com</a> },
+  { icon: "⌂", label: "Brokerage", val: nap.brokerage },
 ];
 
 const socials = [
-  { label: "IG", title: "Instagram", href: "https://instagram.com/colivingcait" },
-  { label: "YT", title: "YouTube", href: "#" },
-  { label: "FB", title: "Facebook", href: "#" },
-  { label: "LI", title: "LinkedIn", href: "#" },
-  { label: "TT", title: "TikTok", href: "#" },
+  { label: "IG", title: "Instagram", href: "https://www.instagram.com/colivingcait/" },
+  { label: "FB", title: "Facebook", href: "https://www.facebook.com/caitlynverdugorealtor" },
+  { label: "LI", title: "LinkedIn", href: "https://www.linkedin.com/in/caitlyn-verdugo-realtor/" },
 ];
 
 export default function ContactPage() {

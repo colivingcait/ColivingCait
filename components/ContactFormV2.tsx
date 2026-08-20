@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { nap } from "@/lib/entity";
 
 // Contact form for /contact — visual layout mirrors the v2 HTML 1:1.
 // Posts to /api/contact (ConvertKit + email notification).
@@ -95,7 +96,7 @@ export default function ContactFormV2() {
       </button>
       {status === "error" && (
         <p className="text-xs text-[#C07070] text-center">
-          Something went wrong — please try again or email colivingcait@gmail.com.
+          Something went wrong — please try again or email {nap.email}.
         </p>
       )}
     </form>

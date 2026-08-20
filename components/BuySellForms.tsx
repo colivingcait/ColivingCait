@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { nap } from "@/lib/entity";
 
 // Side-by-side buyer + seller forms for /buy-and-sell. Posts to the
 // existing /api/buyer-inquiry route (buyer) and /api/contact (seller,
@@ -109,7 +110,7 @@ function BuyerForm() {
           {status === "ok" ? "Sent — talk soon!" : status === "submitting" ? "Sending..." : "Submit →"}
         </button>
         {status === "error" && (
-          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email colivingcait@gmail.com.</p>
+          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email {nap.email}.</p>
         )}
       </div>
     </form>
@@ -193,7 +194,7 @@ function SellerForm() {
           {status === "ok" ? "Sent — talk soon!" : status === "submitting" ? "Sending..." : "Submit →"}
         </button>
         {status === "error" && (
-          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email colivingcait@gmail.com.</p>
+          <p className="text-xs text-[#C07070] text-center">Something went wrong — please try again or email {nap.email}.</p>
         )}
       </div>
     </form>

@@ -5,7 +5,7 @@ import RevealObserver from "@/components/RevealObserver";
 export const metadata = {
   title: "Community — Coliving Cait",
   description:
-    "Join She Leads Coliving, attend the Atlanta Women's Monthly Meetup, and reserve your seat at the Women's Coliving Summit 2026.",
+    "Join She Leads Coliving and attend the Atlanta Women Investors meetup, founded by Caitlyn Verdugo — REALTOR®, investor, and coliving operator in Atlanta.",
 };
 
 // Community — pixel-perfect rewrite of coliving-cait-community.html.
@@ -127,15 +127,15 @@ export default function CommunityPage() {
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5 leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              Atlanta Women&apos;s Monthly{" "}
-              <em className="italic text-gold font-light">Meetup</em>
+              Atlanta Women{" "}
+              <em className="italic text-gold font-light">Investors</em>
             </h2>
             <p className="text-[15px] leading-[1.85] text-warmgray mb-9 max-w-[480px]">
               A monthly in-person meetup for women real estate investors in Atlanta — all strategies, all experience levels. Whether you&apos;re brand new and exploring your options or ten deals deep and scaling, this is your room. Coliving, house hacking, flips, rentals, commercial — everyone&apos;s welcome.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-9">
               {[
-                ["When", "Last Tuesday of every month"],
+                ["When", "4th Tuesday of every month"],
                 ["Where", "Atlanta, Georgia"],
                 ["Cost", "Free"],
                 ["RSVP", "Eventbrite"],
@@ -198,7 +198,7 @@ export default function CommunityPage() {
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-center lg:grid-cols-2">
           <div className="reveal">
             <span className="eyebrow !text-gold-light before:!bg-gold-light">
-              Annual · Atlanta · Women Only
+              Founded 2025 · Atlanta · Women Only
             </span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
@@ -207,25 +207,8 @@ export default function CommunityPage() {
               Women&apos;s Coliving <em className="italic text-gold-light font-light">Summit</em>
             </h2>
             <p className="text-base leading-[1.85] text-warmgray-light mb-9">
-              The first and only live event built for and by women in coliving. Whether you&apos;re just curious about the model or you&apos;re already building a massive coliving portfolio — this is your event. Two days of panels, workshops, deal reviews, networking, and the kind of connection you won&apos;t find anywhere else. Open to women at every stage — from exploring to converting existing housing into coliving units to scaling an established portfolio.
+              In 2025, Caitlyn founded the first live event built for and by women in coliving — two days of panels, workshops, deal reviews, networking, and the kind of connection you won&apos;t find anywhere else. Open to women at every stage, from exploring the model to scaling an established portfolio.
             </p>
-            <div className="flex flex-wrap gap-9 mb-10">
-              {[
-                ["Oct 16–17", "2026"],
-                ["Atlanta, GA", "Location"],
-                ["~150", "Attendees"],
-              ].map(([val, label]) => (
-                <div key={label}>
-                  <div className="font-heading font-medium text-xl text-white">{val}</div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light mt-0.5">
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <a href="#" className="btn-outline-light">
-              Reserve Your Seat on Eventbrite →
-            </a>
           </div>
 
           <div
@@ -321,11 +304,11 @@ export default function CommunityPage() {
             <em className="italic text-gold-light font-light">for you.</em>
           </h2>
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Join the community, show up to a meetup, or reserve your seat at the summit. Wherever you start, you&apos;ll never do this alone again.
+            Join the community or show up to a meetup. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
             <a href="#" className="btn-gold">Join She Leads →</a>
-            <a href="#" className="btn-outline-light">Reserve WCS Seat →</a>
+            <Link href="/community" className="btn-outline-light">RSVP to a Meetup →</Link>
           </div>
         </div>
       </section>

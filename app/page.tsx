@@ -10,12 +10,11 @@ import RevealObserver from "@/components/RevealObserver";
 // so utility usage matches the source HTML 1:1.
 
 const tickerItems = [
-  "$2.5M AUM",
-  "50+ Rooms",
-  "Top Realtor in DeKalb County",
+  "Licensed Georgia REALTOR®",
+  "Coliving Portfolio Across Atlanta Metro",
   "5 Star Zillow Rating",
+  "Keller Williams Metro Atlanta",
   "Community Builder",
-  "Women's Empowerment",
 ];
 
 const testimonials = [
@@ -34,16 +33,16 @@ export default function HomePage() {
       <section className="min-h-screen flex items-end pt-[140px] px-8 lg:px-[60px] bg-white relative">
         <div className="mx-auto grid w-full max-w-[1320px] items-end gap-10 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="lg:pb-24 z-[2] text-center lg:text-left">
-            <span className="eyebrow lg:inline-flex">Investor · Coach · Realtor</span>
+            <span className="eyebrow lg:inline-flex">REALTOR® · Investor · Operator</span>
             <h1
               className="font-heading font-normal tracking-[-0.025em] text-charcoal mt-0 mb-8 leading-[1.03] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
               style={{ fontSize: "clamp(44px, 5vw, 72px)" }}
             >
-              Helping women build wealth through{" "}
+              Building wealth through{" "}
               <em className="italic text-gold font-light">intentional coliving.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray mb-11 max-w-[440px] mx-auto lg:mx-0 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
-              I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro. Now I coach women through doing the same — from first deal to full portfolio. Whether you want to learn, invest, or buy, there&apos;s a seat at this table for you.
+              I&apos;ve built a portfolio of coliving homes across the Atlanta metro as a licensed REALTOR® with Keller Williams Metro Atlanta. Now I coach investors through doing the same — from first deal to full portfolio. Whether you want to learn, invest, or buy, there&apos;s a seat at this table for you.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
               <Link href="/contact" className="btn-primary">Book a Discovery Call</Link>
@@ -68,9 +67,11 @@ export default function HomePage() {
               />
             </div>
             <div className="hidden lg:block absolute bottom-12 -left-9 bg-white px-7 py-[22px] z-[3] shadow-photo opacity-0 [animation:heroReveal_0.7s_cubic-bezier(0.16,1,0.3,1)_1.1s_forwards]">
-              <div className="font-heading font-medium text-[28px] leading-none text-charcoal">50+</div>
+              <div className="font-heading font-medium text-[22px] leading-none text-charcoal max-w-[140px]">
+                Atlanta Metro
+              </div>
               <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light">
-                Coliving Rooms
+                Coliving Portfolio
               </div>
             </div>
           </div>
@@ -383,19 +384,19 @@ export default function HomePage() {
               },
               {
                 icon: "◈",
-                title: "Atlanta Monthly Meetup",
-                copy: "Real conversations, real connections, every month. Join us the last Tuesday of every month in Atlanta. Bring your questions, your deals, and your ambition.",
-                detail: "Last Tuesday · Atlanta · Free",
+                title: "Atlanta Women Investors",
+                copy: "Real conversations, real connections, every month. Join us the 4th Tuesday of every month in Atlanta. Bring your questions, your deals, and your ambition.",
+                detail: "4th Tuesday · Atlanta · Free",
                 cta: "RSVP on Eventbrite →",
                 href: "#",
               },
               {
                 icon: "★",
                 title: "Women's Coliving Summit",
-                copy: "The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won't find anywhere else.",
-                detail: "Oct 16–17, 2026 · Atlanta · ~150 attendees",
-                cta: "Reserve Your Seat →",
-                href: "#",
+                copy: "The first live event built for and by women in coliving — founded by Caitlyn in 2025. Two days of panels, workshops, deal reviews, and connection you won't find anywhere else.",
+                detail: "Founded 2025 · Atlanta",
+                cta: "About the Summit →",
+                href: "/about",
               },
             ].map((c, i) => (
               <div

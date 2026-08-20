@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { nap } from "@/lib/entity";
 
 // Footer mirrors Section 8 of the playbook v2:
 //   col 1: ColivingCait logo + tagline
 //   col 2: Navigate
 //   col 3: Connect (community, contact, socials)
-// Bottom bar: copyright + email
+// Bottom bar: brokerage/license/EHO compliance line + copyright + email
 const navigate = [
   { href: "/about", label: "About" },
   { href: "/what-is-coliving", label: "What Is Coliving" },
@@ -17,10 +18,9 @@ const navigate = [
 const connect = [
   { href: "/community", label: "Community", external: false },
   { href: "/contact", label: "Contact", external: false },
-  { href: "https://instagram.com/colivingcait", label: "Instagram", external: true },
-  { href: "#", label: "YouTube", external: true },
-  { href: "#", label: "Facebook", external: true },
-  { href: "#", label: "LinkedIn", external: true },
+  { href: "https://www.instagram.com/colivingcait/", label: "Instagram", external: true },
+  { href: "https://www.facebook.com/caitlynverdugorealtor", label: "Facebook", external: true },
+  { href: "https://www.linkedin.com/in/caitlyn-verdugo-realtor/", label: "LinkedIn", external: true },
 ];
 
 export default function Footer() {
@@ -35,7 +35,7 @@ export default function Footer() {
             Coliving<em className="italic font-light text-gold-light">Cait</em>
           </Link>
           <p className="mt-3 max-w-[280px] text-[13px] leading-[1.6] text-warmgray">
-            Helping women build wealth through intentional coliving. Atlanta-based investor, coach, and Keller Williams Realtor.
+            Atlanta-based REALTOR®, investor, and coliving operator with Keller Williams Metro Atlanta, building wealth through intentional coliving.
           </p>
         </div>
 
@@ -89,16 +89,25 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-2 border-t border-white/[0.06] py-6 text-center md:flex-row md:items-center md:justify-between md:text-left">
-        <span className="text-[11px] text-warmgray">
-          © 2026 Coliving Cait · Lustra House LLC
-        </span>
-        <a
-          href="mailto:colivingcait@gmail.com"
-          className="text-[11px] text-warmgray-light hover:text-gold transition-colors duration-200"
-        >
-          colivingcait@gmail.com
-        </a>
+      <div className="mx-auto w-full max-w-[1320px] border-t border-white/[0.06] py-6">
+        <div className="flex flex-col gap-2 text-center md:flex-row md:items-center md:justify-between md:text-left">
+          <span className="text-[11px] text-warmgray">
+            © 2026 Coliving Cait · Lustra House LLC
+          </span>
+          <a
+            href={`mailto:${nap.email}`}
+            className="text-[11px] text-warmgray-light hover:text-gold transition-colors duration-200"
+          >
+            {nap.email}
+          </a>
+        </div>
+        <p className="mt-3 text-center text-[11px] leading-[1.7] text-warmgray/70 md:text-left">
+          {nap.name}, {nap.title} · {nap.brokerage} · {nap.license} · {nap.address} · {nap.phone}
+          <br />
+          <span className="inline-flex items-center gap-1.5 mt-1">
+            <span aria-hidden>⌂</span> Equal Housing Opportunity
+          </span>
+        </p>
       </div>
     </footer>
   );
