@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
-import { CK_TAGS, subscribeToConvertKit } from "@/lib/convertkit";
+import { CK_TAGS } from "@/lib/convertkit";
+import { submitToCrm } from "@/lib/crm";
 
-// Contact form endpoint. Maps the form's topic dropdown to a specific
-// ConvertKit tag, subscribes the visitor, and (TODO) sends an email
-// notification to colivingcait@gmail.com via Resend once that key lands.
+// Contact form endpoint. Maps the form's topic dropdown to a tag (still
+// named after the old ConvertKit taxonomy - CRM tags are just names, so
+// reusing it keeps everyone's segment filters meaningful without a
+// separate rename pass) and forwards straight to Caitlyn's CRM.
 const TOPIC_TO_TAG: Record<string, string> = {
   general: CK_TAGS.CONTACT_FORM_SUBMITTED,
   coaching: CK_TAGS.COACHING_INTERESTED,
@@ -30,33 +32,19 @@ export async function POST(request: Request) {
 
     const tagName = TOPIC_TO_TAG[topic] ?? CK_TAGS.CONTACT_FORM_SUBMITTED;
 
-    const result = await subscribeToConvertKit({
+    const result = await submitToCrm("contact", {
       email,
       firstName,
-      tagName,
-      fields: {
-        last_name: lastName,
-        phone: phone ?? "",
-        contact_topic: topic,
-        last_message: message?.slice(0, 500), // bounded
-      },
+      lastName,
+      phone,
+      message,
+      tags: [tagName],
+      fields: { topic },
     });
 
     if (!result.ok) {
-      // Don't fail the user even if CK errors — log and continue, since
-      // we still want the message itself to land in Caitlyn's inbox.
-      console.warn("[contact] CK subscribe failed", result.error);
+      console.warn("[contact] CRM submission failed", result.error);
     }
-
-    // TODO: Email notification to colivingcait@gmail.com via Resend.
-    console.log("[contact]", {
-      firstName,
-      lastName,
-      email,
-      phone,
-      topic,
-      message,
-    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {

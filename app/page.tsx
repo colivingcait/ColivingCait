@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
+import { CK_TAGS } from "@/lib/convertkit";
 
 // Homepage — pixel-perfect rewrite of coliving-cait-homepage.html.
 // Sections: Hero · Stats Ticker · Service Cards · Coliving Math · Lead Magnet 1
@@ -253,6 +255,7 @@ export default function HomePage() {
         copy="Everything you need to understand the coliving model, the math, and how to evaluate your first deal — in one quick read."
         button="Send It"
         bg="bg-blush"
+        tag={CK_TAGS.COLIVING_STARTER_GUIDE_DOWNLOADED}
       />
 
       {/* ===== 6. WHY COLIVING ===== */}
@@ -431,6 +434,7 @@ export default function HomePage() {
         copy="The five coliving mistakes that cost first-time investors thousands — and exactly how to avoid every one of them."
         button="Get the Guide"
         bg="bg-white border-y border-soft"
+        tag={CK_TAGS.COLIVING_MISTAKES_DOWNLOADED}
       />
 
       {/* ===== 11. FINAL CTA ===== */}
@@ -465,12 +469,14 @@ function LeadMagnet({
   copy,
   button,
   bg,
+  tag,
 }: {
   eyebrow: string;
   title: React.ReactNode;
   copy: string;
   button: string;
   bg: string;
+  tag: string;
 }) {
   return (
     <section className={`px-8 lg:px-[60px] py-16 lg:py-20 ${bg}`}>
@@ -483,20 +489,7 @@ function LeadMagnet({
           {title}
         </h3>
         <p className="text-[15px] text-warmgray mb-8">{copy}</p>
-        <form className="flex flex-col sm:flex-row gap-0 max-w-[520px] mx-auto">
-          <input
-            type="email"
-            placeholder="Your email address"
-            required
-            className="flex-1 px-5 py-4 font-sans text-sm font-light text-charcoal border border-soft sm:border-r-0 bg-white outline-none transition-colors duration-300 focus:border-gold placeholder:text-warmgray-light"
-          />
-          <button
-            type="submit"
-            className="px-8 py-4 bg-charcoal text-white font-sans text-[11px] font-medium uppercase tracking-[0.1em] border-none cursor-pointer whitespace-nowrap transition-colors duration-300 hover:bg-gold"
-          >
-            {button}
-          </button>
-        </form>
+        <NewsletterCaptureForm tag={tag} buttonLabel={button} />
       </div>
     </section>
   );

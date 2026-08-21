@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { subscribeToConvertKit } from "@/lib/convertkit";
+import { submitToCrm } from "@/lib/crm";
 
-// Lead-magnet endpoint. Used by every LeadMagnetForm + the calculator
-// email gate. Posts directly to ConvertKit via the shared helper —
-// applies the tag passed in the request body.
+// Lead-magnet endpoint. Used by LeadMagnetForm + the calculator email
+// gate. Forwards to the CRM, applying the tag passed in the request body.
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -16,17 +15,13 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await subscribeToConvertKit({
-      email,
-      firstName,
-      tagName: tag,
-    });
+    const result = await submitToCrm("lead_magnet", { email, firstName, tags: [tag] });
 
     if (!result.ok) {
       return NextResponse.json({ error: result.error }, { status: 502 });
     }
 
-    return NextResponse.json({ ok: true, mode: result.mode });
+    return NextResponse.json({ ok: true });
   } catch (err) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }

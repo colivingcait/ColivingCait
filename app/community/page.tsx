@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
+import { CK_TAGS } from "@/lib/convertkit";
 
 export const metadata = {
   title: "Community — Coliving Cait",
@@ -255,20 +257,7 @@ export default function CommunityPage() {
           <p className="text-[15px] text-warmgray mb-8">
             Market insights, deal breakdowns, lessons from my portfolio, and community updates — straight to your inbox.
           </p>
-          <form className="flex flex-col sm:flex-row gap-0 max-w-[520px] mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              required
-              className="flex-1 px-5 py-4 font-sans text-sm font-light text-charcoal border border-soft sm:border-r-0 bg-white outline-none transition-colors duration-300 focus:border-gold placeholder:text-warmgray-light"
-            />
-            <button
-              type="submit"
-              className="px-8 py-4 bg-charcoal text-white font-sans text-[11px] font-medium uppercase tracking-[0.1em] cursor-pointer whitespace-nowrap transition-colors duration-300 hover:bg-gold"
-            >
-              Subscribe
-            </button>
-          </form>
+          <NewsletterCaptureForm tag={CK_TAGS.COMMUNITY_MEMBER} buttonLabel="Subscribe" />
         </div>
       </section>
 

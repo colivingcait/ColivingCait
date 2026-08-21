@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
-import { subscribeToConvertKit } from "@/lib/convertkit";
+import { submitToCrm } from "@/lib/crm";
 
-// Unified ConvertKit subscribe endpoint. Every form across the site can
-// post to this route with { email, first_name?, tag_name } and get a
-// consistent response.
-//
-// Falls back to a dev stub when CONVERTKIT_API_KEY isn't set so forms
-// keep working in local development.
+// Unified subscribe endpoint. Every form across the site (newsletter
+// boxes, lead magnets, the calculator email-gate) posts here with
+// { email, first_name?, tag_name } and gets a consistent response - the
+// tag_name becomes a CRM tag, same segmenting role it played in ConvertKit.
 
 type Body = {
   email?: string;
@@ -32,7 +30,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // Basic email shape check
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
       { error: "Invalid email address" },
@@ -40,16 +37,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await subscribeToConvertKit({
-    email,
-    firstName,
-    tagName,
-    fields,
-  });
+  const result = await submitToCrm("newsletter", { email, firstName, tags: [tagName], fields });
 
   if (!result.ok) {
     return NextResponse.json({ error: result.error }, { status: 502 });
   }
 
-  return NextResponse.json({ ok: true, mode: result.mode });
+  return NextResponse.json({ ok: true });
 }
