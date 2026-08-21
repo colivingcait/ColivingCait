@@ -34,6 +34,8 @@ export const CK_TAGS = {
   COLIVING_CALCULATOR_USED: "coliving-calculator-used",
   HOUSE_HACKING_CALCULATOR_USED: "house-hacking-calculator-used",
   DSCR_CALCULATOR_USED: "dscr-calculator-used",
+  PRO_FORMA_CALCULATOR_USED: "pro-forma-calculator-used",
+  PRO_FORMA_PDF_DOWNLOADED: "pro-forma-pdf-downloaded",
   COLIVING_DEAL_STRONG: "coliving-deal-strong",
   COLIVING_DEAL_MARGINAL: "coliving-deal-marginal",
   COLIVING_DEAL_WEAK: "coliving-deal-weak",

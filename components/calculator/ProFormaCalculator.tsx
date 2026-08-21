@@ -20,6 +20,12 @@ import {
   fmtMoneySigned,
   fmtPercent,
 } from "@/lib/coliving-calculator";
+import { CK_TAGS } from "@/lib/convertkit";
+import {
+  getVisitorEmail,
+  getVisitorFirstName,
+  rememberVisitor,
+} from "@/lib/visitor";
 
 // Fully-editable Pro Forma calculator. Inputs live on the left, the pro
 // forma statement updates live on a sticky panel to the right — every
@@ -27,8 +33,17 @@ import {
 export default function ProFormaCalculator() {
   const [inputs, setInputs] = useState<ProFormaInputs>(DEFAULT_PROFORMA);
   const [propertyLabel, setPropertyLabel] = useState("");
+  // The intake modal collects the core deal facts up front, then the full
+  // editor takes over. Shown once on first load.
+  const [showIntake, setShowIntake] = useState(true);
+
+  // PDF download is gated behind a name + email capture.
+  const [showPdfGate, setShowPdfGate] = useState(false);
+  const [leadName, setLeadName] = useState("");
 
   const results = useMemo(() => calculateProForma(inputs), [inputs]);
+
+  const rateSuffix = inputs.rentFrequency === "weekly" ? "/wk" : "/mo";
 
   const set = <K extends keyof ProFormaInputs>(
     key: K,
@@ -40,8 +55,28 @@ export default function ProFormaCalculator() {
     setPropertyLabel("");
   };
 
-  const downloadPdf = () => {
-    if (typeof window !== "undefined") window.print();
+  // Capture the lead, then trigger the browser's print/Save-as-PDF dialog.
+  const handlePdfSubmit = async (name: string, email: string) => {
+    setLeadName(name);
+    rememberVisitor(email, name);
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          first_name: name,
+          tag_name: CK_TAGS.PRO_FORMA_PDF_DOWNLOADED,
+        }),
+      });
+    } catch {
+      // Don't block the download on a network hiccup.
+    }
+    setShowPdfGate(false);
+    if (typeof window !== "undefined") {
+      // Let the modal unmount before the print dialog paints.
+      setTimeout(() => window.print(), 50);
+    }
   };
 
   // Fill the expense fields with estimates derived from the property. The
@@ -51,6 +86,16 @@ export default function ProFormaCalculator() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-12 md:px-10 md:py-16">
+      {showIntake && (
+        <IntakeModal
+          inputs={inputs}
+          set={set}
+          results={results}
+          rateSuffix={rateSuffix}
+          onSuggest={applySuggestedExpenses}
+          onClose={() => setShowIntake(false)}
+        />
+      )}
       <div className="grid gap-10 lg:grid-cols-[1fr_minmax(340px,400px)] lg:gap-12">
         {/* ---------------- Inputs ---------------- */}
         <div className="space-y-12">
@@ -123,10 +168,27 @@ export default function ProFormaCalculator() {
 
           {/* Income — built from the room mix */}
           <Group eyebrow="Income" title="What it rents for">
-            <p className="-mt-2 mb-6 text-sm text-warmgray leading-body">
-              Set the rate and number of rooms for each bathroom type. We&apos;ll
-              total the gross rent for you.
-            </p>
+            <div className="-mt-2 mb-6 flex flex-wrap items-start justify-between gap-4">
+              <p className="text-sm text-warmgray leading-body max-w-sm">
+                Set the rate and number of rooms for each bathroom type. We&apos;ll
+                total the gross rent for you.
+              </p>
+              <label className="shrink-0">
+                <span className="block text-[10px] uppercase tracking-eyebrow text-charcoal/70 mb-1.5">
+                  Rates are
+                </span>
+                <Segmented
+                  value={inputs.rentFrequency}
+                  onChange={(m) =>
+                    set("rentFrequency", m as "weekly" | "monthly")
+                  }
+                  options={[
+                    { value: "monthly", label: "Per month" },
+                    { value: "weekly", label: "Per week" },
+                  ]}
+                />
+              </label>
+            </div>
 
             {/* Private-bath rooms */}
             <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
@@ -136,7 +198,7 @@ export default function ProFormaCalculator() {
               <Field
                 label="Rate per room"
                 prefix="$"
-                suffix="/mo"
+                suffix={rateSuffix}
                 step={25}
                 value={inputs.privateRoomRate}
                 onChange={(v) => set("privateRoomRate", v)}
@@ -158,7 +220,7 @@ export default function ProFormaCalculator() {
               <Field
                 label="Rate per room"
                 prefix="$"
-                suffix="/mo"
+                suffix={rateSuffix}
                 step={25}
                 value={inputs.sharedRoomRate}
                 onChange={(v) => set("sharedRoomRate", v)}
@@ -231,9 +293,16 @@ export default function ProFormaCalculator() {
                 </button>
               </div>
               <p className="mt-2 text-[11px] text-warmgray/70 leading-body">
-                Rules of thumb: ${SUGGESTION_RATES.utilitiesPerRoom}/room utilities ·
-                ${SUGGESTION_RATES.servicesPerRoom}/room cleaning &amp; lawn ·{" "}
-                {SUGGESTION_RATES.maintenancePctOfGross}% maintenance ·{" "}
+                Rules of thumb: utilities ${SUGGESTION_RATES.electricPerRoom}/room
+                electric + ${SUGGESTION_RATES.waterMonthly} water + $
+                {SUGGESTION_RATES.gasMonthly} gas + $
+                {SUGGESTION_RATES.internetMonthly} internet · services $
+                {SUGGESTION_RATES.cleaningMonthly +
+                  SUGGESTION_RATES.lawnMonthly +
+                  SUGGESTION_RATES.pestMonthly}
+                /mo (cleaning ${SUGGESTION_RATES.cleaningMonthly}, lawn $
+                {SUGGESTION_RATES.lawnMonthly}, pest ${SUGGESTION_RATES.pestMonthly})
+                · {SUGGESTION_RATES.maintenancePctOfGross}% maintenance ·{" "}
                 {SUGGESTION_RATES.capexPctOfGross}% CapEx ·{" "}
                 {SUGGESTION_RATES.taxInsuranceAnnualPctOfPrice}%/yr taxes &amp;
                 insurance.
@@ -252,14 +321,15 @@ export default function ProFormaCalculator() {
                 step={10}
                 value={inputs.utilities}
                 onChange={(v) => set("utilities", v)}
-                hint="Power, water, gas, internet, trash"
+                hint="Electric, water, gas, internet"
               />
               <Field
-                label="Cleaning & lawn"
+                label="Cleaning, lawn & pest"
                 prefix="$"
                 step={10}
                 value={inputs.cleaningLawn}
                 onChange={(v) => set("cleaningLawn", v)}
+                hint="Cleaning, lawn care & pest control"
               />
               <Field
                 label="Other (monthly)"
@@ -267,7 +337,7 @@ export default function ProFormaCalculator() {
                 step={10}
                 value={inputs.otherExpense}
                 onChange={(v) => set("otherExpense", v)}
-                hint="Pest, HOA, software — anything else"
+                hint="Software or misc — anything else"
               />
               <DollarPctField
                 label="Maintenance"
@@ -294,9 +364,16 @@ export default function ProFormaCalculator() {
           </Group>
 
           <div className="flex flex-wrap items-center gap-5">
-            <Button onClick={downloadPdf} variant="primary" size="md">
+            <Button onClick={() => setShowPdfGate(true)} variant="primary" size="md">
               ↓ Download PDF
             </Button>
+            <button
+              type="button"
+              onClick={() => setShowIntake(true)}
+              className="text-xs uppercase tracking-button text-warmgray hover:text-gold transition-colors"
+            >
+              ✎ Edit basics
+            </button>
             <button
               type="button"
               onClick={reset}
@@ -311,17 +388,25 @@ export default function ProFormaCalculator() {
         <div className="lg:sticky lg:top-8 lg:self-start">
           <ProFormaPanel r={results} />
           <p className="mt-3 text-center text-xs text-warmgray/60">
-            Tap <span className="text-gold">Download PDF</span> and choose
-            “Save as PDF” to keep a copy.
+            <span className="text-gold">Download PDF</span> to save a copy of
+            your pro forma.
           </p>
         </div>
       </div>
+
+      {showPdfGate && (
+        <PdfGateModal
+          onSubmit={handlePdfSubmit}
+          onClose={() => setShowPdfGate(false)}
+        />
+      )}
 
       {/* Print-only report — hidden on screen, the sole content when printing */}
       <PrintableReport
         inputs={inputs}
         r={results}
         label={propertyLabel}
+        preparedFor={leadName}
       />
     </div>
   );
@@ -667,7 +752,7 @@ function ProFormaPanel({ r }: { r: ProFormaResults }) {
           muted
         />
         <Line
-          label="Cleaning & lawn"
+          label="Cleaning, lawn & pest"
           value={`(${fmtMoney(r.cleaningLawn)})`}
           indent
           muted
@@ -836,10 +921,12 @@ function PrintableReport({
   inputs,
   r,
   label,
+  preparedFor,
 }: {
   inputs: ProFormaInputs;
   r: ProFormaResults;
   label: string;
+  preparedFor: string;
 }) {
   // Set the date client-side only, to avoid an SSR/CSR hydration mismatch.
   const [date, setDate] = useState("");
@@ -867,6 +954,7 @@ function PrintableReport({
           <p className="font-semibold uppercase tracking-[0.2em] text-[#8B6535]">
             Coliving Cait
           </p>
+          {preparedFor && <p className="mt-0.5">Prepared for {preparedFor}</p>}
           {date && <p className="mt-0.5">{date}</p>}
         </div>
       </div>
@@ -948,7 +1036,7 @@ function PrintableReport({
               indent
             />
             <PRow
-              label="Cleaning & lawn"
+              label="Cleaning, lawn & pest"
               value={`(${fmtMoney(r.cleaningLawn)})`}
               indent
             />
@@ -1050,5 +1138,277 @@ function PKpi({ label, value }: { label: string; value: string }) {
         {label}
       </p>
     </div>
+  );
+}
+
+/* ================================================================ */
+/* Modal shell — backdrop, centered card, ESC + scroll lock          */
+/* ================================================================ */
+function ModalShell({
+  onClose,
+  children,
+}: {
+  onClose: () => void;
+  children: React.ReactNode;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-start justify-center overflow-y-auto p-4 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="absolute inset-0 bg-charcoal/60 [backdrop-filter:blur(4px)]"
+        onClick={onClose}
+      />
+      <div className="relative my-auto w-full max-w-lg border border-brand bg-cream p-6 shadow-card md:p-8">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute right-4 top-4 text-warmgray/70 hover:text-charcoal transition-colors text-lg leading-none"
+        >
+          ✕
+        </button>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================ */
+/* Intake modal — collects the core deal facts up front              */
+/* ================================================================ */
+function IntakeModal({
+  inputs,
+  set,
+  results,
+  rateSuffix,
+  onSuggest,
+  onClose,
+}: {
+  inputs: ProFormaInputs;
+  set: <K extends keyof ProFormaInputs>(k: K, v: ProFormaInputs[K]) => void;
+  results: ProFormaResults;
+  rateSuffix: string;
+  onSuggest: () => void;
+  onClose: () => void;
+}) {
+  const [expenseMode, setExpenseMode] = useState<"suggest" | "manual">(
+    "suggest",
+  );
+
+  const finish = () => {
+    if (expenseMode === "suggest") onSuggest();
+    onClose();
+  };
+
+  return (
+    <ModalShell onClose={onClose}>
+      <Eyebrow className="mb-2">Let&apos;s set up your deal</Eyebrow>
+      <Heading size="sm">Start with the basics</Heading>
+      <p className="mt-3 text-sm text-warmgray leading-body">
+        A few numbers to get going — you can fine-tune everything afterward.
+      </p>
+
+      <div className="mt-6 space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
+            label="Purchase price"
+            prefix="$"
+            step={1000}
+            value={inputs.purchasePrice}
+            onChange={(v) => set("purchasePrice", v)}
+          />
+          <Field
+            label="Reno / conversion cost"
+            prefix="$"
+            step={1000}
+            value={inputs.rehabBudget}
+            onChange={(v) => set("rehabBudget", v)}
+          />
+        </div>
+
+        <div>
+          <span className="block text-[10px] uppercase tracking-eyebrow text-charcoal/70 mb-1.5">
+            Room rates are
+          </span>
+          <Segmented
+            value={inputs.rentFrequency}
+            onChange={(m) => set("rentFrequency", m as "weekly" | "monthly")}
+            options={[
+              { value: "monthly", label: "Per month" },
+              { value: "weekly", label: "Per week" },
+            ]}
+          />
+        </div>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
+            label="Private-bath rate"
+            prefix="$"
+            suffix={rateSuffix}
+            step={25}
+            value={inputs.privateRoomRate}
+            onChange={(v) => set("privateRoomRate", v)}
+          />
+          <Field
+            label="# private rooms"
+            step={1}
+            value={inputs.privateRoomCount}
+            onChange={(v) => set("privateRoomCount", v)}
+          />
+          <Field
+            label="Shared-bath rate"
+            prefix="$"
+            suffix={rateSuffix}
+            step={25}
+            value={inputs.sharedRoomRate}
+            onChange={(v) => set("sharedRoomRate", v)}
+          />
+          <Field
+            label="# shared rooms"
+            step={1}
+            value={inputs.sharedRoomCount}
+            onChange={(v) => set("sharedRoomCount", v)}
+          />
+        </div>
+
+        <div className="flex items-baseline justify-between border border-brand bg-blush/40 px-4 py-3">
+          <span className="text-[10px] uppercase tracking-eyebrow text-charcoal/60">
+            Gross rent ({results.totalRooms}{" "}
+            {results.totalRooms === 1 ? "room" : "rooms"})
+          </span>
+          <span className="font-heading text-2xl text-charcoal tabular-nums">
+            {fmtMoney(results.grossRent)}
+            <span className="text-xs text-warmgray/70 font-sans"> / mo</span>
+          </span>
+        </div>
+
+        {/* Expense approach */}
+        <div>
+          <span className="block text-[10px] uppercase tracking-eyebrow text-charcoal/70 mb-1.5">
+            Operating expenses
+          </span>
+          <Segmented
+            value={expenseMode}
+            onChange={(m) => setExpenseMode(m as "suggest" | "manual")}
+            options={[
+              { value: "suggest", label: "Suggest for me" },
+              { value: "manual", label: "Enter manually" },
+            ]}
+          />
+          <p className="mt-2 text-xs text-warmgray/70 leading-body">
+            {expenseMode === "suggest"
+              ? "We'll estimate utilities, services, taxes, maintenance & CapEx from your rooms and price — all still editable."
+              : "Start the expense lines blank and fill them in yourself."}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-7">
+        <Button onClick={finish} variant="primary" size="md" className="w-full">
+          See my pro forma →
+        </Button>
+      </div>
+    </ModalShell>
+  );
+}
+
+/* ================================================================ */
+/* PDF gate — name + email required before download                  */
+/* ================================================================ */
+function PdfGateModal({
+  onSubmit,
+  onClose,
+}: {
+  onSubmit: (name: string, email: string) => void;
+  onClose: () => void;
+}) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  // Prefill from any prior visitor identity.
+  useEffect(() => {
+    setName(getVisitorFirstName() ?? "");
+    setEmail(getVisitorEmail() ?? "");
+  }, []);
+
+  const valid =
+    name.trim().length > 0 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!valid || submitting) return;
+    setSubmitting(true);
+    await onSubmit(name.trim(), email.trim());
+  };
+
+  return (
+    <ModalShell onClose={onClose}>
+      <Eyebrow className="mb-2">Your pro forma is ready</Eyebrow>
+      <Heading size="sm">
+        Where should we <em>send it?</em>
+      </Heading>
+      <p className="mt-3 text-sm text-warmgray leading-body">
+        Add your name and email to download the PDF. We&apos;ll keep you posted
+        with coliving deal tips — unsubscribe anytime.
+      </p>
+
+      <form onSubmit={submit} className="mt-6 space-y-4">
+        <label className="block">
+          <span className="text-[10px] uppercase tracking-eyebrow text-charcoal/70">
+            Name
+          </span>
+          <input
+            type="text"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+            className="mt-2 w-full border border-brand bg-white px-4 py-3 text-sm font-sans text-charcoal placeholder:text-warmgray/50 focus:outline-none focus:border-gold transition-colors"
+          />
+        </label>
+        <label className="block">
+          <span className="text-[10px] uppercase tracking-eyebrow text-charcoal/70">
+            Email
+          </span>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@example.com"
+            className="mt-2 w-full border border-brand bg-white px-4 py-3 text-sm font-sans text-charcoal placeholder:text-warmgray/50 focus:outline-none focus:border-gold transition-colors"
+          />
+        </label>
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          disabled={!valid || submitting}
+          className="w-full"
+        >
+          {submitting ? "Preparing…" : "↓ Download PDF"}
+        </Button>
+        <p className="text-center text-xs text-warmgray/60">
+          ✦ No spam. Your numbers stay on your device.
+        </p>
+      </form>
+    </ModalShell>
   );
 }
