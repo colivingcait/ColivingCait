@@ -3,9 +3,16 @@ import RevealObserver from "@/components/RevealObserver";
 import { getCourse } from "@/lib/courses";
 
 export const metadata = {
-  title: "Learn With Me — Coliving Cait",
+  title: "Real Estate Coaching & Courses — Atlanta",
   description:
-    "Whether you're new to coliving or scaling your portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+    "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+  alternates: { canonical: "/learn" },
+  openGraph: {
+    title: "Real Estate Coaching & Courses — Atlanta",
+    description:
+      "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+    url: "/learn",
+  },
 };
 
 // Learn With Me — pixel-perfect rewrite of coliving-cait-learn.html.

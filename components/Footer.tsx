@@ -35,7 +35,7 @@ export default function Footer() {
             Coliving<em className="italic font-light text-gold-light">Cait</em>
           </Link>
           <p className="mt-3 max-w-[280px] text-[13px] leading-[1.6] text-warmgray">
-            Helping women build wealth through intentional coliving. Atlanta-based investor, coach, and Keller Williams Realtor.
+            Helping you build wealth through real estate — one door at a time. Atlanta-based investor, coach, and Keller Williams Realtor.
           </p>
         </div>
 

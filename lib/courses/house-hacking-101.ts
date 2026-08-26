@@ -2631,8 +2631,8 @@ export const houseHacking101: Course = {
           type: "bullets",
           items: [
             "She Leads Coliving — free online community for women building wealth through coliving",
-            "Women's Coliving Summit — October 16–17, 2026 · Atlanta, GA. The first and only live coliving event built for and by women.",
-            "Atlanta Monthly Meetup — last Tuesday of every month. Free. Real estate, coliving, and investing — in person.",
+            "Atlanta House Hackers — free Facebook group for house hackers across metro Atlanta",
+            "Atlanta Women Investors — monthly in-person meetup, last Tuesday of every month. Free.",
           ],
         },
         {

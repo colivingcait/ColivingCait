@@ -5,9 +5,16 @@ import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
 
 export const metadata = {
-  title: "What Is Coliving — Coliving Cait",
+  title: "What Is Coliving? How the Model Works",
   description:
-    "Coliving transforms single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works.",
+    "Coliving turns single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works and how to underwrite it.",
+  alternates: { canonical: "/what-is-coliving" },
+  openGraph: {
+    title: "What Is Coliving? How the Model Works",
+    description:
+      "Coliving turns single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works and how to underwrite it.",
+    url: "/what-is-coliving",
+  },
 };
 
 // What Is Coliving — pixel-perfect rewrite of coliving-cait-what-is-coliving.html.

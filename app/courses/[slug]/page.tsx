@@ -8,6 +8,7 @@ import Link from "next/link";
 import { courses, getCourse } from "@/lib/courses";
 import { getCurrentUser, hasAccess } from "@/lib/auth/helpers";
 import BuyButton from "@/components/courses/BuyButton";
+import JsonLd, { graph, courseSchema, breadcrumbSchema } from "@/components/JsonLd";
 
 export const dynamic = "force-dynamic";
 
@@ -26,9 +27,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const course = getCourse(slug);
   if (!course) return {};
+  const canonical = `/courses/${course.slug}`;
   return {
-    title: `${course.title} — Coliving Cait`,
+    title: course.title,
     description: course.description,
+    alternates: { canonical },
+    openGraph: {
+      title: course.title,
+      description: course.description,
+      url: canonical,
+    },
   };
 }
 
@@ -53,6 +61,16 @@ export default async function CourseLandingPage({
 
   return (
     <>
+      <JsonLd
+        data={graph(
+          courseSchema(course),
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Courses", path: "/courses" },
+            { name: course.title, path: `/courses/${course.slug}` },
+          ]),
+        )}
+      />
       {/* Hero */}
       <Section tone="charcoal" className="relative grain overflow-hidden">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr] md:items-end">

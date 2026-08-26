@@ -5,9 +5,16 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Calculators — Coliving Cait",
+  title: "Free Real Estate Calculators — Coliving, House Hacking & DSCR",
   description:
-    "Three free calculators built for women evaluating real estate deals. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
+    "Three free calculators for investors running the numbers on a deal. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
+  alternates: { canonical: "/calculator" },
+  openGraph: {
+    title: "Free Real Estate Calculators — Coliving, House Hacking & DSCR",
+    description:
+      "Three free calculators for investors running the numbers on a deal. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
+    url: "/calculator",
+  },
 };
 
 type Calc = {

@@ -5,9 +5,16 @@ import Reveal from "@/components/Reveal";
 import ProFormaCalculator from "@/components/calculator/ProFormaCalculator";
 
 export const metadata = {
-  title: "Pro Forma Calculator — Coliving Cait",
+  title: "Rental Property Pro Forma Calculator",
   description:
     "A fully-editable rental pro forma. Toggle every number — gross rent, vacancy, platform fee, utilities, maintenance, CapEx, and financing — and watch cap rate, cash-on-cash, and monthly cash flow update live.",
+  alternates: { canonical: "/calculator/pro-forma" },
+  openGraph: {
+    title: "Rental Property Pro Forma Calculator",
+    description:
+      "A fully-editable rental pro forma. Toggle every number — gross rent, vacancy, platform fee, utilities, maintenance, CapEx, and financing — and watch cap rate, cash-on-cash, and monthly cash flow update live.",
+    url: "/calculator/pro-forma",
+  },
 };
 
 // Pro Forma Calculator — page wrapper. The calculator is a client component

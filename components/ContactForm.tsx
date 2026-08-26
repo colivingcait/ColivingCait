@@ -23,9 +23,9 @@ const TOPIC_OPTIONS: { value: string; label: string; tag: string }[] = [
   { value: "house-hacking", label: "House hacking", tag: "house-hacker-lead" },
   { value: "speaking", label: "Speaking & media", tag: "media-inquiry" },
   {
-    value: "wcs",
-    label: "Women's Coliving Summit",
-    tag: "wcs-interested",
+    value: "meetup",
+    label: "Atlanta Women Investors meetup",
+    tag: "meetup-interested",
   },
   {
     value: "she-leads",

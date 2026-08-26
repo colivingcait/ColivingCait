@@ -5,13 +5,20 @@ import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
 
 export const metadata = {
-  title: "Community — Coliving Cait",
+  title: "Atlanta Real Estate Investor Communities",
   description:
-    "Join She Leads Coliving, attend the Atlanta Women's Monthly Meetup, and reserve your seat at the Women's Coliving Summit 2026.",
+    "Three free real estate communities — She Leads Coliving, the Atlanta Women Investors monthly meetup, and Atlanta House Hackers. Free to join, all experience levels.",
+  alternates: { canonical: "/community" },
+  openGraph: {
+    title: "Atlanta Real Estate Investor Communities",
+    description:
+      "Three free real estate communities — She Leads Coliving, the Atlanta Women Investors monthly meetup, and Atlanta House Hackers. Free to join, all experience levels.",
+    url: "/community",
+  },
 };
 
 // Community — pixel-perfect rewrite of coliving-cait-community.html.
-// Sections: Hero · She Leads · Atlanta Meetup · Quote banner · WCS ·
+// Sections: Hero · She Leads · Atlanta Women Investors · Quote banner · House Hackers ·
 // Newsletter · Work With Me triple CTA · Final CTA.
 
 const memberTypes = [
@@ -53,7 +60,7 @@ export default function CommunityPage() {
               <em className="italic text-gold font-light">alone.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
-              Three communities. All built for women. Whether you&apos;re investing in coliving, real estate, or just exploring your options — there&apos;s a place here for you.
+              Three free communities — coliving, house hacking, and women building portfolios. Whether you&apos;re running your first set of numbers or scaling a portfolio, there&apos;s a room here for you.
             </p>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
@@ -63,7 +70,7 @@ export default function CommunityPage() {
             >
               <Image
                 src="/images/wcs2025.png"
-                alt="Women's Coliving Summit 2025 group photo"
+                alt="Caitlyn with the Atlanta investor community"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 560px"
@@ -129,8 +136,8 @@ export default function CommunityPage() {
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5 leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              Atlanta Women&apos;s Monthly{" "}
-              <em className="italic text-gold font-light">Meetup</em>
+              Atlanta Women{" "}
+              <em className="italic text-gold font-light">Investors</em>
             </h2>
             <p className="text-[15px] leading-[1.85] text-warmgray mb-9 max-w-[480px]">
               A monthly in-person meetup for women real estate investors in Atlanta — all strategies, all experience levels. Whether you&apos;re brand new and exploring your options or ten deals deep and scaling, this is your room. Coliving, house hacking, flips, rentals, commercial — everyone&apos;s welcome.
@@ -140,7 +147,7 @@ export default function CommunityPage() {
                 ["When", "Last Tuesday of every month"],
                 ["Where", "Atlanta, Georgia"],
                 ["Cost", "Free"],
-                ["RSVP", "Eventbrite"],
+                ["RSVP", "Free — save your spot"],
               ].map(([label, val]) => (
                 <div key={label} className="p-6 bg-cream">
                   <span className="block text-[10px] font-medium uppercase tracking-[0.12em] text-gold mb-1.5">
@@ -152,7 +159,14 @@ export default function CommunityPage() {
                 </div>
               ))}
             </div>
-            <a href="#" className="btn-primary">RSVP on Eventbrite →</a>
+            <a
+              href="https://atlantawomeninvestors.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              RSVP at AtlantaWomenInvestors.com →
+            </a>
           </div>
 
           <div className="reveal reveal-d2 bg-cream p-10 lg:p-11 border border-soft">
@@ -195,27 +209,27 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* ===== 5. WCS ===== */}
+      {/* ===== 5. ATLANTA HOUSE HACKERS ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-center lg:grid-cols-2">
           <div className="reveal">
             <span className="eyebrow !text-gold-light before:!bg-gold-light">
-              Annual · Atlanta · Women Only
+              Online · Metro Atlanta · Open to All
             </span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
               style={{ fontSize: "clamp(30px, 3.2vw, 44px)" }}
             >
-              Women&apos;s Coliving <em className="italic text-gold-light font-light">Summit</em>
+              Atlanta House <em className="italic text-gold-light font-light">Hackers</em>
             </h2>
             <p className="text-base leading-[1.85] text-warmgray-light mb-9">
-              The first and only live event built for and by women in coliving. Whether you&apos;re just curious about the model or you&apos;re already building a massive coliving portfolio — this is your event. Two days of panels, workshops, deal reviews, networking, and the kind of connection you won&apos;t find anywhere else. Open to women at every stage — from exploring to converting existing housing into coliving units to scaling an established portfolio.
+House hacking is how most people I know got their first door — buy a home, rent the extra rooms or units, and let your tenants cover the mortgage. This community is for anyone doing it in metro Atlanta: first-timers still running the numbers, buyers under contract, and owners already living for free. Lender intel, real deal breakdowns, and a full library of Atlanta-specific guides.
             </p>
             <div className="flex flex-wrap gap-9 mb-10">
               {[
-                ["Oct 16–17", "2026"],
-                ["Atlanta, GA", "Location"],
-                ["~150", "Attendees"],
+                ["Free", "To join"],
+                ["Metro Atlanta", "Focus"],
+                ["Guides + Group", "What you get"],
               ].map(([val, label]) => (
                 <div key={label}>
                   <div className="font-heading font-medium text-xl text-white">{val}</div>
@@ -225,8 +239,13 @@ export default function CommunityPage() {
                 </div>
               ))}
             </div>
-            <a href="#" className="btn-outline-light">
-              Reserve Your Seat on Eventbrite →
+            <a
+              href="https://househackingatlanta.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-light"
+            >
+              Visit HouseHackingAtlanta.com →
             </a>
           </div>
 
@@ -238,7 +257,7 @@ export default function CommunityPage() {
               border: "1px solid rgba(255,255,255,0.08)",
             }}
           >
-            WCS event photo
+            House hacking meetup photo
           </div>
         </div>
       </section>
@@ -310,11 +329,11 @@ export default function CommunityPage() {
             <em className="italic text-gold-light font-light">for you.</em>
           </h2>
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Join the community, show up to a meetup, or reserve your seat at the summit. Wherever you start, you&apos;ll never do this alone again.
+            Join a group, show up to a meetup, or start with the house hacking guides. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
             <a href="#" className="btn-gold">Join She Leads →</a>
-            <a href="#" className="btn-outline-light">Reserve WCS Seat →</a>
+            <a href="https://househackingatlanta.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
           </div>
         </div>
       </section>

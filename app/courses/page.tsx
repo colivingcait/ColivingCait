@@ -7,9 +7,16 @@ import { courses } from "@/lib/courses";
 import { cn } from "@/lib/cn";
 
 export const metadata = {
-  title: "Mini Courses — Coliving Cait",
+  title: "Real Estate Investing Mini Courses",
   description:
     "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+  alternates: { canonical: "/courses" },
+  openGraph: {
+    title: "Real Estate Investing Mini Courses",
+    description:
+      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+    url: "/courses",
+  },
 };
 
 // Course marketplace — three cards, $99 each ($149 bundle). Coliving 101

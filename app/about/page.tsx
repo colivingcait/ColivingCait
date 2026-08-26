@@ -3,13 +3,20 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 
 export const metadata = {
-  title: "About Caitlyn — Coliving Cait",
+  title: "About Caitlyn Verdugo — Atlanta Investor & Realtor",
   description:
-    "Meet Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. From founding a swim school at 17 to building 50+ coliving rooms across Atlanta.",
+    "Meet Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Caitlyn Verdugo — Atlanta Investor & Realtor",
+    description:
+      "Meet Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
+    url: "/about",
+  },
 };
 
 // About page — pixel-perfect rewrite of coliving-cait-about.html.
-// Sections: Hero · My Story · Mission · She Leads + WCS · Media · Testimonials
+// Sections: Hero · My Story · Mission · Communities · Media · Testimonials
 // · Triple CTA · Final CTA. Reveal animations driven by RevealObserver.
 
 const stats = [
@@ -25,15 +32,15 @@ const storyParagraphs = [
   "After graduating I decided I wanted to live my life and travel a little more — so I booked one-way tickets to places I'd never been. I spent a year living in Hawaii, backpacking South America, then Asheville North Carolina, then St. Pete Florida, where I fell in love with marathon swimming and real estate in 2019/2020 — right as the pandemic was just getting started. Perfect timing.",
   "I moved to Atlanta to be closer to family and pretty quickly felt the pull toward investing. I started attending real estate investing meetups. In 2022 I converted my basement into a studio apartment, rented it out, and felt the click of something falling into place. A few months later, I unknowingly walked into a PadSplit meetup — and that was it. I knew coliving was the strategy I'd been looking for.",
   "Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday women build real wealth through real estate. And what I love most about it is that it's the ultimate creative solution. We don't have enough housing for the people who need it — but rather than just throwing our hands up and saying “we need to build more,” which takes decades, we can reconfigure the housing we already have to better serve the people who need it right now.",
-  "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving and the Women's Coliving Summit, and built a coaching program to help women do exactly what I did — but faster, smarter, and with someone in their corner.",
+  "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving, hosted the Women's Coliving Summit, and built a coaching program to help other investors do exactly what I did — but faster, smarter, and with someone in their corner.",
   "Because real estate is the entrepreneur's dream. You can make it as big as you want. There's no ceiling, no set path. And I'm proof of that.",
 ];
 
 const roles = [
   { icon: "$", title: "Investor", copy: "50+ rooms across the Atlanta metro" },
-  { icon: "◈", title: "Coach", copy: "Helping women build their first portfolios" },
+  { icon: "◈", title: "Coach", copy: "Helping investors build their first portfolios" },
   { icon: "♀", title: "She Leads Co-Founder", copy: "500+ women in coliving community" },
-  { icon: "★", title: "WCS Co-Founder", copy: "The first summit for women in coliving" },
+  { icon: "★", title: "Summit Co-Founder", copy: "Hosted the first summit for women in coliving" },
   { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
 ];
 
@@ -174,7 +181,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ===== 4. SHE LEADS + WCS ===== */}
+      {/* ===== 4. COMMUNITIES ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
         <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-2">
           <div className="reveal p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
@@ -194,15 +201,15 @@ export default function AboutPage() {
           <div className="reveal reveal-d2 p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
             <span className="block text-[28px] text-gold mb-5">★</span>
             <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
-              Women&apos;s Coliving Summit
+              Atlanta House Hackers
             </h3>
             <p className="text-sm leading-[1.8] text-warmgray mb-2">
-              The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won&apos;t find anywhere else.
+              A free community for anyone house hacking in metro Atlanta — first-timers running the numbers, and owners already living for free.
             </p>
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
-              Oct 16–17, 2026 · Atlanta · ~150 attendees
+              Free · Facebook group · Metro Atlanta
             </span>
-            <a href="#" className="btn-sm">Reserve Your Seat →</a>
+            <a href="https://househackingatlanta.com" target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
           </div>
         </div>
       </section>

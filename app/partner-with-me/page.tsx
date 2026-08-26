@@ -4,9 +4,16 @@ import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
 
 export const metadata = {
-  title: "Partner With Me — Coliving Cait",
+  title: "Partner on Atlanta Coliving Deals",
   description:
     "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
+  alternates: { canonical: "/partner-with-me" },
+  openGraph: {
+    title: "Partner on Atlanta Coliving Deals",
+    description:
+      "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
+    url: "/partner-with-me",
+  },
 };
 
 // Partner With Me — pixel-perfect rewrite of coliving-cait-partner.html.

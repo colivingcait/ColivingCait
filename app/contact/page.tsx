@@ -3,9 +3,16 @@ import RevealObserver from "@/components/RevealObserver";
 import ContactFormV2 from "@/components/ContactFormV2";
 
 export const metadata = {
-  title: "Contact — Coliving Cait",
+  title: "Contact Caitlyn Verdugo",
   description:
-    "Get in touch with Caitlyn Verdugo — Atlanta-based coliving investor, Realtor, and women's coliving coach. General inquiries, coaching, partnerships, speaking, and media.",
+    "Get in touch with Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. General inquiries, coaching, partnerships, speaking, and media.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Caitlyn Verdugo",
+    description:
+      "Get in touch with Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. General inquiries, coaching, partnerships, speaking, and media.",
+    url: "/contact",
+  },
 };
 
 // Contact — pixel-perfect rewrite of coliving-cait-contact.html.

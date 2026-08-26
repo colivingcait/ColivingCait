@@ -16,8 +16,9 @@ const tickerItems = [
   "50+ Rooms",
   "Top Realtor in DeKalb County",
   "5 Star Zillow Rating",
+  "Investor-Friendly Agent",
+  "House Hacking Specialist",
   "Community Builder",
-  "Women's Empowerment",
 ];
 
 const testimonials = [
@@ -36,16 +37,16 @@ export default function HomePage() {
       <section className="min-h-screen flex items-end pt-[140px] px-8 lg:px-[60px] bg-white relative">
         <div className="mx-auto grid w-full max-w-[1320px] items-end gap-10 lg:gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="lg:pb-24 z-[2] text-center lg:text-left">
-            <span className="eyebrow lg:inline-flex">Investor · Coach · Realtor</span>
+            <span className="eyebrow lg:inline-flex">Realtor · Investor · Coach</span>
             <h1
               className="font-heading font-normal tracking-[-0.025em] text-charcoal mt-0 mb-8 leading-[1.03] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
               style={{ fontSize: "clamp(44px, 5vw, 72px)" }}
             >
-              Helping women build wealth through{" "}
-              <em className="italic text-gold font-light">intentional coliving.</em>
+              Helping you build wealth —{" "}
+              <em className="italic text-gold font-light">one door at a time.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray mb-11 max-w-[440px] mx-auto lg:mx-0 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
-              I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro. Now I coach women through doing the same — from first deal to full portfolio. Whether you want to learn, invest, or buy, there&apos;s a seat at this table for you.
+              Coliving. House hacking. Your first home or your tenth deal. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro — now I help other investors do the same, whether you&apos;re learning, buying, selling, or partnering.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
               <Link href="/contact" className="btn-primary">Book a Discovery Call</Link>
@@ -109,7 +110,7 @@ export default function HomePage() {
               </h2>
             </div>
             <p className="reveal reveal-d1 max-w-[400px] text-[15px] text-warmgray">
-              Whether you&apos;re ready to learn, invest, or buy — I meet you exactly where you are.
+              Whether you&apos;re ready to learn, invest, buy, or sell — I meet you exactly where you are.
             </p>
           </div>
 
@@ -134,8 +135,8 @@ export default function HomePage() {
               {
                 num: "03",
                 title: "Buy & Sell With Me",
-                desc: "Work with a Keller Williams Realtor who thinks like an investor. I specialize in investment properties, coliving conversions, and house hacking.",
-                items: ["Investment Properties", "Coliving Conversions", "House Hacking"],
+                desc: "Work with a Keller Williams Realtor who thinks like an investor — whether you're buying your first home, selling a rental, or hunting your next deal.",
+                items: ["Buying & Selling", "Investment Properties", "House Hacking & Coliving"],
                 href: "/buy-and-sell",
                 cta: "Get started",
               },
@@ -283,7 +284,7 @@ export default function HomePage() {
                 copy: "Affordable, flexible, fully furnished housing with individual leases and no cosigner required. A real option for the people who keep our communities running.",
               },
               {
-                icon: "♀",
+                icon: "◈",
                 title: "For Communities",
                 copy: "Every coliving home is one more option for someone who needs a safe, stable, high-quality, and affordable place to land — without waiting on politicians or new construction.",
               },
@@ -373,6 +374,9 @@ export default function HomePage() {
               You don&apos;t have to figure this out{" "}
               <em className="italic text-gold font-light">alone.</em>
             </h2>
+            <p className="mt-5 text-[15px] text-warmgray max-w-[520px] mx-auto leading-[1.8]">
+              Three free communities — coliving, house hacking, and women building portfolios. Find the room that fits where you are.
+            </p>
           </div>
           <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
             {[
@@ -380,25 +384,28 @@ export default function HomePage() {
                 icon: "♀",
                 title: "She Leads Coliving",
                 copy: "A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.",
-                detail: "500+ members · Free to join",
+                detail: "500+ members · Free · Nationwide",
                 cta: "Join on Facebook →",
                 href: "#",
+                external: false,
               },
               {
                 icon: "◈",
-                title: "Atlanta Monthly Meetup",
-                copy: "Real conversations, real connections, every month. Join us the last Tuesday of every month in Atlanta. Bring your questions, your deals, and your ambition.",
+                title: "Atlanta Women Investors",
+                copy: "A monthly in-person meetup for women investing in Atlanta real estate — every strategy, every experience level. Bring your questions, your deals, and your ambition.",
                 detail: "Last Tuesday · Atlanta · Free",
-                cta: "RSVP on Eventbrite →",
-                href: "#",
+                cta: "See the next meetup →",
+                href: "https://atlantawomeninvestors.com",
+                external: true,
               },
               {
-                icon: "★",
-                title: "Women's Coliving Summit",
-                copy: "The first and only live event built for and by women in coliving. Two days of panels, workshops, deal reviews, and connection you won't find anywhere else.",
-                detail: "Oct 16–17, 2026 · Atlanta · ~150 attendees",
-                cta: "Reserve Your Seat →",
-                href: "#",
+                icon: "⌂",
+                title: "Atlanta House Hackers",
+                copy: "For anyone getting their home to pay for itself. Deal breakdowns, lender intel, and a free library of house hacking guides for the Atlanta market.",
+                detail: "Free · Facebook group · Metro Atlanta",
+                cta: "Explore house hacking →",
+                href: "https://househackingatlanta.com",
+                external: true,
               },
             ].map((c, i) => (
               <div
@@ -415,7 +422,13 @@ export default function HomePage() {
                 <span className="block text-[11px] text-warmgray-light tracking-[0.06em] mb-6">
                   {c.detail}
                 </span>
-                <a href={c.href} className="btn-sm">{c.cta}</a>
+                <a
+                  href={c.href}
+                  {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="btn-sm"
+                >
+                  {c.cta}
+                </a>
               </div>
             ))}
           </div>
@@ -453,7 +466,7 @@ export default function HomePage() {
             <em className="italic text-gold-light font-light">for you.</em>
           </h2>
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
+            Whether you&apos;re buying your first home, exploring coliving, or scaling a portfolio, it starts with one conversation.
           </p>
           <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
         </div>

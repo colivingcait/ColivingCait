@@ -13,7 +13,7 @@ const TOPIC_TO_TAG: Record<string, string> = {
   "buy-sell": CK_TAGS.BUYER_LEAD,
   "house-hacking": CK_TAGS.HOUSE_HACKER_LEAD,
   speaking: CK_TAGS.MEDIA_INQUIRY,
-  wcs: CK_TAGS.WCS_INTERESTED,
+  meetup: CK_TAGS.MEETUP_INTERESTED,
   "she-leads": CK_TAGS.SHE_LEADS_INTERESTED,
   other: CK_TAGS.CONTACT_FORM_SUBMITTED,
 };
