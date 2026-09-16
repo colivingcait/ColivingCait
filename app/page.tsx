@@ -320,7 +320,7 @@ export default function HomePage() {
             className="font-heading font-light italic leading-[1.4] text-charcoal max-w-[760px] mx-auto"
             style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
           >
-            “Coliving isn&apos;t just a housing strategy — it&apos;s how women are building generational wealth right now.”
+            “Coliving isn&apos;t just a housing strategy — it&apos;s how people are building generational wealth right now.”
             <span className="font-sans not-italic block mt-7 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">
               — Caitlyn Verdugo
             </span>

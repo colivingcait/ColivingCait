@@ -31,7 +31,7 @@ const storyParagraphs = [
   "At 17 I started my first business — not from a business plan, but from a moment that mattered. A family friend's two-year-old had a near-drowning experience. As a lifelong competitive swimmer who had been teaching swim lessons for the city of Huntington Beach, I stepped in and taught her how to swim in my parents' backyard pool. One lesson quickly grew into a full-fledged business. By the time I was 21, Jump Start Swimming had over 20 instructors, three pools, and hundreds of families every year across Orange County, California. While studying business and child development at Cal State Fullerton I was simultaneously managing staff, running operations, responding to midnight emails, and learning what it actually means to build something real from the ground up.",
   "After graduating I decided I wanted to live my life and travel a little more — so I booked one-way tickets to places I'd never been. I spent a year living in Hawaii, backpacking South America, then Asheville North Carolina, then St. Pete Florida, where I fell in love with marathon swimming and real estate in 2019/2020 — right as the pandemic was just getting started. Perfect timing.",
   "I moved to Atlanta to be closer to family and pretty quickly felt the pull toward investing. I started attending real estate investing meetups. In 2022 I converted my basement into a studio apartment, rented it out, and felt the click of something falling into place. A few months later, I unknowingly walked into a PadSplit meetup — and that was it. I knew coliving was the strategy I'd been looking for.",
-  "Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday women build real wealth through real estate. And what I love most about it is that it's the ultimate creative solution. We don't have enough housing for the people who need it — but rather than just throwing our hands up and saying “we need to build more,” which takes decades, we can reconfigure the housing we already have to better serve the people who need it right now.",
+  "Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday people build real wealth through real estate. And what I love most about it is that it's the ultimate creative solution. We don't have enough housing for the people who need it — but rather than just throwing our hands up and saying “we need to build more,” which takes decades, we can reconfigure the housing we already have to better serve the people who need it right now.",
   "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving, hosted the Women's Coliving Summit, and built a coaching program to help other investors do exactly what I did — but faster, smarter, and with someone in their corner.",
   "Because real estate is the entrepreneur's dream. You can make it as big as you want. There's no ceiling, no set path. And I'm proof of that.",
 ];
@@ -81,7 +81,7 @@ export default function AboutPage() {
               <em className="italic text-gold font-light">Here to help.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
-              I&apos;m an Atlanta-based coliving investor, Keller Williams Realtor, and women&apos;s coliving coach. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro, and I&apos;m on a mission to help women do the same.
+              I&apos;m an Atlanta-based coliving investor, Keller Williams Realtor, and coliving coach. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro, and I&apos;m on a mission to help people do the same.
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-9">
               {stats.map((s) => (
@@ -158,7 +158,7 @@ export default function AboutPage() {
               <em className="italic text-gold-light font-light">wealth and community.</em>
             </h2>
             <p className="text-base leading-[1.85] text-warmgray-light">
-              Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday women build real wealth through real estate. I wear a lot of hats to make that happen.
+              Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday people build real wealth through real estate. I wear a lot of hats to make that happen.
             </p>
           </div>
 
