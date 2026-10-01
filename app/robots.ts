@@ -15,7 +15,10 @@ export default function robots(): MetadataRoute.Robots {
         "/courses/*/",
       ],
     },
-    sitemap: absoluteUrl("/sitemap.xml"),
+    sitemap: [
+      absoluteUrl("/sitemap.xml"),
+      "https://www.colivingcait.com/listings/sitemap.xml",
+    ],
     host: SITE_URL,
   };
 }

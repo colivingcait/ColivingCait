@@ -9,13 +9,16 @@ import { cn } from "@/lib/cn";
 
 // Primary site navigation — frosted glass, transparent → solid on scroll.
 // Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
-const links = [
+// Listings is served by the CRM via a rewrite, so it must be a plain <a>
+// (next/link would client-navigate inside this app).
+const links: { href: string; label: string; plain?: boolean }[] = [
   { href: "/about", label: "About" },
   { href: "/what-is-coliving", label: "What Is Coliving" },
   { href: "/learn", label: "Learn With Me" },
   { href: "/partner-with-me", label: "Partner" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
   { href: "/community", label: "Community" },
+  { href: "/listings", label: "Listings", plain: true },
 ];
 
 export default function Nav() {
@@ -73,9 +76,15 @@ export default function Nav() {
         <ul className="hidden lg:flex items-center gap-9 list-none">
           {links.map((l) => (
             <li key={l.href}>
-              <Link href={l.href} className={linkClass(pathname === l.href)}>
-                {l.label}
-              </Link>
+              {l.plain ? (
+                <a href={l.href} className={linkClass(pathname === l.href)}>
+                  {l.label}
+                </a>
+              ) : (
+                <Link href={l.href} className={linkClass(pathname === l.href)}>
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
 
@@ -138,16 +147,27 @@ export default function Nav() {
       {open && (
         <div className="lg:hidden border-t border-soft bg-white/95 [backdrop-filter:blur(24px)]">
           <nav className="flex flex-col px-2 py-4">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {links.map((l) =>
+              l.plain ? (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="py-3 text-[13px] tracking-[0.02em] text-charcoal hover:text-gold"
+                >
+                  {l.label}
+                </Link>
+              ),
+            )}
 
             {/* Account */}
             {authed ? (

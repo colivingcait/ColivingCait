@@ -2,7 +2,7 @@
 // so a domain change is a one-line config edit rather than a code sweep —
 // every canonical, sitemap entry, and JSON-LD @id is derived from this.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://colivingcait.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.colivingcait.com"
 ).replace(/\/$/, "");
 
 /** Absolute URL for a site-relative path. */
