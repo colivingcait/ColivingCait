@@ -104,12 +104,14 @@ export default function Button(props: ButtonProps) {
 
   if ("href" in props && props.href) {
     const isExternal = /^https?:\/\//.test(props.href);
-    element = isExternal ? (
+    // /book is a rewrite to the CRM booking app. A full page load is safer
+    // than a client-side navigation inside this Next app.
+    const fullPage = props.href === "/book" || props.href.startsWith("/book/");
+    element = isExternal || fullPage ? (
       <a
         href={props.href}
         className={classes}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {inner}
       </a>

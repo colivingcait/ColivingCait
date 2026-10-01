@@ -1,6 +1,6 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
-import VillaCandaceSlider from "@/components/VillaCandaceSlider";
+import VillaCSlider from "@/components/VillaCSlider";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
 
@@ -19,7 +19,7 @@ export const metadata = {
 
 // What Is Coliving — pixel-perfect rewrite of coliving-cait-what-is-coliving.html.
 // Sections: Hero · Problem · Traditional Options · Solution · The Math (Villa
-// Candace slider) · Calculator CTA · Communities · Two Paths · Lead Magnet ·
+// C slider) · Calculator CTA · Communities · Two Paths · Lead Magnet ·
 // Coliving 101 Upsell · Quote · Final CTA.
 
 const solution = [
@@ -181,7 +181,7 @@ export default function WhatIsColivingPage() {
         </div>
       </section>
 
-      {/* ===== 5. THE MATH — VILLA CANDACE ===== */}
+      {/* ===== 5. THE MATH — VILLA C ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal mb-16">
@@ -198,13 +198,13 @@ export default function WhatIsColivingPage() {
               </div>
               <div>
                 <p className="text-[15px] text-warmgray leading-[1.8]">
-                  This is Villa Candace. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
+                  This is Villa C. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
                 </p>
               </div>
             </div>
           </div>
 
-          <VillaCandaceSlider />
+          <VillaCSlider />
         </div>
       </section>
 
@@ -353,7 +353,7 @@ export default function WhatIsColivingPage() {
                 $149
               </span>
               <div className="font-heading font-medium text-[48px] leading-none text-charcoal">
-                $99
+                $49
               </div>
             </div>
             <span className="block text-[13px] text-warmgray-light mb-6">

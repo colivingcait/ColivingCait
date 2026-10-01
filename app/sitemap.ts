@@ -21,7 +21,8 @@ const staticRoutes: Array<{
   { path: "/calculator/pro-forma", changeFrequency: "yearly", priority: 0.7 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/community", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/contact", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/hello", changeFrequency: "yearly", priority: 0.4 },
+  { path: "/chip", changeFrequency: "yearly", priority: 0.4 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

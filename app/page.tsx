@@ -49,14 +49,14 @@ export default function HomePage() {
               Coliving. House hacking. Your first home or your tenth deal. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro — now I help other investors do the same, whether you&apos;re learning, buying, selling, or partnering.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
-              <Link href="/contact" className="btn-primary">Book a Discovery Call</Link>
+              <a href="/book" className="btn-primary">Book a Discovery Call</a>
               <Link href="/what-is-coliving" className="btn-text">
                 Learn about coliving <span>→</span>
               </Link>
             </div>
           </div>
 
-          <div className="relative self-end opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
+          <div className="relative self-end w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[420px] lg:max-w-none mx-auto lg:mx-0">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "3 / 4" }}
@@ -386,8 +386,8 @@ export default function HomePage() {
                 copy: "A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.",
                 detail: "500+ members · Free · Nationwide",
                 cta: "Join on Facebook →",
-                href: "#",
-                external: false,
+                href: "https://www.facebook.com/groups/1407759770477235",
+                external: true,
               },
               {
                 icon: "◈",
@@ -468,7 +468,7 @@ export default function HomePage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re buying your first home, exploring coliving, or scaling a portfolio, it starts with one conversation.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a href="/book" className="btn-gold">Book a Discovery Call</a>
         </div>
       </section>
     </>

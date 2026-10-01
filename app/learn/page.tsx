@@ -5,12 +5,12 @@ import { getCourse } from "@/lib/courses";
 export const metadata = {
   title: "Real Estate Coaching & Courses — Atlanta",
   description:
-    "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+    "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $49 mini courses to 1:1 coaching and ongoing consulting.",
   alternates: { canonical: "/learn" },
   openGraph: {
     title: "Real Estate Coaching & Courses — Atlanta",
     description:
-      "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+      "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $49 mini courses to 1:1 coaching and ongoing consulting.",
     url: "/learn",
   },
 };
@@ -188,7 +188,7 @@ export default function LearnPage() {
                     $149
                   </span>
                   <span className="font-heading font-medium text-[28px] text-charcoal block">
-                    $99
+                    $49
                   </span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
                     Limited
@@ -224,9 +224,9 @@ export default function LearnPage() {
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
                   <span className="text-base text-warmgray-light line-through">$447</span>
-                  <span className="font-heading font-medium text-[32px] text-charcoal">$149</span>
+                  <span className="font-heading font-medium text-[32px] text-charcoal">$99</span>
                   <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    $298 off
+                    $348 off
                   </span>
                 </div>
                 <Link href="/courses?bundle=1" className="btn-primary">
@@ -295,18 +295,18 @@ export default function LearnPage() {
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
               </span>
-              <Link
-                href="/contact?topic=coaching"
+              <a
+                href="/book"
                 className="btn-gold w-full text-center mt-7"
                 style={{ display: "block" }}
               >
                 Enroll Now
-              </Link>
+              </a>
               <p className="text-[13px] text-warmgray-light mt-3 text-center">
                 Payment plan available at checkout
               </p>
               <a
-                href="/contact?topic=coaching"
+                href="/book"
                 className="btn-text mt-5 flex justify-center"
               >
                 Have questions? Book a Discovery Call →
@@ -359,10 +359,10 @@ export default function LearnPage() {
               </span>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
-              <Link href="/contact?topic=coaching" className="btn-gold">
+              <a href="/book" className="btn-gold">
                 Start Now — $1,000/mo
-              </Link>
-              <a href="/contact?topic=coaching" className="btn-text">
+              </a>
+              <a href="/book" className="btn-text">
                 Have questions? Book a Discovery Call →
               </a>
             </div>
@@ -385,9 +385,9 @@ export default function LearnPage() {
             <p className="text-[15px] text-warmgray mb-8">
               These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
             </p>
-            <Link href="/contact?topic=coaching" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Book a Discovery Call
-            </Link>
+            </a>
           </div>
 
           <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
@@ -425,9 +425,9 @@ export default function LearnPage() {
             <span className="block text-[15px] text-warmgray-light mb-6">
               One session · 60 minutes
             </span>
-            <Link href="/contact?topic=strategy-session" className="btn-gold">
+            <a href="/book" className="btn-gold">
               Book a Session — $250
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -449,7 +449,7 @@ export default function LearnPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a href="/book" className="btn-gold">Book a Discovery Call</a>
         </div>
       </section>
     </>

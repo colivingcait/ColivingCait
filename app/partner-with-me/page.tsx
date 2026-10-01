@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
 
@@ -86,18 +85,18 @@ export default function PartnerPage() {
             <p className="text-base leading-[1.85] text-warmgray max-w-[480px] mx-auto lg:mx-0 mb-9">
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
-            <Link href="/contact?topic=partnership" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Schedule a Discovery Call →
-            </Link>
+            </a>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}
             >
               <Image
-                src="/images/villacandace-after.png"
-                alt="Villa Candace — Atlanta metro coliving property"
+                src="/images/villa-c-after.png"
+                alt="Villa C — Atlanta metro coliving property"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 600px"
@@ -189,9 +188,9 @@ export default function PartnerPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/contact?topic=partnership" className="btn-sm self-start">
+                <a href="/book" className="btn-sm self-start">
                   Schedule a Call →
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -216,15 +215,18 @@ export default function PartnerPage() {
           </div>
 
           <PropertyCard
-            name="Villa Candace"
+            name="Villa C"
             location="Atlanta Metro, Georgia"
             original="5 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villacandace-before.png",
-              "/images/villacandace-after.png",
+              "/images/villa-c/kitchen.jpg",
+              "/images/villa-c/12.png",
+              "/images/villa-c/18.png",
+              "/images/villa-c/interior-1.jpg",
+              "/images/villa-c/interior-2.jpg",
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
@@ -232,7 +234,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Raven"
+            name="Sparrow"
             location="Stone Mountain, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -240,11 +242,11 @@ export default function PartnerPage() {
             strategy="Acquisition"
             delay={1}
             images={[
-              "/images/raven/ravenfront.jpg",
-              "/images/raven/ravenkitchen.jpg",
-              "/images/raven/ravenbed1.jpg",
-              "/images/raven/ravenbed2.jpg",
-              "/images/raven/ravenbed3.jpg",
+              "/images/sparrow/front.jpg",
+              "/images/sparrow/kitchen.jpg",
+              "/images/sparrow/bed-1.jpg",
+              "/images/sparrow/bed-2.jpg",
+              "/images/sparrow/bed-3.jpg",
             ]}
           >
             Converted the living room, dining room and basement into{" "}
@@ -252,7 +254,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Meadow"
+            name="Honeysuckle"
             location="Snellville, Georgia"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -260,13 +262,13 @@ export default function PartnerPage() {
             strategy="Arbitrage"
             delay={2}
             images={[
-              "/images/Meadow/meadowfront.jpg",
-              "/images/Meadow/meadow2.jpg",
-              "/images/Meadow/meadow3.jpg",
-              "/images/Meadow/meadow4.jpg",
-              "/images/Meadow/meadow5.jpg",
-              "/images/Meadow/meadow6.jpg",
-              "/images/Meadow/meadow7.jpg",
+              "/images/honeysuckle/front.jpg",
+              "/images/honeysuckle/2.jpg",
+              "/images/honeysuckle/3.jpg",
+              "/images/honeysuckle/4.jpg",
+              "/images/honeysuckle/5.jpg",
+              "/images/honeysuckle/6.jpg",
+              "/images/honeysuckle/7.jpg",
             ]}
           >
             Converted the living rooms, dining room and basement into{" "}
@@ -376,9 +378,9 @@ export default function PartnerPage() {
             Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
-            <Link href="/contact?topic=partnership" className="btn-gold">
+            <a href="/book" className="btn-gold">
               Schedule a Discovery Call
-            </Link>
+            </a>
           </div>
         </div>
       </section>

@@ -2,18 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Before/after floorplan slider for the Villa Candace case study on
+// Before/after floorplan slider for the Villa C case study on
 // /what-is-coliving. Mirrors the IntersectionObserver + drag handle behavior
-// from the v2 HTML design. Images are loaded from /public/images/villa-candace
-// when available; until then, gradient placeholders fill the same aspect.
-//
-// Drop final images at:
-//   /public/images/villacandace-before.png  (5BR/3BA original)
-//   /public/images/villacandace-after.png   (8 rooms after conversion)
-const BEFORE_SRC = "/images/villacandace-before.png";
-const AFTER_SRC = "/images/villacandace-after.png";
+// from the v2 HTML design.
+const BEFORE_SRC = "/images/villa-c-before.png";
+const AFTER_SRC = "/images/villa-c-after.png";
 
-export default function VillaCandaceSlider() {
+export default function VillaCSlider() {
   const [position, setPosition] = useState(50);
   const [hasBefore, setHasBefore] = useState(true);
   const [hasAfter, setHasAfter] = useState(true);
@@ -74,7 +69,7 @@ export default function VillaCandaceSlider() {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={BEFORE_SRC}
-            alt="Villa Candace — Original 5BR/3BA floorplan"
+            alt="Villa C — Original 5BR/3BA floorplan"
             draggable={false}
             onError={() => setHasBefore(false)}
             className="w-full h-auto block pointer-events-none"
@@ -101,7 +96,7 @@ export default function VillaCandaceSlider() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={AFTER_SRC}
-              alt="Villa Candace — Coliving conversion 8 rooms"
+              alt="Villa C — Coliving conversion 8 rooms"
               draggable={false}
               onError={() => setHasAfter(false)}
               className="absolute top-0 left-0 h-full w-auto min-w-full object-cover pointer-events-none"

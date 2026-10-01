@@ -12,6 +12,12 @@ const nextConfig = {
   // /crm-static, or /icon.svg, so the default afterFiles phase is enough
   // for these to win. /listing stays as a safety net for CRM card links
   // that still point at the singular path.
+  async redirects() {
+    return [
+      { source: "/ncc", destination: "/chip", permanent: true },
+      { source: "/contact", destination: "/book", permanent: true },
+    ];
+  },
   async rewrites() {
     return [
       { source: "/listings", destination: `${CRM}/public-listings` },
