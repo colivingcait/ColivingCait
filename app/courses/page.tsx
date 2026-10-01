@@ -9,17 +9,17 @@ import { cn } from "@/lib/cn";
 export const metadata = {
   title: "Real Estate Investing Mini Courses",
   description:
-    "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+    "Three self-paced mini courses on coliving, house hacking, and real estate investing. $49 each, $99 bundle. Lifetime access. Module quizzes included.",
   alternates: { canonical: "/courses" },
   openGraph: {
     title: "Real Estate Investing Mini Courses",
     description:
-      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $49 each, $99 bundle. Lifetime access. Module quizzes included.",
     url: "/courses",
   },
 };
 
-// Course marketplace — three cards, $99 each ($149 bundle). Coliving 101
+// Course marketplace — three cards, $49 each ($99 bundle). Coliving 101
 // and House Hacking 101 are live; Real Estate Investing 101 is a stub
 // until its content lands.
 export default function CoursesPage() {
@@ -43,17 +43,17 @@ export default function CoursesPage() {
                 $149 each
               </span>
               <span className="font-heading text-3xl md:text-4xl text-gold-light">
-                $99 each
+                $49 each
               </span>
               <span className="text-[10px] uppercase tracking-eyebrow text-gold-light border border-gold-light/40 px-2 py-1 ml-1">
-                33% off
+                67% off
               </span>
             </div>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
               Three self-paced courses on coliving, house hacking, and
-              real estate investing. Bundle all three for $149 (a $447
+              real estate investing. Bundle all three for $99 (a $447
               value) — lifetime access, module quizzes included. This
               pricing won&apos;t last.
             </p>

@@ -15,7 +15,7 @@ export const realEstate101: Course = {
     "Six modules. Twenty-eight lessons. Every major residential strategy, how to choose yours, and your first move.",
   longDescription:
     "A self-paced foundation in residential real estate. Six modules cover why real estate works, every major strategy, how to pick yours, the fundamentals every investor needs, the costliest mistakes, and your first move. Twenty-eight lessons. Five module quizzes. Lifetime access.",
-  price: 99,
+  price: 49,
   originalPrice: 149,
   status: "available",
   symbol: "$",
@@ -2725,9 +2725,9 @@ export const realEstate101: Course = {
           type: "card",
           eyebrow: "If you need more education",
           bullets: [
-            "House Hacking 101 — if house hacking is your first move, this course goes deep on financing, property selection, numbers, operations, and exit strategies. $99.",
-            "Coliving 101 — if coliving interests you, this course covers the full model from math to operations. $99.",
-            "Bundle all three courses — $149.",
+            "House Hacking 101 — if house hacking is your first move, this course goes deep on financing, property selection, numbers, operations, and exit strategies. $49.",
+            "Coliving 101 — if coliving interests you, this course covers the full model from math to operations. $49.",
+            "Bundle all three courses — $99.",
           ],
         },
         { type: "heading", content: "While you're getting ready — do this now" },
@@ -2793,9 +2793,9 @@ export const realEstate101: Course = {
         {
           type: "bullets",
           items: [
-            "House Hacking 101 — the complete guide to your best first move. $99.",
-            "Coliving 101 — the complete coliving model from math to operations. $99.",
-            "Bundle all three courses — $149.",
+            "House Hacking 101 — the complete guide to your best first move. $49.",
+            "Coliving 101 — the complete coliving model from math to operations. $49.",
+            "Bundle all three courses — $99.",
           ],
         },
         { type: "heading", content: "Want hands-on guidance" },

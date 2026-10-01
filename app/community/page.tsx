@@ -63,7 +63,7 @@ export default function CommunityPage() {
               Three free communities — coliving, house hacking, and women building portfolios. Whether you&apos;re running your first set of numbers or scaling a portfolio, there&apos;s a room here for you.
             </p>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}
@@ -106,7 +106,7 @@ export default function CommunityPage() {
                 </li>
               ))}
             </ul>
-            <a href="#" className="btn-primary">Join She Leads on Facebook →</a>
+            <a href="https://www.facebook.com/groups/1407759770477235" target="_blank" rel="noopener noreferrer" className="btn-primary">Join She Leads on Facebook →</a>
           </div>
 
           <div className="reveal reveal-d2 bg-white border border-soft p-12 lg:p-11 transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
@@ -119,7 +119,7 @@ export default function CommunityPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.06em] mb-6">
               500+ members · Free · Private Facebook group · Nationwide
             </span>
-            <a href="#" className="btn-sm">Join Now →</a>
+            <a href="https://www.facebook.com/groups/1407759770477235" target="_blank" rel="noopener noreferrer" className="btn-sm">Join Now →</a>
             <p className="font-heading italic text-lg text-charcoal leading-[1.45] pt-6 mt-6 border-t border-soft">
               “I joined She Leads not knowing a single person in coliving. Six months later I closed my first deal — and I had a whole community cheering me on.”
             </p>
@@ -332,7 +332,7 @@ House hacking is how most people I know got their first door — buy a home, ren
             Join a group, show up to a meetup, or start with the house hacking guides. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
-            <a href="#" className="btn-gold">Join She Leads →</a>
+            <a href="https://www.facebook.com/groups/1407759770477235" target="_blank" rel="noopener noreferrer" className="btn-gold">Join She Leads →</a>
             <a href="https://househackingatlanta.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
           </div>
         </div>

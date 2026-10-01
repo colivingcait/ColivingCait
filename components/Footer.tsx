@@ -14,13 +14,14 @@ const navigate = [
   { href: "/calculator", label: "Calculators" },
 ];
 
-const connect = [
+const connect: { href: string; label: string; external: boolean; plain?: boolean }[] = [
   { href: "/community", label: "Community", external: false },
-  { href: "/contact", label: "Contact", external: false },
+  { href: "/book", label: "Contact", external: false, plain: true },
   { href: "https://instagram.com/colivingcait", label: "Instagram", external: true },
-  { href: "#", label: "YouTube", external: true },
-  { href: "#", label: "Facebook", external: true },
-  { href: "#", label: "LinkedIn", external: true },
+  { href: "https://youtube.com/colivingcait", label: "YouTube", external: true },
+  { href: "https://facebook.com/colivingcait", label: "Facebook", external: true },
+  { href: "https://www.linkedin.com/in/coliving-cait/", label: "LinkedIn", external: true },
+  { href: "https://tiktok.com/@colivingcait", label: "TikTok", external: true },
 ];
 
 export default function Footer() {
@@ -63,12 +64,11 @@ export default function Footer() {
           </h4>
           <ul className="flex flex-col gap-3 list-none">
             {connect.map((l) =>
-              l.external ? (
+              l.external || l.plain ? (
                 <li key={l.label}>
                   <a
                     href={l.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="text-[13px] text-warmgray-light hover:text-white transition-colors duration-200"
                   >
                     {l.label}

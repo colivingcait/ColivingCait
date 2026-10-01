@@ -46,6 +46,9 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // QR welcome pages render their own chrome-free layout.
+  if (pathname === "/hello" || pathname === "/chip") return null;
+
   return (
     <header
       className={cn(
@@ -121,12 +124,12 @@ export default function Nav() {
           )}
 
           <li>
-            <Link
-              href="/contact"
+            <a
+              href="/book"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
             >
               Book a Call
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -200,13 +203,13 @@ export default function Nav() {
               </Link>
             )}
 
-            <Link
-              href="/contact"
+            <a
+              href="/book"
               onClick={() => setOpen(false)}
               className="mt-3 bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] text-center hover:bg-gold transition-colors"
             >
               Book a Call
-            </Link>
+            </a>
           </nav>
         </div>
       )}

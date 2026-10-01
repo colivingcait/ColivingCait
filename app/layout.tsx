@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import AuthProvider from "@/components/AuthProvider";
 import { SITE, SITE_URL } from "@/lib/site";
 import JsonLd, { graph, personSchema, businessSchema, websiteSchema } from "@/components/JsonLd";
@@ -44,14 +44,14 @@ export const metadata: Metadata = {
       "Caitlyn Verdugo — Atlanta Realtor & Real Estate Investor | Coliving Cait",
     description:
       "Helping you build wealth one door at a time. Coliving, house hacking, investment properties, and buying or selling across metro Atlanta.",
-    images: [{ url: "/images/caitlyn-yellow-blazer.jpg", width: 1200, height: 1600, alt: SITE.personName }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: SITE.personName }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Caitlyn Verdugo — Atlanta Realtor & Real Estate Investor",
     description:
       "Helping you build wealth one door at a time. Coliving, house hacking, and investment real estate in metro Atlanta.",
-    images: ["/images/caitlyn-yellow-blazer.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -77,7 +77,7 @@ export default function RootLayout({
         <AuthProvider>
           <Nav />
           <main>{children}</main>
-          <Footer />
+          <ConditionalFooter />
         </AuthProvider>
       </body>
     </html>

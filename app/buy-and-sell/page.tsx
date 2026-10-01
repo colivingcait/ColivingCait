@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
@@ -96,11 +95,11 @@ export default function BuyAndSellPage() {
                 </span>
               ))}
             </div>
-            <Link href="/contact?topic=buy-sell" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Schedule a Call →
-            </Link>
+            </a>
           </div>
-          <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
+          <div className="w-full opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
               className="relative w-full overflow-hidden bg-cream"
               style={{ aspectRatio: "4 / 3" }}
@@ -138,6 +137,7 @@ export default function BuyAndSellPage() {
               title: "For Buyers & Investors",
               intro: "Finding a property is easy. Finding the right one takes an investor's eye. I specialize in identifying properties with real potential and helping you navigate every step from search to close.",
               cta: "Tell Me What You're Looking For →",
+              href: "#forms",
               features: buyerFeatures,
               delay: "",
             },
@@ -146,6 +146,7 @@ export default function BuyAndSellPage() {
               title: "For Sellers",
               intro: "Selling is more than putting a sign in the yard. I help you understand your options, price strategically, and navigate the full transaction from contract to close.",
               cta: "Let's Talk About Your Property →",
+              href: "/book",
               features: sellerFeatures,
               delay: "reveal-d1",
             },
@@ -160,7 +161,7 @@ export default function BuyAndSellPage() {
                   {panel.title}
                 </h3>
                 <p className="text-[15px] text-warmgray leading-[1.8] mb-7">{panel.intro}</p>
-                <a href="#forms" className="btn-sm self-start">{panel.cta}</a>
+                <a href={panel.href} className="btn-sm self-start">{panel.cta}</a>
               </div>
               <div className="p-12 lg:p-11 flex flex-col justify-center">
                 <ul className="list-none">
@@ -366,9 +367,9 @@ export default function BuyAndSellPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re buying, selling, or house hacking — it starts with one conversation.
           </p>
-          <Link href="/contact?topic=buy-sell" className="btn-gold">
+          <a href="/book" className="btn-gold">
             Schedule a Discovery Call
-          </Link>
+          </a>
         </div>
       </section>
     </>
