@@ -179,7 +179,7 @@ export const realEstate101: Course = {
           eyebrow: "Read before you start",
           paragraphs: [
             "This course is educational in nature. I am not your attorney, CPA, or financial advisor. Always consult licensed professionals before making investment, legal, or tax decisions.",
-            "Interest rates, property values, rental rates, and financial projections used throughout this course are examples based on real experience. Your actual numbers will depend on your specific market, property, and current conditions.",
+            "Interest rates, property values, rental rates, and financial projections used throughout this course are illustrative examples based on real experience. Your actual numbers will depend on your specific market, property, and current conditions.",
             "Results vary. Real estate investing carries risk — educate yourself, do your due diligence, and make informed decisions.",
           ],
         },
