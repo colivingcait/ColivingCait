@@ -183,7 +183,7 @@ export const coliving101: Course = {
           eyebrow: "Read before you start",
           paragraphs: [
             "This course is educational in nature. I am not your attorney, CPA, or financial advisor. Always consult licensed professionals before making investment decisions.",
-            "Interest rates, room rates, property values, and financial projections used throughout this course are illustrative examples based on real experience. Your actual numbers will depend on your specific market, property, and current market conditions.",
+            "Interest rates, room rates, property values, and financial projections used throughout this course are examples based on real experience. Your actual numbers will depend on your specific market, property, and current market conditions.",
             "Results vary. The numbers and projections in this course are based on real operational experience but are not guarantees of future performance. Real estate investing carries risk — educate yourself, do your due diligence, and make informed decisions.",
           ],
         },

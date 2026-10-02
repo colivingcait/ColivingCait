@@ -14,7 +14,6 @@ export function absoluteUrl(path = "/"): string {
 export const SITE = {
   name: "Coliving Cait",
   personName: "Caitlyn Verdugo",
-  legalName: "Lustra House LLC",
   email: "colivingcait@gmail.com",
   brokerage: "Keller Williams",
   city: "Atlanta",

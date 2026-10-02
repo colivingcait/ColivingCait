@@ -54,7 +54,6 @@ export const businessSchema = {
   "@type": "RealEstateAgent",
   "@id": BUSINESS_ID,
   name: SITE.name,
-  legalName: SITE.legalName,
   url: SITE_URL,
   image: absoluteUrl("/images/caitlyn-yellow-blazer.jpg"),
   logo: absoluteUrl("/images/colivingcait-logo.png"),
