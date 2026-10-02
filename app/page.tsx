@@ -404,7 +404,7 @@ export default function HomePage() {
                 copy: "For anyone getting their home to pay for itself. Deal breakdowns, lender intel, and a free library of house hacking guides for the Atlanta market.",
                 detail: "Free · Facebook group · Metro Atlanta",
                 cta: "Explore house hacking →",
-                href: "https://househackingatlanta.com",
+                href: "https://www.househackingatl.com",
                 external: true,
               },
             ].map((c, i) => (

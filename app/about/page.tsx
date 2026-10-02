@@ -209,7 +209,7 @@ export default function AboutPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
               Free · Facebook group · Metro Atlanta
             </span>
-            <a href="https://househackingatlanta.com" target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
+            <a href="https://www.househackingatl.com" target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
           </div>
         </div>
       </section>

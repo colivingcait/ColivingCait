@@ -240,12 +240,12 @@ House hacking is how most people I know got their first door — buy a home, ren
               ))}
             </div>
             <a
-              href="https://househackingatlanta.com"
+              href="https://www.househackingatl.com"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-outline-light"
             >
-              Visit HouseHackingAtlanta.com →
+              Visit www.househackingatl.com →
             </a>
           </div>
 
@@ -333,7 +333,7 @@ House hacking is how most people I know got their first door — buy a home, ren
           </p>
           <div className="flex flex-wrap justify-center gap-5">
             <a href="#" className="btn-gold">Join She Leads →</a>
-            <a href="https://househackingatlanta.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
+            <a href="https://www.househackingatl.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
           </div>
         </div>
       </section>
