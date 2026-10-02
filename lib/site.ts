@@ -14,7 +14,6 @@ export function absoluteUrl(path = "/"): string {
 export const SITE = {
   name: "Coliving Cait",
   personName: "Caitlyn Verdugo",
-  legalName: "Lustra House LLC",
   email: "colivingcait@gmail.com",
   brokerage: "Keller Williams",
   city: "Atlanta",
@@ -23,7 +22,10 @@ export const SITE = {
   country: "US",
   sameAs: ["https://instagram.com/colivingcait"],
   /** Sister sites — separate properties, same operator. */
-  sisterSites: ["https://atlantawomeninvestors.com"],
+  sisterSites: [
+    "https://www.househackingatl.com",
+    "https://atlantawomeninvestors.com",
+  ],
   /** Metro-area service footprint, used for LocalBusiness areaServed. */
   areaServed: [
     "Atlanta, GA",

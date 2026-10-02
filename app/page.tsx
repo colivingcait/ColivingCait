@@ -375,19 +375,19 @@ export default function HomePage() {
               <em className="italic text-gold font-light">alone.</em>
             </h2>
             <p className="mt-5 text-[15px] text-warmgray max-w-[520px] mx-auto leading-[1.8]">
-              Three free communities — coliving, house hacking, and women building portfolios. Find the room that fits where you are.
+              Two free communities — house hacking, and women building portfolios. Find the room that fits where you are.
             </p>
           </div>
-          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-[880px] lg:grid-cols-2">
             {[
               {
-                icon: "♀",
-                title: "She Leads Coliving",
-                copy: "A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.",
-                detail: "500+ members · Free · Nationwide",
-                cta: "Join on Facebook →",
-                href: "#",
-                external: false,
+                icon: "⌂",
+                title: "Atlanta House Hackers",
+                copy: "For anyone getting their home to pay for itself. Deal breakdowns, lender intel, and a free library of house hacking guides for the Atlanta market.",
+                detail: "Free · Facebook group · Metro Atlanta",
+                cta: "Explore house hacking →",
+                href: "https://www.househackingatl.com",
+                external: true,
               },
               {
                 icon: "◈",
@@ -396,15 +396,6 @@ export default function HomePage() {
                 detail: "Last Tuesday · Atlanta · Free",
                 cta: "See the next meetup →",
                 href: "https://atlantawomeninvestors.com",
-                external: true,
-              },
-              {
-                icon: "⌂",
-                title: "Atlanta House Hackers",
-                copy: "For anyone getting their home to pay for itself. Deal breakdowns, lender intel, and a free library of house hacking guides for the Atlanta market.",
-                detail: "Free · Facebook group · Metro Atlanta",
-                cta: "Explore house hacking →",
-                href: "https://househackingatlanta.com",
                 external: true,
               },
             ].map((c, i) => (
