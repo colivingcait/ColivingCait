@@ -7,27 +7,19 @@ import { CK_TAGS } from "@/lib/convertkit";
 export const metadata = {
   title: "Atlanta Real Estate Investor Communities",
   description:
-    "Three free real estate communities — She Leads Coliving, the Atlanta Women Investors monthly meetup, and Atlanta House Hackers. Free to join, all experience levels.",
+    "Two free real estate communities — Atlanta House Hackers and the Atlanta Women Investors monthly meetup. Free to join, all experience levels.",
   alternates: { canonical: "/community" },
   openGraph: {
     title: "Atlanta Real Estate Investor Communities",
     description:
-      "Three free real estate communities — She Leads Coliving, the Atlanta Women Investors monthly meetup, and Atlanta House Hackers. Free to join, all experience levels.",
+      "Two free real estate communities — Atlanta House Hackers and the Atlanta Women Investors monthly meetup. Free to join, all experience levels.",
     url: "/community",
   },
 };
 
 // Community — pixel-perfect rewrite of coliving-cait-community.html.
-// Sections: Hero · She Leads · Atlanta Women Investors · Quote banner · House Hackers ·
+// Sections: Hero · Atlanta Women Investors · Quote banner · House Hackers ·
 // Newsletter · Work With Me triple CTA · Final CTA.
-
-const memberTypes = [
-  "Women exploring coliving for the first time",
-  "First-time investors working toward their first deal",
-  "Active operators managing coliving properties",
-  "Realtors and agents specializing in investment properties",
-  "Passive investors looking for coliving opportunities",
-];
 
 const meetupBonus = [
   "Online virtual events and workshops",
@@ -60,7 +52,7 @@ export default function CommunityPage() {
               <em className="italic text-gold font-light">alone.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
-              Three free communities — coliving, house hacking, and women building portfolios. Whether you&apos;re running your first set of numbers or scaling a portfolio, there&apos;s a room here for you.
+              Two free communities — house hacking, and women building portfolios. Whether you&apos;re running your first set of numbers or scaling a portfolio, there&apos;s a room here for you.
             </p>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
@@ -81,54 +73,8 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* ===== 2. SHE LEADS ===== */}
+      {/* ===== 2. MEETUP ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
-        <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-start lg:grid-cols-2">
-          <div className="reveal">
-            <span className="eyebrow">Online · Nationwide · Women Only</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5 leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
-            >
-              She Leads <em className="italic text-gold font-light">Coliving</em>
-            </h2>
-            <p className="text-[15px] leading-[1.85] text-warmgray mb-9 max-w-[480px]">
-              A private online community for women in coliving — nationwide, always on, and completely free. This is where women at every stage of the coliving journey connect, ask questions, share wins, and support each other through the real stuff.
-            </p>
-            <ul className="list-none mb-10">
-              {memberTypes.map((m) => (
-                <li
-                  key={m}
-                  className="text-[15px] text-warmgray py-3 flex items-start gap-3.5 border-b border-soft last:border-b-0"
-                >
-                  <span className="text-gold text-[8px] mt-2 shrink-0">✦</span>
-                  {m}
-                </li>
-              ))}
-            </ul>
-            <a href="#" className="btn-primary">Join She Leads on Facebook →</a>
-          </div>
-
-          <div className="reveal reveal-d2 bg-white border border-soft p-12 lg:p-11 transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
-            <h3 className="font-heading font-medium text-2xl text-charcoal mb-4">
-              What you&apos;ll find inside
-            </h3>
-            <p className="text-sm text-warmgray leading-[1.75] mb-3">
-              Real conversations about real deals. No gatekeeping, no fluff — just women helping women build wealth through coliving. Consistent interaction, daily posts, and a network that shows up for each other.
-            </p>
-            <span className="block text-xs text-warmgray-light tracking-[0.06em] mb-6">
-              500+ members · Free · Private Facebook group · Nationwide
-            </span>
-            <a href="#" className="btn-sm">Join Now →</a>
-            <p className="font-heading italic text-lg text-charcoal leading-[1.45] pt-6 mt-6 border-t border-soft">
-              “I joined She Leads not knowing a single person in coliving. Six months later I closed my first deal — and I had a whole community cheering me on.”
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 3. MEETUP ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-center lg:grid-cols-2">
           <div className="reveal">
             <span className="eyebrow">In Person · Atlanta · Women Only</span>
@@ -332,7 +278,6 @@ House hacking is how most people I know got their first door — buy a home, ren
             Join a group, show up to a meetup, or start with the house hacking guides. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
-            <a href="#" className="btn-gold">Join She Leads →</a>
             <a href="https://www.househackingatl.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
           </div>
         </div>

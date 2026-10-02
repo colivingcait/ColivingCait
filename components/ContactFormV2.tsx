@@ -18,7 +18,6 @@ const TOPIC_OPTIONS = [
   { value: "house-hacking", label: "House hacking" },
   { value: "speaking", label: "Speaking & media" },
   { value: "meetup", label: "Atlanta Women Investors meetup" },
-  { value: "she-leads", label: "She Leads Coliving" },
   { value: "agent-referral", label: "Agent referral" },
   { value: "other", label: "Other" },
 ];

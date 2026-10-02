@@ -27,11 +27,6 @@ const TOPIC_OPTIONS: { value: string; label: string; tag: string }[] = [
     label: "Atlanta Women Investors meetup",
     tag: "meetup-interested",
   },
-  {
-    value: "she-leads",
-    label: "She Leads Coliving",
-    tag: "she-leads-interested",
-  },
   { value: "other", label: "Other", tag: "contact-other" },
 ];
 

@@ -2766,7 +2766,6 @@ export const coliving101: Course = {
         {
           type: "bullets",
           items: [
-            "She Leads Coliving — free online community for women building wealth through coliving",
             "Atlanta House Hackers — free Facebook group for house hackers across metro Atlanta",
             "Atlanta Women Investors — monthly in-person meetup, last Tuesday of every month. Free.",
           ],

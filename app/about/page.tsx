@@ -183,22 +183,8 @@ export default function AboutPage() {
 
       {/* ===== 4. COMMUNITIES ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
-        <div className="mx-auto grid max-w-[1320px] gap-12 lg:grid-cols-2">
+        <div className="mx-auto max-w-[640px]">
           <div className="reveal p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
-            <span className="block text-[28px] text-gold mb-5">♀</span>
-            <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
-              She Leads Coliving
-            </h3>
-            <p className="text-sm leading-[1.8] text-warmgray mb-2">
-              A private online community for women in coliving — investors, operators, and those just getting started. Real conversations, real support, completely free.
-            </p>
-            <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
-              500+ members · Free to join
-            </span>
-            <a href="#" className="btn-sm">Join on Facebook →</a>
-          </div>
-
-          <div className="reveal reveal-d2 p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
             <span className="block text-[28px] text-gold mb-5">★</span>
             <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
               Atlanta House Hackers
