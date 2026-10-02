@@ -23,10 +23,7 @@ export const SITE = {
   country: "US",
   sameAs: ["https://instagram.com/colivingcait"],
   /** Sister sites — separate properties, same operator. */
-  sisterSites: [
-    "https://househackingatlanta.com",
-    "https://atlantawomeninvestors.com",
-  ],
+  sisterSites: ["https://atlantawomeninvestors.com"],
   /** Metro-area service footprint, used for LocalBusiness areaServed. */
   areaServed: [
     "Atlanta, GA",
