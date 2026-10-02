@@ -485,6 +485,12 @@
     align-items: flex-start;
     gap: 16px;
   }
+  .site-footer .kwimg {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 52px;
+  }
   .site-footer .eho {
     margin-left: 0;
   }
