@@ -306,3 +306,186 @@
     margin: 1.5cm;
   }
 }
+
+/* Site footer — Nico's approved design. Values follow the handoff
+   (.ftop, .g3, .fbook, .broker, .kwimg, .btxt, .ind, .eho) and use the
+   brand tokens already defined above. */
+.site-footer {
+  background: var(--charcoal);
+  padding: 0 60px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-family: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
+}
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+.site-footer .ftop {
+  max-width: 1320px;
+  margin: 0 auto 36px;
+  padding-top: 56px;
+}
+.site-footer .brand {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 1.4;
+}
+.site-footer .brand em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold-light);
+}
+.site-footer .ftop p {
+  margin-top: 8px;
+  max-width: 280px;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--warm-gray);
+}
+.site-footer .g3 {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 60px;
+  padding: 0 0 56px;
+}
+.site-footer h4 {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  margin: 0 0 20px;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+}
+.site-footer ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+.site-footer ul a {
+  font-size: 13px;
+  color: var(--warm-gray-light);
+  line-height: 1.4;
+}
+.site-footer ul a:hover {
+  color: #fff;
+}
+.site-footer .fbook {
+  display: inline-block;
+  margin-top: 18px;
+  background: #c4955a;
+  color: #1c1917;
+  padding: 13px 22px;
+  font-family: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+.site-footer .fbook:hover {
+  background: var(--gold-dark);
+}
+.site-footer .broker {
+  max-width: 1320px;
+  margin: 40px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 0;
+}
+.site-footer .kwimg {
+  height: 52px;
+  width: auto;
+  max-width: none;
+  flex: none;
+  display: block;
+}
+.site-footer .btxt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 300;
+  color: #a09a94;
+}
+.site-footer .btxt b {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: #faf7f2;
+}
+.site-footer .btxt .ind {
+  font-size: 12px;
+  font-style: italic;
+  color: #8a847e;
+}
+.site-footer .eho {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #a09a94;
+  white-space: nowrap;
+}
+.site-footer .eho svg {
+  height: 14px;
+  width: auto;
+  flex: none;
+  display: block;
+}
+.site-footer .legal {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 24px 0;
+  font-size: 11px;
+  color: var(--warm-gray);
+}
+
+@media (max-width: 1023px) {
+  .site-footer {
+    padding: 0 32px;
+  }
+  .site-footer .g3 {
+    gap: 40px;
+  }
+  .site-footer .legal {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-footer .g3 {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+  }
+  .site-footer .g3 > div:last-child {
+    grid-column: 1 / -1;
+    margin-top: 28px;
+  }
+  .site-footer .broker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .site-footer .eho {
+    margin-left: 0;
+  }
+}
