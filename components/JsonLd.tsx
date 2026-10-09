@@ -50,7 +50,7 @@ const zillowReviewSchema = zillowTestimonials.map((t, i) => ({
     bestRating: "5",
     worstRating: "1",
   },
-  itemReviewed: { "@id": PERSON_ID },
+  itemReviewed: { "@id": BUSINESS_ID },
 }));
 
 /** Meetup organization. Same @id the house-hacking site should publish. */

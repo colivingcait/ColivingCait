@@ -240,7 +240,7 @@ export default function AboutPage() {
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">What People Are Saying</span>
+            <span className="eyebrow eyebrow-center">What Clients Are Saying</span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-2 leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
