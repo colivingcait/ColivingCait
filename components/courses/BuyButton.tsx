@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 type BuyButtonProps = {
   courseSlug: string;
@@ -17,15 +17,22 @@ export default function BuyButton({
   children,
   className = "",
 }: BuyButtonProps) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    // Not signed in — redirect to sign in, then back to this page
+    // Session still resolving — don't treat that as logged out.
+    if (status === "loading") return;
+
+    // Logged out: show the email form. Calling signIn("email") here
+    // posts /api/auth/signin/email with no address, and NextAuth
+    // answers that with error=EmailSignin before any adapter or
+    // mailer runs. The form collects the address, then starts the flow.
     if (status !== "authenticated") {
-      signIn("email", {
-        callbackUrl: window.location.href,
-      });
+      const callbackUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      window.location.assign(
+        `/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`,
+      );
       return;
     }
 
