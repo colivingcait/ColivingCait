@@ -5,7 +5,13 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
 import { SITE, SITE_URL } from "@/lib/site";
-import JsonLd, { graph, personSchema, businessSchema, websiteSchema } from "@/components/JsonLd";
+import JsonLd, {
+  graph,
+  personSchema,
+  businessSchema,
+  houseHackingOrgSchema,
+  websiteSchema,
+} from "@/components/JsonLd";
 
 // Brand fonts loaded once at the root and exposed via CSS variables so they
 // can be referenced by Tailwind's font-heading / font-sans utilities.
@@ -74,7 +80,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body className="bg-white text-warmgray">
-        <JsonLd data={graph(personSchema, businessSchema, websiteSchema)} />
+        <JsonLd
+          data={graph(personSchema, businessSchema, houseHackingOrgSchema, websiteSchema)}
+        />
         <AuthProvider>
           <Nav />
           <main>{children}</main>

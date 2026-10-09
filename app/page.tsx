@@ -3,6 +3,8 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
+import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 // Homepage — pixel-perfect rewrite of coliving-cait-homepage.html.
 // Sections: Hero · Stats Ticker · Service Cards · Coliving Math · Lead Magnet 1
@@ -19,13 +21,6 @@ const tickerItems = [
   "Investor-Friendly Agent",
   "House Hacking Specialist",
   "Community Builder",
-];
-
-const testimonials = [
-  '"Caitlyn made the entire process seamless. She knew exactly what to look for and guided us through every step. I wouldn\'t work with anyone else."',
-  '"Her knowledge of investment properties is unmatched. She helped me see potential in a property I would have passed on — and it turned out to be my best deal."',
-  '"Professional, responsive, and genuinely invested in my success. Caitlyn goes above and beyond for every client."',
-  '"I came in with a vague idea about real estate investing. Caitlyn helped me build a clear plan and execute on it. Can\'t recommend her enough."',
 ];
 
 export default function HomePage() {
@@ -340,25 +335,10 @@ export default function HomePage() {
               Real reviews from <em className="italic text-gold font-light">real clients.</em>
             </h2>
             <p className="text-[13px] text-warmgray-light tracking-[0.06em]">
-              <span className="text-gold tracking-[2px]">★★★★★</span>
-              &nbsp;&nbsp;5.0 on Zillow
+              <ZillowRatingLink />
             </p>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className={`reveal reveal-d${i + 1} bg-cream p-10 border border-transparent hover:border-brand hover:-translate-y-[3px] hover:shadow-card transition-all duration-500`}
-              >
-                <span className="block text-gold text-xs tracking-[3px] mb-4">★★★★★</span>
-                <p className="text-[14.5px] leading-[1.75] text-warmgray italic mb-5">{t}</p>
-                <span className="block text-[13px] font-medium text-charcoal">Zillow Review</span>
-                <span className="block text-[11px] text-warmgray-light tracking-[0.06em]">
-                  Verified Client
-                </span>
-              </div>
-            ))}
-          </div>
+          <ZillowReviewGrid cardClassName="bg-cream p-10 border border-transparent hover:border-brand hover:-translate-y-[3px] hover:shadow-card transition-all duration-500" />
         </div>
       </section>
 
@@ -386,8 +366,12 @@ export default function HomePage() {
                 copy: "For anyone getting their home to pay for itself. Deal breakdowns, lender intel, and a free library of house hacking guides for the Atlanta market.",
                 detail: "Free · Facebook group · Metro Atlanta",
                 cta: "Explore house hacking →",
-                href: "https://www.househackingatl.com",
+                href: HOUSE_HACKING_URL,
                 external: true,
+                secondary: {
+                  cta: "Meetups on Eventbrite →",
+                  href: EVENTBRITE_ORGANIZER_URL,
+                },
               },
               {
                 icon: "◈",
@@ -413,13 +397,25 @@ export default function HomePage() {
                 <span className="block text-[11px] text-warmgray-light tracking-[0.06em] mb-6">
                   {c.detail}
                 </span>
-                <a
-                  href={c.href}
-                  {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="btn-sm"
-                >
-                  {c.cta}
-                </a>
+                <div className="flex flex-col items-start gap-4">
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="btn-sm"
+                  >
+                    {c.cta}
+                  </a>
+                  {"secondary" in c && c.secondary ? (
+                    <a
+                      href={c.secondary.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-text"
+                    >
+                      {c.secondary.cta}
+                    </a>
+                  ) : null}
+                </div>
               </div>
             ))}
           </div>

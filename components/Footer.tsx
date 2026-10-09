@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
 
 // Nico's approved site footer. /listings and /book are CRM rewrites, so they
 // stay plain anchors — next/link would client-navigate inside this app.
@@ -92,6 +93,16 @@ export default function Footer() {
             </li>
             <li>
               <a href="mailto:CV.SellsHomes@gmail.com">CV.SellsHomes@gmail.com</a>
+            </li>
+            <li>
+              <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer">
+                House Hacking Atlanta
+              </a>
+            </li>
+            <li>
+              <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer">
+                Meetups on Eventbrite
+              </a>
             </li>
           </ul>
           <a className="fbook" href="/book">

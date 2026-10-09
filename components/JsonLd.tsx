@@ -1,4 +1,18 @@
-import { SITE, SITE_URL, absoluteUrl } from "@/lib/site";
+import {
+  EVENTBRITE_ORGANIZER_URL,
+  HOUSE_HACKING_ORG_ID,
+  HOUSE_HACKING_URL,
+  LINKEDIN_URL,
+  SITE,
+  SITE_URL,
+  absoluteUrl,
+} from "@/lib/site";
+import {
+  ZILLOW_PROFILE_URL,
+  ZILLOW_RATING,
+  ZILLOW_REVIEW_COUNT,
+  zillowTestimonials,
+} from "@/lib/testimonials";
 
 /**
  * Renders a JSON-LD block. Schema graphs are static, author-controlled data,
@@ -21,6 +35,35 @@ export default function JsonLd({ data }: { data: object }) {
 export const PERSON_ID = `${SITE_URL}/#caitlyn`;
 export const BUSINESS_ID = `${SITE_URL}/#business`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
+
+// Reviews are CreativeWork, so they can hang off the Person via subjectOf.
+// AggregateRating stays on the RealEstateAgent, which is the type that accepts it.
+const zillowReviewSchema = zillowTestimonials.map((t, i) => ({
+  "@type": "Review",
+  "@id": `${SITE_URL}/#zillow-review-${i + 1}`,
+  author: { "@type": "Person", name: t.author },
+  datePublished: t.published,
+  reviewBody: t.quote,
+  reviewRating: {
+    "@type": "Rating",
+    ratingValue: t.rating,
+    bestRating: "5",
+    worstRating: "1",
+  },
+  itemReviewed: { "@id": PERSON_ID },
+}));
+
+/** Meetup organization. Same @id the house-hacking site should publish. */
+export const houseHackingOrgSchema = {
+  "@type": "Organization",
+  "@id": HOUSE_HACKING_ORG_ID,
+  name: "House Hacking Atlanta",
+  url: HOUSE_HACKING_URL,
+  description:
+    "Free monthly house hacking meetup and guide library for metro Atlanta, founded and hosted by Caitlyn Verdugo.",
+  founder: { "@id": PERSON_ID },
+  sameAs: [EVENTBRITE_ORGANIZER_URL],
+};
 
 export const personSchema = {
   "@type": "Person",
@@ -47,7 +90,15 @@ export const personSchema = {
   ],
   // Sister properties are the same operator — declaring them here is the
   // honest way to relate the domains without reciprocal link-building.
-  sameAs: [...SITE.sameAs, ...SITE.sisterSites],
+  // LinkedIn and the Eventbrite organizer page name Caitlyn directly.
+  sameAs: [
+    ...SITE.sameAs,
+    ...SITE.sisterSites,
+    LINKEDIN_URL,
+    EVENTBRITE_ORGANIZER_URL,
+    ZILLOW_PROFILE_URL,
+  ],
+  subjectOf: zillowReviewSchema,
 };
 
 export const businessSchema = {
@@ -61,6 +112,7 @@ export const businessSchema = {
   founder: { "@id": PERSON_ID },
   employee: { "@id": PERSON_ID },
   parentOrganization: { "@type": "Organization", name: SITE.brokerage },
+  subOrganization: { "@id": HOUSE_HACKING_ORG_ID },
   address: {
     "@type": "PostalAddress",
     addressLocality: SITE.city,
@@ -74,7 +126,16 @@ export const businessSchema = {
     "Investment property sales",
     "First-time home buyers",
   ],
-  sameAs: [...SITE.sameAs, ...SITE.sisterSites],
+  sameAs: [...SITE.sameAs, ...SITE.sisterSites, ZILLOW_PROFILE_URL],
+  // reviewCount is the full Zillow total, matching "5.0 from 18 Zillow reviews".
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: ZILLOW_RATING,
+    reviewCount: ZILLOW_REVIEW_COUNT,
+    bestRating: "5",
+    worstRating: "1",
+  },
+  review: zillowReviewSchema.map((review) => ({ "@id": review["@id"] })),
 };
 
 export const websiteSchema = {

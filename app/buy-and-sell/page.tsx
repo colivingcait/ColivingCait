@@ -4,6 +4,7 @@ import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
+import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 export const metadata = {
   title: "Buy & Sell Atlanta Real Estate — Investor-Friendly Realtor",
@@ -42,13 +43,6 @@ const whyMe = [
   { icon: "✦", title: "Coliving Expertise", copy: "I specialize in identifying properties with coliving conversion potential that most agents overlook entirely." },
   { icon: "$", title: "Sharp Negotiation", copy: "Whether you're buying or selling, I protect your bottom line at every stage of the transaction." },
   { icon: "⊕", title: "Full Transaction Support", copy: "Contract to close — inspections, appraisal, title, repairs, and closing coordination handled." },
-];
-
-const reviews = [
-  '"Caitlyn made the entire process seamless. She knew exactly what to look for and guided us through every step. I wouldn\'t work with anyone else."',
-  '"Her knowledge of investment properties is unmatched. She helped me see potential in a property I would have passed on — and it turned out to be my best deal."',
-  '"Professional, responsive, and genuinely invested in my success. Caitlyn goes above and beyond for every client."',
-  '"I came in with a vague idea about real estate investing. Caitlyn helped me build a clear plan and execute on it. Can\'t recommend her enough."',
 ];
 
 const counties = [
@@ -247,23 +241,10 @@ export default function BuyAndSellPage() {
               Real reviews from <em className="italic text-gold font-light">real clients.</em>
             </h2>
             <p className="text-[13px] text-warmgray-light">
-              <span className="text-gold tracking-[2px]">★★★★★</span>
-              &nbsp;&nbsp;5.0 on Zillow
+              <ZillowRatingLink />
             </p>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {reviews.map((r, i) => (
-              <div
-                key={i}
-                className={`reveal reveal-d${i + 1} bg-cream p-10 border border-transparent transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card`}
-              >
-                <span className="block text-gold text-xs tracking-[3px] mb-4">★★★★★</span>
-                <p className="text-[14.5px] leading-[1.75] text-warmgray italic mb-5">{r}</p>
-                <span className="block text-[13px] font-medium text-charcoal">Zillow Review</span>
-                <span className="block text-[11px] text-warmgray-light">Verified Client</span>
-              </div>
-            ))}
-          </div>
+          <ZillowReviewGrid cardClassName="bg-cream p-10 border border-transparent transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card" />
         </div>
       </section>
 
