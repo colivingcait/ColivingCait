@@ -77,18 +77,7 @@ export default async function CourseLandingPage({
           <div>
             <Reveal>
               <Eyebrow className="mb-6">
-                ✦ Mini course ·{" "}
-                {course.originalPrice ? (
-                  <>
-                    <span className="line-through text-cream/40">
-                      ${course.originalPrice}
-                    </span>{" "}
-                    <span className="text-gold-light">${course.price}</span>{" "}
-                    · Limited time
-                  </>
-                ) : (
-                  <>${course.price}</>
-                )}
+                ✦ Mini course · ${course.price}
               </Eyebrow>
             </Reveal>
             <Reveal delay={0.1}>
@@ -322,26 +311,9 @@ export default async function CourseLandingPage({
           </Reveal>
           <Reveal delay={0.1}>
             <Heading size="xl" className="text-cream">
-              {course.originalPrice ? (
-                <>
-                  <span className="line-through text-cream/40">
-                    ${course.originalPrice}
-                  </span>{" "}
-                  <span className="text-gold-light">${course.price}</span>.{" "}
-                  <em className="text-gold-light">Lifetime access.</em>
-                </>
-              ) : (
-                <>
-                  ${course.price}.{" "}
-                  <em className="text-gold-light">Lifetime access.</em>
-                </>
-              )}
+              ${course.price}.{" "}
+              <em className="text-gold-light">Lifetime access.</em>
             </Heading>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <p className="mt-4 text-[10px] uppercase tracking-eyebrow text-gold-light">
-              ✦ Limited-time launch pricing
-            </p>
           </Reveal>
           <Reveal delay={0.25}>
             <p className="mt-6 text-cream/70 leading-body max-w-xl mx-auto">

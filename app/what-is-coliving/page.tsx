@@ -3,6 +3,7 @@ import RevealObserver from "@/components/RevealObserver";
 import VillaCandaceSlider from "@/components/VillaCandaceSlider";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
+import { getCourse } from "@/lib/courses";
 
 export const metadata = {
   title: "What Is Coliving? How the Model Works",
@@ -346,15 +347,10 @@ export default function WhatIsColivingPage() {
 
           <div className="reveal reveal-d2 bg-cream p-12 lg:px-10 text-center border border-soft">
             <span className="eyebrow eyebrow-center justify-center">
-              ✦ Coliving 101 · Limited time
+              ✦ Coliving 101
             </span>
-            <div className="flex items-baseline justify-center gap-3 mb-2">
-              <span className="text-2xl text-warmgray-light line-through">
-                $149
-              </span>
-              <div className="font-heading font-medium text-[48px] leading-none text-charcoal">
-                $99
-              </div>
+            <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-2">
+              ${getCourse("coliving-101")?.price}
             </div>
             <span className="block text-[13px] text-warmgray-light mb-6">
               6 modules · 23 lessons · 2–3 hours of course content

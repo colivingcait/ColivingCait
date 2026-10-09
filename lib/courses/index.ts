@@ -3,6 +3,10 @@ import { coliving101 } from "./coliving-101";
 import { houseHacking101 } from "./house-hacking-101";
 import { realEstate101 } from "./real-estate-101";
 
+// Display amount for the all-three bundle, in USD.
+// Checkout still uses BUNDLE_PRICE_ID in lib/stripe.ts.
+export const BUNDLE_PRICE_USD = 99;
+
 // All three courses in the catalog are now fully written.
 export const courses: Course[] = [
   coliving101,

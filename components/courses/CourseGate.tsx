@@ -7,7 +7,6 @@ type CourseGateProps = {
   courseSlug: string;
   courseTitle: string;
   price: number;
-  originalPrice?: number;
 };
 
 // Full-page gate shown in place of lesson content when the user
@@ -16,7 +15,6 @@ export default function CourseGate({
   courseSlug,
   courseTitle,
   price,
-  originalPrice,
 }: CourseGateProps) {
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-6">
@@ -33,16 +31,7 @@ export default function CourseGate({
         </p>
 
         <div className="mb-8">
-          {originalPrice ? (
-            <p className="font-heading text-3xl text-charcoal">
-              <span className="line-through text-warmgray/50 text-xl">
-                ${originalPrice}
-              </span>{" "}
-              <span className="text-gold">${price}</span>
-            </p>
-          ) : (
-            <p className="font-heading text-3xl text-charcoal">${price}</p>
-          )}
+          <p className="font-heading text-3xl text-charcoal">${price}</p>
           <p className="text-[10px] uppercase tracking-eyebrow text-warmgray/60 mt-1">
             One-time payment · Lifetime access
           </p>

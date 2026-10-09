@@ -15,8 +15,7 @@ export const coliving101: Course = {
     "Six modules. Twenty-three lessons. Everything you need to understand the coliving model — from how it works to whether it's right for you.",
   longDescription:
     "A self-paced introduction to general workforce housing coliving. Six modules cover what coliving is, why it's growing, the math that makes it work, how to find and evaluate a property, how to set it up and launch, the day-to-day operations, and the three paths into coliving. Twenty-three lessons. Five module quizzes. Lifetime access.",
-  price: 99,
-  originalPrice: 149,
+  price: 49,
   status: "available",
   symbol: "◈",
   outcomes: [
@@ -2757,9 +2756,9 @@ export const coliving101: Course = {
         {
           type: "bullets",
           items: [
-            "Real Estate Investing 101 — the fundamentals, 8 residential strategies compared, and how to evaluate any deal. $99.",
-            "House Hacking 101 — how to live for free while your tenants pay your mortgage. The best first move for most new investors. $99.",
-            "Bundle all three courses — $149.",
+            "Real Estate Investing 101 — the fundamentals, 8 residential strategies compared, and how to evaluate any deal. $49.",
+            "House Hacking 101 — how to live for free while your tenants pay your mortgage. The best first move for most new investors. $49.",
+            "Bundle all three courses — $99.",
           ],
         },
         { type: "heading", content: "Join the community" },
