@@ -3,6 +3,7 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
+import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
 
 export const metadata = {
   title: "Atlanta Real Estate Investor Communities",
@@ -185,14 +186,24 @@ House hacking is how most people I know got their first door — buy a home, ren
                 </div>
               ))}
             </div>
-            <a
-              href="https://www.househackingatl.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-outline-light"
-            >
-              Visit www.househackingatl.com →
-            </a>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={HOUSE_HACKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline-light"
+              >
+                Visit www.househackingatl.com →
+              </a>
+              <a
+                href={EVENTBRITE_ORGANIZER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline-light"
+              >
+                Meetups on Eventbrite →
+              </a>
+            </div>
           </div>
 
           <div
@@ -278,7 +289,8 @@ House hacking is how most people I know got their first door — buy a home, ren
             Join a group, show up to a meetup, or start with the house hacking guides. Wherever you start, you&apos;ll never do this alone again.
           </p>
           <div className="flex flex-wrap justify-center gap-5">
-            <a href="https://www.househackingatl.com" target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
+            <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
+            <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">Meetups on Eventbrite →</a>
           </div>
         </div>
       </section>

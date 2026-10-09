@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 export const metadata = {
   title: "About Caitlyn Verdugo — Atlanta Investor & Realtor",
@@ -48,13 +50,6 @@ const media = [
   { type: "Podcast", title: "Podcast Episode Title", copy: "Brief description of the episode and what was discussed.", link: "Listen →" },
   { type: "Speaking", title: "Conference or Event Name", copy: "Brief description of the talk or panel topic.", link: "Watch →" },
   { type: "YouTube", title: "Video Title", copy: "Brief description of the video content.", link: "Watch →" },
-];
-
-const reviews = [
-  '"Caitlyn made the entire process seamless. She knew exactly what to look for and guided us through every step. I wouldn\'t work with anyone else."',
-  '"Her knowledge of investment properties is unmatched. She helped me see potential in a property I would have passed on — and it turned out to be my best deal."',
-  '"Professional, responsive, and genuinely invested in my success. Caitlyn goes above and beyond for every client."',
-  '"I came in with a vague idea about real estate investing. Caitlyn helped me build a clear plan and execute on it. Can\'t recommend her enough."',
 ];
 
 const triple = [
@@ -195,7 +190,10 @@ export default function AboutPage() {
             <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
               Free · Facebook group · Metro Atlanta
             </span>
-            <a href="https://www.househackingatl.com" target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+              <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
+              <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer" className="btn-text">Meetups on Eventbrite →</a>
+            </div>
           </div>
         </div>
       </section>
@@ -242,7 +240,7 @@ export default function AboutPage() {
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">What People Are Saying</span>
+            <span className="eyebrow eyebrow-center">What Clients Are Saying</span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-2 leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
@@ -250,23 +248,10 @@ export default function AboutPage() {
               Real reviews from <em className="italic text-gold font-light">real clients.</em>
             </h2>
             <p className="text-[13px] text-warmgray-light">
-              <span className="text-gold tracking-[2px]">★★★★★</span>
-              &nbsp;&nbsp;5.0 on Zillow
+              <ZillowRatingLink />
             </p>
           </div>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {reviews.map((r, i) => (
-              <div
-                key={i}
-                className={`reveal reveal-d${i + 1} bg-white p-10 border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card`}
-              >
-                <span className="block text-gold text-xs tracking-[3px] mb-4">★★★★★</span>
-                <p className="text-[14.5px] leading-[1.75] text-warmgray italic mb-5">{r}</p>
-                <span className="block text-[13px] font-medium text-charcoal">Zillow Review</span>
-                <span className="block text-[11px] text-warmgray-light">Verified Client</span>
-              </div>
-            ))}
-          </div>
+          <ZillowReviewGrid cardClassName="bg-white p-10 border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card" />
         </div>
       </section>
 

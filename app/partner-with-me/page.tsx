@@ -332,32 +332,7 @@ export default function PartnerPage() {
         </div>
       </section>
 
-      {/* ===== 6. TESTIMONIAL ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
-        <div className="mx-auto max-w-[900px]">
-          <div className="reveal text-center mb-14">
-            <span className="eyebrow eyebrow-center">From Partners</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
-              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
-            >
-              What my partners <em className="italic text-gold font-light">say.</em>
-            </h2>
-          </div>
-          <div className="reveal text-center">
-            <blockquote
-              className="font-heading font-light italic leading-[1.45] text-charcoal mb-6"
-              style={{ fontSize: "clamp(20px, 2.2vw, 28px)" }}
-            >
-              “Partner testimonial placeholder — a quote from a current lending or equity partner about their experience working with Caitlyn, the transparency, and the returns.”
-            </blockquote>
-            <span className="block text-sm font-medium text-charcoal">Partner Name</span>
-            <span className="block text-xs text-warmgray-light">Partnership Type</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 7. FINAL CTA ===== */}
+      {/* ===== 6. FINAL CTA ===== */}
       <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
         <span
           aria-hidden
