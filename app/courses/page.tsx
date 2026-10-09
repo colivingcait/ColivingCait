@@ -6,6 +6,7 @@ import Link from "next/link";
 import { BUNDLE_PRICE_USD, courses } from "@/lib/courses";
 import { cn } from "@/lib/cn";
 import BuyButton from "@/components/courses/BuyButton";
+import ScrollToBundle from "@/components/courses/ScrollToBundle";
 
 export const metadata = {
   title: "Real Estate Investing Mini Courses",
@@ -26,6 +27,7 @@ export default function CoursesPage() {
 
   return (
     <>
+      <ScrollToBundle />
       <Section tone="charcoal" className="relative grain overflow-hidden">
         <div className="text-center max-w-3xl mx-auto">
           <Reveal>
@@ -70,7 +72,7 @@ export default function CoursesPage() {
         <Reveal delay={0.2}>
           <div
             id="bundle"
-            className="mt-12 border border-gold bg-white p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left"
+            className="scroll-mt-24 mt-12 border border-gold bg-white p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left"
           >
             <div>
               <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
