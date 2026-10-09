@@ -5,6 +5,7 @@ import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 import { BUNDLE_PRICE_USD, courses } from "@/lib/courses";
 import { cn } from "@/lib/cn";
+import BuyButton from "@/components/courses/BuyButton";
 
 export const metadata = {
   title: "Real Estate Investing Mini Courses",
@@ -65,6 +66,37 @@ export default function CoursesPage() {
             </StaggerItem>
           ))}
         </Stagger>
+
+        <Reveal delay={0.2}>
+          <div
+            id="bundle"
+            className="mt-12 border border-gold bg-white p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left"
+          >
+            <div>
+              <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-2">
+                Bundle
+              </p>
+              <p className="font-heading text-2xl text-charcoal">
+                All three courses
+              </p>
+              <p className="mt-2 text-sm text-warmgray max-w-md">
+                Coliving 101, House Hacking 101, and Real Estate Investing
+                101. Lifetime access, module quizzes included.
+              </p>
+            </div>
+            <div className="flex items-center gap-5 shrink-0">
+              <p className="font-heading text-4xl text-charcoal leading-none">
+                ${BUNDLE_PRICE_USD}
+              </p>
+              <BuyButton
+                courseSlug="bundle"
+                className="bg-charcoal text-cream px-8 py-3 text-sm uppercase tracking-eyebrow hover:bg-charcoal/90 transition-colors"
+              >
+                Get the bundle
+              </BuyButton>
+            </div>
+          </div>
+        </Reveal>
 
         <Reveal delay={0.3}>
           <p className="mt-12 text-center text-xs text-warmgray/70 italic">

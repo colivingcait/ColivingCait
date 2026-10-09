@@ -1,5 +1,6 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import BuyButton from "@/components/courses/BuyButton";
 import { BUNDLE_PRICE_USD, getCourse } from "@/lib/courses";
 
 export const metadata = {
@@ -219,9 +220,9 @@ export default function LearnPage() {
                 <div className="flex items-baseline gap-3">
                   <span className="font-heading font-medium text-[32px] text-charcoal">${BUNDLE_PRICE_USD}</span>
                 </div>
-                <Link href="/courses?bundle=1" className="btn-primary">
+                <BuyButton courseSlug="bundle" className="btn-primary">
                   Get the Bundle
-                </Link>
+                </BuyButton>
               </div>
             </div>
           </div>

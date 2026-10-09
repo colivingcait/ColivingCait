@@ -71,9 +71,31 @@ export function SupabaseAdapter(): Adapter {
     },
 
     async updateUser(user) {
+      const updates: Record<string, string | null> = {};
+      if (user.name !== undefined) updates.name = user.name;
+
+      // The email callback calls updateUser({ id, emailVerified }) after a
+      // magic link. This adapter does not write public.users.email_verified
+      // — that timestamptz column may be absent, and an empty PostgREST
+      // update is rejected. Fetch the row and let the session be created.
+      if (Object.keys(updates).length === 0) {
+        const { data, error } = await supabase
+          .from("users")
+          .select()
+          .eq("id", user.id!)
+          .single();
+        if (error || !data) throw error ?? new Error("User not found");
+        return {
+          id: data.id,
+          email: data.email,
+          emailVerified: null,
+          name: data.name,
+        };
+      }
+
       const { data, error } = await supabase
         .from("users")
-        .update({ name: user.name ?? undefined })
+        .update(updates)
         .eq("id", user.id!)
         .select()
         .single();
