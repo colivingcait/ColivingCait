@@ -91,10 +91,8 @@ export type Course = {
   tagline: string;
   description: string;
   longDescription: string;
+  /** Current price in USD. */
   price: number;
-  /** Original / "compare-at" price shown struck-through next to `price`
-   *  to convey a markdown. Optional. */
-  originalPrice?: number;
   status: "available" | "coming-soon";
   /** Two-letter symbol for the course card */
   symbol: string;

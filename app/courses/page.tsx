@@ -3,33 +3,33 @@ import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
-import { courses } from "@/lib/courses";
+import { BUNDLE_PRICE_USD, courses } from "@/lib/courses";
 import { cn } from "@/lib/cn";
 
 export const metadata = {
   title: "Real Estate Investing Mini Courses",
   description:
-    "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+    "Three self-paced mini courses on coliving, house hacking, and real estate investing. $49 each, $99 bundle. Lifetime access. Module quizzes included.",
   alternates: { canonical: "/courses" },
   openGraph: {
     title: "Real Estate Investing Mini Courses",
     description:
-      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $99 each, $149 bundle. Lifetime access. Module quizzes included.",
+      "Three self-paced mini courses on coliving, house hacking, and real estate investing. $49 each, $99 bundle. Lifetime access. Module quizzes included.",
     url: "/courses",
   },
 };
 
-// Course marketplace — three cards, $99 each ($149 bundle). Coliving 101
-// and House Hacking 101 are live; Real Estate Investing 101 is a stub
-// until its content lands.
+// Course marketplace — three cards at the individual course price, plus the bundle.
 export default function CoursesPage() {
+  const coursePrice = courses[0]?.price ?? 49;
+
   return (
     <>
       <Section tone="charcoal" className="relative grain overflow-hidden">
         <div className="text-center max-w-3xl mx-auto">
           <Reveal>
             <Eyebrow className="mb-6">
-              ✦ Limited time launch pricing
+              ✦ Mini courses
             </Eyebrow>
           </Reveal>
           <Reveal delay={0.1}>
@@ -39,23 +39,16 @@ export default function CoursesPage() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className="mt-8 inline-flex items-baseline gap-3 text-cream/85">
-              <span className="text-cream/40 line-through text-2xl md:text-3xl">
-                $149 each
-              </span>
               <span className="font-heading text-3xl md:text-4xl text-gold-light">
-                $99 each
-              </span>
-              <span className="text-[10px] uppercase tracking-eyebrow text-gold-light border border-gold-light/40 px-2 py-1 ml-1">
-                33% off
+                ${coursePrice} each
               </span>
             </div>
           </Reveal>
           <Reveal delay={0.3}>
             <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
               Three self-paced courses on coliving, house hacking, and
-              real estate investing. Bundle all three for $149 (a $447
-              value) — lifetime access, module quizzes included. This
-              pricing won&apos;t last.
+              real estate investing. Bundle all three for ${BUNDLE_PRICE_USD} —
+              lifetime access, module quizzes included.
             </p>
           </Reveal>
         </div>
@@ -103,16 +96,9 @@ function CourseCard({ course }: { course: (typeof courses)[number] }) {
       )}
 
       <p className="text-3xl text-gold mb-5">{course.symbol}</p>
-      <div className="flex items-center gap-2 mb-3">
-        <p className="text-[10px] uppercase tracking-eyebrow text-gold">
-          Mini course
-        </p>
-        {course.originalPrice && (
-          <span className="text-[10px] uppercase tracking-eyebrow text-gold/80 border border-gold/40 px-1.5 py-0.5">
-            Limited time · ${course.originalPrice - course.price} off
-          </span>
-        )}
-      </div>
+      <p className="text-[10px] uppercase tracking-eyebrow text-gold mb-3">
+        Mini course
+      </p>
       <Heading level={3} size="sm">
         {course.title}
       </Heading>
@@ -125,16 +111,9 @@ function CourseCard({ course }: { course: (typeof courses)[number] }) {
       </p>
 
       <div className="mt-8 pt-6 border-t border-brand flex items-baseline justify-between">
-        <div className="flex items-baseline gap-2">
-          {course.originalPrice && (
-            <span className="text-base text-warmgray-light line-through">
-              ${course.originalPrice}
-            </span>
-          )}
-          <p className="font-heading text-4xl text-charcoal leading-none">
-            ${course.price}
-          </p>
-        </div>
+        <p className="font-heading text-4xl text-charcoal leading-none">
+          ${course.price}
+        </p>
         <p className="text-xs uppercase tracking-button">
           {isAvailable ? (
             <span className="text-gold link-underline inline-block">

@@ -1,16 +1,16 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
-import { getCourse } from "@/lib/courses";
+import { BUNDLE_PRICE_USD, getCourse } from "@/lib/courses";
 
 export const metadata = {
   title: "Real Estate Coaching & Courses — Atlanta",
   description:
-    "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+    "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $49 mini courses to 1:1 coaching and ongoing consulting.",
   alternates: { canonical: "/learn" },
   openGraph: {
     title: "Real Estate Coaching & Courses — Atlanta",
     description:
-      "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $99 mini courses to 1:1 coaching and ongoing consulting.",
+      "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $49 mini courses to 1:1 coaching and ongoing consulting.",
     url: "/learn",
   },
 };
@@ -184,14 +184,8 @@ export default function LearnPage() {
                   of course content
                 </span>
                 <div className="flex items-baseline gap-3 mb-5">
-                  <span className="text-base text-warmgray-light line-through">
-                    $149
-                  </span>
                   <span className="font-heading font-medium text-[28px] text-charcoal block">
-                    $99
-                  </span>
-                  <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    Limited
+                    ${getCourse(c.slug)?.price}
                   </span>
                 </div>
                 <Link
@@ -223,11 +217,7 @@ export default function LearnPage() {
               </div>
               <div className="flex flex-col items-center lg:flex-row gap-6 shrink-0">
                 <div className="flex items-baseline gap-3">
-                  <span className="text-base text-warmgray-light line-through">$447</span>
-                  <span className="font-heading font-medium text-[32px] text-charcoal">$149</span>
-                  <span className="text-[10px] uppercase tracking-eyebrow text-gold border border-gold/40 px-1.5 py-0.5">
-                    $298 off
-                  </span>
+                  <span className="font-heading font-medium text-[32px] text-charcoal">${BUNDLE_PRICE_USD}</span>
                 </div>
                 <Link href="/courses?bundle=1" className="btn-primary">
                   Get the Bundle

@@ -17,8 +17,7 @@ export const houseHacking101: Course = {
     "Six modules. Twenty-one lessons. The complete strategy for buying a property, living in part of it, and renting out the rest — your first investment property and the foundation of your portfolio.",
   longDescription:
     "A self-paced introduction to the most powerful first move in real estate. Six modules cover what house hacking is, the four types, owner-occupied financing (FHA / conventional / VA), how to find the right property, how to run the numbers, how to operate with tenants under your own roof, and how to scale into a portfolio. Twenty-one lessons. Five module quizzes. Lifetime access.",
-  price: 99,
-  originalPrice: 149,
+  price: 49,
   status: "available",
   symbol: "⌂",
   outcomes: [
@@ -2587,7 +2586,7 @@ export const houseHacking101: Course = {
         {
           type: "callout",
           tone: "cream",
-          body: "Coliving 101 — the complete coliving model from math to operations. $99. colivingcait.com/courses/coliving-101",
+          body: "Coliving 101 — the complete coliving model from math to operations. $49. colivingcait.com/courses/coliving-101",
         },
         { type: "heading", content: "Want hands-on guidance" },
         {
@@ -2617,8 +2616,8 @@ export const houseHacking101: Course = {
         {
           type: "bullets",
           items: [
-            "Real Estate Investing 101 — the fundamentals, 8 residential strategies compared, and how to evaluate any deal. $99.",
-            "Bundle all three courses — $149.",
+            "Real Estate Investing 101 — the fundamentals, 8 residential strategies compared, and how to evaluate any deal. $49.",
+            "Bundle all three courses — $99.",
           ],
         },
         {

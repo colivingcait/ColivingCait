@@ -55,7 +55,6 @@ export default async function LessonPage({
         courseSlug={data.course.slug}
         courseTitle={data.course.title}
         price={data.course.price}
-        originalPrice={data.course.originalPrice}
       />
     );
   }
