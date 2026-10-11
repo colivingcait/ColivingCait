@@ -21,10 +21,17 @@ export function ZillowRatingLink({ className = "" }: { className?: string }) {
 }
 
 /** Two-column review grid in the same card style as the rest of the site. */
-export function ZillowReviewGrid({ cardClassName }: { cardClassName: string }) {
+export function ZillowReviewGrid({
+  cardClassName,
+  limit,
+}: {
+  cardClassName: string;
+  limit?: number;
+}) {
+  const quotes = limit ? zillowTestimonials.slice(0, limit) : zillowTestimonials;
   return (
     <div className="grid gap-6 lg:grid-cols-2">
-      {zillowTestimonials.map((t, i) => (
+      {quotes.map((t, i) => (
         <article
           key={t.author}
           className={`reveal reveal-d${(i % 6) + 1} ${cardClassName}`}

@@ -21,12 +21,13 @@ function hasDarkHero(pathname: string) {
 
 const links: { href: string; label: string; plain?: boolean }[] = [
   { href: "/about", label: "About" },
-  { href: "/what-is-coliving", label: "What Is Coliving" },
-  { href: "/learn", label: "Learn With Me" },
-  { href: "/partner-with-me", label: "Partner" },
   { href: "/buy-and-sell", label: "Buy & Sell" },
+  { href: "/what-is-coliving", label: "What Is Coliving" },
+  { href: "/partner-with-me", label: "Partner" },
   { href: "/community", label: "Community" },
   { href: "/listings", label: "Listings", plain: true },
+  { href: "/calculator", label: "Calculators" },
+  { href: "/learn", label: "Learn" },
 ];
 
 export default function Nav() {
@@ -41,7 +42,7 @@ export default function Nav() {
   // Shared desktop link styling (gold underline grows on hover / active).
   const linkClass = (active: boolean) =>
     cn(
-      "relative text-[13px] tracking-[0.02em] transition-colors duration-200",
+      "relative text-[12px] xl:text-[13px] tracking-[0.02em] transition-colors duration-200",
       "after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold",
       "after:transition-[width] after:duration-[350ms] after:ease-brand",
       active
@@ -86,15 +87,15 @@ export default function Nav() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden lg:flex items-center gap-9 list-none">
+        <ul className="hidden lg:flex items-center gap-3 xl:gap-5 list-none">
           {links.map((l) => (
             <li key={l.href}>
               {l.plain ? (
-                <a href={l.href} className={linkClass(pathname === l.href)}>
+                <a href={l.href} className={linkClass(pathname === l.href || pathname.startsWith(`${l.href}/`))}>
                   {l.label}
                 </a>
               ) : (
-                <Link href={l.href} className={linkClass(pathname === l.href)}>
+                <Link href={l.href} className={linkClass(pathname === l.href || pathname.startsWith(`${l.href}/`))}>
                   {l.label}
                 </Link>
               )}

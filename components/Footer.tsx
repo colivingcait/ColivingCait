@@ -5,16 +5,16 @@ import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
 // stay plain anchors — next/link would client-navigate inside this app.
 const navigateA = [
   { href: "/about", label: "About" },
+  { href: "/buy-and-sell", label: "Buy & Sell" },
   { href: "/what-is-coliving", label: "What Is Coliving" },
-  { href: "/learn", label: "Learn With Me" },
-  { href: "/partner-with-me", label: "Partner With Me" },
+  { href: "/partner-with-me", label: "Partner" },
 ];
 
 const navigateB = [
-  { href: "/buy-and-sell", label: "Buy & Sell" },
-  { href: "/listings", label: "Listings", plain: true },
   { href: "/community", label: "Community" },
+  { href: "/listings", label: "Listings", plain: true },
   { href: "/calculator", label: "Calculators" },
+  { href: "/learn", label: "Learn" },
 ];
 
 function FooterLink({
@@ -106,7 +106,7 @@ export default function Footer() {
             </li>
           </ul>
           <a className="fbook" href="/book">
-            BOOK A MEETING
+            Book a Call
           </a>
         </div>
       </div>

@@ -2,6 +2,7 @@ import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
+import HeroFrame from "@/components/HeroFrame";
 import ColivingCalculator from "@/components/calculator/ColivingCalculator";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
@@ -25,7 +26,8 @@ export default function ColivingCalculatorPage() {
   return (
     <>
       <Section tone="charcoal" className="relative grain overflow-hidden">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_200px] max-w-4xl mx-auto">
+          <div className="text-center md:text-left">
           <Reveal>
             <Eyebrow className="mb-6">The Coliving Calculator</Eyebrow>
           </Reveal>
@@ -35,12 +37,14 @@ export default function ColivingCalculatorPage() {
             </Heading>
           </Reveal>
           <Reveal delay={0.25}>
-            <p className="mt-8 text-cream/75 leading-body text-[1.0625rem]">
+            <p className="mt-8 text-cream leading-body text-[1.0625rem]">
               Six steps. Five minutes. The same underwriting model I run on
               my own deals — adapted into a tool that walks you straight
               from address to verdict.
             </p>
           </Reveal>
+          </div>
+          <HeroFrame src="/images/raven/ravenkitchen.jpg" alt="Coliving kitchen interior" ratio="4 / 5" />
         </div>
       </Section>
 

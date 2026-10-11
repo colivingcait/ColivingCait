@@ -2,6 +2,7 @@ import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
+import HeroFrame from "@/components/HeroFrame";
 import ProFormaCalculator from "@/components/calculator/ProFormaCalculator";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
@@ -26,7 +27,8 @@ export default function ProFormaCalculatorPage() {
   return (
     <>
       <Section tone="charcoal" className="relative grain overflow-hidden">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_200px] max-w-4xl mx-auto">
+          <div className="text-center md:text-left">
           <Reveal>
             <Eyebrow className="mb-6">The Pro Forma Calculator</Eyebrow>
           </Reveal>
@@ -37,7 +39,7 @@ export default function ProFormaCalculatorPage() {
             </Heading>
           </Reveal>
           <Reveal delay={0.25}>
-            <p className="mt-8 text-cream/75 leading-body text-[1.0625rem]">
+            <p className="mt-8 text-cream leading-body text-[1.0625rem]">
               No locked assumptions, no preloaded figures. Enter your own
               numbers for everything — rent, vacancy, platform fee, utilities,
               maintenance, CapEx, taxes, and financing — and the pro forma
@@ -45,6 +47,8 @@ export default function ProFormaCalculatorPage() {
               does.
             </p>
           </Reveal>
+          </div>
+          <HeroFrame src="/images/raven/ravenbed1.jpg" alt="Furnished coliving bedroom" ratio="4 / 5" />
         </div>
       </Section>
 

@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import WorkWithMe from "@/components/WorkWithMe";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import {
+  ATLANTA_WOMEN_INVESTORS_URL,
+  EVENTBRITE_ORGANIZER_URL,
+  HOUSE_HACKING_URL,
+} from "@/lib/site";
 import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 // Homepage — pixel-perfect rewrite of coliving-cait-homepage.html.
@@ -14,13 +19,14 @@ import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 // so utility usage matches the source HTML 1:1.
 
 const tickerItems = [
-  "$2.5M AUM",
+  "5.0 from 18 Zillow reviews",
   "50+ Rooms",
+  "$2.5M AUM",
+  "6+ Years Experience",
   "Top Realtor in DeKalb County",
-  "5 Star Zillow Rating",
-  "Investor-Friendly Agent",
-  "House Hacking Specialist",
-  "Community Builder",
+  "100+ Residents",
+  "500+ Women in Coliving",
+  "First summit for women in coliving",
 ];
 
 export default function HomePage() {
@@ -41,13 +47,13 @@ export default function HomePage() {
               <em className="italic text-gold font-light">one door at a time.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray mb-11 max-w-[440px] mx-auto lg:mx-0 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
-              Coliving. House hacking. Your first home or your tenth deal. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro — now I help other investors do the same, whether you&apos;re learning, buying, selling, or partnering.
+              Atlanta Realtor with Keller Williams. Coliving, house hacking, your first home or your tenth deal. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro — and I help investors and house hackers buy, sell, and partner.
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
-              <a href="/book" className="btn-primary">Book a Discovery Call</a>
-              <Link href="/what-is-coliving" className="btn-text">
-                Learn about coliving <span>→</span>
-              </Link>
+              <a href="/book" className="btn-primary">Book a Call</a>
+              <a href="/listings" className="btn-text">
+                View listings <span>→</span>
+              </a>
             </div>
           </div>
 
@@ -58,17 +64,17 @@ export default function HomePage() {
             >
               <Image
                 src="/images/caitlyn-yellow-blazer.jpg"
-                alt="Caitlyn Verdugo"
+                alt="Caitlyn Verdugo, Atlanta Realtor"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 560px"
                 className="object-cover"
               />
-            </div>
-            <div className="hidden lg:block absolute bottom-12 -left-9 bg-white px-7 py-[22px] z-[3] shadow-photo opacity-0 [animation:heroReveal_0.7s_cubic-bezier(0.16,1,0.3,1)_1.1s_forwards]">
-              <div className="font-heading font-medium text-[28px] leading-none text-charcoal">50+</div>
-              <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light">
-                Coliving Rooms
+              <div className="hidden lg:block absolute bottom-6 left-6 bg-white px-6 py-5 z-[3] shadow-photo">
+                <div className="font-heading font-medium text-[28px] leading-none text-charcoal">50+</div>
+                <div className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray whitespace-nowrap">
+                  Coliving Rooms
+                </div>
               </div>
             </div>
           </div>
@@ -91,83 +97,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 3. SERVICE CARDS ===== */}
-      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="grid items-end gap-4 lg:gap-[60px] mb-12 lg:mb-20 lg:grid-cols-2">
-            <div className="reveal">
-              <span className="eyebrow">How I Can Help</span>
-              <h2
-                className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.08]"
-                style={{ fontSize: "clamp(32px, 3.4vw, 48px)" }}
-              >
-                Three ways to work <em className="italic text-gold font-light">with me.</em>
-              </h2>
-            </div>
-            <p className="reveal reveal-d1 max-w-[400px] text-[15px] text-warmgray">
-              Whether you&apos;re ready to learn, invest, buy, or sell — I meet you exactly where you are.
-            </p>
-          </div>
-
-          <div className="grid gap-4 lg:gap-px lg:grid-cols-3 lg:bg-[rgba(28,25,23,0.06)] lg:border lg:border-soft">
-            {[
-              {
-                num: "01",
-                title: "Learn With Me",
-                desc: "Whether you're starting from scratch or scaling what you've built, I'll meet you where you are with the right level of guidance.",
-                items: ["1:1 Coaching Program", "Advisory Retainer", "Mini Courses"],
-                href: "/learn",
-                cta: "Explore options",
-              },
-              {
-                num: "02",
-                title: "Partner With Me",
-                desc: "Put your capital to work in Atlanta's coliving market. You invest, I operate — with full transparency, legal protections, and consistent payment history.",
-                items: ["Private Money Lending", "Private Money Partnerships", "Coliving Arbitrage"],
-                href: "/partner-with-me",
-                cta: "Learn more",
-              },
-              {
-                num: "03",
-                title: "Buy & Sell With Me",
-                desc: "Work with a Keller Williams Realtor who thinks like an investor — whether you're buying your first home, selling a rental, or hunting your next deal.",
-                items: ["Buying & Selling", "Investment Properties", "House Hacking & Coliving"],
-                href: "/buy-and-sell",
-                cta: "Get started",
-              },
-            ].map((card, i) => (
-              <Link
-                key={card.num}
-                href={card.href}
-                className={`reveal reveal-d${i + 1} group bg-white px-9 lg:px-11 py-12 cursor-pointer transition-[background] duration-500 ease-brand relative overflow-hidden border border-soft lg:border-0 hover:bg-cream`}
-              >
-                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold scale-x-0 origin-left transition-transform duration-500 ease-brand group-hover:scale-x-100" />
-                <div className="font-heading font-light text-[64px] leading-none mb-7 text-[rgba(28,25,23,0.05)] group-hover:text-[rgba(196,149,90,0.25)] transition-colors duration-500">
-                  {card.num}
-                </div>
-                <h3 className="font-heading font-medium text-[26px] leading-tight tracking-[-0.01em] text-charcoal mb-4">
-                  {card.title}
-                </h3>
-                <p className="text-sm leading-[1.8] text-warmgray mb-6">{card.desc}</p>
-                <ul className="list-none mb-8">
-                  {card.items.map((it) => (
-                    <li key={it} className="text-[13px] text-warmgray py-[5px] flex items-center gap-2.5">
-                      <span className="text-gold text-[7px] shrink-0">✦</span>
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-                <span className="inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.1em] text-charcoal group-hover:text-gold-dark transition-colors duration-300">
-                  {card.cta}
-                  <span className="relative inline-block w-6 h-px bg-charcoal group-hover:w-10 group-hover:bg-gold-dark transition-all duration-300">
-                    <span className="absolute -top-[3px] right-0 w-[7px] h-[7px] border-t border-r border-charcoal group-hover:border-gold-dark rotate-45 transition-colors duration-300" />
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WorkWithMe
+        title={
+          <>
+            Three ways to work <em className="italic text-gold font-light">with me.</em>
+          </>
+        }
+        intro="Whether you're buying, selling, investing, or ready to learn — I meet you exactly where you are."
+      />
 
       {/* ===== 4. WHAT IS COLIVING — MATH ===== */}
       <section className="px-8 lg:px-[60px] bg-white">
@@ -178,8 +115,8 @@ export default function HomePage() {
               className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-6 leading-[1.12]"
               style={{ fontSize: "clamp(28px, 2.8vw, 40px)" }}
             >
-              The math that makes coliving{" "}
-              <em className="italic text-gold font-light">impossible to ignore.</em>
+              Same house.{" "}
+              <em className="italic text-gold font-light">A different set of numbers.</em>
             </h2>
             <p className="text-[15px] leading-[1.85] text-warmgray mb-10 max-w-[420px]">
               Coliving transforms a single-family home into multiple individual income streams — giving residents affordable, flexible, high-quality housing while generating significantly more revenue than a traditional rental.
@@ -239,91 +176,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 5. LEAD MAGNET #1 ===== */}
-      <LeadMagnet
-        eyebrow="Free Guide"
-        title={
-          <>
-            Not ready to book a call? Grab the free{" "}
-            <em className="italic text-gold font-light">Coliving Starter Guide.</em>
-          </>
-        }
-        copy="Everything you need to understand the coliving model, the math, and how to evaluate your first deal — in one quick read."
-        button="Send It"
-        bg="bg-blush"
-        tag={CK_TAGS.COLIVING_STARTER_GUIDE_DOWNLOADED}
-      />
-
-      {/* ===== 6. WHY COLIVING ===== */}
-      <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16 lg:mb-20">
-            <span className="eyebrow eyebrow-center">Why Coliving</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
-            >
-              One strategy. <em className="italic text-gold font-light">Three wins.</em>
-            </h2>
-          </div>
-          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:gap-14 lg:grid-cols-3">
-            {[
-              {
-                icon: "$",
-                title: "For Investors",
-                copy: "Higher cashflow, built-in risk diversification, and a proven model that turns single-family homes into wealth-building machines. The math speaks for itself.",
-              },
-              {
-                icon: "⌂",
-                title: "For Residents",
-                copy: "Affordable, flexible, fully furnished housing with individual leases and no cosigner required. A real option for the people who keep our communities running.",
-              },
-              {
-                icon: "◈",
-                title: "For Communities",
-                copy: "Every coliving home is one more option for someone who needs a safe, stable, high-quality, and affordable place to land — without waiting on politicians or new construction.",
-              },
-            ].map((c, i) => (
-              <div
-                key={c.title}
-                className={`reveal reveal-d${i + 1} group text-center p-10 lg:py-10 lg:px-7 transition-all duration-500 border border-transparent hover:border-brand hover:bg-cream hover:-translate-y-1`}
-              >
-                <span className="block text-[32px] text-gold mb-6 transition-transform duration-500 group-hover:scale-110">
-                  {c.icon}
-                </span>
-                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3.5 leading-tight">
-                  {c.title}
-                </h3>
-                <p className="text-sm leading-[1.8] text-warmgray">{c.copy}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 7. QUOTE BANNER ===== */}
-      <section className="px-8 lg:px-[60px] py-24 bg-cream text-center relative overflow-hidden">
-        <span
-          aria-hidden
-          className="absolute -top-5 left-1/2 -translate-x-1/2 font-heading font-light leading-none pointer-events-none"
-          style={{ fontSize: "280px", color: "rgba(196,149,90,0.06)" }}
-        >
-          “
-        </span>
-        <div className="reveal relative">
-          <blockquote
-            className="font-heading font-light italic leading-[1.4] text-charcoal max-w-[760px] mx-auto"
-            style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
-          >
-            “Coliving isn&apos;t just a housing strategy — it&apos;s how people are building generational wealth right now.”
-            <span className="font-sans not-italic block mt-7 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">
-              — Caitlyn Verdugo
-            </span>
-          </blockquote>
-        </div>
-      </section>
-
-      {/* ===== 8. TESTIMONIALS ===== */}
+      {/* ===== TESTIMONIALS ===== */}
       <section className="px-8 lg:px-[60px] py-24 lg:py-[140px] bg-white">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal text-center mb-14 lg:mb-[72px]">
@@ -338,7 +191,10 @@ export default function HomePage() {
               <ZillowRatingLink />
             </p>
           </div>
-          <ZillowReviewGrid cardClassName="bg-cream p-10 border border-transparent hover:border-brand hover:-translate-y-[3px] hover:shadow-card transition-all duration-500" />
+          <ZillowReviewGrid
+            limit={3}
+            cardClassName="bg-cream p-10 border border-transparent hover:border-brand hover:-translate-y-[3px] hover:shadow-card transition-all duration-500"
+          />
         </div>
       </section>
 
@@ -351,8 +207,8 @@ export default function HomePage() {
               className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
               style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
             >
-              You don&apos;t have to figure this out{" "}
-              <em className="italic text-gold font-light">alone.</em>
+              Find your people{" "}
+              <em className="italic text-gold font-light">in Atlanta.</em>
             </h2>
             <p className="mt-5 text-[15px] text-warmgray max-w-[520px] mx-auto leading-[1.8]">
               Two free communities — house hacking, and women building portfolios. Find the room that fits where you are.
@@ -379,7 +235,7 @@ export default function HomePage() {
                 copy: "A monthly in-person meetup for women investing in Atlanta real estate — every strategy, every experience level. Bring your questions, your deals, and your ambition.",
                 detail: "Last Tuesday · Atlanta · Free",
                 cta: "See the next meetup →",
-                href: "https://atlantawomeninvestors.com",
+                href: ATLANTA_WOMEN_INVESTORS_URL,
                 external: true,
               },
             ].map((c, i) => (
@@ -449,13 +305,13 @@ export default function HomePage() {
             className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
             style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
           >
-            There&apos;s a seat at this table{" "}
-            <em className="italic text-gold-light font-light">for you.</em>
+            Buying, selling, or investing in Atlanta?{" "}
+            <em className="italic text-gold-light font-light">Start with a call.</em>
           </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Whether you&apos;re buying your first home, exploring coliving, or scaling a portfolio, it starts with one conversation.
+          <p className="text-[15px] text-cream mb-11 max-w-[440px] mx-auto leading-[1.8]">
+            Tell me what you&apos;re looking at. I&apos;ll tell you how I&apos;d underwrite it.
           </p>
-          <a href="/book" className="btn-gold">Book a Discovery Call</a>
+          <a href="/book" className="btn-gold">Book a Call</a>
         </div>
       </section>
     </>

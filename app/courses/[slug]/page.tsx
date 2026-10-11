@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import HeroFrame from "@/components/HeroFrame";
 import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
@@ -88,12 +89,12 @@ export default async function CourseLandingPage({
                 <em
                   className="text-gold-light"
                 >
-                  {course.tagline.toLowerCase()}
+                  {course.tagline}
                 </em>
               </Heading>
             </Reveal>
             <Reveal delay={0.25}>
-              <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-xl">
+              <p className="mt-6 text-cream leading-body text-[1.0625rem] max-w-xl">
                 {course.longDescription}
               </p>
             </Reveal>
@@ -318,11 +319,24 @@ export default async function CourseLandingPage({
             </Heading>
           </Reveal>
           <Reveal delay={0.25}>
-            <p className="mt-6 text-cream/70 leading-body max-w-xl mx-auto">
+            <p className="mt-6 text-cream leading-body max-w-xl mx-auto">
               {purchased
                 ? "You have lifetime access to this course. Pick up where you left off."
                 : "One-time payment. Lifetime access. Start learning at your own pace."}
             </p>
+          </Reveal>
+          <Reveal delay={0.35}>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5">
+              <div className="w-24 shrink-0">
+                <HeroFrame src="/images/caitlyn-yellow-blazer.jpg" alt="Caitlyn Verdugo" ratio="1 / 1" />
+              </div>
+              <p className="text-sm text-cream leading-body max-w-xs text-left">
+                Taught by Caitlyn Verdugo, Keller Williams Realtor.{" "}
+                <a href="/book" className="text-gold-light underline">
+                  Book a Call
+                </a>
+              </p>
+            </div>
           </Reveal>
           <Reveal delay={0.4}>
             <div className="mt-10">

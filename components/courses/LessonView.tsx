@@ -233,7 +233,7 @@ function LessonNavigation({
             Course complete · Next →
           </p>
           <p className="mt-2 font-heading text-lg leading-heading">
-            Book a coaching call
+            Book a Call
           </p>
         </a>
       )}

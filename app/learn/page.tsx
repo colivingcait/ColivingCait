@@ -1,5 +1,5 @@
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import HeroFrame from "@/components/HeroFrame";
 import BuyButton from "@/components/courses/BuyButton";
 import { BUNDLE_PRICE_USD, getCourse } from "@/lib/courses";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
@@ -104,8 +104,9 @@ export default function LearnPage() {
       <RevealObserver />
 
       {/* ===== HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-40 lg:pb-[100px] bg-white text-center relative">
-        <div className="mx-auto max-w-[760px]">
+      <section className="px-8 lg:px-[60px] pt-[140px] pb-20 lg:pt-40 lg:pb-[100px] bg-white relative">
+        <div className="mx-auto grid w-full max-w-[1320px] items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="max-w-[640px] mx-auto lg:mx-0 text-center lg:text-left">
           <span className="eyebrow eyebrow-center">Learn With Me</span>
           <h1
             className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-7 leading-[1.05] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
@@ -114,7 +115,7 @@ export default function LearnPage() {
             Wherever you are in your real estate investing journey, there&apos;s a{" "}
             <em className="italic text-gold font-light">next step here.</em>
           </h1>
-          <p className="text-[17px] leading-[1.85] text-warmgray max-w-[560px] mx-auto mb-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+            <p className="text-[17px] leading-[1.85] text-warmgray max-w-[560px] mx-auto lg:mx-0 mb-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
             From learning the coliving model for the first time to scaling a portfolio you&apos;ve already built — I meet you exactly where you are with the right level of guidance.
           </p>
           <p className="text-sm text-warmgray-light opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.65s_forwards]">
@@ -145,6 +146,41 @@ export default function LearnPage() {
               </span>
             ))}
           </div>
+        </div>
+        <div className="max-w-[420px] mx-auto lg:max-w-none">
+          <HeroFrame src="/images/caitlyn-yellow-blazer.jpg" alt="Caitlyn Verdugo" />
+        </div>
+        </div>
+      </section>
+
+      {/* ===== FASCINATIONS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white border-y border-soft">
+        <div className="mx-auto max-w-[1320px] grid gap-12 lg:gap-20 items-center lg:grid-cols-[1fr_1.4fr]">
+          <div className="reveal">
+            <span className="eyebrow">Did You Know</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5 leading-[1.12]"
+              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
+            >
+              The things most investors learn{" "}
+              <em className="italic text-gold font-light">the hard way.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray">
+              These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
+            </p>
+          </div>
+
+          <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
+            {fascinations.map((f) => (
+              <li
+                key={f}
+                className="group text-base font-normal text-charcoal py-4 flex items-start gap-3.5 border-b border-soft transition-all duration-300 break-inside-avoid hover:text-gold-dark hover:translate-x-1"
+              >
+                <span className="text-gold text-[9px] mt-2 shrink-0">✦</span>
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -191,13 +227,9 @@ export default function LearnPage() {
                     ${getCourse(c.slug)?.price}
                   </span>
                 </div>
-                <Link
-                  href={c.href}
-                  className="btn-gold w-full text-center"
-                  style={{ display: "block" }}
-                >
+                <BuyButton courseSlug={c.slug} className="btn-gold w-full text-center block">
                   Buy Now
-                </Link>
+                </BuyButton>
               </div>
             ))}
           </div>
@@ -227,6 +259,34 @@ export default function LearnPage() {
                 </BuyButton>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== STRATEGY SESSION ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
+        <div className="reveal mx-auto max-w-[1000px] grid gap-10 items-center text-center lg:text-left lg:grid-cols-[1fr_auto] lg:gap-14">
+          <div>
+            <h3
+              className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(30px, 3vw, 40px)" }}
+            >
+              Just need a <em className="italic text-gold font-light">one-time deep dive?</em>
+            </h3>
+            <p className="text-[17px] text-warmgray leading-[1.8]">
+              Bring your deal, your question, or your biggest challenge. One hour, one focused conversation — walk away with clarity and a clear next step.
+            </p>
+          </div>
+          <div className="text-center shrink-0">
+            <div className="font-heading font-medium text-[52px] leading-none text-charcoal mb-1.5">
+              $250
+            </div>
+            <span className="block text-[15px] text-warmgray-light mb-6">
+              One session · 60 minutes
+            </span>
+            <a href="/book" className="btn-gold">
+              Book a Call
+            </a>
           </div>
         </div>
       </section>
@@ -288,22 +348,12 @@ export default function LearnPage() {
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
               </span>
-              <Link
-                href="/contact?topic=coaching"
-                className="btn-gold w-full text-center mt-7"
-                style={{ display: "block" }}
-              >
+              <a href="/book" className="btn-gold w-full text-center mt-7 block">
                 Enroll Now
-              </Link>
+              </a>
               <p className="text-[13px] text-warmgray-light mt-3 text-center">
                 Payment plan available at checkout
               </p>
-              <a
-                href="/book"
-                className="btn-text mt-5 flex justify-center"
-              >
-                Have questions? Book a Discovery Call →
-              </a>
             </div>
           </div>
         </div>
@@ -352,75 +402,10 @@ export default function LearnPage() {
               </span>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
-              <Link href="/contact?topic=coaching" className="btn-gold">
+              <a href="/book" className="btn-gold">
                 Start Now — $1,000/mo
-              </Link>
-              <a href="/book" className="btn-text">
-                Have questions? Book a Discovery Call →
               </a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FASCINATIONS ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white border-y border-soft">
-        <div className="mx-auto max-w-[1320px] grid gap-12 lg:gap-20 items-center lg:grid-cols-[1fr_1.4fr]">
-          <div className="reveal">
-            <span className="eyebrow">Did You Know</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5 leading-[1.12]"
-              style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
-            >
-              The things most investors learn{" "}
-              <em className="italic text-gold font-light">the hard way.</em>
-            </h2>
-            <p className="text-[15px] text-warmgray mb-8">
-              These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
-            </p>
-            <a href="/book" className="btn-primary">
-              Book a Discovery Call
-            </a>
-          </div>
-
-          <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
-            {fascinations.map((f) => (
-              <li
-                key={f}
-                className="group text-base font-normal text-charcoal py-4 flex items-start gap-3.5 border-b border-soft transition-all duration-300 break-inside-avoid hover:text-gold-dark hover:translate-x-1"
-              >
-                <span className="text-gold text-[9px] mt-2 shrink-0">✦</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ===== STRATEGY SESSION ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
-        <div className="reveal mx-auto max-w-[1000px] grid gap-10 items-center text-center lg:text-left lg:grid-cols-[1fr_auto] lg:gap-14">
-          <div>
-            <h3
-              className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-4"
-              style={{ fontSize: "clamp(30px, 3vw, 40px)" }}
-            >
-              Just need a <em className="italic text-gold font-light">one-time deep dive?</em>
-            </h3>
-            <p className="text-[17px] text-warmgray leading-[1.8]">
-              Bring your deal, your question, or your biggest challenge. One hour, one focused conversation — walk away with clarity and a clear next step.
-            </p>
-          </div>
-          <div className="text-center shrink-0">
-            <div className="font-heading font-medium text-[52px] leading-none text-charcoal mb-1.5">
-              $250
-            </div>
-            <span className="block text-[15px] text-warmgray-light mb-6">
-              One session · 60 minutes
-            </span>
-            <a href="/book" className="btn-gold">
-              Book a Session — $250
-            </a>
           </div>
         </div>
       </section>
@@ -439,10 +424,10 @@ export default function LearnPage() {
           >
             Let&apos;s figure it out <em className="italic text-gold-light font-light">together.</em>
           </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
+          <p className="text-[15px] text-cream mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
-          <a href="/book" className="btn-gold">Book a Discovery Call</a>
+          <a href="/book" className="btn-gold">Book a Call</a>
         </div>
       </section>
     </>

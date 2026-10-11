@@ -22,7 +22,8 @@ const TOPIC_OPTIONS = [
   { value: "other", label: "Other" },
 ];
 
-export default function ContactFormV2() {
+export default function ContactFormV2({ initialTopic = "" }: { initialTopic?: string }) {
+  const topic = TOPIC_OPTIONS.some((t) => t.value === initialTopic) ? initialTopic : "";
   const [status, setStatus] = useState<Status>("idle");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -69,7 +70,7 @@ export default function ContactFormV2() {
         </Field>
       </div>
       <Field label="What can I help with?">
-        <select name="topic" required className={fieldClass} defaultValue="">
+        <select name="topic" required className={fieldClass} defaultValue={topic}>
           <option value="" disabled>Select one...</option>
           {TOPIC_OPTIONS.map((t) => (
             <option key={t.value} value={t.value}>{t.label}</option>
