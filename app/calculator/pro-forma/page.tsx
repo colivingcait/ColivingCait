@@ -3,6 +3,7 @@ import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
 import ProFormaCalculator from "@/components/calculator/ProFormaCalculator";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Rental Property Pro Forma Calculator",
@@ -14,6 +15,7 @@ export const metadata = {
     description:
       "A fully-editable rental pro forma. Toggle every number — gross rent, vacancy, platform fee, utilities, maintenance, CapEx, and financing — and watch cap rate, cash-on-cash, and monthly cash flow update live.",
     url: "/calculator/pro-forma",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

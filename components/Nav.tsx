@@ -11,6 +11,14 @@ import { cn } from "@/lib/cn";
 // Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
 // Listings is served by the CRM via a rewrite, so it must be a plain <a>
 // (next/link would client-navigate inside this app).
+// Charcoal heroes sit under the transparent bar. The dark wordmark and
+// hamburger disappear on those pages until the bar turns solid.
+function hasDarkHero(pathname: string) {
+  if (pathname === "/courses" || pathname === "/calculator") return true;
+  if (pathname.startsWith("/calculator/")) return true;
+  return /^\/courses\/[^/]+$/.test(pathname);
+}
+
 const links: { href: string; label: string; plain?: boolean }[] = [
   { href: "/about", label: "About" },
   { href: "/what-is-coliving", label: "What Is Coliving" },
@@ -27,6 +35,8 @@ export default function Nav() {
   const pathname = usePathname();
   const { status } = useSession();
   const authed = status === "authenticated";
+  const onDark = hasDarkHero(pathname) && !scrolled && !open;
+  const markColor = onDark ? "bg-white" : "bg-charcoal";
 
   // Shared desktop link styling (gold underline grows on hover / active).
   const linkClass = (active: boolean) =>
@@ -47,12 +57,15 @@ export default function Nav() {
   }, []);
 
   return (
+    <>
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-[100] px-8 lg:px-[60px] transition-all duration-500 ease-brand border-b",
-        scrolled
-          ? "bg-white/95 [backdrop-filter:blur(24px)] [-webkit-backdrop-filter:blur(24px)] border-soft"
-          : "bg-transparent border-transparent",
+        "fixed inset-x-0 top-0 z-[200] px-8 lg:px-[60px] transition-all duration-500 ease-brand border-b",
+        open
+          ? "bg-white border-soft"
+          : scrolled
+            ? "bg-white/95 [backdrop-filter:blur(24px)] [-webkit-backdrop-filter:blur(24px)] border-soft"
+            : "bg-transparent border-transparent",
       )}
     >
       <div className="mx-auto flex w-full max-w-[1320px] items-center justify-between py-5">
@@ -63,7 +76,7 @@ export default function Nav() {
           className="inline-flex items-center hover:opacity-70 transition-opacity"
         >
           <Image
-            src="/images/colivingcait-logo.png"
+            src={onDark ? "/images/colivingcait-logo-light.png" : "/images/colivingcait-logo.png"}
             alt="ColivingCait"
             width={200}
             height={40}
@@ -121,12 +134,12 @@ export default function Nav() {
           )}
 
           <li>
-            <Link
-              href="/contact"
+            <a
+              href="/book"
               className="bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] transition-all duration-300 hover:bg-gold hover:-translate-y-px inline-block"
             >
               Book a Call
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -137,16 +150,20 @@ export default function Nav() {
           onClick={() => setOpen((v) => !v)}
           className="lg:hidden inline-flex h-10 w-10 flex-col items-center justify-center gap-[5px] cursor-pointer"
         >
-          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "translate-y-[6.5px] rotate-45")} />
-          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "opacity-0")} />
-          <span className={cn("block h-[1.5px] w-6 bg-charcoal transition", open && "-translate-y-[6.5px] -rotate-45")} />
+          <span className={cn("block h-[1.5px] w-6 transition", markColor, open && "translate-y-[6.5px] rotate-45")} />
+          <span className={cn("block h-[1.5px] w-6 transition", markColor, open && "opacity-0")} />
+          <span className={cn("block h-[1.5px] w-6 transition", markColor, open && "-translate-y-[6.5px] -rotate-45")} />
         </button>
       </div>
 
-      {/* Mobile drawer */}
+    </header>
+
+      {/* Full-viewport panel. Kept outside the header so the bar's
+          backdrop-filter cannot trap this fixed layer, and opaque so the
+          hero cannot show through. */}
       {open && (
-        <div className="lg:hidden border-t border-soft bg-white/95 [backdrop-filter:blur(24px)]">
-          <nav className="flex flex-col px-2 py-4">
+        <div className="lg:hidden fixed inset-0 z-[190] overflow-y-auto bg-white">
+          <nav className="flex flex-col px-8 pt-28 pb-12">
             {links.map((l) =>
               l.plain ? (
                 <a
@@ -200,16 +217,16 @@ export default function Nav() {
               </Link>
             )}
 
-            <Link
-              href="/contact"
+            <a
+              href="/book"
               onClick={() => setOpen(false)}
               className="mt-3 bg-charcoal text-white px-7 py-3 text-[11px] font-medium uppercase tracking-[0.1em] text-center hover:bg-gold transition-colors"
             >
               Book a Call
-            </Link>
+            </a>
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }

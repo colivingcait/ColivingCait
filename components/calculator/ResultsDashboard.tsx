@@ -6,8 +6,6 @@ import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import { cn } from "@/lib/cn";
 
-const DISCOVERY_CALL_URL = "https://calendly.com/colivingcait/discovery";
-
 type ResultsDashboardProps = {
   results: Results;
   onReset: () => void;
@@ -52,7 +50,7 @@ export default function ResultsDashboard({
 
         <div className="mt-8 flex flex-wrap gap-4 justify-center">
           <Button
-            href={DISCOVERY_CALL_URL}
+            href="/book"
             variant="primary"
             size="lg"
             magnetic

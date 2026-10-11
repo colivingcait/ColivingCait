@@ -4,6 +4,7 @@ import VillaCandaceSlider from "@/components/VillaCandaceSlider";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
 import { getCourse } from "@/lib/courses";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "What Is Coliving? How the Model Works",
@@ -15,6 +16,7 @@ export const metadata = {
     description:
       "Coliving turns single-family homes into affordable, flexible housing for residents while generating significantly more revenue for investors. Learn how the model works and how to underwrite it.",
     url: "/what-is-coliving",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

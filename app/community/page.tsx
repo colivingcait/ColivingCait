@@ -3,7 +3,7 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
 
 export const metadata = {
   title: "Atlanta Real Estate Investor Communities",
@@ -15,6 +15,7 @@ export const metadata = {
     description:
       "Two free real estate communities — Atlanta House Hackers and the Atlanta Women Investors monthly meetup. Free to join, all experience levels.",
     url: "/community",
+    images: [{ url: "/images/wcs2025.png", alt: "Caitlyn with the Atlanta investor community" }],
   },
 };
 
@@ -158,8 +159,8 @@ export default function CommunityPage() {
 
       {/* ===== 5. ATLANTA HOUSE HACKERS ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
-        <div className="mx-auto grid max-w-[1320px] gap-10 lg:gap-20 items-center lg:grid-cols-2">
-          <div className="reveal">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal max-w-[760px]">
             <span className="eyebrow !text-gold-light before:!bg-gold-light">
               Online · Metro Atlanta · Open to All
             </span>
@@ -204,17 +205,6 @@ House hacking is how most people I know got their first door — buy a home, ren
                 Meetups on Eventbrite →
               </a>
             </div>
-          </div>
-
-          <div
-            className="reveal reveal-d2 flex items-center justify-center text-sm text-warmgray-light"
-            style={{
-              aspectRatio: "4 / 3",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-            }}
-          >
-            House hacking meetup photo
           </div>
         </div>
       </section>

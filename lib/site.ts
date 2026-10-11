@@ -44,3 +44,15 @@ export const SITE = {
     "Brookhaven, GA",
   ],
 } as const;
+
+/** Display price for the all-three mini-course bundle, in USD. */
+export const BUNDLE_PRICE_USD = 99;
+
+/** Default share image. Child pages that set their own openGraph must
+ *  repeat an image — Next drops the layout images when they do. */
+export const DEFAULT_OG_IMAGE = {
+  url: "/images/caitlyn-yellow-blazer.jpg",
+  width: 1200,
+  height: 1600,
+  alt: SITE.personName,
+};

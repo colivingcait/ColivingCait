@@ -4,6 +4,7 @@ import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 export const metadata = {
@@ -16,6 +17,7 @@ export const metadata = {
     description:
       "Work with an Atlanta Realtor who thinks like an investor. Caitlyn Verdugo helps buyers, sellers, and investors across Decatur, Stone Mountain, Snellville, Tucker, and the greater Atlanta metro — from first homes to house hacks and coliving conversions.",
     url: "/buy-and-sell",
+    images: [{ url: "/images/caitlyn-buy-sell.jpg", alt: DEFAULT_OG_IMAGE.alt }],
   },
 };
 
@@ -90,9 +92,9 @@ export default function BuyAndSellPage() {
                 </span>
               ))}
             </div>
-            <Link href="/contact?topic=buy-sell" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Schedule a Call →
-            </Link>
+            </a>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
@@ -347,9 +349,9 @@ export default function BuyAndSellPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re buying, selling, or house hacking — it starts with one conversation.
           </p>
-          <Link href="/contact?topic=buy-sell" className="btn-gold">
+          <a href="/book" className="btn-gold">
             Schedule a Discovery Call
-          </Link>
+          </a>
         </div>
       </section>
     </>

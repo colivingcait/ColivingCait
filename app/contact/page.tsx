@@ -1,6 +1,6 @@
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import ContactFormV2 from "@/components/ContactFormV2";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Contact Caitlyn Verdugo",
@@ -12,6 +12,7 @@ export const metadata = {
     description:
       "Get in touch with Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. General inquiries, coaching, partnerships, speaking, and media.",
     url: "/contact",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -19,9 +20,9 @@ export const metadata = {
 // Sections: Hero · Quick Links · Contact Form · Contact Info · Socials.
 
 const quickLinks = [
-  { icon: "◈", title: "Learning & Coaching", copy: "Courses, coaching, consulting, or a strategy session.", href: "/learn" },
-  { icon: "$", title: "Partnership & Investing", copy: "Private lending, partnerships, or coliving arbitrage.", href: "/partner-with-me" },
-  { icon: "⌂", title: "Buy & Sell", copy: "Investment properties, coliving conversions, or house hacking.", href: "/buy-and-sell" },
+  { icon: "◈", title: "Learning & Coaching", copy: "Courses, coaching, consulting, or a strategy session." },
+  { icon: "$", title: "Partnership & Investing", copy: "Private lending, partnerships, or coliving arbitrage." },
+  { icon: "⌂", title: "Buy & Sell", copy: "Investment properties, coliving conversions, or house hacking." },
 ];
 
 const info = [
@@ -29,14 +30,6 @@ const info = [
   { icon: "◈", label: "Location", val: "Atlanta Metro, Georgia" },
   { icon: "⌂", label: "Brokerage", val: "Keller Williams Metro Atlanta" },
   { icon: "★", label: "Website", val: <a href="https://colivingcait.com" className="text-charcoal hover:text-gold-dark transition-colors duration-300">colivingcait.com</a> },
-];
-
-const socials = [
-  { label: "IG", title: "Instagram", href: "https://instagram.com/colivingcait" },
-  { label: "YT", title: "YouTube", href: "#" },
-  { label: "FB", title: "Facebook", href: "#" },
-  { label: "LI", title: "LinkedIn", href: "#" },
-  { label: "TT", title: "TikTok", href: "#" },
 ];
 
 export default function ContactPage() {
@@ -70,9 +63,9 @@ export default function ContactPage() {
           </div>
           <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
             {quickLinks.map((q, i) => (
-              <Link
+              <a
                 key={q.title}
-                href={q.href}
+                href="/book"
                 className={`reveal reveal-d${i + 1} group bg-white border border-soft p-10 lg:px-8 text-center transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
               >
                 <span className="block text-[28px] text-gold mb-4 transition-transform duration-500 group-hover:scale-[1.15]">
@@ -85,7 +78,7 @@ export default function ContactPage() {
                 <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.1em] text-gold-dark group-hover:gap-3 transition-all duration-300">
                   Schedule a Call →
                 </span>
-              </Link>
+              </a>
             ))}
           </div>
         </div>
@@ -126,26 +119,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ===== SOCIALS ===== */}
-      <section className="px-8 lg:px-[60px] pt-12 pb-20 bg-cream">
-        <div className="reveal mx-auto max-w-[600px] text-center">
-          <p className="text-[15px] text-warmgray mb-6">Find me online</p>
-          <div className="flex justify-center gap-4">
-            {socials.map((s) => (
-              <a
-                key={s.title}
-                href={s.href}
-                title={s.title}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
-                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="w-12 h-12 border border-soft bg-white flex items-center justify-center text-base text-charcoal hover:border-gold hover:text-gold hover:-translate-y-[3px] transition-all duration-300"
-              >
-                {s.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   );
 }
