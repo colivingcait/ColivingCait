@@ -17,7 +17,7 @@ import JsonLd, {
 // can be referenced by Tailwind's font-heading / font-sans utilities.
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",

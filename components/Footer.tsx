@@ -14,6 +14,7 @@ const navigateB = [
   { href: "/community", label: "Community" },
   { href: "/listings", label: "Listings", plain: true },
   { href: "/calculator", label: "Calculators" },
+  { href: "/grow-with-me", label: "Grow With Me at KW" },
   { href: "/learn", label: "Learn" },
 ];
 
