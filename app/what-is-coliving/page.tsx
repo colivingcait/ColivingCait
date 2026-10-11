@@ -1,9 +1,9 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import HeroFrame from "@/components/HeroFrame";
 import VillaCandaceSlider from "@/components/VillaCandaceSlider";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { getCourse } from "@/lib/courses";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
@@ -47,8 +47,9 @@ export default function WhatIsColivingPage() {
       <RevealObserver />
 
       {/* ===== 1. HERO ===== */}
-      <section className="px-8 lg:px-[60px] pt-32 pb-16 lg:pt-[180px] lg:pb-[100px] bg-white text-center">
-        <div className="mx-auto max-w-[800px]">
+      <section className="px-8 lg:px-[60px] pt-32 pb-16 lg:pt-[180px] lg:pb-[100px] bg-white">
+        <div className="mx-auto grid max-w-[1320px] items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] text-center lg:text-left">
+        <div className="max-w-[640px] mx-auto lg:mx-0">
           <span className="eyebrow eyebrow-center">What Is Coliving</span>
           <h1
             className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-7 leading-[1.06] opacity-0 translate-y-[30px] [animation:heroReveal_1s_cubic-bezier(0.16,1,0.3,1)_0.2s_forwards]"
@@ -57,9 +58,13 @@ export default function WhatIsColivingPage() {
             The housing solution our communities need — and the{" "}
             <em className="italic text-gold font-light">investment opportunity you&apos;ve been looking for.</em>
           </h1>
-          <p className="text-[17px] leading-[1.85] text-warmgray max-w-[620px] mx-auto opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+          <p className="text-[17px] leading-[1.85] text-warmgray max-w-[620px] mx-auto lg:mx-0 opacity-0 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
             Rent-by-the-room housing that&apos;s affordable for residents and profitable for investors. One model, two wins.
           </p>
+        </div>
+        <div className="max-w-[480px] mx-auto lg:max-w-none">
+          <HeroFrame src="/images/raven/ravenbed1.jpg" alt="Furnished coliving bedroom" ratio="4 / 5" />
+        </div>
         </div>
       </section>
 
@@ -184,6 +189,63 @@ export default function WhatIsColivingPage() {
         </div>
       </section>
 
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-14">
+            <span className="eyebrow eyebrow-center">Why Coliving</span>
+            <h2 className="font-heading font-normal tracking-[-0.02em] text-charcoal" style={{ fontSize: "clamp(28px, 3vw, 42px)" }}>
+              One strategy. <em className="italic text-gold font-light">Three wins.</em>
+            </h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-3">
+            {[
+              ["$", "For Investors", "Higher cashflow and a model that turns one house into several income streams."],
+              ["⌂", "For Residents", "Affordable, furnished rooms with an individual lease and no cosigner."],
+              ["◈", "For Communities", "More housing from the homes already standing, without waiting on new construction."],
+            ].map(([icon, title, copy]) => (
+              <div key={title} className="reveal text-center p-8 border border-soft">
+                <span className="block text-[28px] text-gold mb-4">{icon}</span>
+                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3">{title}</h3>
+                <p className="text-sm leading-[1.8] text-warmgray">{copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 7. FOR COMMUNITIES ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16 max-w-[600px]">
+            <span className="eyebrow">For Communities</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5"
+              style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
+            >
+              Coliving investors are doing something{" "}
+              <em className="italic text-gold font-light">politicians aren&apos;t.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray">
+              Rather than waiting for new construction that takes decades, coliving reconfigures the housing we already have to serve the people who need it right now.
+            </p>
+          </div>
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {impact.map((c, i) => (
+              <div
+                key={c.title}
+                className={`reveal reveal-d${i + 1} p-9 lg:px-7 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
+              >
+                <span className="block text-2xl text-gold mb-3.5">{c.icon}</span>
+                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
+                  {c.title}
+                </h3>
+                <p className="text-[13px] text-warmgray leading-[1.7]">{c.copy}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== 5. THE MATH — VILLA CANDACE ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
@@ -232,44 +294,11 @@ export default function WhatIsColivingPage() {
         </div>
       </section>
 
-      {/* ===== 7. FOR COMMUNITIES ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal mb-16 max-w-[600px]">
-            <span className="eyebrow">For Communities</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-5"
-              style={{ fontSize: "clamp(28px, 3vw, 42px)" }}
-            >
-              Coliving investors are doing something{" "}
-              <em className="italic text-gold font-light">politicians aren&apos;t.</em>
-            </h2>
-            <p className="text-[15px] text-warmgray">
-              Rather than waiting for new construction that takes decades, coliving reconfigures the housing we already have to serve the people who need it right now.
-            </p>
-          </div>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {impact.map((c, i) => (
-              <div
-                key={c.title}
-                className={`reveal reveal-d${i + 1} p-9 lg:px-7 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
-              >
-                <span className="block text-2xl text-gold mb-3.5">{c.icon}</span>
-                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
-                  {c.title}
-                </h3>
-                <p className="text-[13px] text-warmgray leading-[1.7]">{c.copy}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 8. TWO PATHS ===== */}
+      {/* ===== 8. THREE PATHS ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-cream">
-        <div className="mx-auto max-w-[900px]">
+        <div className="mx-auto max-w-[1100px]">
           <div className="reveal text-center mb-12">
-            <span className="eyebrow eyebrow-center">Two Paths</span>
+            <span className="eyebrow eyebrow-center">Three Paths</span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-charcoal"
               style={{ fontSize: "clamp(28px, 2.8vw, 38px)" }}
@@ -277,21 +306,28 @@ export default function WhatIsColivingPage() {
               How do you want to be <em className="italic text-gold font-light">involved?</em>
             </h2>
           </div>
-          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-2">
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
             {[
               {
-                icon: "◈",
-                title: "Active Investor",
-                copy: "Build and operate your own coliving portfolio. Learn the model, find the deals, run the properties. I'll show you how.",
-                href: "/learn",
-                cta: "Learn With Me →",
+                icon: "⌂",
+                title: "Buy a coliving property with me",
+                copy: "Find a house with the layout coliving needs. I underwrite it like an investor and represent you on the purchase.",
+                href: "/buy-and-sell",
+                cta: "Buy & Sell With Me →",
               },
               {
                 icon: "$",
-                title: "Passive Investor",
+                title: "Partner with me",
                 copy: "Put your capital to work in my portfolio. You invest, I operate — with full transparency, legal protections, and consistent returns.",
                 href: "/partner-with-me",
                 cta: "Partner With Me →",
+              },
+              {
+                icon: "◈",
+                title: "Learn the model",
+                copy: "Build and operate your own portfolio. Coliving 101 is on the Learn page when you want the full breakdown.",
+                href: "/learn",
+                cta: "Learn With Me →",
               },
             ].map((p, i) => (
               <div
@@ -328,97 +364,20 @@ export default function WhatIsColivingPage() {
         </div>
       </section>
 
-      {/* ===== 10. COLIVING 101 UPSELL ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-white border-t border-soft">
-        <div className="mx-auto grid max-w-[900px] gap-10 lg:gap-16 items-center lg:grid-cols-2">
-          <div className="reveal">
-            <span className="eyebrow">Go Deeper</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.01em] text-charcoal mb-4"
-              style={{ fontSize: "clamp(26px, 2.6vw, 34px)" }}
-            >
-              Ready to learn the full <em className="italic text-gold font-light">coliving model?</em>
-            </h2>
-            <p className="text-[15px] text-warmgray leading-[1.8] mb-7">
-              Coliving 101 breaks down everything — how the model works, who it serves, how the math works, and what to look for in your first property. Six lessons, quizzes, worksheets, and a certificate when you&apos;re done.
-            </p>
-            <p className="text-sm text-warmgray">
-              Coliving 101 is part of The Explorer — my foundations curriculum for new investors. See all three courses, the bundle deal, and the full learning path.
-            </p>
-          </div>
-
-          <div className="reveal reveal-d2 bg-cream p-12 lg:px-10 text-center border border-soft">
-            <span className="eyebrow eyebrow-center justify-center">
-              ✦ Coliving 101
-            </span>
-            <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-2">
-              ${getCourse("coliving-101")?.price}
-            </div>
-            <span className="block text-[13px] text-warmgray-light mb-6">
-              6 modules · 23 lessons · 2–3 hours of course content
-            </span>
-            <Link
-              href="/courses/coliving-101"
-              className="btn-gold w-full text-center mb-3"
-              style={{ display: "block" }}
-            >
-              Buy Now
-            </Link>
-            <Link
-              href="/learn#foundations"
-              className="text-[13px] text-warmgray hover:text-charcoal transition-colors duration-300"
-            >
-              See all courses →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 11. QUOTE ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream text-center relative overflow-hidden">
-        <span
-          aria-hidden
-          className="absolute -top-5 left-1/2 -translate-x-1/2 font-heading font-light leading-none pointer-events-none"
-          style={{ fontSize: "280px", color: "rgba(196,149,90,0.06)" }}
-        >
-          “
-        </span>
-        <div className="reveal relative">
-          <blockquote
-            className="font-heading font-light italic leading-[1.4] text-charcoal max-w-[760px] mx-auto"
-            style={{ fontSize: "clamp(24px, 2.8vw, 36px)" }}
-          >
-            “Every coliving home any of us opens is one more option for someone in our community who needs a safe, stable, clean, high quality and affordable place to land.”
-            <span className="font-sans not-italic block mt-7 text-[11px] font-medium uppercase tracking-[0.15em] text-gold">
-              — Caitlyn Verdugo
-            </span>
-          </blockquote>
-        </div>
-      </section>
-
-      {/* ===== FINAL CTA ===== */}
       <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
-        <span
-          aria-hidden
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
-        />
         <div className="reveal">
-          <span className="eyebrow eyebrow-center !text-gold">Be Part of the Solution</span>
+          <span className="eyebrow eyebrow-center !text-gold">Next step</span>
           <h2
             className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
             style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
           >
-            Join the <em className="italic text-gold-light font-light">movement.</em>
+            Buy, partner, or learn —{" "}
+            <em className="italic text-gold-light font-light">start with a call.</em>
           </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[560px] mx-auto leading-[1.8]">
-            Coliving is how we solve the housing crisis and build real wealth at the same time. The only question is how you want to be part of it.
+          <p className="text-[15px] text-cream mb-11 max-w-[520px] mx-auto leading-[1.8]">
+            Tell me which path you&apos;re on. I&apos;ll tell you what I&apos;d do next.
           </p>
-          <div className="flex flex-wrap justify-center gap-5">
-            <Link href="/learn" className="btn-gold">Start Building Your Portfolio →</Link>
-            <Link href="/partner-with-me" className="btn-outline-light">
-              Put Your Capital to Work →
-            </Link>
-          </div>
+          <a href="/book" className="btn-gold">Book a Call</a>
         </div>
       </section>
     </>

@@ -1,3 +1,4 @@
+import HeroFrame from "@/components/HeroFrame";
 import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
@@ -33,7 +34,8 @@ export default function CoursesPage() {
       <JsonLd data={graph(...courses.map((course) => courseSchema(course)))} />
       <ScrollToBundle />
       <Section tone="charcoal" className="relative grain overflow-hidden">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_200px] max-w-4xl mx-auto">
+          <div className="text-center md:text-left">
           <Reveal>
             <Eyebrow className="mb-6">
               ✦ Mini courses
@@ -45,19 +47,21 @@ export default function CoursesPage() {
             </Heading>
           </Reveal>
           <Reveal delay={0.2}>
-            <div className="mt-8 inline-flex items-baseline gap-3 text-cream/85">
+            <div className="mt-8 inline-flex items-baseline gap-3 text-cream">
               <span className="font-heading text-3xl md:text-4xl text-gold-light">
                 ${coursePrice} each
               </span>
             </div>
           </Reveal>
           <Reveal delay={0.3}>
-            <p className="mt-6 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
+            <p className="mt-6 text-cream leading-body text-[1.0625rem] max-w-2xl md:mx-0 mx-auto">
               Three self-paced courses on coliving, house hacking, and
               real estate investing. Bundle all three for ${BUNDLE_PRICE_USD} —
               lifetime access, module quizzes included.
             </p>
           </Reveal>
+          </div>
+          <HeroFrame src="/images/caitlyn-yellow-blazer.jpg" alt="Caitlyn Verdugo" ratio="3 / 4" />
         </div>
       </Section>
 
@@ -105,6 +109,13 @@ export default function CoursesPage() {
         </Reveal>
 
         <Reveal delay={0.3}>
+          <p className="mt-10 text-center text-sm text-warmgray">
+            Want to go further than the courses?{" "}
+            <Link href="/learn" className="text-charcoal underline">
+              See Learn With Me
+            </Link>
+            .
+          </p>
           <p className="mt-12 text-center text-xs text-warmgray/70 italic">
             ✦ Course unlocks immediately after checkout. Lifetime access
             includes all future updates.

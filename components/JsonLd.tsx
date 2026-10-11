@@ -73,7 +73,7 @@ export const personSchema = {
   name: SITE.personName,
   url: SITE_URL,
   image: absoluteUrl("/images/caitlyn-yellow-blazer.jpg"),
-  jobTitle: "Real Estate Investor, Realtor & Coach",
+  jobTitle: "Realtor, Real Estate Investor & Coach",
   worksFor: { "@id": BUSINESS_ID },
   email: `mailto:${SITE.email}`,
   address: {

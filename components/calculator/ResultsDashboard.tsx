@@ -55,7 +55,7 @@ export default function ResultsDashboard({
             size="lg"
             magnetic
           >
-            Book a Discovery Call →
+            Book a Call →
           </Button>
           <Button onClick={onReset} variant="outline" size="lg">
             Run Another Property
