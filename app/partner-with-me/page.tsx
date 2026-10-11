@@ -49,8 +49,6 @@ const models = [
   },
 ];
 
-const photoGrid = ["/images/colivingconsulting/5.png"];
-
 const trust = [
   { icon: "§", title: "Promissory Note", copy: "Every lending partnership is backed by a legally binding promissory note with clear terms." },
   { icon: "⊞", title: "Operating Agreement", copy: "Equity partnerships are structured with detailed operating agreements that define roles and returns." },
@@ -241,34 +239,6 @@ export default function PartnerPage() {
             Converted the living room, dining room and basement into{" "}
             <strong className="text-charcoal font-medium">4 additional bedrooms</strong>.
           </PropertyCard>
-
-          <div className="reveal mt-16">
-            <h3
-              className="font-heading font-normal text-[28px] text-charcoal mb-3 tracking-[-0.01em]"
-            >
-              More coliving properties I&apos;ve{" "}
-              <em className="italic text-gold font-light">worked on.</em>
-            </h3>
-            <p className="text-[15px] text-warmgray mb-8">
-              Consulting, property management, or helping a client purchase or sell.
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {photoGrid.map((src, i) => (
-                <div
-                  key={src}
-                  className="relative aspect-square bg-blush border border-soft cursor-pointer overflow-hidden transition-all duration-300 hover:border-brand"
-                >
-                  <Image
-                    src={src}
-                    alt="Coliving interior"
-                    fill
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

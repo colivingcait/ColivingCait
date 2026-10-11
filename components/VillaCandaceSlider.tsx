@@ -79,18 +79,7 @@ export default function VillaCandaceSlider() {
             onError={() => setHasBefore(false)}
             className="w-full h-auto block pointer-events-none"
           />
-        ) : (
-          <div
-            className="w-full flex items-center justify-center text-warmgray-light text-sm"
-            style={{
-              aspectRatio: "16 / 9",
-              background:
-                "linear-gradient(135deg, #FAF7F2 0%, #F0E8E0 100%)",
-            }}
-          >
-            Original 5BR / 3BA — floorplan placeholder
-          </div>
-        )}
+        ) : null}
 
         {/* Overlay layer — AFTER */}
         <div
