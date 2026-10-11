@@ -17,6 +17,7 @@ const staticRoutes: Array<{
   { path: "/courses", changeFrequency: "monthly", priority: 0.8 },
   { path: "/partner-with-me", changeFrequency: "monthly", priority: 0.8 },
   { path: "/calculator", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/grow-with-me", changeFrequency: "monthly", priority: 0.7 },
   { path: "/calculator/coliving", changeFrequency: "yearly", priority: 0.7 },
   { path: "/calculator/pro-forma", changeFrequency: "yearly", priority: 0.7 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },

@@ -15,6 +15,7 @@ const navigateB = [
   { href: "/listings", label: "Listings", plain: true },
   { href: "/community", label: "Community" },
   { href: "/calculator", label: "Calculators" },
+  { href: "/grow-with-me", label: "Grow With Me at KW" },
 ];
 
 function FooterLink({
