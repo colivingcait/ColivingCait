@@ -30,6 +30,7 @@ const stats = [
   { val: "$2.5M", label: "AUM" },
   { val: "50+", label: "Rooms" },
   { val: "100+", label: "Residents" },
+  { val: "6+", label: "Years" },
   { val: "5.0", label: "Zillow" },
 ];
 
@@ -43,7 +44,7 @@ const storyParagraphs = [
 ];
 
 const roles = [
-  { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
+  { icon: "⌂", title: "KW Realtor", copy: "Top Realtor in DeKalb County" },
   { icon: "$", title: "Investor", copy: "$2.5M AUM · 50+ rooms · 100+ residents" },
   { icon: "◈", title: "Coach", copy: "Helping investors build their first portfolios" },
   { icon: "♀", title: "She Leads Co-Founder", copy: "500+ women in coliving community" },

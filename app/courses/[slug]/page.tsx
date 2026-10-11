@@ -14,6 +14,22 @@ import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
+// Interiors and an indoor portrait. No exteriors.
+const courseHeroPhoto: Record<string, { src: string; alt: string }> = {
+  "coliving-101": {
+    src: "/images/raven/ravenkitchen.jpg",
+    alt: "Kitchen inside a coliving home",
+  },
+  "house-hacking-101": {
+    src: "/images/raven/ravenbed1.jpg",
+    alt: "Bedroom inside a coliving home",
+  },
+  "real-estate-101": {
+    src: "/images/caitlyn-yellow-blazer.jpg",
+    alt: "Caitlyn Verdugo",
+  },
+};
+
 // Pre-generate static params for every available course
 export async function generateStaticParams() {
   return courses
@@ -61,6 +77,10 @@ export default async function CourseLandingPage({
   const purchased = user ? await hasAccess(user.id, slug) : false;
 
   const firstLesson = course.lessons[0];
+  const heroPhoto = courseHeroPhoto[course.slug] ?? {
+    src: "/images/caitlyn-yellow-blazer.jpg",
+    alt: "Caitlyn Verdugo",
+  };
 
   return (
     <>
@@ -125,7 +145,9 @@ export default async function CourseLandingPage({
               (i.e. excludes the welcome + module-quiz entries) so the
               numbers match the marketing copy. */}
           <Reveal delay={0.3}>
-            <div className="md:pl-12 md:border-l md:border-cream/15 grid grid-cols-2 md:grid-cols-1 gap-6">
+            <div className="flex flex-col gap-8">
+              <HeroFrame src={heroPhoto.src} alt={heroPhoto.alt} ratio="4 / 3" />
+              <div className="md:pl-12 md:border-l md:border-cream/15 grid grid-cols-2 md:grid-cols-1 gap-6">
               {course.modules && course.modules.length > 0 ? (
                 <CourseMeta label="Modules" value={`${course.modules.length}`} />
               ) : null}
@@ -148,6 +170,7 @@ export default async function CourseLandingPage({
                 } module quizzes`}
               />
               <CourseMeta label="Access" value="Lifetime" />
+            </div>
             </div>
           </Reveal>
         </div>
