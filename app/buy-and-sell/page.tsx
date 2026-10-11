@@ -50,7 +50,7 @@ const whyMe = [
 const counties = [
   {
     name: "DeKalb County",
-    cities: ["Decatur", "Stone Mountain", "Lithonia", "Tucker", "Clarkston", "Avondale Estates", "Scottdale", "Redan", "Ellenwood", "Pine Lake", "Chamblee", "Dunwoody", "Brookhaven"],
+    cities: ["Decatur", "East Atlanta", "Stone Mountain", "Lithonia", "Tucker", "Clarkston", "Avondale Estates", "Scottdale", "Redan", "Ellenwood", "Pine Lake", "Chamblee", "Dunwoody", "Brookhaven"],
   },
   {
     name: "Gwinnett County",
@@ -83,7 +83,7 @@ export default function BuyAndSellPage() {
               I don&apos;t just help you find a property — I help you find the right one. Whether you&apos;re buying your first investment, selling a property, or house hacking your way to financial freedom, you&apos;ll work with someone who&apos;s done all three.
             </p>
             <div className="flex flex-wrap gap-6 mb-9 justify-center lg:justify-start">
-              {["7 Years Experience", "5.0 Zillow", "Top Realtor in DeKalb County"].map((c) => (
+              {["6+ Years Experience", "5.0 from 18 Zillow reviews", "Top Realtor in DeKalb County"].map((c) => (
                 <span
                   key={c}
                   className="text-xs font-medium tracking-[0.04em] text-charcoal bg-cream px-4 py-2"
@@ -93,7 +93,7 @@ export default function BuyAndSellPage() {
               ))}
             </div>
             <a href="/book" className="btn-primary">
-              Schedule a Call →
+              Book a Call
             </a>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
@@ -214,23 +214,6 @@ export default function BuyAndSellPage() {
         </div>
       </section>
 
-      {/* ===== 4. FORMS ===== */}
-      <section id="forms" className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream scroll-mt-24">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">Get Started</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
-              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
-            >
-              Tell me what you&apos;re working{" "}
-              <em className="italic text-gold font-light">with.</em>
-            </h2>
-          </div>
-          <BuySellForms />
-        </div>
-      </section>
-
       {/* ===== 5. TESTIMONIALS ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
@@ -261,8 +244,12 @@ export default function BuyAndSellPage() {
             Serving investors across the{" "}
             <em className="italic text-gold font-light">Atlanta metro.</em>
           </h2>
-          <p className="text-[15px] text-warmgray mb-12">
-            I work with buyers, sellers, and investors across the greater Atlanta area.
+          <p className="text-[15px] text-warmgray mb-12 max-w-[640px] mx-auto">
+            I work with buyers, sellers, and investors in Decatur, East Atlanta, and across DeKalb County — and the rest of the Atlanta metro.{" "}
+            <a href="/listings" className="text-gold-dark border-b border-brand">
+              See current listings
+            </a>
+            .
           </p>
 
           <div className="grid gap-6 max-w-[1100px] mx-auto text-left grid-cols-1 md:grid-cols-3">
@@ -314,6 +301,23 @@ export default function BuyAndSellPage() {
         </div>
       </section>
 
+      {/* ===== 4. FORMS ===== */}
+      <section id="forms" className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream scroll-mt-24">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal text-center mb-16">
+            <span className="eyebrow eyebrow-center">Get Started</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
+            >
+              Tell me what you&apos;re working{" "}
+              <em className="italic text-gold font-light">with.</em>
+            </h2>
+          </div>
+          <BuySellForms />
+        </div>
+      </section>
+
       {/* ===== 7. LEAD MAGNET ===== */}
       <section className="px-8 lg:px-[60px] py-16 lg:py-20 bg-blush">
         <div className="reveal mx-auto max-w-[720px] text-center">
@@ -346,11 +350,11 @@ export default function BuyAndSellPage() {
             Your next property is out there.{" "}
             <em className="italic text-gold-light font-light">Let&apos;s go find it.</em>
           </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
+          <p className="text-[15px] text-cream mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re buying, selling, or house hacking — it starts with one conversation.
           </p>
           <a href="/book" className="btn-gold">
-            Schedule a Discovery Call
+            Book a Call
           </a>
         </div>
       </section>

@@ -13,6 +13,10 @@ export const HOUSE_HACKING_ORG_ID = `${HOUSE_HACKING_URL}/#org`;
 export const EVENTBRITE_ORGANIZER_URL =
   "https://www.eventbrite.com/o/caitlyn-verdugo-house-hacking-atlanta-119802863511";
 
+/** Atlanta Women Investors — monthly meetup Caitlyn co-hosts. */
+export const ATLANTA_WOMEN_INVESTORS_URL =
+  "https://www.atlantawomeninvestors.com";
+
 export const LINKEDIN_URL = "https://www.linkedin.com/in/coliving-cait";
 
 /** Absolute URL for a site-relative path. */
@@ -32,7 +36,7 @@ export const SITE = {
   country: "US",
   sameAs: ["https://instagram.com/colivingcait"],
   /** Sister sites — separate properties, same operator. */
-  sisterSites: [HOUSE_HACKING_URL, "https://atlantawomeninvestors.com"],
+  sisterSites: [HOUSE_HACKING_URL, ATLANTA_WOMEN_INVESTORS_URL],
   /** Metro-area service footprint, used for LocalBusiness areaServed. */
   areaServed: [
     "Atlanta, GA",

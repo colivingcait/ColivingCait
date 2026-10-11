@@ -1,9 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import WorkWithMe from "@/components/WorkWithMe";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { DEFAULT_OG_IMAGE, EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import {
+  ATLANTA_WOMEN_INVESTORS_URL,
+  EVENTBRITE_ORGANIZER_URL,
+  HOUSE_HACKING_URL,
+} from "@/lib/site";
 
 export const metadata = {
   title: "Atlanta Real Estate Investor Communities",
@@ -30,12 +34,6 @@ const meetupBonus = [
   "Networking events with industry partners",
 ];
 
-const triple = [
-  { icon: "◈", title: "Learn With Me", copy: "Courses, coaching, and consulting — from your first lesson to your tenth deal.", href: "/learn", cta: "Explore Options →" },
-  { icon: "$", title: "Partner With Me", copy: "Put your capital to work in Atlanta's coliving market. You invest, I operate.", href: "/partner-with-me", cta: "Learn More →" },
-  { icon: "⌂", title: "Buy & Sell With Me", copy: "A Realtor who thinks like an investor. Investment properties, conversions, and house hacking.", href: "/buy-and-sell", cta: "Get Started →" },
-];
-
 export default function CommunityPage() {
   return (
     <>
@@ -50,8 +48,8 @@ export default function CommunityPage() {
               className="font-heading font-normal tracking-[-0.025em] text-charcoal mb-6 leading-[1.05]"
               style={{ fontSize: "clamp(40px, 4.4vw, 60px)" }}
             >
-              You don&apos;t have to figure this out{" "}
-              <em className="italic text-gold font-light">alone.</em>
+              Atlanta&apos;s investor{" "}
+              <em className="italic text-gold font-light">communities.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
               Two free communities — house hacking, and women building portfolios. Whether you&apos;re running your first set of numbers or scaling a portfolio, there&apos;s a room here for you.
@@ -72,6 +70,76 @@ export default function CommunityPage() {
               />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== 5. ATLANTA HOUSE HACKERS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal max-w-[760px]">
+            <span className="eyebrow !text-gold-light before:!bg-gold-light">
+              Online · Metro Atlanta · Open to All
+            </span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
+              style={{ fontSize: "clamp(30px, 3.2vw, 44px)" }}
+            >
+              Atlanta House <em className="italic text-gold-light font-light">Hackers</em>
+            </h2>
+            <p className="text-base leading-[1.85] text-cream mb-9">
+House hacking is how most people I know got their first door — buy a home, rent the extra rooms or units, and let your tenants cover the mortgage. This community is for anyone doing it in metro Atlanta: first-timers still running the numbers, buyers under contract, and owners already living for free. Lender intel, real deal breakdowns, and a full library of Atlanta-specific guides.
+            </p>
+            <div className="flex flex-wrap gap-9 mb-10">
+              {[
+                ["Free", "To join"],
+                ["Metro Atlanta", "Focus"],
+                ["Guides + Group", "What you get"],
+              ].map(([val, label]) => (
+                <div key={label}>
+                  <div className="font-heading font-medium text-xl text-white">{val}</div>
+                  <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-cream mt-0.5">
+                    {label}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={HOUSE_HACKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline-light"
+              >
+                Visit www.househackingatl.com →
+              </a>
+              <a
+                href={EVENTBRITE_ORGANIZER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline-light"
+              >
+                Meetups on Eventbrite →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. QUOTE ===== */}
+      <section
+        className="px-8 lg:px-[60px] py-16 lg:py-20 text-center"
+        style={{ background: "linear-gradient(135deg, #C4955A 0%, #D4A86A 100%)" }}
+      >
+        <div className="reveal">
+          <blockquote
+            className="font-heading font-light italic leading-[1.4] text-white max-w-[760px] mx-auto"
+            style={{ fontSize: "clamp(22px, 2.5vw, 30px)" }}
+          >
+            “Every coliving home any of us opens is one more option for someone in our community who needs a safe, stable, clean, high quality and affordable place to land.”
+            <span className="font-sans not-italic block mt-5 text-[11px] font-medium uppercase tracking-[0.15em] text-white/70">
+              — Caitlyn Verdugo
+            </span>
+          </blockquote>
         </div>
       </section>
 
@@ -108,7 +176,7 @@ export default function CommunityPage() {
               ))}
             </div>
             <a
-              href="https://atlantawomeninvestors.com"
+              href={ATLANTA_WOMEN_INVESTORS_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary"
@@ -139,76 +207,6 @@ export default function CommunityPage() {
         </div>
       </section>
 
-      {/* ===== 4. QUOTE ===== */}
-      <section
-        className="px-8 lg:px-[60px] py-16 lg:py-20 text-center"
-        style={{ background: "linear-gradient(135deg, #C4955A 0%, #D4A86A 100%)" }}
-      >
-        <div className="reveal">
-          <blockquote
-            className="font-heading font-light italic leading-[1.4] text-white max-w-[760px] mx-auto"
-            style={{ fontSize: "clamp(22px, 2.5vw, 30px)" }}
-          >
-            “Every coliving home any of us opens is one more option for someone in our community who needs a safe, stable, clean, high quality and affordable place to land.”
-            <span className="font-sans not-italic block mt-5 text-[11px] font-medium uppercase tracking-[0.15em] text-white/70">
-              — Caitlyn Verdugo
-            </span>
-          </blockquote>
-        </div>
-      </section>
-
-      {/* ===== 5. ATLANTA HOUSE HACKERS ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal max-w-[760px]">
-            <span className="eyebrow !text-gold-light before:!bg-gold-light">
-              Online · Metro Atlanta · Open to All
-            </span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
-              style={{ fontSize: "clamp(30px, 3.2vw, 44px)" }}
-            >
-              Atlanta House <em className="italic text-gold-light font-light">Hackers</em>
-            </h2>
-            <p className="text-base leading-[1.85] text-warmgray-light mb-9">
-House hacking is how most people I know got their first door — buy a home, rent the extra rooms or units, and let your tenants cover the mortgage. This community is for anyone doing it in metro Atlanta: first-timers still running the numbers, buyers under contract, and owners already living for free. Lender intel, real deal breakdowns, and a full library of Atlanta-specific guides.
-            </p>
-            <div className="flex flex-wrap gap-9 mb-10">
-              {[
-                ["Free", "To join"],
-                ["Metro Atlanta", "Focus"],
-                ["Guides + Group", "What you get"],
-              ].map(([val, label]) => (
-                <div key={label}>
-                  <div className="font-heading font-medium text-xl text-white">{val}</div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-warmgray-light mt-0.5">
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href={HOUSE_HACKING_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline-light"
-              >
-                Visit www.househackingatl.com →
-              </a>
-              <a
-                href={EVENTBRITE_ORGANIZER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline-light"
-              >
-                Meetups on Eventbrite →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ===== 6. NEWSLETTER ===== */}
       <section className="px-8 lg:px-[60px] py-16 lg:py-20 bg-blush">
         <div className="reveal mx-auto max-w-[720px] text-center">
@@ -227,63 +225,14 @@ House hacking is how most people I know got their first door — buy a home, ren
         </div>
       </section>
 
-      {/* ===== 7. WORK WITH ME ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white border-t border-soft">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">Ready to Go Deeper?</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
-            >
-              Ready to go beyond the{" "}
-              <em className="italic text-gold font-light">community?</em>
-            </h2>
-          </div>
-          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
-            {triple.map((t, i) => (
-              <div
-                key={t.title}
-                className={`reveal reveal-d${i + 1} group p-12 lg:p-9 border border-soft text-center transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
-              >
-                <span className="block text-[28px] text-gold mb-5 transition-transform duration-500 group-hover:scale-110">
-                  {t.icon}
-                </span>
-                <h3 className="font-heading font-medium text-[22px] text-charcoal mb-3">
-                  {t.title}
-                </h3>
-                <p className="text-sm leading-[1.75] text-warmgray mb-6">{t.copy}</p>
-                <Link href={t.href} className="btn-sm">{t.cta}</Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FINAL CTA ===== */}
-      <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
-        <span
-          aria-hidden
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
-        />
-        <div className="reveal">
-          <span className="eyebrow eyebrow-center !text-gold">There&apos;s a Seat at This Table</span>
-          <h2
-            className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
-            style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
-          >
-            There&apos;s a seat at this table{" "}
-            <em className="italic text-gold-light font-light">for you.</em>
-          </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Join a group, show up to a meetup, or start with the house hacking guides. Wherever you start, you&apos;ll never do this alone again.
-          </p>
-          <div className="flex flex-wrap justify-center gap-5">
-            <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">Explore House Hacking →</a>
-            <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer" className="btn-outline-light">Meetups on Eventbrite →</a>
-          </div>
-        </div>
-      </section>
+      <WorkWithMe
+        eyebrow="When you want more"
+        title={
+          <>
+            Buy, partner, or <em className="italic text-gold font-light">learn.</em>
+          </>
+        }
+      />
     </>
   );
 }

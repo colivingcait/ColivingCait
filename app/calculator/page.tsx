@@ -2,18 +2,19 @@ import Section from "@/components/Section";
 import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
+import HeroFrame from "@/components/HeroFrame";
 import Link from "next/link";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
-  title: "Free Real Estate Calculators — Coliving, House Hacking & DSCR",
+  title: "Free Real Estate Calculators — Coliving & Pro Forma",
   description:
-    "Three free calculators for investors running the numbers on a deal. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
+    "Two free calculators for investors running the numbers on a deal. A coliving conversion wizard and a fully editable rental pro forma.",
   alternates: { canonical: "/calculator" },
   openGraph: {
-    title: "Free Real Estate Calculators — Coliving, House Hacking & DSCR",
+    title: "Free Real Estate Calculators — Coliving & Pro Forma",
     description:
-      "Three free calculators for investors running the numbers on a deal. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
+      "Two free calculators for investors running the numbers on a deal. A coliving conversion wizard and a fully editable rental pro forma.",
     url: "/calculator",
     images: [DEFAULT_OG_IMAGE],
   },
@@ -45,23 +46,15 @@ const calculators: Calc[] = [
     href: "/calculator/pro-forma",
     status: "available",
   },
-  {
-    symbol: "$",
-    label: "Calculator 03",
-    title: "DSCR Loan",
-    body: "Plug in projected rent, mortgage, taxes, and insurance — see whether a property qualifies for a DSCR loan and what the ratio looks like.",
-    href: "/calculator/dscr",
-    status: "coming-soon",
-  },
 ];
 
-// Calculator hub — three cards routing to each calculator. Two of three
-// are placeholders awaiting future build phases.
+// Calculator hub — the two live calculators. DSCR stays off until it ships.
 export default function CalculatorHubPage() {
   return (
     <>
       <Section tone="charcoal" className="relative grain overflow-hidden">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="grid items-center gap-10 md:grid-cols-[1fr_220px] max-w-4xl mx-auto">
+          <div className="text-center md:text-left">
           <Reveal>
             <Eyebrow className="mb-6">The calculators</Eyebrow>
           </Reveal>
@@ -72,18 +65,20 @@ export default function CalculatorHubPage() {
             </Heading>
           </Reveal>
           <Reveal delay={0.25}>
-            <p className="mt-8 text-cream/75 leading-body text-[1.0625rem] max-w-2xl mx-auto">
-              Three free calculators built around the actual numbers I run
+            <p className="mt-8 text-cream leading-body text-[1.0625rem] max-w-2xl md:mx-0 mx-auto">
+              Two free calculators built around the actual numbers I run
               for my own deals. Project revenue, model expenses, see the
               cashflow — and the verdict — in five minutes.
             </p>
           </Reveal>
+          </div>
+          <HeroFrame src="/images/caitlyn-yellow-blazer.jpg" alt="Caitlyn Verdugo" ratio="3 / 4" />
         </div>
       </Section>
 
       <Section tone="cream">
         <Stagger
-          className="grid gap-6 md:grid-cols-3 items-stretch"
+          className="grid gap-6 md:grid-cols-2 items-stretch max-w-4xl mx-auto"
           stagger={0.1}
         >
           {calculators.map((c) => (
@@ -92,6 +87,27 @@ export default function CalculatorHubPage() {
             </StaggerItem>
           ))}
         </Stagger>
+      </Section>
+
+      <Section tone="charcoal" className="relative grain overflow-hidden">
+        <div className="text-center max-w-2xl mx-auto">
+          <Reveal>
+            <Heading size="lg" className="text-cream">
+              Want me to run the numbers{" "}
+              <em className="text-gold-light">with you?</em>
+            </Heading>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <p className="mt-6 text-cream leading-body">
+              Bring the address. I&apos;ll walk the underwriting with you.
+            </p>
+          </Reveal>
+          <Reveal delay={0.25}>
+            <a href="/book" className="btn-gold mt-8 inline-block">
+              Book a Call
+            </a>
+          </Reveal>
+        </div>
       </Section>
     </>
   );

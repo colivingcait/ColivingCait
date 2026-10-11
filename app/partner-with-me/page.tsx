@@ -1,5 +1,5 @@
-import Image from "next/image";
 import RevealObserver from "@/components/RevealObserver";
+import HeroFrame from "@/components/HeroFrame";
 import PropertyCard from "@/components/PropertyCard";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
@@ -77,23 +77,72 @@ export default function PartnerPage() {
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
             <a href="/book" className="btn-primary">
-              Schedule a Discovery Call →
+              Book a Call
             </a>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
-            <div
-              className="relative w-full overflow-hidden bg-cream"
-              style={{ aspectRatio: "4 / 3" }}
+            <HeroFrame
+              src="/images/raven/ravenkitchen.jpg"
+              alt="Coliving kitchen interior"
+              ratio="4 / 3"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-cream border-y border-soft py-8 px-8">
+        <ul className="mx-auto flex max-w-[1100px] flex-wrap justify-center gap-x-10 gap-y-3 text-center list-none">
+          {["$2.5M AUM", "50+ Rooms", "100+ Residents", "6+ Years Experience"].map((item) => (
+            <li key={item} className="font-heading text-lg text-charcoal">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* ===== 3. PARTNERSHIP MODELS ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal mb-16">
+            <span className="eyebrow">Partnership Models</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              <Image
-                src="/images/villacandace-after.png"
-                alt="Villa Candace floor plan — Atlanta metro"
-                fill
-                priority
-                sizes="(max-width: 1024px) 90vw, 600px"
-                className="object-cover"
-              />
-            </div>
+              Three ways to <em className="italic text-gold font-light">partner.</em>
+            </h2>
+            <p className="text-[15px] text-warmgray max-w-[560px]">
+              Every partnership is structured differently based on your goals, risk tolerance, and how involved you want to be. Here are the three models I work with.
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:gap-px lg:grid-cols-3 lg:bg-[rgba(28,25,23,0.06)] lg:border lg:border-soft">
+            {models.map((m, i) => (
+              <div
+                key={m.title}
+                className={`reveal reveal-d${i + 1} group bg-white p-12 lg:p-10 transition-[background] duration-500 ease-brand relative overflow-hidden flex flex-col border border-soft lg:border-0 hover:bg-cream`}
+              >
+                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold scale-x-0 origin-left transition-transform duration-500 ease-brand group-hover:scale-x-100" />
+                <span className="block text-[28px] text-gold mb-5 transition-transform duration-500 group-hover:scale-[1.15]">
+                  {m.icon}
+                </span>
+                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3">
+                  {m.title}
+                </h3>
+                <p className="text-sm leading-[1.8] text-warmgray mb-5">{m.copy}</p>
+                <ul className="list-none mb-7 flex-1">
+                  {m.items.map((it) => (
+                    <li
+                      key={it}
+                      className="text-[13px] text-warmgray py-1.5 flex items-start gap-2.5"
+                    >
+                      <span className="text-gold text-[7px] mt-[7px] shrink-0">✦</span>
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -138,50 +187,29 @@ export default function PartnerPage() {
         </div>
       </section>
 
-      {/* ===== 3. PARTNERSHIP MODELS ===== */}
+      {/* ===== 5. TRUST ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
-          <div className="reveal mb-16">
-            <span className="eyebrow">Partnership Models</span>
+          <div className="reveal text-center mb-16">
+            <span className="eyebrow eyebrow-center">Trust &amp; Protections</span>
             <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-4"
+              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
               style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              Three ways to <em className="italic text-gold font-light">partner.</em>
+              Your investment is <em className="italic text-gold font-light">protected.</em>
             </h2>
-            <p className="text-[15px] text-warmgray max-w-[560px]">
-              Every partnership is structured differently based on your goals, risk tolerance, and how involved you want to be. Here are the three models I work with.
-            </p>
           </div>
-
-          <div className="grid gap-4 lg:gap-px lg:grid-cols-3 lg:bg-[rgba(28,25,23,0.06)] lg:border lg:border-soft">
-            {models.map((m, i) => (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            {trust.map((t, i) => (
               <div
-                key={m.title}
-                className={`reveal reveal-d${i + 1} group bg-white p-12 lg:p-10 transition-[background] duration-500 ease-brand relative overflow-hidden flex flex-col border border-soft lg:border-0 hover:bg-cream`}
+                key={t.title}
+                className={`reveal reveal-d${i + 1} p-10 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
               >
-                <span className="absolute bottom-0 left-0 right-0 h-[3px] bg-gold scale-x-0 origin-left transition-transform duration-500 ease-brand group-hover:scale-x-100" />
-                <span className="block text-[28px] text-gold mb-5 transition-transform duration-500 group-hover:scale-[1.15]">
-                  {m.icon}
-                </span>
-                <h3 className="font-heading font-medium text-2xl text-charcoal mb-3">
-                  {m.title}
+                <span className="block text-2xl text-gold mb-4">{t.icon}</span>
+                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
+                  {t.title}
                 </h3>
-                <p className="text-sm leading-[1.8] text-warmgray mb-5">{m.copy}</p>
-                <ul className="list-none mb-7 flex-1">
-                  {m.items.map((it) => (
-                    <li
-                      key={it}
-                      className="text-[13px] text-warmgray py-1.5 flex items-start gap-2.5"
-                    >
-                      <span className="text-gold text-[7px] mt-[7px] shrink-0">✦</span>
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-                <a href="/book" className="btn-sm self-start">
-                  Schedule a Call →
-                </a>
+                <p className="text-[13px] text-warmgray leading-[1.7]">{t.copy}</p>
               </div>
             ))}
           </div>
@@ -242,35 +270,6 @@ export default function PartnerPage() {
         </div>
       </section>
 
-      {/* ===== 5. TRUST ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">Trust &amp; Protections</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal"
-              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
-            >
-              Your investment is <em className="italic text-gold font-light">protected.</em>
-            </h2>
-          </div>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {trust.map((t, i) => (
-              <div
-                key={t.title}
-                className={`reveal reveal-d${i + 1} p-10 border border-soft text-center transition-all duration-500 hover:border-brand hover:-translate-y-[3px]`}
-              >
-                <span className="block text-2xl text-gold mb-4">{t.icon}</span>
-                <h3 className="font-heading font-medium text-lg text-charcoal mb-2">
-                  {t.title}
-                </h3>
-                <p className="text-[13px] text-warmgray leading-[1.7]">{t.copy}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ===== 6. FINAL CTA ===== */}
       <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
         <span
@@ -286,12 +285,12 @@ export default function PartnerPage() {
             Let&apos;s put your money to work{" "}
             <em className="italic text-gold-light font-light">together.</em>
           </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
+          <p className="text-[15px] text-cream mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
             <a href="/book" className="btn-gold">
-              Schedule a Discovery Call
+              Book a Call
             </a>
           </div>
         </div>

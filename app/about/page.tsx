@@ -1,19 +1,22 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import WorkWithMe from "@/components/WorkWithMe";
 import { mediaAction, mediaAppearances } from "@/lib/media";
-import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
-import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
+import {
+  ATLANTA_WOMEN_INVESTORS_URL,
+  EVENTBRITE_ORGANIZER_URL,
+  HOUSE_HACKING_URL,
+} from "@/lib/site";
 
 export const metadata = {
-  title: "About Caitlyn Verdugo — Atlanta Investor & Realtor",
+  title: "About Caitlyn Verdugo — Atlanta Realtor, Investor & Coach",
   description:
-    "Meet Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
+    "Meet Caitlyn Verdugo — Atlanta Keller Williams Realtor, real estate investor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About Caitlyn Verdugo — Atlanta Investor & Realtor",
+    title: "About Caitlyn Verdugo — Atlanta Realtor, Investor & Coach",
     description:
-      "Meet Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
+      "Meet Caitlyn Verdugo — Atlanta Keller Williams Realtor, real estate investor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
     url: "/about",
     images: [{ url: "/images/caitlyn-staircase.jpg", alt: "Caitlyn Verdugo" }],
   },
@@ -35,23 +38,16 @@ const storyParagraphs = [
   "At 17 I started my first business — not from a business plan, but from a moment that mattered. A family friend's two-year-old had a near-drowning experience. As a lifelong competitive swimmer who had been teaching swim lessons for the city of Huntington Beach, I stepped in and taught her how to swim in my parents' backyard pool. One lesson quickly grew into a full-fledged business. By the time I was 21, Jump Start Swimming had over 20 instructors, three pools, and hundreds of families every year across Orange County, California. While studying business and child development at Cal State Fullerton I was simultaneously managing staff, running operations, responding to midnight emails, and learning what it actually means to build something real from the ground up.",
   "After graduating I decided I wanted to live my life and travel a little more — so I booked one-way tickets to places I'd never been. I spent a year living in Hawaii, backpacking South America, then Asheville North Carolina, then St. Pete Florida, where I fell in love with marathon swimming and real estate in 2019/2020 — right as the pandemic was just getting started. Perfect timing.",
   "I moved to Atlanta to be closer to family and pretty quickly felt the pull toward investing. I started attending real estate investing meetups. In 2022 I converted my basement into a studio apartment, rented it out, and felt the click of something falling into place. A few months later, I unknowingly walked into a PadSplit meetup — and that was it. I knew coliving was the strategy I'd been looking for.",
-  "Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday people build real wealth through real estate. And what I love most about it is that it's the ultimate creative solution. We don't have enough housing for the people who need it — but rather than just throwing our hands up and saying “we need to build more,” which takes decades, we can reconfigure the housing we already have to better serve the people who need it right now.",
   "I've now built a growing portfolio of coliving homes across the Atlanta metro, co-founded She Leads Coliving, hosted the Women's Coliving Summit, and built a coaching program to help other investors do exactly what I did — but faster, smarter, and with someone in their corner.",
   "Because real estate is the entrepreneur's dream. You can make it as big as you want. There's no ceiling, no set path. And I'm proof of that.",
 ];
 
 const roles = [
-  { icon: "$", title: "Investor", copy: "50+ rooms across the Atlanta metro" },
+  { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
+  { icon: "$", title: "Investor", copy: "$2.5M AUM · 50+ rooms · 100+ residents" },
   { icon: "◈", title: "Coach", copy: "Helping investors build their first portfolios" },
   { icon: "♀", title: "She Leads Co-Founder", copy: "500+ women in coliving community" },
   { icon: "★", title: "Summit Co-Founder", copy: "Hosted the first summit for women in coliving" },
-  { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
-];
-
-const triple = [
-  { icon: "◈", title: "Learn With Me", copy: "Courses, coaching, and consulting — from your first lesson to your tenth deal.", href: "/learn", cta: "Explore Options →" },
-  { icon: "$", title: "Partner With Me", copy: "Put your capital to work in Atlanta's coliving market. You invest, I operate.", href: "/partner-with-me", cta: "Learn More →" },
-  { icon: "⌂", title: "Buy & Sell With Me", copy: "A Realtor who thinks like an investor. Investment properties, conversions, and house hacking.", href: "/buy-and-sell", cta: "Get Started →" },
 ];
 
 export default function AboutPage() {
@@ -72,7 +68,7 @@ export default function AboutPage() {
               <em className="italic text-gold font-light">Here to help.</em>
             </h1>
             <p className="text-base leading-[1.85] text-warmgray max-w-[460px] mx-auto lg:mx-0">
-              I&apos;m an Atlanta-based coliving investor, Keller Williams Realtor, and coliving coach. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro, and I&apos;m on a mission to help people do the same.
+              I&apos;m an Atlanta-based Keller Williams Realtor, real estate investor, and coach. I&apos;ve built a portfolio of 50+ coliving rooms across the Atlanta metro, and I&apos;m on a mission to help people do the same.
             </p>
             <div className="flex flex-wrap justify-center lg:justify-start gap-8 mt-9">
               {stats.map((s) => (
@@ -102,6 +98,42 @@ export default function AboutPage() {
                 className="object-cover"
               />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3. THE MISSION ===== */}
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
+        <div className="mx-auto max-w-[1320px]">
+          <div className="reveal max-w-[680px] mb-16 lg:mb-[72px]">
+            <span className="eyebrow !text-gold-light before:!bg-gold-light">What I Do</span>
+            <h2
+              className="font-heading font-normal tracking-[-0.02em] text-white mb-6 leading-[1.1]"
+              style={{ fontSize: "clamp(30px, 3.2vw, 44px)" }}
+            >
+              Realtor, investor,{" "}
+              <em className="italic text-gold-light font-light">and coach.</em>
+            </h2>
+            <p className="text-base leading-[1.85] text-cream">
+              Keller Williams Realtor first, then the portfolio, then coaching — plus the communities I built around that work.
+            </p>
+          </div>
+
+          <div className="grid gap-px bg-white/[0.06] grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+            {roles.map((r, i) => (
+              <div
+                key={r.title}
+                className={`reveal reveal-d${i + 1} group bg-charcoal hover:bg-charcoal-soft px-7 py-9 text-center transition-colors duration-500`}
+              >
+                <span className="block text-2xl text-gold mb-4 transition-transform duration-500 group-hover:scale-[1.15]">
+                  {r.icon}
+                </span>
+                <h3 className="font-heading font-medium text-lg leading-tight text-white">
+                  {r.title}
+                </h3>
+                <p className="text-xs text-cream mt-1.5 leading-[1.6]">{r.copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -136,65 +168,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ===== 3. THE MISSION ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-charcoal">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal max-w-[680px] mb-16 lg:mb-[72px]">
-            <span className="eyebrow !text-gold-light before:!bg-gold-light">The Mission</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-white mb-6 leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3.2vw, 44px)" }}
-            >
-              Coliving as a vehicle for{" "}
-              <em className="italic text-gold-light font-light">wealth and community.</em>
-            </h2>
-            <p className="text-base leading-[1.85] text-warmgray-light">
-              Coliving is one of the most powerful tools we have right now — working to accomplish the joint mission of solving the affordable housing crisis and helping everyday people build real wealth through real estate. I wear a lot of hats to make that happen.
-            </p>
-          </div>
-
-          <div className="grid gap-px bg-white/[0.06] grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-            {roles.map((r, i) => (
-              <div
-                key={r.title}
-                className={`reveal reveal-d${i + 1} group bg-charcoal hover:bg-charcoal-soft px-7 py-9 text-center transition-colors duration-500`}
-              >
-                <span className="block text-2xl text-gold mb-4 transition-transform duration-500 group-hover:scale-[1.15]">
-                  {r.icon}
-                </span>
-                <h3 className="font-heading font-medium text-lg leading-tight text-white">
-                  {r.title}
-                </h3>
-                <p className="text-xs text-warmgray-light mt-1.5 leading-[1.6]">{r.copy}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 4. COMMUNITIES ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
-        <div className="mx-auto max-w-[640px]">
-          <div className="reveal p-10 lg:px-11 lg:py-12 bg-white border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card">
-            <span className="block text-[28px] text-gold mb-5">★</span>
-            <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
-              Atlanta House Hackers
-            </h3>
-            <p className="text-sm leading-[1.8] text-warmgray mb-2">
-              A free community for anyone house hacking in metro Atlanta — first-timers running the numbers, and owners already living for free.
-            </p>
-            <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
-              Free · Facebook group · Metro Atlanta
-            </span>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-              <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
-              <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer" className="btn-text">Meetups on Eventbrite →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 5. MEDIA & APPEARANCES ===== */}
+      {/* ===== MEDIA & APPEARANCES ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal text-center mb-16">
@@ -234,78 +208,60 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ===== 6. TESTIMONIALS ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-cream">
+      <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-blush">
         <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">What Clients Are Saying</span>
-            <h2
-              className="font-heading font-normal tracking-[-0.02em] text-charcoal mb-2 leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
-            >
-              Real reviews from <em className="italic text-gold font-light">real clients.</em>
-            </h2>
-            <p className="text-[13px] text-warmgray-light">
-              <ZillowRatingLink />
-            </p>
-          </div>
-          <ZillowReviewGrid cardClassName="bg-white p-10 border border-soft transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card" />
-        </div>
-      </section>
-
-      {/* ===== 7. TRIPLE CTA ===== */}
-      <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white border-t border-soft">
-        <div className="mx-auto max-w-[1320px]">
-          <div className="reveal text-center mb-16">
-            <span className="eyebrow eyebrow-center">Work With Me</span>
+          <div className="reveal text-center mb-12">
+            <span className="eyebrow eyebrow-center">Community</span>
             <h2
               className="font-heading font-normal tracking-[-0.02em] text-charcoal leading-[1.1]"
-              style={{ fontSize: "clamp(30px, 3vw, 44px)" }}
+              style={{ fontSize: "clamp(30px, 3vw, 42px)" }}
             >
-              Ready to take the <em className="italic text-gold font-light">next step?</em>
+              Two rooms in <em className="italic text-gold font-light">Atlanta.</em>
             </h2>
           </div>
-          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-3">
-            {triple.map((t, i) => (
-              <div
-                key={t.title}
-                className={`reveal reveal-d${i + 1} group p-12 lg:px-9 border border-soft text-center bg-white transition-all duration-500 ease-brand hover:border-gold hover:-translate-y-1 hover:shadow-cardGold`}
-              >
-                <span className="block text-[28px] text-gold mb-5 transition-transform duration-500 group-hover:scale-110">
-                  {t.icon}
-                </span>
-                <h3 className="font-heading font-medium text-[22px] text-charcoal mb-3">
-                  {t.title}
-                </h3>
-                <p className="text-sm leading-[1.75] text-warmgray mb-6">{t.copy}</p>
-                <Link href={t.href} className="btn-sm">{t.cta}</Link>
+          <div className="grid gap-6 max-w-[420px] mx-auto lg:max-w-none lg:grid-cols-2">
+            <div className="reveal p-10 lg:px-11 lg:py-12 bg-white border border-soft">
+              <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
+                Atlanta House Hackers
+              </h3>
+              <p className="text-sm leading-[1.8] text-warmgray mb-2">
+                A free community for anyone house hacking in metro Atlanta — first-timers running the numbers, and owners already living for free.
+              </p>
+              <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
+                Free · Facebook group · Metro Atlanta
+              </span>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+                <a href={HOUSE_HACKING_URL} target="_blank" rel="noopener noreferrer" className="btn-sm">Explore House Hacking →</a>
+                <a href={EVENTBRITE_ORGANIZER_URL} target="_blank" rel="noopener noreferrer" className="btn-text">Meetups on Eventbrite →</a>
               </div>
-            ))}
+            </div>
+            <div className="reveal reveal-d2 p-10 lg:px-11 lg:py-12 bg-white border border-soft">
+              <h3 className="font-heading font-medium text-2xl text-charcoal mb-3 leading-tight">
+                Atlanta Women Investors
+              </h3>
+              <p className="text-sm leading-[1.8] text-warmgray mb-2">
+                A monthly meetup for women investing in Atlanta real estate — every strategy, every experience level.
+              </p>
+              <span className="block text-xs text-warmgray-light tracking-[0.04em] mb-6">
+                Last Tuesday · Atlanta · Free
+              </span>
+              <a href={ATLANTA_WOMEN_INVESTORS_URL} target="_blank" rel="noopener noreferrer" className="btn-sm">
+                See the next meetup →
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== FINAL CTA ===== */}
-      <section className="relative px-8 lg:px-[60px] py-24 lg:py-40 bg-charcoal text-center overflow-hidden">
-        <span
-          aria-hidden
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-20 bg-gradient-to-b from-gold to-transparent"
-        />
-        <div className="reveal">
-          <span className="eyebrow eyebrow-center !text-gold">Let&apos;s Connect</span>
-          <h2
-            className="font-heading font-normal tracking-[-0.02em] text-white mb-5 leading-[1.08]"
-            style={{ fontSize: "clamp(36px, 3.8vw, 56px)" }}
-          >
-            There&apos;s a seat at this table{" "}
-            <em className="italic text-gold-light font-light">for you.</em>
-          </h2>
-          <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
-            Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
-          </p>
-          <a href="/book" className="btn-gold">Book a Discovery Call</a>
-        </div>
-      </section>
+      <WorkWithMe
+        eyebrow="Work With Me"
+        title={
+          <>
+            Buy, partner, or <em className="italic text-gold font-light">learn.</em>
+          </>
+        }
+        showBook
+      />
     </>
   );
 }
