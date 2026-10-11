@@ -104,6 +104,15 @@ export default function Button(props: ButtonProps) {
 
   if ("href" in props && props.href) {
     const isExternal = /^https?:\/\//.test(props.href);
+    // /book and /listings are CRM rewrites. next/link would client-navigate
+    // inside this app and miss the rewrite.
+    const isRewrite =
+      props.href === "/book" ||
+      props.href.startsWith("/book/") ||
+      props.href === "/listings" ||
+      props.href.startsWith("/listings/") ||
+      props.href === "/listing" ||
+      props.href.startsWith("/listing/");
     element = isExternal ? (
       <a
         href={props.href}
@@ -111,6 +120,10 @@ export default function Button(props: ButtonProps) {
         target="_blank"
         rel="noopener noreferrer"
       >
+        {inner}
+      </a>
+    ) : isRewrite ? (
+      <a href={props.href} className={classes}>
         {inner}
       </a>
     ) : (

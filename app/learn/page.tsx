@@ -2,6 +2,7 @@ import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import BuyButton from "@/components/courses/BuyButton";
 import { BUNDLE_PRICE_USD, getCourse } from "@/lib/courses";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Real Estate Coaching & Courses — Atlanta",
@@ -13,6 +14,7 @@ export const metadata = {
     description:
       "Whether you're buying your first property or scaling a portfolio, find the right level of guidance — from $49 mini courses to 1:1 coaching and ongoing consulting.",
     url: "/learn",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -297,7 +299,7 @@ export default function LearnPage() {
                 Payment plan available at checkout
               </p>
               <a
-                href="/contact?topic=coaching"
+                href="/book"
                 className="btn-text mt-5 flex justify-center"
               >
                 Have questions? Book a Discovery Call →
@@ -353,7 +355,7 @@ export default function LearnPage() {
               <Link href="/contact?topic=coaching" className="btn-gold">
                 Start Now — $1,000/mo
               </Link>
-              <a href="/contact?topic=coaching" className="btn-text">
+              <a href="/book" className="btn-text">
                 Have questions? Book a Discovery Call →
               </a>
             </div>
@@ -376,9 +378,9 @@ export default function LearnPage() {
             <p className="text-[15px] text-warmgray mb-8">
               These are real lessons from real deals — the kind of knowledge that separates a portfolio that works from one that drains you.
             </p>
-            <Link href="/contact?topic=coaching" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Book a Discovery Call
-            </Link>
+            </a>
           </div>
 
           <ul className="reveal reveal-d2 list-none lg:columns-2 lg:gap-8">
@@ -416,9 +418,9 @@ export default function LearnPage() {
             <span className="block text-[15px] text-warmgray-light mb-6">
               One session · 60 minutes
             </span>
-            <Link href="/contact?topic=strategy-session" className="btn-gold">
+            <a href="/book" className="btn-gold">
               Book a Session — $250
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -440,7 +442,7 @@ export default function LearnPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Book a free discovery call and we&apos;ll talk through where you are, where you want to go, and which path makes the most sense for you.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a href="/book" className="btn-gold">Book a Discovery Call</a>
         </div>
       </section>
     </>

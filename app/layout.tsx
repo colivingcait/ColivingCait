@@ -4,7 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
-import { SITE, SITE_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SITE, SITE_URL } from "@/lib/site";
 import JsonLd, {
   graph,
   personSchema,
@@ -51,14 +51,14 @@ export const metadata: Metadata = {
       "Caitlyn Verdugo — Atlanta Realtor & Real Estate Investor | Coliving Cait",
     description:
       "Helping you build wealth one door at a time. Coliving, house hacking, investment properties, and buying or selling across metro Atlanta.",
-    images: [{ url: "/images/caitlyn-yellow-blazer.jpg", width: 1200, height: 1600, alt: SITE.personName }],
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Caitlyn Verdugo — Atlanta Realtor & Real Estate Investor",
     description:
       "Helping you build wealth one door at a time. Coliving, house hacking, and investment real estate in metro Atlanta.",
-    images: ["/images/caitlyn-yellow-blazer.jpg"],
+    images: [DEFAULT_OG_IMAGE.url],
   },
   robots: {
     index: true,

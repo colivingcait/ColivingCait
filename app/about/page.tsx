@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
+import { mediaAction, mediaAppearances } from "@/lib/media";
 import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
 import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
@@ -14,6 +15,7 @@ export const metadata = {
     description:
       "Meet Caitlyn Verdugo — Atlanta-based real estate investor, Keller Williams Realtor, and coach. From founding a swim school at 17 to building 50+ coliving rooms across metro Atlanta.",
     url: "/about",
+    images: [{ url: "/images/caitlyn-staircase.jpg", alt: "Caitlyn Verdugo" }],
   },
 };
 
@@ -44,12 +46,6 @@ const roles = [
   { icon: "♀", title: "She Leads Co-Founder", copy: "500+ women in coliving community" },
   { icon: "★", title: "Summit Co-Founder", copy: "Hosted the first summit for women in coliving" },
   { icon: "⌂", title: "KW Realtor", copy: "Top agent in DeKalb County" },
-];
-
-const media = [
-  { type: "Podcast", title: "Podcast Episode Title", copy: "Brief description of the episode and what was discussed.", link: "Listen →" },
-  { type: "Speaking", title: "Conference or Event Name", copy: "Brief description of the talk or panel topic.", link: "Watch →" },
-  { type: "YouTube", title: "Video Title", copy: "Brief description of the video content.", link: "Watch →" },
 ];
 
 const triple = [
@@ -211,24 +207,26 @@ export default function AboutPage() {
             </h2>
           </div>
 
-          <div className="grid gap-6 max-w-[480px] mx-auto lg:max-w-none lg:grid-cols-3">
-            {media.map((m, i) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {mediaAppearances.map((m, i) => (
               <div
-                key={m.title}
-                className={`reveal reveal-d${i + 1} border border-soft p-9 lg:px-8 bg-white transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card`}
+                key={m.href}
+                className={`reveal reveal-d${(i % 6) + 1} border border-soft p-9 lg:px-8 bg-white transition-all duration-500 hover:border-brand hover:-translate-y-[3px] hover:shadow-card`}
               >
                 <span className="block text-[10px] font-medium uppercase tracking-[0.15em] text-gold mb-3.5">
-                  {m.type}
+                  {m.eyebrow}
                 </span>
                 <h3 className="font-heading font-medium text-xl leading-tight text-charcoal mb-2.5">
                   {m.title}
                 </h3>
-                <p className="text-[13px] text-warmgray leading-[1.7] mb-4">{m.copy}</p>
+                <p className="text-[13px] text-warmgray leading-[1.7] mb-4">{m.description}</p>
                 <a
-                  href="#"
+                  href={m.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.1em] text-charcoal hover:text-gold-dark hover:gap-3 transition-all duration-300"
                 >
-                  {m.link}
+                  {mediaAction(m.kind)} →
                 </a>
               </div>
             ))}
@@ -305,7 +303,7 @@ export default function AboutPage() {
           <p className="text-[15px] text-warmgray-light mb-11 max-w-[440px] mx-auto leading-[1.8]">
             Whether you&apos;re exploring coliving for the first time or scaling your portfolio, it starts with one conversation.
           </p>
-          <Link href="/contact" className="btn-gold">Book a Discovery Call</Link>
+          <a href="/book" className="btn-gold">Book a Discovery Call</a>
         </div>
       </section>
     </>

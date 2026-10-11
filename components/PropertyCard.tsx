@@ -132,54 +132,31 @@ export default function PropertyCard({
         </div>
       </div>
 
-      {/* Thumbnails / footer */}
-      <div className="flex items-center justify-between gap-4 px-10 lg:px-11 py-4 border-t border-soft">
-        {hasImages ? (
-          <div className="hidden sm:flex gap-2 flex-wrap">
-            {images.map((src, i) => (
-              <button
-                key={src}
-                type="button"
-                onClick={() => setIndex(i)}
-                aria-label={`Show photo ${i + 1}`}
-                aria-current={i === index}
-                className={cn(
-                  "relative w-14 h-10 bg-blush border overflow-hidden cursor-pointer transition-all",
-                  i === index ? "border-gold ring-1 ring-gold" : "border-soft hover:border-brand",
-                )}
-              >
-                <Image
-                  src={src}
-                  alt=""
-                  fill
-                  sizes="56px"
-                  className="object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="hidden sm:flex gap-2">
-            {["Main", "Before", "After", "Rooms"].map((label, i) => (
-              <div
-                key={label}
-                className={cn(
-                  "w-14 h-10 bg-blush border flex items-center justify-center text-[9px] text-warmgray-light",
-                  i === 0 ? "border-gold" : "border-soft",
-                )}
-              >
-                {label}
-              </div>
-            ))}
-          </div>
-        )}
-        <a
-          href="#"
-          className="group inline-flex items-center gap-2 text-xs font-medium tracking-[0.08em] uppercase text-gold-dark hover:text-gold hover:gap-3 transition-all duration-300"
-        >
-          View all photos →
-        </a>
-      </div>
+      {hasImages && (
+        <div className="flex gap-2 flex-wrap px-10 lg:px-11 py-4 border-t border-soft">
+          {images.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Show photo ${i + 1}`}
+              aria-current={i === index}
+              className={cn(
+                "relative w-14 h-10 bg-blush border overflow-hidden cursor-pointer transition-all",
+                i === index ? "border-gold ring-1 ring-gold" : "border-soft hover:border-brand",
+              )}
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="56px"
+                className="object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

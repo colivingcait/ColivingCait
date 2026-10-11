@@ -224,8 +224,8 @@ function LessonNavigation({
           </p>
         </Link>
       ) : (
-        <Link
-          href="/learn"
+        <a
+          href="/book"
           onClick={onAdvance}
           className="group block border border-gold bg-gold/[0.06] p-5 hover:bg-gold/[0.12] transition-colors text-right"
         >
@@ -235,7 +235,7 @@ function LessonNavigation({
           <p className="mt-2 font-heading text-lg leading-heading">
             Book a coaching call
           </p>
-        </Link>
+        </a>
       )}
     </div>
   );

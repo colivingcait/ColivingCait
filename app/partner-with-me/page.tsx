@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import PropertyCard from "@/components/PropertyCard";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Partner on Atlanta Coliving Deals",
@@ -13,12 +13,13 @@ export const metadata = {
     description:
       "Put your capital to work in Atlanta's coliving market. Three partnership models — private money lending, private money partnerships, and coliving arbitrage.",
     url: "/partner-with-me",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
 // Partner With Me — pixel-perfect rewrite of coliving-cait-partner.html.
 // Sections: Hero · How It Works (3 steps) · Partnership Models (3 cards) ·
-// Portfolio (4 property cards + photo grid) · Trust & Protections (4) ·
+// Portfolio (property cards + interior photo) · Trust & Protections (4) ·
 // Partner Testimonial · Final CTA.
 
 const steps = [
@@ -48,17 +49,6 @@ const models = [
   },
 ];
 
-const photoGrid = [
-  "/images/colivingconsulting/1.png",
-  "/images/colivingconsulting/2.png",
-  "/images/colivingconsulting/3.png",
-  "/images/colivingconsulting/4.png",
-  "/images/colivingconsulting/5.png",
-  "/images/colivingconsulting/8.png",
-  "/images/colivingconsulting/9.png",
-  "/images/colivingconsulting/10.png",
-];
-
 const trust = [
   { icon: "§", title: "Promissory Note", copy: "Every lending partnership is backed by a legally binding promissory note with clear terms." },
   { icon: "⊞", title: "Operating Agreement", copy: "Equity partnerships are structured with detailed operating agreements that define roles and returns." },
@@ -86,9 +76,9 @@ export default function PartnerPage() {
             <p className="text-base leading-[1.85] text-warmgray max-w-[480px] mx-auto lg:mx-0 mb-9">
               I operate coliving properties across the Atlanta metro. You bring the capital, I bring the expertise and operations. Three partnership models, full transparency, and a track record you can verify.
             </p>
-            <Link href="/contact?topic=partnership" className="btn-primary">
+            <a href="/book" className="btn-primary">
               Schedule a Discovery Call →
-            </Link>
+            </a>
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <div
@@ -97,7 +87,7 @@ export default function PartnerPage() {
             >
               <Image
                 src="/images/villacandace-after.png"
-                alt="Villa Candace — Atlanta metro coliving property"
+                alt="Villa Candace floor plan — Atlanta metro"
                 fill
                 priority
                 sizes="(max-width: 1024px) 90vw, 600px"
@@ -189,9 +179,9 @@ export default function PartnerPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href="/contact?topic=partnership" className="btn-sm self-start">
+                <a href="/book" className="btn-sm self-start">
                   Schedule a Call →
-                </Link>
+                </a>
               </div>
             ))}
           </div>
@@ -217,7 +207,7 @@ export default function PartnerPage() {
 
           <PropertyCard
             name="Villa Candace"
-            location="Atlanta Metro, Georgia"
+            location="Atlanta metro"
             original="5 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,000"
@@ -233,14 +223,13 @@ export default function PartnerPage() {
 
           <PropertyCard
             name="Raven"
-            location="Stone Mountain, Georgia"
+            location="Atlanta metro"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,500"
             strategy="Acquisition"
             delay={1}
             images={[
-              "/images/raven/ravenfront.jpg",
               "/images/raven/ravenkitchen.jpg",
               "/images/raven/ravenbed1.jpg",
               "/images/raven/ravenbed2.jpg",
@@ -250,56 +239,6 @@ export default function PartnerPage() {
             Converted the living room, dining room and basement into{" "}
             <strong className="text-charcoal font-medium">4 additional bedrooms</strong>.
           </PropertyCard>
-
-          <PropertyCard
-            name="Meadow"
-            location="Snellville, Georgia"
-            original="4 Bed / 3 Bath"
-            converted="8 Rooms / 3 Bath"
-            gross="$5,000"
-            strategy="Arbitrage"
-            delay={2}
-            images={[
-              "/images/Meadow/meadowfront.jpg",
-              "/images/Meadow/meadow2.jpg",
-              "/images/Meadow/meadow3.jpg",
-              "/images/Meadow/meadow4.jpg",
-              "/images/Meadow/meadow5.jpg",
-              "/images/Meadow/meadow6.jpg",
-              "/images/Meadow/meadow7.jpg",
-            ]}
-          >
-            Converted the living rooms, dining room and basement into{" "}
-            <strong className="text-charcoal font-medium">4 additional bedrooms</strong>.
-          </PropertyCard>
-
-          <div className="reveal mt-16">
-            <h3
-              className="font-heading font-normal text-[28px] text-charcoal mb-3 tracking-[-0.01em]"
-            >
-              More coliving properties I&apos;ve{" "}
-              <em className="italic text-gold font-light">worked on.</em>
-            </h3>
-            <p className="text-[15px] text-warmgray mb-8">
-              Consulting, property management, or helping a client purchase or sell.
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {photoGrid.map((src, i) => (
-                <div
-                  key={src}
-                  className="relative aspect-square bg-blush border border-soft cursor-pointer overflow-hidden transition-all duration-300 hover:border-brand"
-                >
-                  <Image
-                    src={src}
-                    alt={`Portfolio property ${i + 1}`}
-                    fill
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -351,9 +290,9 @@ export default function PartnerPage() {
             Every partnership starts with a conversation. No pressure, no commitment — just a chance to see if we&apos;re a good fit.
           </p>
           <div className="flex flex-wrap gap-5 justify-center">
-            <Link href="/contact?topic=partnership" className="btn-gold">
+            <a href="/book" className="btn-gold">
               Schedule a Discovery Call
-            </Link>
+            </a>
           </div>
         </div>
       </section>

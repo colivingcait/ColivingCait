@@ -4,6 +4,8 @@ import Heading from "@/components/Heading";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
 import { BUNDLE_PRICE_USD, courses } from "@/lib/courses";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
+import JsonLd, { courseSchema, graph } from "@/components/JsonLd";
 import { cn } from "@/lib/cn";
 import BuyButton from "@/components/courses/BuyButton";
 import ScrollToBundle from "@/components/courses/ScrollToBundle";
@@ -18,6 +20,7 @@ export const metadata = {
     description:
       "Three self-paced mini courses on coliving, house hacking, and real estate investing. $49 each, $99 bundle. Lifetime access. Module quizzes included.",
     url: "/courses",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
@@ -27,6 +30,7 @@ export default function CoursesPage() {
 
   return (
     <>
+      <JsonLd data={graph(...courses.map((course) => courseSchema(course)))} />
       <ScrollToBundle />
       <Section tone="charcoal" className="relative grain overflow-hidden">
         <div className="text-center max-w-3xl mx-auto">

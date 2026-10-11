@@ -3,6 +3,7 @@ import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal, { Stagger, StaggerItem } from "@/components/Reveal";
 import Link from "next/link";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Free Real Estate Calculators — Coliving, House Hacking & DSCR",
@@ -14,6 +15,7 @@ export const metadata = {
     description:
       "Three free calculators for investors running the numbers on a deal. Coliving conversions, house hacking, and DSCR loans — pencil it before you offer.",
     url: "/calculator",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

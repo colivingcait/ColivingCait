@@ -9,6 +9,7 @@ import { courses, getCourse } from "@/lib/courses";
 import { getCurrentUser, hasAccess } from "@/lib/auth/helpers";
 import BuyButton from "@/components/courses/BuyButton";
 import JsonLd, { graph, courseSchema, breadcrumbSchema } from "@/components/JsonLd";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,7 @@ export async function generateMetadata({
       title: course.title,
       description: course.description,
       url: canonical,
+      images: [DEFAULT_OG_IMAGE],
     },
   };
 }

@@ -1,4 +1,6 @@
+import { mediaCreativeWorks } from "@/lib/media";
 import {
+  BUNDLE_PRICE_USD,
   EVENTBRITE_ORGANIZER_URL,
   HOUSE_HACKING_ORG_ID,
   HOUSE_HACKING_URL,
@@ -98,7 +100,7 @@ export const personSchema = {
     EVENTBRITE_ORGANIZER_URL,
     ZILLOW_PROFILE_URL,
   ],
-  subjectOf: zillowReviewSchema,
+  subjectOf: [...zillowReviewSchema, ...mediaCreativeWorks()],
 };
 
 export const businessSchema = {
@@ -176,14 +178,28 @@ export function courseSchema(course: {
     author: { "@id": PERSON_ID },
     inLanguage: "en-US",
     isAccessibleForFree: false,
-    offers: {
-      "@type": "Offer",
-      price: course.price,
-      priceCurrency: "USD",
-      category: "Paid",
-      availability: "https://schema.org/InStock",
-      url: absoluteUrl(`/courses/${course.slug}`),
-    },
+    offers: [
+      {
+        "@type": "Offer",
+        name: course.title,
+        price: course.price,
+        priceCurrency: "USD",
+        category: "Paid",
+        availability: "https://schema.org/InStock",
+        url: absoluteUrl(`/courses/${course.slug}`),
+      },
+      {
+        "@type": "Offer",
+        name: "All three mini courses",
+        description:
+          "Coliving 101, House Hacking 101, and Real Estate Investing 101.",
+        price: BUNDLE_PRICE_USD,
+        priceCurrency: "USD",
+        category: "Paid",
+        availability: "https://schema.org/InStock",
+        url: absoluteUrl("/courses#bundle"),
+      },
+    ],
     hasCourseInstance: {
       "@type": "CourseInstance",
       courseMode: "online",

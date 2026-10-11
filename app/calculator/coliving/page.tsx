@@ -3,6 +3,7 @@ import Eyebrow from "@/components/Eyebrow";
 import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
 import ColivingCalculator from "@/components/calculator/ColivingCalculator";
+import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
   title: "Coliving Conversion Calculator",
@@ -14,6 +15,7 @@ export const metadata = {
     description:
       "See what any property could earn as a coliving home. Six-step underwriting wizard with real numbers — gross revenue, expenses, cashflow, cash-on-cash, and 5-year wealth projection.",
     url: "/calculator/coliving",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
