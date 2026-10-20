@@ -149,7 +149,9 @@ export function runChecks(ledger: Ledger, parsed: ParseResult): CheckResult[] {
     label: `No single bill over $${RULES.bigBill.toLocaleString()} or dues bill under $${RULES.smallDuesBill}`,
     blocking: false,
     status: odd.length ? "warn" : "pass",
-    detail: odd.length ? `${odd.length} bills look unusual. Worth a glance.` : "No unusual bills.",
+    detail: odd.length
+      ? `${odd.length} bill${odd.length > 1 ? "s look" : " looks"} unusual. Worth a glance.`
+      : "No unusual bills.",
     items: odd,
   });
 

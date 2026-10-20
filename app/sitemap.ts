@@ -20,6 +20,7 @@ const staticRoutes: Array<{
   { path: "/grow-with-me", changeFrequency: "monthly", priority: 0.7 },
   { path: "/calculator/coliving", changeFrequency: "yearly", priority: 0.7 },
   { path: "/calculator/pro-forma", changeFrequency: "yearly", priority: 0.7 },
+  { path: "/tools/rent-ledger", changeFrequency: "monthly", priority: 0.7 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/community", changeFrequency: "monthly", priority: 0.6 },
   { path: "/contact", changeFrequency: "yearly", priority: 0.6 },
