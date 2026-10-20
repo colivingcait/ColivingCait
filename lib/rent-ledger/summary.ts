@@ -3,19 +3,24 @@ import type { CheckResult } from "./checks";
 import { unrecognizedItems } from "./checks";
 import type { Report } from "./metrics";
 import { dayToISO, monthStartDay } from "./parse";
+import { houseMetros, normalizeMetro } from "./metros";
 import { RULES_VERSION, priceBand } from "./rules";
 import { median } from "./stats";
 
-// Section 10: the anonymous per-house summary that is the only house-level
-// data ever sent to the server, and only after the benchmark opt-in. The
-// PSID goes up so the server can hash it with its salt; the server stores
-// the hash, never the PSID.
+// Section 10: the per-house summary, the only house-level data ever sent to
+// the server. It's saved once a signed-in host opens their report (unlocking
+// means contributing). Benchmarks only ever show aggregates of it; the
+// address is kept for Caitlyn's admin view. The PSID goes up so the server
+// can hash it with its salt; the server stores the hash, never the PSID.
 
 export interface HouseSummary {
   psid: string;
   city: string;
   state: string;
   zip: string | null;
+  metro: string | null;
+  /** Street address. Stored for Caitlyn's admin view only; never in benchmarks. */
+  address: string;
   rooms: number | null;
   price_band: string | null;
   months_covered: number;
@@ -42,7 +47,7 @@ export interface HouseSummary {
 
 /** Keys the save route accepts. Anything else in a summary is dropped. */
 export const SUMMARY_FIELDS: Array<keyof HouseSummary> = [
-  "psid", "city", "state", "zip", "rooms", "price_band", "months_covered",
+  "psid", "city", "state", "zip", "metro", "rooms", "price_band", "months_covered",
   "period_start", "period_end", "collected_per_house_month", "collection_rate",
   "breakage_rate", "breakage_per_house_month", "move_outs", "left_owing_rate",
   "median_balance", "avg_stay_days", "short_pct", "long_pct", "requests",
@@ -60,8 +65,9 @@ const round = (n: number | null | undefined, d = 4) =>
 export function buildHouseSummaries(
   ledger: Ledger,
   report: Report,
-  location: { city: string; state: string; zips?: Record<string, string> },
+  location: { city: string; state: string; zips?: Record<string, string>; metros?: Record<string, string> },
 ): HouseSummary[] {
+  const autoMetros = houseMetros(ledger);
   return ledger.houses
     .filter((h) => report.perHouse[h.id]?.houseMonths > 0)
     .map((h) => {
@@ -80,6 +86,8 @@ export function buildHouseSummaries(
         city: location.city,
         state: location.state,
         zip: location.zips?.[h.id] || null,
+        metro: normalizeMetro(location.metros?.[h.id]) ?? autoMetros[h.id] ?? null,
+        address: h.address,
         rooms: occ?.rooms || null,
         price_band: priceBand(median(prices)),
         months_covered: m.houseMonths,

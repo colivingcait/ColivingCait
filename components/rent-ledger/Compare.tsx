@@ -1,15 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { BENCH_METRICS, type BenchmarkGroup } from "@/lib/rent-ledger/benchmarks";
+import { useEffect, useMemo, useState } from "react";
+import { cn } from "@/lib/cn";
+import {
+  BENCH_METRICS,
+  verdict,
+  type BenchmarkGroup,
+  type MetricKind,
+  type MetroCount,
+  type Verdict,
+} from "@/lib/rent-ledger/benchmarks";
 import { fmtMoney, fmtPct } from "@/lib/rent-ledger/metrics";
+import { RULES } from "@/lib/rent-ledger/rules";
+import { mean } from "@/lib/rent-ledger/stats";
 import type { HouseSummary } from "@/lib/rent-ledger/summary";
 import { DataTable, Notice, Panel } from "./ui";
 
-// Compare tab: where each of the user's houses sits against the anonymous
-// benchmark groups. The server returns medians and quartiles only.
+// Compare: the host's houses against their metro, every metro, or a metro
+// they pick. The server returns aggregates only (averages and quartiles from
+// 5+ operators), so no other host's numbers can be seen here.
 
-function fmt(kind: string, v: number | null | undefined) {
+type Scope = { kind: "mine" } | { kind: "all" } | { kind: "pick"; metro: string };
+
+function fmt(kind: MetricKind, v: number | null | undefined) {
   if (v == null || !Number.isFinite(v)) return "–";
   if (kind === "money") return fmtMoney(v);
   if (kind === "pct") return fmtPct(v, 0);
@@ -18,11 +31,28 @@ function fmt(kind: string, v: number | null | undefined) {
   return v.toFixed(2);
 }
 
-function where(v: number | null | undefined, q1: number | null, q3: number | null) {
-  if (v == null || q1 == null || q3 == null) return "–";
-  if (v < q1) return "Below the middle half";
-  if (v > q3) return "Above the middle half";
-  return "In the middle half";
+const VERDICT: Record<Verdict, { label: string; icon: string; cls: string }> = {
+  better: { label: "Better", icon: "▲", cls: "border-[#008300] text-[#006300]" },
+  average: { label: "Average", icon: "●", cls: "border-warmgray-light text-warmgray" },
+  worse: { label: "Worse", icon: "▼", cls: "border-red-700 text-red-800" },
+};
+
+function VerdictChip({ v }: { v: Verdict | null }) {
+  if (!v) return <span className="text-warmgray">–</span>;
+  const s = VERDICT[v];
+  return (
+    <span className={cn("inline-flex items-center gap-1 border px-2 py-0.5 text-[11px] uppercase tracking-button", s.cls)}>
+      <span aria-hidden>{s.icon}</span>
+      {s.label}
+    </span>
+  );
+}
+
+/** The metro most of the host's houses are in. */
+export function mainMetro(summaries: HouseSummary[]): string | null {
+  const counts = new Map<string, number>();
+  for (const s of summaries) if (s.metro) counts.set(s.metro, (counts.get(s.metro) ?? 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
 }
 
 export default function Compare({
@@ -32,81 +62,154 @@ export default function Compare({
   summaries: HouseSummary[];
   names: Record<string, string>;
 }) {
-  const [data, setData] = useState<Record<string, BenchmarkGroup[]>>({});
+  const myMetro = mainMetro(summaries);
+  const [scope, setScope] = useState<Scope>(myMetro ? { kind: "mine" } : { kind: "all" });
+  const [house, setHouse] = useState<string>("all");
+  const [metros, setMetros] = useState<MetroCount[]>([]);
+  const [group, setGroup] = useState<BenchmarkGroup | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const key = summaries.map((s) => `${s.psid}:${s.zip}:${s.price_band}:${s.rooms}`).join("|");
 
   useEffect(() => {
+    fetch("/api/rent-ledger/benchmarks?list=metros")
+      .then((r) => r.json())
+      .then((j) => setMetros(j.metros ?? []))
+      .catch(() => {});
+  }, []);
+
+  const metro = scope.kind === "mine" ? myMetro : scope.kind === "pick" ? scope.metro : null;
+  useEffect(() => {
     let live = true;
-    Promise.all(
-      summaries.map(async (s) => {
-        const q = new URLSearchParams();
-        if (s.city) q.set("city", s.city);
-        if (s.state) q.set("state", s.state);
-        if (s.zip) q.set("zip", s.zip);
-        if (s.price_band) q.set("priceBand", s.price_band);
-        if (s.rooms) q.set("rooms", String(s.rooms));
-        const res = await fetch(`/api/rent-ledger/benchmarks?${q}`);
-        const j = await res.json();
-        if (!res.ok) throw new Error(j.error ?? "Benchmarks are unavailable.");
-        return [s.psid, j.groups as BenchmarkGroup[]] as const;
-      }),
-    )
-      .then((pairs) => live && setData(Object.fromEntries(pairs)))
+    setGroup(null);
+    setError(null);
+    const q = metro ? `metro=${encodeURIComponent(metro)}` : "scope=all";
+    fetch(`/api/rent-ledger/benchmarks?${q}`)
+      .then(async (r) => {
+        const j = await r.json();
+        if (!r.ok) throw new Error(j.error ?? "Benchmarks are unavailable.");
+        if (live) setGroup(j.group);
+      })
       .catch((e) => live && setError(e.message));
     return () => {
       live = false;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [metro]);
 
-  if (error) return <Notice tone="warn">{error}</Notice>;
-  if (!Object.keys(data).length) return <p className="text-warmgray">Loading benchmarks…</p>;
+  // "You": one house, or the average across the host's houses.
+  const mine = useMemo(() => {
+    const picked = house === "all" ? summaries : summaries.filter((s) => s.psid === house);
+    const out: Record<string, number | null> = {};
+    for (const m of BENCH_METRICS) {
+      const vals = picked
+        .map((s) => s[m.key as keyof HouseSummary])
+        .filter((v): v is number => typeof v === "number" && Number.isFinite(v));
+      out[m.key] = mean(vals);
+    }
+    return out;
+  }, [summaries, house]);
+
+  const rows = group?.enough ? BENCH_METRICS.filter((m) => group.metrics[m.key]?.n) : [];
+  const verdicts = rows.map((m) => verdict(mine[m.key], group!.metrics[m.key], m.better));
+  const tally = (v: Verdict) => verdicts.filter((x) => x === v).length;
 
   return (
     <div className="space-y-6">
       <Notice>
-        Benchmarks use the newest anonymous snapshot of each house that opted in. A group shows once it has 5 or more
-        operators and 5 or more houses. “Middle half” is the range from the 25th to the 75th percentile.
+        Every host who unlocks a report adds their houses to these benchmarks. Other hosts only ever see averages from
+        groups of {RULES.benchmarkMinUsers}+ operators and {RULES.benchmarkMinHouses}+ houses, never anyone&apos;s
+        individual numbers, names or addresses. Caitlyn can see each host&apos;s house-level numbers. Nobody ever sees your
+        residents: that data never leaves your browser.
       </Notice>
-      {summaries.map((s) => (
-        <Panel key={s.psid} title={names[s.psid] ?? "House"}>
-          <div className="space-y-5">
-            {(data[s.psid] ?? []).map((g) =>
-              g.enough ? (
-                <div key={g.id}>
-                  <p className="text-[10px] uppercase tracking-eyebrow text-warmgray mb-2">
-                    {g.label} · {g.houses} houses, {g.users} operators
-                  </p>
-                  <DataTable
-                    rows={BENCH_METRICS.filter((m) => g.metrics[m.key]?.n)}
-                    columns={[
-                      { key: "m", label: "Metric", render: (m) => m.label },
-                      { key: "y", label: "Yours", align: "right", render: (m) => fmt(m.kind, s[m.key as keyof HouseSummary] as number | null) },
-                      { key: "md", label: "Median", align: "right", render: (m) => fmt(m.kind, g.metrics[m.key].median) },
-                      {
-                        key: "r",
-                        label: "Middle half",
-                        align: "right",
-                        render: (m) => `${fmt(m.kind, g.metrics[m.key].q1)}–${fmt(m.kind, g.metrics[m.key].q3)}`,
-                      },
-                      {
-                        key: "w",
-                        label: "You",
-                        render: (m) => where(s[m.key as keyof HouseSummary] as number | null, g.metrics[m.key].q1, g.metrics[m.key].q3),
-                      },
-                    ]}
-                  />
-                </div>
-              ) : (
-                <p key={g.id} className="text-sm text-warmgray">
-                  Not enough houses in {g.label} yet. You&apos;re one of {g.houses}.
-                </p>
-              ),
-            )}
-          </div>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="inline-flex border border-brand">
+          {myMetro && (
+            <ScopeButton active={scope.kind === "mine"} onClick={() => setScope({ kind: "mine" })}>
+              My metro · {myMetro}
+            </ScopeButton>
+          )}
+          <ScopeButton active={scope.kind === "all"} onClick={() => setScope({ kind: "all" })}>
+            All metros
+          </ScopeButton>
+        </div>
+        <label className="flex items-center gap-2 text-sm text-charcoal">
+          <span className="text-[10px] uppercase tracking-eyebrow text-warmgray">Or pick a metro</span>
+          <select
+            className="border border-brand bg-white px-2 py-1"
+            value={scope.kind === "pick" ? scope.metro : ""}
+            onChange={(e) => setScope(e.target.value ? { kind: "pick", metro: e.target.value } : { kind: "all" })}
+          >
+            <option value="">Choose…</option>
+            {metros.map((m) => (
+              <option key={m.metro} value={m.metro}>
+                {m.metro} ({m.houses} house{m.houses === 1 ? "" : "s"}
+                {m.enough ? "" : ", not enough yet"})
+              </option>
+            ))}
+          </select>
+        </label>
+        {summaries.length > 1 && (
+          <label className="flex items-center gap-2 text-sm text-charcoal">
+            <span className="text-[10px] uppercase tracking-eyebrow text-warmgray">Compare</span>
+            <select className="border border-brand bg-white px-2 py-1" value={house} onChange={(e) => setHouse(e.target.value)}>
+              <option value="all">My houses (average)</option>
+              {summaries.map((s) => (
+                <option key={s.psid} value={s.psid}>
+                  {names[s.psid] ?? "House"}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
+
+      {error ? (
+        <Notice tone="warn">{error}</Notice>
+      ) : !group ? (
+        <p className="text-warmgray">Loading benchmarks…</p>
+      ) : !group.enough ? (
+        <Notice>
+          Not enough houses in {group.label} yet. You&apos;re one of {group.houses} house{group.houses === 1 ? "" : "s"} from{" "}
+          {group.users} operator{group.users === 1 ? "" : "s"}; numbers show once there are {RULES.benchmarkMinUsers}+
+          operators and {RULES.benchmarkMinHouses}+ houses. Try All metros.
+        </Notice>
+      ) : (
+        <Panel title={`${house === "all" ? "Your houses" : names[house]} vs ${group.label}`}>
+          <p className="text-sm text-warmgray mb-4">
+            {group.houses} houses from {group.users} operators. Better on {tally("better")}, average on {tally("average")},
+            worse on {tally("worse")}. Average means inside the middle half of houses (25th to 75th percentile).
+          </p>
+          <DataTable
+            rows={rows}
+            columns={[
+              { key: "m", label: "Metric", render: (m) => m.label },
+              { key: "y", label: "You", align: "right", render: (m) => fmt(m.kind, mine[m.key]) },
+              { key: "a", label: `${group.label} average`, align: "right", render: (m) => fmt(m.kind, group.metrics[m.key].mean) },
+              {
+                key: "r",
+                label: "Middle half",
+                align: "right",
+                render: (m) => `${fmt(m.kind, group.metrics[m.key].q1)}–${fmt(m.kind, group.metrics[m.key].q3)}`,
+              },
+              { key: "v", label: "", render: (m) => <VerdictChip v={verdict(mine[m.key], group.metrics[m.key], m.better)} /> },
+            ]}
+          />
         </Panel>
-      ))}
+      )}
     </div>
+  );
+}
+
+function ScopeButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "px-4 py-2 text-[11px] uppercase tracking-button",
+        active ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream",
+      )}
+    >
+      {children}
+    </button>
   );
 }

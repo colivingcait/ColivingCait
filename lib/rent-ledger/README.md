@@ -1,10 +1,17 @@
 # Read Your Rent Ledger
 
-Free tool at `/tools/rent-ledger`. A PadSplit host drops in their earnings export and gets a full report. Parsing and math run in the browser. The server only gets lead answers and, after the benchmark opt-in, the anonymous house summary (`summary.ts`).
+Free tool at `/tools/rent-ledger`. A PadSplit host drops in their earnings export and gets a full report. Parsing and math run in the browser. The server only gets lead answers and the per-house summary (`summary.ts`).
+
+Unlocking a report adds the host's houses to the benchmarks. There's no opt-out. The form and the report say so up front:
+- **Other hosts** only see aggregates for their metro, every metro, or any metro they pick. That means the average, median and middle half, and only for groups of 5+ operators and 5+ houses.
+- **Caitlyn** sees every host's house-level numbers and addresses at `/tools/rent-ledger/admin`, with a CSV download. Admin access is set by `RENT_LEDGER_ADMIN_EMAILS`, which defaults to the site's two addresses.
+- **Resident names and rows** never leave the browser.
+
+Each house's metro comes from the export's "PadSplit Market" column, and the host can change it on the unlock form.
 
 ## Setup
 
-1. Run `supabase/migrations/20261020000000_rent_ledger.sql` in the Supabase SQL editor. It creates `rl_users`, `rl_house_snapshots` and `rl_feedback`.
+1. Run both files in `supabase/migrations/` (`20261020…` then `20261021…`) in the Supabase SQL editor.
 2. Set `RENT_LEDGER_HASH_SALT` in Vercel to any long random string. Don't change it later, or existing snapshots stop deduping.
 3. Optional: `CRM_WEBHOOK_URL` and `CRM_WEBHOOK_SECRET`. By default leads go to the CRM's site-form webhook with `form: "rent_ledger"` and the tags from `lib/crm/tags.ts`.
 

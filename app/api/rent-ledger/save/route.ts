@@ -4,18 +4,20 @@ import { supabase } from "@/lib/supabase";
 import { sendLead, type CrmLead } from "@/lib/crm/adapter";
 import { leadTags } from "@/lib/crm/tags";
 import { SUMMARY_FIELDS } from "@/lib/rent-ledger/summary";
-import { bool, cityMedians, houseHash, num, str } from "@/lib/rent-ledger/server";
+import { normalizeMetro } from "@/lib/rent-ledger/metros";
+import { bool, hasContributed, houseHash, metroMedians, num, str } from "@/lib/rent-ledger/server";
 
-// Rent ledger saves. Receives lead answers and, after the benchmark opt-in,
-// the anonymous house summaries (build spec section 10). Never receives the
+// Rent ledger saves. Receives lead answers and the per-house summaries
+// (build spec section 10). Unlocking the report adds the host's houses to
+// the benchmarks; there is no opt-out. Other hosts only ever see aggregates;
+// the house address is kept for Caitlyn's admin view. Never receives the
 // export, resident names, member IDs or any per-resident row.
 //
 //   POST { action: "unlock", lead, stats }      email unlock form (before sign-in)
 //   POST { action: "profile", lead, stats }     after the magic link: saves rl_users
 //   POST { action: "interests", interests, stats }
-//   POST { action: "benchmark", houses, stats } opt-in: saves house snapshots
-//   GET                                         the signed-in user's profile + opt-in state
-//   DELETE                                      "Remove my houses from benchmarks"
+//   POST { action: "benchmark", houses, stats } saves a snapshot of each house
+//   GET                                         the signed-in user's profile + contribution state
 
 const OPERATOR_TYPES = new Set(["owner", "arbitrage", "both", "pm"]);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,6 +44,7 @@ function readLead(v: unknown) {
     email: str(l.email, 200)?.toLowerCase(),
     city: str(l.city, 80),
     state: str(l.state, 40),
+    metro: normalizeMetro(str(l.metro, 60)) ?? undefined,
     operatorType: operatorType && OPERATOR_TYPES.has(operatorType) ? operatorType : undefined,
     houseCount: num(l.houseCount),
     consentReport: bool(l.consentReport) === true,
@@ -55,6 +58,7 @@ type Profile = {
   email: string;
   city?: string | null;
   state?: string | null;
+  metro?: string | null;
   operator_type?: string | null;
   house_count?: number | null;
   consent_contact?: boolean | null;
@@ -71,7 +75,7 @@ async function fireLead(p: Profile, stats: Stats) {
     partnering: p.interest_partnering ?? undefined,
     help: p.interest_help ?? undefined,
   };
-  const city = await cityMedians(p.city ?? undefined, p.state ?? undefined);
+  const city = await metroMedians(p.metro);
   const lead: CrmLead = {
     email: p.email,
     firstName: p.first_name ?? undefined,
@@ -84,6 +88,7 @@ async function fireLead(p: Profile, stats: Stats) {
     interests,
     tags: leadTags({
       city: p.city ?? undefined,
+      metro: p.metro ?? undefined,
       operatorType: p.operator_type ?? undefined,
       houseCount: p.house_count ?? stats.houses,
       consentContact: !!p.consent_contact,
@@ -116,11 +121,12 @@ export async function GET() {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ signedIn: false });
   const profile = await loadProfile(user.id);
-  const { count } = await supabase
-    .from("rl_house_snapshots")
-    .select("id", { count: "exact", head: true })
-    .eq("user_id", user.id);
-  return NextResponse.json({ signedIn: true, email: user.email, profile, optedIn: (count ?? 0) > 0 });
+  return NextResponse.json({
+    signedIn: true,
+    email: user.email,
+    profile,
+    contributed: await hasContributed(user.id),
+  });
 }
 
 export async function POST(request: Request) {
@@ -149,6 +155,7 @@ export async function POST(request: Request) {
         last_name: lead.lastName,
         city: lead.city,
         state: lead.state,
+        metro: lead.metro,
         operator_type: lead.operatorType,
         house_count: lead.houseCount,
         consent_contact: lead.consentContact,
@@ -170,6 +177,7 @@ export async function POST(request: Request) {
       last_name: lead.lastName ?? null,
       city: lead.city ?? null,
       state: lead.state ?? null,
+      metro: lead.metro ?? null,
       operator_type: lead.operatorType ?? null,
       house_count: lead.houseCount ?? null,
       consent_report: true,
@@ -226,10 +234,19 @@ export async function POST(request: Request) {
       rows = houses.map((h: Record<string, unknown>) => {
         const psid = str(h.psid, 64);
         if (!psid) throw new Error("A house is missing its PSID.");
-        const row: Record<string, unknown> = { user_id: user.id, house_hash: houseHash(psid) };
+        const row: Record<string, unknown> = {
+          user_id: user.id,
+          house_hash: houseHash(psid),
+          // Admin view only; never returned by the benchmarks route.
+          house_address: str(h.address, 200) ?? null,
+        };
         // Whitelisted summary fields only; the PSID itself is never stored.
         for (const k of SUMMARY_FIELDS) {
           if (k === "psid") continue;
+          if (k === "metro") {
+            row.metro = normalizeMetro(str(h.metro, 60));
+            continue;
+          }
           const v = h[k];
           row[k] = typeof v === "number" ? (Number.isFinite(v) ? v : null) : typeof v === "string" ? v.slice(0, 40) : null;
         }
@@ -250,15 +267,4 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
-}
-
-export async function DELETE() {
-  const user = await getCurrentUser();
-  if (!user) return NextResponse.json({ error: "Not signed in" }, { status: 401 });
-  const { error } = await supabase.from("rl_house_snapshots").delete().eq("user_id", user.id);
-  if (error) {
-    console.error("[rent-ledger] snapshot delete failed", error);
-    return NextResponse.json({ error: "Could not remove your houses." }, { status: 500 });
-  }
-  return NextResponse.json({ ok: true });
 }

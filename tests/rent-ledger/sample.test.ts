@@ -38,11 +38,23 @@ describe("sample export", async () => {
     expect(report.portfolio.breakageAll).toBeCloseTo(withOutliers.portfolio.breakage);
   });
 
-  it("builds anonymous house summaries with no names or IDs beyond the PSID", () => {
+  it("builds house summaries with a metro and no resident data", () => {
     const s = buildHouseSummaries(a.ledger!, report, { city: "Decatur", state: "GA" });
     expect(s).toHaveLength(4);
+    expect(s.every((h) => h.metro === "Atlanta")).toBe(true);
     const text = JSON.stringify(s);
-    for (const r of a.ledger!.residents.slice(0, 20)) expect(text).not.toContain(r.name);
-    expect(text).not.toMatch(/Magnolia|Willow|Pecan|Juniper/);
+    for (const r of a.ledger!.residents.slice(0, 20)) {
+      expect(text).not.toContain(r.name);
+      expect(text).not.toContain(`"${r.memberId}"`);
+    }
+    // The street address only rides in its own admin-only field.
+    const { address: _a, ...rest } = s[0];
+    expect(JSON.stringify(rest)).not.toMatch(/Magnolia|Willow|Pecan|Juniper/);
+  });
+
+  it("lets the form override a house's metro", () => {
+    const id = a.ledger!.houses[0].id;
+    const s = buildHouseSummaries(a.ledger!, report, { city: "Decatur", state: "GA", metros: { [id]: "dallas" } });
+    expect(s.find((h) => h.psid === id)!.metro).toBe("Dallas–Fort Worth");
   });
 });

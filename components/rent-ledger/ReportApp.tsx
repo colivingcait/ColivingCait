@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { analyze } from "@/lib/rent-ledger";
 import { computeReport, type ReportOptions } from "@/lib/rent-ledger/metrics";
@@ -28,8 +27,8 @@ import Uploader from "./Uploader";
 import { DataTable, Notice, Panel } from "./ui";
 
 // The full report (signed-in). Everything is computed from the export kept
-// in this browser's IndexedDB; only lead answers and, after the opt-in, the
-// anonymous house summaries are sent to the server.
+// in this browser's IndexedDB; only lead answers and the per-house summaries
+// (added to the benchmarks on first load) are sent to the server.
 
 const TABS = [
   ["summary", "Summary"],
@@ -51,8 +50,8 @@ type Period = "all" | "12" | "custom";
 interface Account {
   signedIn: boolean;
   email?: string;
-  optedIn?: boolean;
-  profile?: { city?: string | null; state?: string | null } | null;
+  contributed?: boolean;
+  profile?: { city?: string | null; state?: string | null; metro?: string | null } | null;
 }
 
 export default function ReportApp({ initialTab = "summary" }: { initialTab?: TabId }) {
@@ -120,12 +119,35 @@ export default function ReportApp({ initialTab = "summary" }: { initialTab?: Tab
     city: state?.lead?.city || account?.profile?.city || "",
     state: state?.lead?.state || account?.profile?.state || "",
     zips: state?.lead?.zips,
+    metros: state?.lead?.metros,
   };
   const summaries = useMemo<HouseSummary[]>(
     () => (ledger && baseReport ? buildHouseSummaries(ledger, baseReport, location) : []),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ledger, baseReport, location.city, location.state, JSON.stringify(location.zips ?? {})],
+    [ledger, baseReport, location.city, location.state, JSON.stringify(location.zips ?? {}), JSON.stringify(location.metros ?? {})],
   );
+
+  // Unlocking adds the houses to the benchmarks: one snapshot per upload.
+  const [contribution, setContribution] = useState<"saving" | "saved" | "error" | null>(null);
+  useEffect(() => {
+    if (!account?.signedIn || !state || !baseReport || !summaries.length) return;
+    if (state.contributedFor === state.savedAt || contribution === "saving") return;
+    setContribution("saving");
+    fetch("/api/rent-ledger/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "benchmark", houses: summaries, stats: reportStats(baseReport) }),
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error();
+        patchState({ contributedFor: state.savedAt });
+        setState((cur) => (cur ? { ...cur, contributedFor: cur.savedAt } : cur));
+        setAccount((a) => (a ? { ...a, contributed: true } : a));
+        setContribution("saved");
+      })
+      .catch(() => setContribution("error"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account?.signedIn, state?.savedAt, state?.contributedFor, baseReport, summaries]);
 
   function onFiles(raw: RawFiles, name: string) {
     const next: StoredState = {
@@ -221,7 +243,7 @@ export default function ReportApp({ initialTab = "summary" }: { initialTab?: Tab
 
       <nav className="-mx-1 overflow-x-auto">
         <ul className="flex min-w-max border-b border-brand">
-          {TABS.filter(([id]) => id !== "compare" || account?.optedIn).map(([id, label]) => (
+          {TABS.map(([id, label]) => (
             <li key={id}>
               <button
                 type="button"
@@ -250,25 +272,20 @@ export default function ReportApp({ initialTab = "summary" }: { initialTab?: Tab
         {tab === "pricing" && <PricingTab {...props} />}
         {tab === "data" && <DataCheckTab {...props} />}
         {tab === "compare" &&
-          (account?.optedIn ? (
+          (account?.contributed ? (
             <Compare summaries={summaries} names={Object.fromEntries(ledger.houses.map((h) => [h.id, h.name]))} />
           ) : (
-            <Notice>Add your houses to the benchmark below to compare.</Notice>
+            <Notice>{contribution === "error" ? "We couldn't add your houses yet, so Compare isn't ready. Reload to try again." : "Adding your houses to the benchmark…"}</Notice>
           ))}
       </div>
 
       {account?.signedIn && baseReport && (
         <>
           <Questions state={state} stats={reportStats(baseReport)} onAnswer={(interests) => setState({ ...state, interests })} />
-          <BenchmarkOptIn
+          <Contribution
             summaries={summaries}
             names={Object.fromEntries(ledger.houses.map((h) => [h.id, h.name]))}
-            optedIn={!!account.optedIn}
-            stats={reportStats(baseReport)}
-            onChange={(optedIn) => {
-              setAccount({ ...account, optedIn });
-              if (optedIn) setTab("compare");
-            }}
+            status={contribution}
           />
         </>
       )}
@@ -343,67 +360,40 @@ function Questions({
   );
 }
 
-function BenchmarkOptIn({
+function Contribution({
   summaries,
   names,
-  optedIn,
-  stats,
-  onChange,
+  status,
 }: {
   summaries: HouseSummary[];
   names: Record<string, string>;
-  optedIn: boolean;
-  stats: ReturnType<typeof reportStats>;
-  onChange: (optedIn: boolean) => void;
+  status: "saving" | "saved" | "error" | null;
 }) {
-  const [checked, setChecked] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState<string | null>(null);
-  const missingCity = summaries.some((s) => !s.city || !s.state);
-
-  async function save() {
-    setBusy(true);
-    setMsg(null);
-    const res = await fetch("/api/rent-ledger/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "benchmark", houses: summaries, stats }),
-    }).catch(() => null);
-    const j = await res?.json().catch(() => ({}));
-    setBusy(false);
-    if (res?.ok) {
-      setMsg(optedIn ? "Saved a new snapshot of your houses." : "Your houses are in the benchmark.");
-      onChange(true);
-    } else setMsg(j?.error ?? "Couldn't save. Try again.");
-  }
-
-  async function remove() {
-    setBusy(true);
-    const res = await fetch("/api/rent-ledger/save", { method: "DELETE" }).catch(() => null);
-    setBusy(false);
-    if (res?.ok) {
-      setMsg("Your houses were removed from the benchmarks.");
-      onChange(false);
-    }
-  }
-
   return (
-    <Panel title={optedIn ? "Your houses are in the city benchmark" : "Compare with other operators"}>
+    <Panel title="Your houses in the benchmark">
       <p className="text-warmgray leading-relaxed">
-        {optedIn
-          ? "Upload a newer export any month and save a new snapshot to keep your history current."
-          : "Add your houses' anonymous numbers to the city benchmark and see how they compare. Off unless you turn it on."}
+        Unlocking your report adds your houses&apos; numbers to the benchmarks, which is how every host gets something to
+        compare against. Other hosts only see averages from groups of 5+ operators, never your numbers, name or
+        addresses. Caitlyn can see your house-level numbers. Your residents&apos; names and rows never leave this browser.
+        Upload a newer export any month and your houses update.
       </p>
+      {status && (
+        <p className="mt-3 text-sm text-charcoal">
+          {status === "saving" && "Adding your houses…"}
+          {status === "saved" && "Your houses are in the benchmark."}
+          {status === "error" && "We couldn't add your houses just now. We'll try again next time you open the report."}
+        </p>
+      )}
       <details className="mt-4">
         <summary className="cursor-pointer text-sm text-gold-dark underline underline-offset-4">
-          Exactly what would be saved ({summaries.length} rows)
+          Exactly what&apos;s saved ({summaries.length} house{summaries.length === 1 ? "" : "s"})
         </summary>
         <div className="mt-3">
           <DataTable
             rows={summaries}
             columns={[
-              { key: "h", label: "House (shown here only)", render: (s) => names[s.psid] },
-              { key: "l", label: "Location", render: (s) => [s.city, s.state, s.zip].filter(Boolean).join(", ") || "–" },
+              { key: "h", label: "House", render: (s) => names[s.psid] },
+              { key: "mt", label: "Metro", render: (s) => s.metro ?? "–" },
               { key: "r", label: "Rooms", align: "right", render: (s) => s.rooms ?? "–" },
               { key: "b", label: "Price band", render: (s) => s.price_band ?? "–" },
               { key: "m", label: "Months", align: "right", render: (s) => s.months_covered },
@@ -412,37 +402,14 @@ function BenchmarkOptIn({
             ]}
           />
           <p className="mt-3 text-xs text-warmgray leading-relaxed">
-            Each row also carries: collected per house-month, breakage rate, move-outs, left-owing rate, median balance,
+            Each house also carries: collected per house-month, breakage rate, move-outs, left-owing rate, median balance,
             average stay, short and long stay shares, requests, acceptance rate, months to stabilize, events per year,
-            average occupancy, true room rate and the rules version. The PadSplit property ID is hashed on the server and
-            never stored. Never saved: names, member, room or bill IDs, street addresses, payout account, any resident
-            row, or the file.
+            average occupancy, true room rate, city, zip and the rules version. Its street address is kept for Caitlyn
+            only. The PadSplit property ID is hashed and never stored. Never saved: resident names, member, room or bill
+            IDs, payout account, any resident row, or the file.
           </p>
         </div>
       </details>
-      {missingCity && <p className="mt-3 text-sm text-red-700">Add your city and state on the unlock form to join a city benchmark.</p>}
-      {!optedIn && (
-        <label className="mt-4 flex items-start gap-3 text-sm text-charcoal">
-          <input type="checkbox" className="mt-1" checked={checked} onChange={(e) => setChecked(e.target.checked)} />
-          Add my houses&apos; anonymous numbers to the city benchmark.
-        </label>
-      )}
-      <div className="mt-4 flex flex-wrap gap-3">
-        <button type="button" className="btn-primary disabled:opacity-60" disabled={busy || missingCity || (!optedIn && !checked)} onClick={save}>
-          {optedIn ? "Save a new snapshot" : "Add my houses"}
-        </button>
-        {optedIn && (
-          <>
-            <Link href="/tools/rent-ledger/compare" className="btn-outline">
-              Open Compare
-            </Link>
-            <button type="button" className="text-sm text-warmgray underline underline-offset-4" disabled={busy} onClick={remove}>
-              Remove my houses from benchmarks
-            </button>
-          </>
-        )}
-      </div>
-      {msg && <p className="mt-3 text-sm text-charcoal">{msg}</p>}
     </Panel>
   );
 }

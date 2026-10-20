@@ -4,12 +4,13 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { analyze, type Analysis } from "@/lib/rent-ledger";
-import { GROUP_LABELS, type Resident, type ResidentGroup } from "@/lib/rent-ledger/classify";
+import { GROUP_LABELS, type Ledger, type Resident, type ResidentGroup } from "@/lib/rent-ledger/classify";
 import { blockingFailures } from "@/lib/rent-ledger/checks";
 import { computeReport, fmtMoney, fmtPct, type Report } from "@/lib/rent-ledger/metrics";
 import { dayToISO, monthLabel, type RawFiles } from "@/lib/rent-ledger/parse";
 import { buildFeedback } from "@/lib/rent-ledger/summary";
 import { BROKERAGE_DISCLOSURE } from "@/lib/rent-ledger/copy";
+import { METROS, houseMetros } from "@/lib/rent-ledger/metros";
 import ChecksList from "./ChecksList";
 import Uploader from "./Uploader";
 import { patchState, saveState, type LeadAnswers } from "./store";
@@ -59,7 +60,7 @@ export default function RentLedgerTool() {
       ) : (
         <>
           <Preview analysis={analysis} report={report!} />
-          <UnlockForm report={report!} />
+          <UnlockForm report={report!} ledger={analysis.ledger!} />
         </>
       )}
     </div>
@@ -254,7 +255,12 @@ function Preview({ analysis, report }: { analysis: Analysis; report: Report }) {
   );
 }
 
-function UnlockForm({ report }: { report: Report }) {
+function UnlockForm({ report, ledger }: { report: Report; ledger: Ledger }) {
+  // Metro per house starts from the export's "PadSplit Market" column.
+  const detected = useMemo(() => houseMetros(ledger), [ledger]);
+  const counts = new Map<string, number>();
+  for (const m of Object.values(detected)) counts.set(m, (counts.get(m) ?? 0) + 1);
+  const defaultMetro = [...counts].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "";
   const router = useRouter();
   const { data: session } = useSession();
   const [form, setForm] = useState<LeadAnswers>({
@@ -264,6 +270,8 @@ function UnlockForm({ report }: { report: Report }) {
     city: "",
     state: "",
     zips: {},
+    metro: defaultMetro,
+    metros: Object.fromEntries(report.houses.map((h) => [h.id, detected[h.id] ?? defaultMetro])),
     operatorType: "",
     houseCount: String(report.houses.length),
     consentReport: false,
@@ -343,20 +351,43 @@ function UnlockForm({ report }: { report: Report }) {
           </select>
         </div>
         <Field label="Number of houses" type="number" value={form.houseCount} onChange={(v) => set("houseCount", v)} required />
+        <MetroField
+          id="rl-metro"
+          label="Metro (for benchmarks)"
+          value={form.metro}
+          onChange={(v) => setForm((f) => ({ ...f, metro: v, metros: Object.fromEntries(report.houses.map((h) => [h.id, v])) }))}
+        />
       </div>
       <details className="text-sm text-warmgray">
-        <summary className="cursor-pointer">Add a zip code per house (optional, sharpens benchmarks)</summary>
-        <div className="mt-3 grid md:grid-cols-2 gap-3">
+        <summary className="cursor-pointer">Houses in different metros? Set a metro and zip per house (zip optional)</summary>
+        <div className="mt-3 space-y-3">
           {report.houses.map((h) => (
-            <Field
-              key={h.id}
-              label={h.name}
-              value={form.zips[h.id] ?? ""}
-              onChange={(v) => set("zips", { ...form.zips, [h.id]: v.replace(/\D/g, "").slice(0, 5) })}
-            />
+            <div key={h.id} className="grid md:grid-cols-[1fr_1fr_120px] gap-3 items-end">
+              <p className="text-charcoal pb-2.5">{h.name}</p>
+              <MetroField
+                id={`rl-metro-${h.id}`}
+                label="Metro"
+                value={form.metros[h.id] ?? form.metro}
+                onChange={(v) => set("metros", { ...form.metros, [h.id]: v })}
+              />
+              <Field
+                id={`rl-zip-${h.id}`}
+                label="Zip"
+                value={form.zips[h.id] ?? ""}
+                onChange={(v) => set("zips", { ...form.zips, [h.id]: v.replace(/\D/g, "").slice(0, 5) })}
+              />
+            </div>
           ))}
         </div>
       </details>
+      <div className="border-l-2 border-gold pl-4 text-sm text-charcoal leading-relaxed">
+        <p className="font-medium">Unlocking adds your houses to the benchmarks.</p>
+        <p className="mt-1 text-warmgray">
+          That&apos;s how every host gets to see how they compare with their metro. Other hosts only ever see anonymous
+          averages from groups of 5+ operators, never your numbers, name or addresses. Caitlyn can see your house-level
+          numbers. Your file and your residents&apos; names never leave this browser.
+        </p>
+      </div>
       <label className="flex items-start gap-3 text-sm text-charcoal">
         <input type="checkbox" className="mt-1" checked={form.consentReport} onChange={(e) => set("consentReport", e.target.checked)} required />
         <span>Email me my report and occasional coliving tips.</span>
@@ -373,31 +404,65 @@ function UnlockForm({ report }: { report: Report }) {
         {status === "sending" ? "Sending…" : "Send my report link →"}
       </button>
       <p className="text-xs text-warmgray">
-        We save your answers and headline portfolio numbers (like breakage rate), never your file or anything about your
-        residents.
+        We save your answers and each house&apos;s headline numbers (like breakage rate), never your file or anything
+        about your residents.
       </p>
     </form>
   );
 }
 
 function Field({
+  id: idProp,
   label,
   value,
   onChange,
   type = "text",
   required,
 }: {
+  id?: string;
   label: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
   required?: boolean;
 }) {
-  const id = `rl-${label.toLowerCase().replace(/\W+/g, "-")}`;
+  const id = idProp ?? `rl-${label.toLowerCase().replace(/\W+/g, "-")}`;
   return (
     <div>
       <label htmlFor={id} className={labelClass}>{label}</label>
       <input id={id} type={type} required={required} value={value} onChange={(e) => onChange(e.target.value)} className={inputClass} min={type === "number" ? 1 : undefined} />
+    </div>
+  );
+}
+
+function MetroField({ id, label, value, onChange }: { id: string; label: string; value: string; onChange: (v: string) => void }) {
+  const known = (METROS as readonly string[]).includes(value);
+  const [other, setOther] = useState(!known && !!value);
+  return (
+    <div>
+      <label htmlFor={id} className={labelClass}>{label}</label>
+      {other ? (
+        <div className="flex gap-2">
+          <input id={id} required value={value} onChange={(e) => onChange(e.target.value)} className={inputClass} placeholder="Metro name" />
+          <button type="button" className="text-xs text-gold-dark underline" onClick={() => { setOther(false); onChange(""); }}>
+            List
+          </button>
+        </div>
+      ) : (
+        <select
+          id={id}
+          required
+          className={inputClass}
+          value={known ? value : ""}
+          onChange={(e) => (e.target.value === "__other" ? setOther(true) : onChange(e.target.value))}
+        >
+          <option value="">Choose one</option>
+          {METROS.map((m) => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+          <option value="__other">Other…</option>
+        </select>
+      )}
     </div>
   );
 }

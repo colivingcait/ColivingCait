@@ -12,6 +12,9 @@ export interface LeadAnswers {
   city: string;
   state: string;
   zips: Record<string, string>;
+  /** Metro for the portfolio, and per-house overrides. */
+  metro: string;
+  metros: Record<string, string>;
   operatorType: string;
   houseCount: string;
   consentReport: boolean;
@@ -25,6 +28,8 @@ export interface StoredState {
   lead?: LeadAnswers;
   /** True once the lead has been saved to the signed-in profile. */
   profileSaved?: boolean;
+  /** savedAt of the upload whose houses were added to the benchmarks. */
+  contributedFor?: string;
   rooms?: Record<string, number>;
   interests?: Record<string, boolean>;
 }

@@ -20,14 +20,12 @@ export async function loadSnapshots(): Promise<SnapshotRow[]> {
   return latestPerHouse((data ?? []) as SnapshotRow[], RULES_VERSION);
 }
 
-/** City medians used for lead tags, only when the city meets the benchmark minimum. */
-export async function cityMedians(city?: string, state?: string) {
-  if (!city) return null;
+/** Metro medians used for lead tags, only when the metro meets the benchmark minimum. */
+export async function metroMedians(metro?: string | null) {
+  if (!metro) return null;
   try {
     const rows = (await loadSnapshots()).filter(
-      (r) =>
-        (r.city ?? "").trim().toLowerCase() === city.trim().toLowerCase() &&
-        (!state || (r.state ?? "").trim().toLowerCase() === state.trim().toLowerCase()),
+      (r) => (r.metro ?? "").trim().toLowerCase() === metro.trim().toLowerCase(),
     );
     const users = new Set(rows.map((r) => r.user_id)).size;
     if (users < RULES.benchmarkMinUsers || rows.length < RULES.benchmarkMinHouses) return null;
@@ -40,9 +38,31 @@ export async function cityMedians(city?: string, state?: string) {
       turnover: median(turnover),
     };
   } catch (err) {
-    console.error("[rent-ledger] city medians unavailable", err);
+    console.error("[rent-ledger] metro medians unavailable", err);
     return null;
   }
+}
+
+/** Has this user contributed any houses to the benchmarks? */
+export async function hasContributed(userId: string): Promise<boolean> {
+  const { count } = await supabase
+    .from("rl_house_snapshots")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", userId);
+  return (count ?? 0) > 0;
+}
+
+/**
+ * Caitlyn's admin access. RENT_LEDGER_ADMIN_EMAILS is a comma-separated list;
+ * without it, the site's own addresses are admins.
+ */
+export function isAdminEmail(email: string | null | undefined): boolean {
+  if (!email) return false;
+  const list = (process.env.RENT_LEDGER_ADMIN_EMAILS ?? "colivingcait@gmail.com,cv.sellshomes@gmail.com")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+  return list.includes(email.trim().toLowerCase());
 }
 
 export const str = (v: unknown, max = 120) =>

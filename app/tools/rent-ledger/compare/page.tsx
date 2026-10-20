@@ -9,8 +9,8 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-// The Compare tab on its own URL. Shows benchmarks once the user has opted
-// in; until then it explains how to opt in.
+// The Compare tab on its own URL: the host's houses against their metro,
+// every metro, or a metro they pick.
 export default async function RentLedgerComparePage() {
   const user = await getCurrentUser();
   if (!user) redirect("/auth/signin?callbackUrl=/tools/rent-ledger/compare");

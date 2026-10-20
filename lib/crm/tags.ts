@@ -1,16 +1,18 @@
-// Tag rules for rent-ledger leads (build spec section 13).
+// Tag rules for rent-ledger leads (build spec section 13). "Above the city
+// median" is measured against the host's metro.
 
 export type OperatorType = "owner" | "arbitrage" | "both" | "pm";
 
 export interface TagInput {
   city?: string;
+  metro?: string;
   operatorType?: string;
   houseCount?: number;
   consentContact: boolean;
   interests: { selling?: boolean; buying?: boolean; partnering?: boolean; help?: boolean };
   breakagePerHouseMonth?: number | null;
   turnover?: number | null;
-  /** City medians, when the city has enough houses to show a benchmark. */
+  /** Metro medians, when the metro has enough houses to show a benchmark. */
   cityMedian?: { breakagePerHouseMonth?: number | null; turnover?: number | null } | null;
 }
 
@@ -40,5 +42,6 @@ export function leadTags(t: TagInput): string[] {
   }
   if (t.operatorType === "pm") tags.add("pm");
   if (t.city && slug(t.city)) tags.add(`city-${slug(t.city)}`);
+  if (t.metro && slug(t.metro)) tags.add(`metro-${slug(t.metro)}`);
   return [...tags];
 }
