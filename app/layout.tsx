@@ -65,11 +65,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-  icons: {
-    icon: "/images/colivingcait-favicon.png",
-    shortcut: "/images/colivingcait-favicon.png",
-    apple: "/images/colivingcait-favicon.png",
-  },
 };
 
 export default function RootLayout({
