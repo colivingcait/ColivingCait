@@ -1,8 +1,17 @@
+import { legacyPropertyRedirects } from "./lib/legacy-property-paths.mjs";
+
 /** @type {import('next').NextConfig} */
 const CRM = process.env.CRM_ORIGIN ?? "https://crm.callcaitlyn.com";
 
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return legacyPropertyRedirects.map(([source, destination]) => ({
+      source,
+      destination,
+      permanent: true,
+    }));
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**" },

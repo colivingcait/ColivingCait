@@ -1,7 +1,8 @@
 import Link from "next/link";
 import RevealObserver from "@/components/RevealObserver";
 import HeroFrame from "@/components/HeroFrame";
-import VillaCandaceSlider from "@/components/VillaCandaceSlider";
+import HickorySlider from "@/components/HickorySlider";
+import { portfolio } from "@/lib/properties";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
@@ -21,8 +22,8 @@ export const metadata = {
 };
 
 // What Is Coliving — pixel-perfect rewrite of coliving-cait-what-is-coliving.html.
-// Sections: Hero · Problem · Traditional Options · Solution · The Math (Villa
-// Candace slider) · Calculator CTA · Communities · Two Paths · Lead Magnet ·
+// Sections: Hero · Problem · Traditional Options · Solution · The Math (Hickory
+// floorplan slider) · Calculator CTA · Communities · Two Paths · Lead Magnet ·
 // Coliving 101 Upsell · Quote · Final CTA.
 
 const solution = [
@@ -63,7 +64,7 @@ export default function WhatIsColivingPage() {
           </p>
         </div>
         <div className="max-w-[480px] mx-auto lg:max-w-none">
-          <HeroFrame src="/images/raven/ravenbed1.jpg" alt="Furnished coliving bedroom" ratio="4 / 5" />
+          <HeroFrame src={portfolio.auburn.bed1} alt="Furnished coliving bedroom" ratio="4 / 5" />
         </div>
         </div>
       </section>
@@ -246,7 +247,7 @@ export default function WhatIsColivingPage() {
         </div>
       </section>
 
-      {/* ===== 5. THE MATH — VILLA CANDACE ===== */}
+      {/* ===== 5. THE MATH — HICKORY ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[120px] bg-white">
         <div className="mx-auto max-w-[1320px]">
           <div className="reveal mb-16">
@@ -263,13 +264,13 @@ export default function WhatIsColivingPage() {
               </div>
               <div>
                 <p className="text-[15px] text-warmgray leading-[1.8]">
-                  This is Villa Candace. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
+                  This is {portfolio.hickory.name}. I bought it as a 5-bedroom, 3-bath. Cleaned it up, added a room in the finished basement, converted the garage into 2 more rooms. Same house — from $1,800/month to $6,000/month. Drag the slider to see the transformation.
                 </p>
               </div>
             </div>
           </div>
 
-          <VillaCandaceSlider />
+          <HickorySlider />
         </div>
       </section>
 
