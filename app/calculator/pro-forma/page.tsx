@@ -4,6 +4,7 @@ import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
 import HeroFrame from "@/components/HeroFrame";
 import ProFormaCalculator from "@/components/calculator/ProFormaCalculator";
+import { portfolio } from "@/lib/properties";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
@@ -48,7 +49,7 @@ export default function ProFormaCalculatorPage() {
             </p>
           </Reveal>
           </div>
-          <HeroFrame src="/images/raven/ravenbed1.jpg" alt="Furnished coliving bedroom" ratio="4 / 5" />
+          <HeroFrame src={portfolio.auburn.bed1} alt="Furnished coliving bedroom" ratio="4 / 5" />
         </div>
       </Section>
 

@@ -4,6 +4,7 @@ import Heading from "@/components/Heading";
 import Reveal from "@/components/Reveal";
 import HeroFrame from "@/components/HeroFrame";
 import ColivingCalculator from "@/components/calculator/ColivingCalculator";
+import { portfolio } from "@/lib/properties";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
@@ -44,7 +45,7 @@ export default function ColivingCalculatorPage() {
             </p>
           </Reveal>
           </div>
-          <HeroFrame src="/images/raven/ravenkitchen.jpg" alt="Coliving kitchen interior" ratio="4 / 5" />
+          <HeroFrame src={portfolio.auburn.kitchen} alt="Coliving kitchen interior" ratio="4 / 5" />
         </div>
       </Section>
 

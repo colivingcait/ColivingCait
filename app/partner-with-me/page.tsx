@@ -1,6 +1,7 @@
 import RevealObserver from "@/components/RevealObserver";
 import HeroFrame from "@/components/HeroFrame";
 import PropertyCard from "@/components/PropertyCard";
+import { portfolio } from "@/lib/properties";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const metadata = {
@@ -82,7 +83,7 @@ export default function PartnerPage() {
           </div>
           <div className="opacity-0 [animation:heroReveal_1.2s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards] max-w-[480px] mx-auto lg:max-w-none">
             <HeroFrame
-              src="/images/raven/ravenkitchen.jpg"
+              src={portfolio.auburn.kitchen}
               alt="Coliving kitchen interior"
               ratio="4 / 3"
             />
@@ -234,15 +235,15 @@ export default function PartnerPage() {
           </div>
 
           <PropertyCard
-            name="Villa Candace"
+            name={portfolio.hickory.name}
             location="Atlanta metro"
             original="5 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
             gross="$6,000"
             strategy="Acquisition"
             images={[
-              "/images/villacandace-before.png",
-              "/images/villacandace-after.png",
+              portfolio.hickory.floorplanBefore,
+              portfolio.hickory.floorplanAfter,
             ]}
           >
             Added <strong className="text-charcoal font-medium">1 room in the finished basement</strong> and{" "}
@@ -250,7 +251,7 @@ export default function PartnerPage() {
           </PropertyCard>
 
           <PropertyCard
-            name="Raven"
+            name={portfolio.auburn.name}
             location="Atlanta metro"
             original="4 Bed / 3 Bath"
             converted="8 Rooms / 3 Bath"
@@ -258,10 +259,10 @@ export default function PartnerPage() {
             strategy="Acquisition"
             delay={1}
             images={[
-              "/images/raven/ravenkitchen.jpg",
-              "/images/raven/ravenbed1.jpg",
-              "/images/raven/ravenbed2.jpg",
-              "/images/raven/ravenbed3.jpg",
+              portfolio.auburn.kitchen,
+              portfolio.auburn.bed1,
+              portfolio.auburn.bed2,
+              portfolio.auburn.bed3,
             ]}
           >
             Converted the living room, dining room and basement into{" "}

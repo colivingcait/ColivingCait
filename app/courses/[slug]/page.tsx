@@ -10,6 +10,7 @@ import { courses, getCourse } from "@/lib/courses";
 import { getCurrentUser, hasAccess } from "@/lib/auth/helpers";
 import BuyButton from "@/components/courses/BuyButton";
 import JsonLd, { graph, courseSchema, breadcrumbSchema } from "@/components/JsonLd";
+import { portfolio } from "@/lib/properties";
 import { DEFAULT_OG_IMAGE } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -17,11 +18,11 @@ export const dynamic = "force-dynamic";
 // Interiors and an indoor portrait. No exteriors.
 const courseHeroPhoto: Record<string, { src: string; alt: string }> = {
   "coliving-101": {
-    src: "/images/raven/ravenkitchen.jpg",
+    src: portfolio.auburn.kitchen,
     alt: "Kitchen inside a coliving home",
   },
   "house-hacking-101": {
-    src: "/images/raven/ravenbed1.jpg",
+    src: portfolio.auburn.bed1,
     alt: "Bedroom inside a coliving home",
   },
   "real-estate-101": {
