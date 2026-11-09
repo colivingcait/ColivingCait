@@ -279,7 +279,7 @@ export default function LearnPage() {
           </div>
           <div className="text-center shrink-0">
             <div className="font-heading font-medium text-[52px] leading-none text-charcoal mb-1.5">
-              $250
+              $150
             </div>
             <span className="block text-[15px] text-warmgray-light mb-6">
               One session · 60 minutes
