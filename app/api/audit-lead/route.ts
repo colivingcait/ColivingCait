@@ -93,9 +93,15 @@ export async function POST(request: Request) {
   const houses = clean(body.houses, 10);
   const issue = clean(body.issue, 60);
 
-  if (!firstName || !EMAIL_RE.test(email) || !HOUSES.includes(houses)) {
+  if (
+    !firstName ||
+    !EMAIL_RE.test(email) ||
+    phone.replace(/\D/g, "").length < 10 ||
+    !HOUSES.includes(houses) ||
+    !ISSUES.includes(issue)
+  ) {
     return NextResponse.json(
-      { error: "Please fill in your first name, email and number of houses." },
+      { error: "Please fill in your first name, email, phone number, number of houses and biggest issue." },
       { status: 400 },
     );
   }

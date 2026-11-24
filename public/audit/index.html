@@ -143,9 +143,9 @@ body{padding:10px 0}.wrap{padding:0 10px;overflow-x:visible}
 <form class="cta-f" id="ctaf" novalidate>
 <label>First name<input name="firstName" type="text" autocomplete="given-name" required></label>
 <label>Email<input name="email" type="email" autocomplete="email" inputmode="email" required></label>
-<label><b>Phone <span>(optional)</span></b><input name="phone" type="tel" autocomplete="tel" inputmode="tel"></label>
+<label>Phone<input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
 <label>Number of PadSplit houses<select name="houses" required><option value="">Choose one</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option value="6-10">6&ndash;10</option><option value="11+">11+</option></select></label>
-<label><b>Biggest issue <span>(optional)</span></b><select name="issue"><option value="">Choose one</option><option>Cash flow</option><option>Turnover</option><option>Unpaid balances</option><option>My property manager</option><option>Not sure, just want a checkup</option></select></label>
+<label>Biggest issue<select name="issue" required><option value="">Choose one</option><option>Cash flow</option><option>Turnover</option><option>Unpaid balances</option><option>My property manager</option><option>Not sure, just want a checkup</option></select></label>
 <input name="hp_7c2f" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
 <button type="submit">See my price &rarr;</button><div class="cta-m" role="status" aria-live="polite"></div>
 </form></div>
@@ -196,9 +196,9 @@ function step2(name,houses){
 }
 f.addEventListener('submit',function(e){e.preventDefault();
   var d={firstName:f.firstName.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),houses:f.houses.value,issue:f.issue.value,company:f.hp_7c2f.value};
-  var bad=[];if(!d.firstName)bad.push(f.firstName);if(!EMAIL.test(d.email))bad.push(f.email);if(!d.houses)bad.push(f.houses);
-  [f.firstName,f.email,f.houses].forEach(function(x){x.classList.toggle('bad',bad.indexOf(x)>-1);});
-  if(bad.length){m.textContent='Please fill in your first name, a valid email and number of houses.';bad[0].focus();return;}
+  var bad=[];if(!d.firstName)bad.push(f.firstName);if(!EMAIL.test(d.email))bad.push(f.email);if(d.phone.replace(/\D/g,'').length<10)bad.push(f.phone);if(!d.houses)bad.push(f.houses);if(!d.issue)bad.push(f.issue);
+  [f.firstName,f.email,f.phone,f.houses,f.issue].forEach(function(x){x.classList.toggle('bad',bad.indexOf(x)>-1);});
+  if(bad.length){m.textContent='Please fill in your first name, email, phone number, number of houses and biggest issue.';bad[0].focus();return;}
   m.textContent='';b.disabled=true;b.textContent='One moment…';
   fetch('/api/audit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
   .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);});})
