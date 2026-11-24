@@ -34,6 +34,7 @@ export type IntakeAnswers = {
   name: string;
   phone: string;
   email: string;
+  referredBy: string;
   manager: "self" | "pm";
   pmFee: string;
   pmTenure: string;

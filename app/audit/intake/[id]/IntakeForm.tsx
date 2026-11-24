@@ -171,6 +171,7 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
   const [name, setName] = useState(lead.name);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState(lead.email);
+  const [referredBy, setReferredBy] = useState("");
   const [manager, setManager] = useState<"" | "self" | "pm">("");
   const [pmFee, setPmFee] = useState("");
   const [pmTenure, setPmTenure] = useState("");
@@ -294,6 +295,7 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
           name,
           phone,
           email,
+          referredBy,
           manager,
           pmFee: manager === "pm" ? pmFee : "",
           pmTenure: manager === "pm" ? pmTenure : "",
@@ -363,6 +365,19 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
               inputMode="email"
               autoComplete="email"
               required
+            />
+          </label>
+          <label className={s.field}>
+            <span>
+              Who referred you? <span className={s.opt}>(optional)</span>
+            </span>
+            <input
+              className={s.input}
+              value={referredBy}
+              onChange={(e) => setReferredBy(e.target.value)}
+              placeholder="A friend, a meetup, Instagram…"
+              autoComplete="off"
+              name="referredBy"
             />
           </label>
         </section>

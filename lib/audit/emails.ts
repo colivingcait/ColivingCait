@@ -159,6 +159,7 @@ export function sendIntakeComplete(lead: Lead, links: { file: StoredFile; url: s
     ["Name", a.name],
     ["Phone", a.phone],
     ["Email", a.email],
+    ["Referred by", a.referredBy || "(not given)"],
     ["Houses", `${housesLabel(lead.houses)} (${total === null ? "custom quote" : `${money(total)} quoted`})`],
     ["Who manages the houses", a.manager === "pm" ? "Property manager" : "Self-managed"],
     ...(a.manager === "pm"

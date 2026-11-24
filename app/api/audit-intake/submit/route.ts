@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     name: clean(body.name, 120).replace(/\s+/g, " "),
     phone: clean(body.phone, 40),
     email: clean(body.email, 200),
+    referredBy: clean(body.referredBy, 200),
     manager: body.manager === "pm" ? "pm" : "self",
     pmFee: clean(body.pmFee, 200),
     pmTenure: clean(body.pmTenure, 200),
@@ -113,7 +114,11 @@ export async function POST(request: Request) {
     phone: answers.phone,
     message: `Portfolio audit intake complete (${files.length} files). Biggest concern: ${answers.bugging.slice(0, 300)}`,
     tags: ["audit lead", "intake complete"],
-    fields: { houses: lead.houses, padsplit: answers.padsplit === "access" ? "account access" : "earnings export" },
+    fields: {
+      houses: lead.houses,
+      padsplit: answers.padsplit === "access" ? "account access" : "earnings export",
+      referred_by: answers.referredBy || undefined,
+    },
   });
   log.push(crm.ok ? `CRM accepted ${crm.status} ${crm.body}` : `CRM FAILED ${crm.error} ${crm.body ?? ""}`);
 

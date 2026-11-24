@@ -80,6 +80,9 @@ s = s.replace("</style>", """/* cover: "after the fixes" number is the hero. The
 }
 </style>""", 1)
 
+# 0d. Copy tweaks Caitlyn asked for after the deck was made.
+s = s.replace("Ready? It takes about 5 minutes.", "Ready? Getting started takes 5 minutes.")
+
 # 1. Add the lead form as a new final slide, after "How it works".
 last = s.rindex('<section class="s">')
 end = s.index("</section>", last) + len("</section>")
