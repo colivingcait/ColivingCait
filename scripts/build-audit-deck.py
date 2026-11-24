@@ -107,6 +107,46 @@ old_keys = "document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1
 assert s.count(old_keys) == 1
 s = s.replace(old_keys, "document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowRight')go(1);", 1)
 
+# 3b. PostHog analytics + session replay (key/region in lib/posthog-config.json;
+#     skipped while the key is empty). Loaded through /ingest on this domain.
+import json, os
+_ph = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "lib", "posthog-config.json")))
+if _ph.get("key"):
+    ui_host = "https://eu.posthog.com" if _ph.get("region") == "eu" else "https://us.posthog.com"
+    ph_head = """<script>
+// PostHog: queue calls until the library has loaded.
+window.__ph=function(f){var p=window.posthog;if(p&&p.__loaded)f(p);else(window.__phq=window.__phq||[]).push(f);};
+function __phInit(){posthog.init(%s,{api_host:'/ingest',ui_host:%s,defaults:'2025-05-24',
+  session_recording:{maskAllInputs:false},
+  loaded:function(p){var q=window.__phq||[];window.__phq=[];q.forEach(function(f){f(p);});}});}
+</script>
+<script src="/ingest/static/array.js" async onload="__phInit()"></script>
+""" % (json.dumps(_ph["key"]), json.dumps(ui_host))
+    assert s.count("</head>") == 1
+    s = s.replace("</head>", ph_head + "</head>", 1)
+    ph_slides = r"""<script>
+// PostHog: which slides people reach, and when they get to the form.
+(function(){
+  var deck=document.querySelector('.deck');if(!deck||!window.__ph)return;
+  var slides=[].slice.call(deck.querySelectorAll('.s')),seen=-1,t;
+  function name(sl,i){
+    if(sl.id==='get-audited')return 'Lead form';
+    var k=sl.querySelector('.k'),h=sl.querySelector('h1,h2');
+    return (k&&k.textContent.trim())||(i===0?'Cover':'')||(h?h.textContent.trim().slice(0,60):'Slide '+(i+1));
+  }
+  function check(){
+    var i=Math.round(deck.scrollLeft/deck.clientWidth);if(i===seen||!slides[i])return;seen=i;
+    var props={slide:i+1,of:slides.length,name:name(slides[i],i)};
+    __ph(function(p){p.capture('audit_slide_viewed',props);
+      if(slides[i].id==='get-audited')p.capture('audit_form_viewed');});
+  }
+  deck.addEventListener('scroll',function(){if(!t)t=requestAnimationFrame(function(){t=0;check();});},{passive:true});
+  check();
+})();
+</script></body>"""
+    assert s.count("</body>") == 1
+    s = s.replace("</body>", ph_slides, 1)
+
 # 4. Form script: send the lead, then show the price and next steps.
 #    Plus an auto-fit script that scales a slide's content down (to no
 #    less than 80%) when it is taller than the screen, so short phones
@@ -198,7 +238,7 @@ f.addEventListener('submit',function(e){e.preventDefault();
   m.textContent='';b.disabled=true;b.textContent='One moment…';
   fetch('/api/audit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
   .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);return j;});})
-  .then(function(j){step2(d.name,d.houses,j.intakeUrl);})
+  .then(function(j){if(window.__ph)__ph(function(p){p.identify(d.email,{email:d.email,name:d.name,houses:d.houses});p.capture('audit_form_submitted',{houses:d.houses});});step2(d.name,d.houses,j.intakeUrl);})
   .catch(function(err){b.disabled=false;b.textContent='Find my leaks →';m.textContent=(err&&err.message)||'Something went wrong. Please try again, or email ColivingCait@gmail.com.';});
 });})();
 </script></body>"""

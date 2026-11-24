@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import Analytics from "@/components/Analytics";
 import { DEFAULT_OG_IMAGE, SITE, SITE_URL } from "@/lib/site";
 import JsonLd, {
   graph,
@@ -86,6 +87,7 @@ export default function RootLayout({
         <JsonLd
           data={graph(personSchema, businessSchema, houseHackingOrgSchema, websiteSchema)}
         />
+        <Analytics />
         <AuthProvider>
           <Nav />
           <main>{children}</main>

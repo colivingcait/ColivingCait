@@ -1,10 +1,21 @@
+import { readFileSync } from "node:fs";
 import { legacyPropertyRedirects } from "./lib/legacy-property-paths.mjs";
 
 /** @type {import('next').NextConfig} */
 const CRM = process.env.CRM_ORIGIN ?? "https://crm.callcaitlyn.com";
 
+// PostHog analytics go through /ingest on this domain, so ad blockers that
+// block PostHog's own domain don't drop events. Region from posthog-config.
+const posthogRegion = JSON.parse(
+  readFileSync(new URL("./lib/posthog-config.json", import.meta.url), "utf8"),
+).region === "eu" ? "eu" : "us";
+const POSTHOG_INGEST = process.env.POSTHOG_INGEST_ORIGIN ?? `https://${posthogRegion}.i.posthog.com`;
+const POSTHOG_ASSETS = process.env.POSTHOG_ASSETS_ORIGIN ?? `https://${posthogRegion}-assets.i.posthog.com`;
+
 const nextConfig = {
   reactStrictMode: true,
+  // PostHog's API paths end in "/", which Next would otherwise redirect.
+  skipTrailingSlashRedirect: true,
   async redirects() {
     return legacyPropertyRedirects.map(([source, destination]) => ({
       source,
@@ -54,6 +65,8 @@ const nextConfig = {
         destination: `${CRM}/crm-static/:path+`,
       },
       { source: "/icon.svg", destination: `${CRM}/icon.svg` },
+      { source: "/ingest/static/:path*", destination: `${POSTHOG_ASSETS}/static/:path*` },
+      { source: "/ingest/:path*", destination: `${POSTHOG_INGEST}/:path*` },
       // Standalone sample portfolio audit, served as-is from public/.
       { source: "/audit", destination: "/audit/index.html" },
     ];

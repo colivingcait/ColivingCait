@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { analytics } from "@/lib/analytics";
 import s from "./intake.module.css";
 
 export type IntakeLead = {
@@ -184,6 +185,13 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
   const [done, setDone] = useState(lead.completed);
   const errorsRef = useRef<HTMLDivElement>(null);
 
+  // Tie this visit to the lead (same person as their /audit form submit).
+  useEffect(() => {
+    const ph = analytics();
+    ph?.identify(lead.email, { email: lead.email, name: lead.name });
+    ph?.capture("audit_intake_opened", { houses: lead.housesLabel, already_completed: lead.completed });
+  }, [lead.email, lead.name, lead.housesLabel, lead.completed]);
+
   if (done) return <Done lead={lead} name={name} />;
 
   const patch = (key: string, p: Partial<Upload>) =>
@@ -212,6 +220,7 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
         if (!pr.ok) throw new Error((await pr.json().catch(() => ({}))).error || "Upload failed.");
       }
       patch(u.key, { status: "done", progress: 1, path: j.path });
+      analytics()?.capture("audit_intake_file_uploaded", { kind: u.kind, size_kb: Math.round(u.size / 1024) });
     } catch (err) {
       const msg = err instanceof Error && err.message && !/^(status|network)/.test(err.message) ? err.message : "Upload failed.";
       patch(u.key, { status: "error", error: msg });
@@ -298,6 +307,12 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.error || "Something went wrong. Please try again.");
+      analytics()?.capture("audit_intake_completed", {
+        houses: lead.housesLabel,
+        files: files.length,
+        padsplit: padsplit === "access" ? "account access" : "earnings export",
+        manager: manager === "pm" ? "property manager" : "self-managed",
+      });
       setDone(true);
       // Scroll once the shorter "all set" screen has rendered.
       requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior }));

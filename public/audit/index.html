@@ -167,7 +167,15 @@ h2.a2{color:var(--amber);margin-top:6px}
  .lf2 ol{font-size:14px;margin:10px 0;line-height:1.4}.lf2 li{margin-bottom:4px}
  .lf2 .guar{font-size:14px;padding:8px 12px}.lf-q{font-size:14px;margin-top:10px}
 }
-</style></head><body>
+</style><script>
+// PostHog: queue calls until the library has loaded.
+window.__ph=function(f){var p=window.posthog;if(p&&p.__loaded)f(p);else(window.__phq=window.__phq||[]).push(f);};
+function __phInit(){posthog.init("phc_rC6RbQM3br5WJKWM3cKhMoHm9fJ9myhpsacxbJdyGDwe",{api_host:'/ingest',ui_host:"https://us.posthog.com",defaults:'2025-05-24',
+  session_recording:{maskAllInputs:false},
+  loaded:function(p){var q=window.__phq||[];window.__phq=[];q.forEach(function(f){f(p);});}});}
+</script>
+<script src="/ingest/static/array.js" async onload="__phInit()"></script>
+</head><body>
 <div class="deck">
 
 <section class="s dark cv"><div><span class="badge">Coliving Portfolio Performance Audit</span><div class="sl">A real client house in the Atlanta metro, anonymized.</div>
@@ -275,6 +283,25 @@ document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target
 deck.addEventListener('scroll',()=>requestAnimationFrame(upd));upd();
 }
 </script><script>
+// PostHog: which slides people reach, and when they get to the form.
+(function(){
+  var deck=document.querySelector('.deck');if(!deck||!window.__ph)return;
+  var slides=[].slice.call(deck.querySelectorAll('.s')),seen=-1,t;
+  function name(sl,i){
+    if(sl.id==='get-audited')return 'Lead form';
+    var k=sl.querySelector('.k'),h=sl.querySelector('h1,h2');
+    return (k&&k.textContent.trim())||(i===0?'Cover':'')||(h?h.textContent.trim().slice(0,60):'Slide '+(i+1));
+  }
+  function check(){
+    var i=Math.round(deck.scrollLeft/deck.clientWidth);if(i===seen||!slides[i])return;seen=i;
+    var props={slide:i+1,of:slides.length,name:name(slides[i],i)};
+    __ph(function(p){p.capture('audit_slide_viewed',props);
+      if(slides[i].id==='get-audited')p.capture('audit_form_viewed');});
+  }
+  deck.addEventListener('scroll',function(){if(!t)t=requestAnimationFrame(function(){t=0;check();});},{passive:true});
+  check();
+})();
+</script><script>
 // Auto-fit: shrink slide content that doesn't fit the screen height.
 (function(){
 var MIN=0.8,slides=[].slice.call(document.querySelectorAll('.deck .s'));
@@ -360,7 +387,7 @@ f.addEventListener('submit',function(e){e.preventDefault();
   m.textContent='';b.disabled=true;b.textContent='One moment…';
   fetch('/api/audit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
   .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);return j;});})
-  .then(function(j){step2(d.name,d.houses,j.intakeUrl);})
+  .then(function(j){if(window.__ph)__ph(function(p){p.identify(d.email,{email:d.email,name:d.name,houses:d.houses});p.capture('audit_form_submitted',{houses:d.houses});});step2(d.name,d.houses,j.intakeUrl);})
   .catch(function(err){b.disabled=false;b.textContent='Find my leaks →';m.textContent=(err&&err.message)||'Something went wrong. Please try again, or email ColivingCait@gmail.com.';});
 });})();
 </script></body></html>
