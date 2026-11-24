@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import { CK_TAGS } from "@/lib/convertkit";
 import { submitToCrm } from "@/lib/crm";
+import { sendMail } from "@/lib/mail";
 import { SITE, absoluteUrl } from "@/lib/site";
 
 // "Email it to yourself" form on the static /audit page. Sends the lead to
@@ -17,15 +17,10 @@ function escapeHtml(s: string) {
 }
 
 async function sendAuditLink(email: string, firstName: string) {
-  const server = process.env.EMAIL_SERVER;
-  const from = process.env.EMAIL_FROM;
-  if (!server || !from) return false;
-
   const url = absoluteUrl("/audit");
   const name = escapeHtml(firstName);
-  await nodemailer.createTransport(server).sendMail({
+  return sendMail({
     to: email,
-    from,
     replyTo: SITE.email,
     subject: "Your sample coliving portfolio audit",
     text: `Hi ${firstName},
@@ -44,7 +39,6 @@ Coliving Cait`,
 <p>If you'd like one for your own houses, just reply to this email.</p>
 <p>Caitlyn Verdugo<br>Coliving Cait</p>`,
   });
-  return true;
 }
 
 export async function POST(request: Request) {
