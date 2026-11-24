@@ -40,6 +40,8 @@ const nextConfig = {
         destination: `${CRM}/crm-static/:path+`,
       },
       { source: "/icon.svg", destination: `${CRM}/icon.svg` },
+      // Standalone sample portfolio audit, served as-is from public/.
+      { source: "/audit", destination: "/audit/index.html" },
     ];
   },
 };

@@ -138,6 +138,11 @@ export default function Footer() {
 
       <div className="legal">
         <span>© 2026 Coliving Cait</span>
+        {/* /audit is a static file in public/ served by a rewrite, so it
+            needs a full page load rather than next/link navigation. */}
+        <a className="audit-link" href="/audit">
+          Portfolio audit
+        </a>
         <span>Keller Williams Realty Metro Atlanta</span>
       </div>
     </footer>
