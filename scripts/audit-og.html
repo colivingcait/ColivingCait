@@ -1,0 +1,50 @@
+<!doctype html>
+<!-- Source for public/audit/og.jpg, the /audit link preview (1200x630).
+     Regenerate: node scripts/render-audit-og.js -->
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:Cormorant;src:url(../app/fonts/cormorant-garamond-latin.woff2) format("woff2");font-weight:300 600}
+@font-face{font-family:Cormorant;src:url(../app/fonts/cormorant-garamond-italic-latin.woff2) format("woff2");font-weight:300 600;font-style:italic}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{background:#16302f;color:#fff;font-family:Arial,Helvetica,sans-serif;position:relative}
+.edge{position:absolute;left:0;top:0;bottom:0;width:14px;background:#e2a94f}
+.txt{position:absolute;left:78px;top:56px;width:640px}
+.kick{font-size:21px;letter-spacing:.2em;text-transform:uppercase;font-weight:bold;color:#86c1b9}
+h1{font-size:68px;line-height:1.04;font-weight:bold;margin-top:22px;letter-spacing:-.01em}
+h1 em{display:block;font-style:normal;color:#e2a94f;margin-top:6px}
+.sub{font-size:26px;line-height:1.35;color:#cfe2df;margin-top:22px}
+.brand{position:absolute;left:78px;bottom:52px;font-family:Cormorant,Georgia,serif;font-size:46px;color:#fff;letter-spacing:-.01em}
+.brand em{color:#e2a94f;font-style:italic}
+.url{position:absolute;left:330px;bottom:62px;font-size:21px;color:#9fbcb8;letter-spacing:.04em}
+.art{position:absolute;right:30px;top:40px;width:430px;height:560px}
+.glow{position:absolute;left:50%;bottom:30px;width:420px;height:420px;transform:translateX(-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(226,169,79,.42) 0%,rgba(226,169,79,.14) 45%,rgba(226,169,79,0) 70%)}
+.pile,.fall{position:absolute;inset:0}
+.pile svg,.fall svg{position:absolute;overflow:visible;filter:drop-shadow(0 6px 9px rgba(0,0,0,.45))}
+</style></head><body>
+<div class="edge"></div>
+<div class="txt">
+  <div class="kick">Coliving Portfolio Performance Audit</div>
+  <h1>Full rooms.<br>Thin margins.<em>$8,200 a year left on the table.</em></h1>
+  <p class="sub">Find out what your PadSplit houses really earn, and where the money&rsquo;s leaking.</p>
+</div>
+<div class="brand">Coliving<em>Cait</em></div>
+<div class="url">colivingcait.com/audit</div>
+<div class="art"><div class="glow"></div><div class="fall" id="fall"></div><div class="pile" id="pile"></div></div>
+<script>
+// Same pile as the form slide: banded stacks, loose bills, a few falling.
+// The bill artwork (scripts/money.svg) is inserted by render-audit-og.js.
+function bill(parent,sym,css){var NS='http://www.w3.org/2000/svg',v=document.createElementNS(NS,'svg'),u=document.createElementNS(NS,'use');
+  v.setAttribute('viewBox',sym==='mb-stack'?'0 0 240 132':'0 0 240 102');u.setAttribute('href','#'+sym);v.appendChild(u);v.style.cssText=css;parent.appendChild(v);}
+var pile=document.getElementById('pile'),fall=document.getElementById('fall');
+bill(pile,'mb-bill','left:-4%;bottom:34px;width:150px;height:64px;transform:rotate(-22deg)');
+bill(pile,'mb-bill','left:66%;bottom:36px;width:146px;height:62px;transform:rotate(19deg)');
+[[2,40,-4],[33,44,2],[63,40,6],[17,104,-7],[48,106,5],[32,166,-3]].forEach(function(r){
+  bill(pile,'mb-stack','left:'+r[0]+'%;bottom:'+r[1]+'px;width:170px;height:93px;transform:rotate('+r[2]+'deg)');});
+bill(pile,'mb-bill','left:22%;bottom:226px;width:160px;height:68px;transform:rotate(-16deg)');
+bill(pile,'mb-bill','left:42%;bottom:218px;width:156px;height:66px;transform:rotate(13deg)');
+[[18,10,-28],[60,70,32],[34,140,-62]].forEach(function(f){
+  bill(fall,'mb-bill','left:'+f[0]+'%;top:'+f[1]+'px;width:130px;height:55px;transform:rotate('+f[2]+'deg) rotateX(48deg)');});
+</script>
+</body></html>

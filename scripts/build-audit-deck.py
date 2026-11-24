@@ -12,6 +12,38 @@ import sys
 src, out = sys.argv[1], sys.argv[2]
 s = open(src).read()
 
+# 0. Page title and link preview (iMessage, Slack, Facebook, LinkedIn...).
+#    The preview image is public/audit/og.jpg, made by scripts/render-audit-og.js.
+import os, re
+TITLE = "Coliving Portfolio Performance Audit"
+DESC = "Full rooms, thin margins? Find out what your PadSplit houses really earn, and where the money's leaking. $500 per property, money back guarantee."
+OG_IMAGE = "https://www.colivingcait.com/audit/og.jpg"
+_meta = f"""<title>{TITLE}</title>
+<meta name="description" content="{DESC}">
+<link rel="canonical" href="https://www.colivingcait.com/audit">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Coliving Cait">
+<meta property="og:url" content="https://www.colivingcait.com/audit">
+<meta property="og:title" content="{TITLE}">
+<meta property="og:description" content="{DESC}">
+<meta property="og:image" content="{OG_IMAGE}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Full rooms. Thin margins. $8,200 a year left on the table.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{TITLE}">
+<meta name="twitter:description" content="{DESC}">
+<meta name="twitter:image" content="{OG_IMAGE}">"""
+s, _n = re.subn(r"<title>.*?</title>", lambda m: _meta, s, count=1, flags=re.S)
+assert _n == 1, "deck has no <title>"
+
+# 0b. Realistic bill + banded stack artwork (scripts/money.svg), used by the
+#     money pile, falling bills and the money rain.
+_money = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "money.svg")).read()
+_money = re.sub(r"<!--.*?-->", "", _money, flags=re.S).strip()
+s, _n = re.subn(r"(<body[^>]*>)", lambda m: m.group(1) + _money, s, count=1)
+assert _n == 1, "deck has no <body>"
+
 # 1. Add the lead form as a new final slide, after "How it works".
 last = s.rindex('<section class="s">')
 end = s.index("</section>", last) + len("</section>")
@@ -29,7 +61,7 @@ form_slide = """<section class="s dark lf" id="get-audited"><div class="lf-in" i
 <div class="lf-m" role="status" aria-live="polite"></div>
 </form></div>
 <div class="lf-in lf2" id="lf2" hidden tabindex="-1"></div>
-<div class="lf-art" aria-hidden="true"><div class="lf-glow"></div><div class="lf-fallers"><span style="left:55%;animation-delay:0.00s;animation-duration:3.6s;--r0:43deg;--r1:179deg;--dx:-17px">💵</span><span style="left:29%;animation-delay:0.55s;animation-duration:4.6s;--r0:35deg;--r1:182deg;--dx:-7px">💵</span><span style="left:37%;animation-delay:1.10s;animation-duration:4.5s;--r0:-15deg;--r1:-73deg;--dx:2px">💵</span><span style="left:25%;animation-delay:1.65s;animation-duration:4.1s;--r0:7deg;--r1:-28deg;--dx:-1px">💸</span><span style="left:28%;animation-delay:2.20s;animation-duration:4.1s;--r0:-18deg;--r1:60deg;--dx:40px">💵</span><span style="left:32%;animation-delay:2.75s;animation-duration:3.8s;--r0:31deg;--r1:-171deg;--dx:-25px">💵</span><span style="left:49%;animation-delay:3.30s;animation-duration:4.5s;--r0:13deg;--r1:-5deg;--dx:-4px">💵</span><span style="left:34%;animation-delay:3.85s;animation-duration:3.8s;--r0:17deg;--r1:51deg;--dx:18px">💸</span><span style="left:36%;animation-delay:4.40s;animation-duration:4.6s;--r0:-1deg;--r1:38deg;--dx:24px">💵</span></div><div class="lf-pile"><span style="left:5.4%;bottom:-2px;transform:rotate(-1deg)">💵</span><span style="left:17.7%;bottom:0px;transform:rotate(2deg)">💵</span><span style="left:28.0%;bottom:1px;transform:rotate(-7deg)">💵</span><span style="left:36.8%;bottom:-2px;transform:rotate(19deg)">💵</span><span style="left:45.8%;bottom:-4px;transform:rotate(13deg)">💵</span><span style="left:55.4%;bottom:3px;transform:rotate(-7deg)">💵</span><span style="left:63.0%;bottom:0px;transform:rotate(-21deg)">💵</span><span style="left:73.5%;bottom:0px;transform:rotate(-4deg)">💵</span><span style="left:83.5%;bottom:-2px;transform:rotate(9deg)">💵</span><span style="left:15.5%;bottom:38px;transform:rotate(-9deg)">💵</span><span style="left:25.3%;bottom:38px;transform:rotate(1deg)">💵</span><span style="left:34.1%;bottom:34px;transform:rotate(-4deg)">💵</span><span style="left:44.5%;bottom:34px;transform:rotate(-10deg)">💵</span><span style="left:53.0%;bottom:36px;transform:rotate(-21deg)">💵</span><span style="left:64.7%;bottom:33px;transform:rotate(12deg)">💵</span><span style="left:73.5%;bottom:37px;transform:rotate(-7deg)">💵</span><span style="left:22.3%;bottom:64px;transform:rotate(-7deg)">💵</span><span style="left:32.5%;bottom:63px;transform:rotate(-26deg)">💵</span><span style="left:40.5%;bottom:68px;transform:rotate(1deg)">💵</span><span style="left:50.5%;bottom:62px;transform:rotate(-12deg)">💵</span><span style="left:58.6%;bottom:63px;transform:rotate(-21deg)">💵</span><span style="left:68.7%;bottom:67px;transform:rotate(22deg)">💵</span><span style="left:31.2%;bottom:91px;transform:rotate(9deg)">💵</span><span style="left:42.3%;bottom:96px;transform:rotate(-3deg)">💵</span><span style="left:50.1%;bottom:89px;transform:rotate(-5deg)">💵</span><span style="left:61.0%;bottom:89px;transform:rotate(12deg)">💵</span><span style="left:40.2%;bottom:115px;transform:rotate(22deg)">💵</span><span style="left:49.7%;bottom:120px;transform:rotate(-16deg)">💵</span><span class="lf-bag" style="left:46%;bottom:140px">💰</span></div></div></section>"""
+<div class="lf-art" aria-hidden="true"><div class="lf-glow"></div><div class="lf-fallers"><svg viewBox="0 0 240 102" style="left:55%;animation-delay:0.00s;animation-duration:3.6s;--r0:43deg;--r1:179deg;--dx:-17px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:31%;animation-delay:0.55s;animation-duration:4.4s;--r0:-20deg;--r1:-160deg;--dx:22px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:68%;animation-delay:1.10s;animation-duration:3.9s;--r0:12deg;--r1:140deg;--dx:-30px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:40%;animation-delay:1.65s;animation-duration:4.8s;--r0:-35deg;--r1:95deg;--dx:18px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:24%;animation-delay:2.20s;animation-duration:4.1s;--r0:28deg;--r1:-120deg;--dx:35px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:60%;animation-delay:2.75s;animation-duration:3.7s;--r0:-48deg;--r1:60deg;--dx:-12px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:46%;animation-delay:3.30s;animation-duration:4.5s;--r0:8deg;--r1:200deg;--dx:26px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:34%;animation-delay:3.85s;animation-duration:4.0s;--r0:-12deg;--r1:-90deg;--dx:-20px"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:72%;animation-delay:4.40s;animation-duration:4.2s;--r0:30deg;--r1:150deg;--dx:-35px"><use href="#mb-bill"/></svg></div><div class="lf-pile"><svg viewBox="0 0 240 102" style="left:-3%;bottom:-4px;width:132px;height:56px;transform:rotate(-22deg)"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:72%;bottom:-2px;width:128px;height:54px;transform:rotate(19deg)"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 132" style="left:3%;bottom:0px;width:150px;height:82px;transform:rotate(-4deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 132" style="left:33%;bottom:4px;width:150px;height:82px;transform:rotate(2deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 132" style="left:63%;bottom:0px;width:150px;height:82px;transform:rotate(6deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 132" style="left:17%;bottom:54px;width:150px;height:82px;transform:rotate(-7deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 132" style="left:48%;bottom:56px;width:150px;height:82px;transform:rotate(5deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 132" style="left:32%;bottom:106px;width:150px;height:82px;transform:rotate(-3deg)"><use href="#mb-stack"/></svg><svg viewBox="0 0 240 102" style="left:26%;bottom:156px;width:140px;height:60px;transform:rotate(-16deg)"><use href="#mb-bill"/></svg><svg viewBox="0 0 240 102" style="left:44%;bottom:150px;width:136px;height:58px;transform:rotate(13deg)"><use href="#mb-bill"/></svg></div></div></section>"""
 s = s[:end] + "\n" + form_slide + s[end:]
 
 # 2. Styles for the form slide, matching the deck (deep teal, gold, white).
@@ -64,18 +96,18 @@ css = """/* lead form (last slide) */
  .lf-art{display:block;position:relative;flex:0 1 480px;height:min(68vh,560px);align-self:center}
 }
 .lf-glow{position:absolute;left:50%;bottom:4%;width:78%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(226,169,79,.35) 0%,rgba(226,169,79,.12) 45%,rgba(226,169,79,0) 70%);animation:lf-pulse 3.2s ease-in-out infinite}
-.lf-pile{position:absolute;left:0;right:0;bottom:6%;height:190px}
-.lf-pile span{position:absolute;font-size:46px;line-height:1;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
-.lf-pile .lf-bag{font-size:64px;animation:lf-bob 2.6s ease-in-out infinite}
-.lf-fallers{position:absolute;inset:0;overflow:hidden}
-.lf-fallers span{position:absolute;top:-12%;font-size:40px;line-height:1;opacity:0;animation-name:lf-drop;animation-timing-function:cubic-bezier(.45,.05,.55,.95);animation-iteration-count:infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
-@keyframes lf-drop{0%{opacity:0;transform:translate(0,0) rotate(var(--r0))}10%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate(var(--dx),min(52vh,430px)) rotate(var(--r1))}}
+.lf-pile{position:absolute;left:0;right:0;bottom:5%;height:250px}
+.lf-pile svg{position:absolute;overflow:visible;filter:drop-shadow(0 6px 9px rgba(0,0,0,.45))}
+
+.lf-fallers{position:absolute;inset:-8% 0 0;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%);mask-image:linear-gradient(to bottom,transparent 0,#000 22%)}
+.lf-fallers svg{position:absolute;top:-12%;width:104px;height:44px;overflow:visible;opacity:0;animation-name:lf-drop;animation-timing-function:cubic-bezier(.45,.05,.55,.95);animation-iteration-count:infinite;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+@keyframes lf-drop{0%{opacity:0;transform:translate(0,0) rotate(var(--r0)) rotateX(0deg)}10%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate(var(--dx),min(50vh,400px)) rotate(var(--r1)) rotateX(540deg)}}
 @keyframes lf-pulse{0%,100%{opacity:.75;transform:translateX(-50%) scale(.96)}50%{opacity:1;transform:translateX(-50%) scale(1.04)}}
-@keyframes lf-bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(6deg)}}
-@media (prefers-reduced-motion:reduce){.lf-fallers{display:none}.lf-glow,.lf-pile .lf-bag{animation:none}}
+
+@media (prefers-reduced-motion:reduce){.lf-fallers{display:none}.lf-glow{animation:none}}
 .lf-rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
-.lf-rain span{position:absolute;top:-10vh;animation-name:lf-fall;animation-timing-function:linear;animation-fill-mode:both;will-change:transform}
-@keyframes lf-fall{from{transform:translate(0,0) rotate(var(--r0))}to{transform:translate(var(--dx),125vh) rotate(var(--r1))}}
+.lf-rain svg{position:absolute;top:-10vh;overflow:visible;animation-name:lf-fall;animation-timing-function:linear;animation-fill-mode:both;will-change:transform;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+@keyframes lf-fall{from{transform:translate(0,0) rotate(var(--r0)) rotateX(0deg)}to{transform:translate(var(--dx),125vh) rotate(var(--r1)) rotateX(900deg)}}
 .lf-count{text-align:center;color:#cfe2df;font-size:15px;margin-top:1.2vh;min-height:1.3em}
 /* phones: slimmer nav bar so every slide gets more height */
 @media (max-width:899px){
@@ -184,11 +216,12 @@ function money(n){return '$'+n.toLocaleString('en-US');}
 function rainMoney(){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   var box=document.createElement('div');box.className='lf-rain';box.setAttribute('aria-hidden','true');
-  var bills=['💵','💵','💵','💸','💰'];
+  var NS='http://www.w3.org/2000/svg';
   for(var i=0;i<40;i++){
-    var b=document.createElement('span');b.textContent=bills[i%bills.length];
+    var w=58+Math.random()*52,b=document.createElementNS(NS,'svg'),u=document.createElementNS(NS,'use');
+    b.setAttribute('viewBox','0 0 240 102');u.setAttribute('href','#mb-bill');b.appendChild(u);
     var r0=Math.round(Math.random()*80-40),r1=r0+Math.round(Math.random()*360-180);
-    b.style.cssText='left:'+(Math.random()*100)+'%;font-size:'+(22+Math.random()*22)+'px;'+
+    b.style.cssText='left:'+(Math.random()*100-5)+'%;width:'+w+'px;height:'+(w*102/240)+'px;'+
       'animation-duration:'+(2.4+Math.random()*1.8)+'s;animation-delay:'+(Math.random()*2.2)+'s;'+
       '--dx:'+Math.round(Math.random()*120-60)+'px;--r0:'+r0+'deg;--r1:'+r1+'deg';
     box.appendChild(b);
