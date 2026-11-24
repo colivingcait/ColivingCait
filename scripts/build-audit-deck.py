@@ -17,7 +17,7 @@ last = s.rindex('<section class="s">')
 end = s.index("</section>", last) + len("</section>")
 assert 'id="get-audited"' not in s, "deck already has the lead form"
 form_slide = """<section class="s dark lf" id="get-audited"><div class="lf-in" id="lf1">
-<h2 class="lf-h">Where&rsquo;s your $8,200 hiding?</h2>
+<h2 class="lf-h">Where&rsquo;s your money hiding?</h2>
 <p class="lf-sub">Every house leaks somewhere. Let&rsquo;s find yours.</p>
 <form id="lff" novalidate>
 <label>Name<input name="name" type="text" autocomplete="name" required></label>
