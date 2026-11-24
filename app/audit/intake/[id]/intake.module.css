@@ -1,0 +1,335 @@
+/* Audit intake page: matches the /audit deck (deep teal, gold, Arial). */
+.page {
+  --deep: #16302f;
+  --teal: #1f7a72;
+  --gold: #e2a94f;
+  --ink: #1d2a2e;
+  --muted: #5d686b;
+  --mist: #f4f8f7;
+  --line: #d7e2e0;
+  background: var(--mist);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 104px 16px 64px;
+  min-height: 70vh;
+}
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+}
+/* The site's base styles give every heading a serif font and dark color;
+   this page uses the deck's Arial, and white on the dark hero. */
+.page h1,
+.page h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+}
+.page .hero h1 {
+  color: #fff;
+}
+.hero {
+  background: var(--deep);
+  color: #fff;
+  border-radius: 14px;
+  padding: 26px 24px;
+  margin-bottom: 18px;
+}
+.kicker {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #86c1b9;
+}
+.hero h1 {
+  font-size: clamp(26px, 5vw, 36px);
+  line-height: 1.1;
+  margin: 8px 0 8px;
+  font-weight: bold;
+}
+.hero p {
+  color: #cfe2df;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 20px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+}
+.card h2 {
+  font-size: 18px;
+  color: var(--deep);
+  margin: 0 0 4px;
+  font-weight: bold;
+}
+.num {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  vertical-align: 2px;
+}
+.hint {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.45;
+  margin: 2px 0 12px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--deep);
+  margin-top: 12px;
+}
+.field span.opt {
+  font-weight: normal;
+  color: var(--muted);
+}
+.input,
+.textarea {
+  font: inherit;
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--ink);
+  padding: 11px 13px;
+  border: 1px solid #b9c6c4;
+  border-radius: 9px;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.45;
+}
+.input:focus,
+.textarea:focus {
+  outline: 3px solid var(--gold);
+  outline-offset: 1px;
+}
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1.5px solid #b9c6c4;
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--deep);
+  background: #fff;
+  flex: 1 1 200px;
+}
+.choice input {
+  margin-top: 3px;
+  accent-color: var(--teal);
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.choiceOn {
+  border-color: var(--teal);
+  background: #eef4f3;
+}
+.choice small {
+  display: block;
+  font-weight: normal;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.4;
+  margin-top: 2px;
+}
+.sub {
+  margin: 10px 0 0 4px;
+  padding-left: 14px;
+  border-left: 3px solid var(--line);
+}
+.steps {
+  margin: 8px 0 10px;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.steps li {
+  margin-bottom: 4px;
+}
+.email {
+  font-weight: bold;
+  color: var(--teal);
+  word-break: break-all;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--deep);
+  background: #fdf6ea;
+  border: 1.5px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--teal);
+  flex: none;
+}
+.drop {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  border: 2px dashed #9aa5a8;
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  background: var(--mist);
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--deep);
+}
+.drop:focus-within,
+.dropOver {
+  border-color: var(--teal);
+  background: #eef4f3;
+}
+.drop b {
+  color: var(--teal);
+}
+.drop small {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.files {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+.file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--mist);
+  border-radius: 9px;
+  padding: 9px 12px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.fileName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fileState {
+  font-size: 13px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.fileDone {
+  color: var(--teal);
+  font-weight: bold;
+}
+.fileErr {
+  color: #b3261e;
+  font-weight: bold;
+}
+.bar {
+  height: 4px;
+  background: #d7e2e0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--teal);
+}
+.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 13px;
+  color: var(--teal);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.errors {
+  background: #fdecea;
+  border: 1.5px solid #f08a7e;
+  color: #8c1d18;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.submit {
+  width: 100%;
+  font: inherit;
+  font-size: 19px;
+  font-weight: bold;
+  padding: 16px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--gold);
+  color: var(--deep);
+  cursor: pointer;
+}
+.submit:hover {
+  background: #ecb965;
+}
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.fine {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.done h1 {
+  font-size: clamp(28px, 6vw, 40px);
+}
+.done .card p {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0 0 10px;
+}
+.pay {
+  background: #fdf6ea;
+  border: 2px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--deep);
+  font-size: 15px;
+  line-height: 1.5;
+}

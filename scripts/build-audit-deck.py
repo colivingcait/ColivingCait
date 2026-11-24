@@ -126,9 +126,10 @@ function step2(name,houses){
   var memo='“'+name+' Audit”';
   var pay=n?[el('b','',['Pay by Zelle: ']),money(total)+' to '+ZELLE+', memo: '+memo+'.']
            :[el('b','',['Pay by Zelle ']),'once you have your quote, to '+ZELLE+', memo: '+memo+'.'];
-  kids.push(el('ol','',[el('li','',pay),
-    el('li','',[el('b','',['Intake form. ']),'Once payment lands, I’ll email the intake form (about 30 minutes).']),
-    el('li','',[el('b','',['Report and call. ']),'Report in about 5 business days, then a 45-minute walkthrough call.'])]));
+  kids.push(el('ol','',[
+    el('li','',[el('b','',['Check your inbox. ']),'I just emailed you a link to your 5-minute intake: upload your P&Ls and share your PadSplit data.']),
+    el('li','',pay),
+    el('li','',[el('b','',['Report and call. ']),'Your audit starts once payment lands. Report in about 5 business days, then a 45-minute walkthrough call.'])]));
   kids.push(el('div','guar',[el('small','',['Money-back guarantee']),'If the audit doesn’t find you at least $500 a year in savings per house, you get your money back.']));
   var a=el('a','',['ColivingCait@gmail.com']);a.href='mailto:ColivingCait@gmail.com';
   kids.push(el('p','lf-q',['Questions first? Email ',a]));

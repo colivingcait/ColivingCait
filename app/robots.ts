@@ -9,6 +9,8 @@ export default function robots(): MetadataRoute.Robots {
       disallow: [
         "/api/",
         "/auth/",
+        // Private per-lead audit intake pages.
+        "/audit/intake/",
         // Course sales pages live at /courses/<slug> and stay indexable.
         // Everything one level deeper — lessons and the overview map — is
         // paywalled, so crawling it only ever reaches the gate.

@@ -12,6 +12,20 @@ const nextConfig = {
       permanent: true,
     }));
   },
+  // Private audit intake pages: never indexed or cached, and their URL (the
+  // lead's only key) is never sent to other sites as a referrer.
+  async headers() {
+    return [
+      {
+        source: "/audit/intake/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          { key: "Cache-Control", value: "private, no-store" },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**" },
