@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
-import { submitToCrm } from "@/lib/crm";
-import { sendMail } from "@/lib/mail";
+import { CRM_WEBHOOK_URL, submitToCrm } from "@/lib/crm";
+import { mailConfigured, sendMail } from "@/lib/mail";
+
+export const dynamic = "force-dynamic";
 import { SITE } from "@/lib/site";
 
 // "Ready to get audited?" form at the bottom of the static /audit page.
@@ -35,11 +37,12 @@ async function notifyCaitlyn(lead: {
   phone: string;
   houses: string;
   issue: string;
+  suspect: boolean;
 }) {
   return sendMail({
     to: SITE.email,
     replyTo: lead.email,
-    subject: `New audit lead: ${lead.firstName}, ${lead.houses} house${lead.houses === "1" ? "" : "s"}`,
+    subject: `${lead.suspect ? "[Possible spam] " : ""}New audit lead: ${lead.firstName}, ${lead.houses} house${lead.houses === "1" ? "" : "s"}`,
     text: `New portfolio audit lead from colivingcait.com/audit
 
 Name: ${lead.firstName}
@@ -53,6 +56,25 @@ They were told to pay by Zelle with the memo "${lead.firstName} Audit". Reply to
   });
 }
 
+// Status check: open /api/audit-lead in a browser. Sends nothing and creates
+// no lead; reports whether email is configured and whether the CRM answers.
+export async function GET() {
+  let crm: string;
+  try {
+    const res = await fetch(CRM_WEBHOOK_URL, { method: "GET", cache: "no-store" });
+    crm = `reachable (answered ${res.status} to a test request)`;
+  } catch (err) {
+    crm = `NOT reachable: ${err instanceof Error ? err.message : String(err)}`;
+  }
+  return NextResponse.json({
+    version: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? "unknown",
+    email: mailConfigured()
+      ? `configured (notifications go to ${SITE.email})`
+      : "NOT configured: add EMAIL_SERVER and EMAIL_FROM in Vercel, then redeploy",
+    crm,
+  });
+}
+
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
@@ -61,11 +83,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }
 
-  // Honeypot: a hidden field real visitors never fill in.
-  if (body.company) {
-    console.warn("[audit-lead] honeypot filled; submission dropped", { email: body.email });
-    return NextResponse.json({ ok: true });
-  }
+  // Honeypot: a hidden field real visitors never fill in. Browser autofill
+  // has filled it before, so flag the lead instead of dropping it.
+  const suspect = Boolean(body.company);
 
   const firstName = clean(body.firstName, 80);
   const email = clean(body.email, 200);
@@ -88,18 +108,25 @@ export async function POST(request: Request) {
     message: `Portfolio audit request: ${houses} PadSplit house${houses === "1" ? "" : "s"}${
       biggestIssue ? `. Biggest issue: ${biggestIssue}` : ""
     }.`,
-    tags: ["audit lead"],
+    tags: suspect ? ["audit lead", "possible spam"] : ["audit lead"],
     fields: { houses, biggest_issue: biggestIssue || undefined },
   });
 
-  if (!result.ok) console.warn("[audit-lead] CRM submission failed", result.error);
-
   let notified = false;
+  let emailOutcome = "not configured (EMAIL_SERVER / EMAIL_FROM missing)";
   try {
-    notified = await notifyCaitlyn({ firstName, email, phone, houses, issue: biggestIssue });
+    notified = await notifyCaitlyn({ firstName, email, phone, houses, issue: biggestIssue, suspect });
+    if (notified) emailOutcome = `sent to ${SITE.email}`;
   } catch (err) {
-    console.warn("[audit-lead] notification email failed", err);
+    emailOutcome = `failed: ${err instanceof Error ? err.message : String(err)}`;
   }
+
+  // One line per submission so Vercel's logs show exactly what happened.
+  console.log(
+    `[audit-lead] ${email} (${houses} houses)${suspect ? " [spam trap filled]" : ""} | CRM: ${
+      result.ok ? `accepted ${result.status} ${result.body}` : `FAILED ${result.error} ${result.body ?? ""}`
+    } | email: ${emailOutcome}`,
+  );
 
   // Either channel is enough to keep the lead; only fail if both did.
   if (!result.ok && !notified) {

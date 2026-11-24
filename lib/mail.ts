@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 
+export const mailConfigured = () => Boolean(process.env.EMAIL_SERVER && process.env.EMAIL_FROM);
+
 // Sends mail through the same SMTP server NextAuth uses for sign-in links
 // (EMAIL_SERVER / EMAIL_FROM). Returns false when mail isn't configured.
 export async function sendMail(message: {
