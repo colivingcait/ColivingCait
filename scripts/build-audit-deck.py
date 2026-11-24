@@ -57,7 +57,11 @@ s = s[:_cover_end] + """<div class="pcard" aria-label="A full house, per month: 
 <div class="pr pt"><span>Profit</span><b><span class="circ">+$126</span></b></div>
 <p class="pn"><b>Real client house.</b> This audit found $8,200 a year the operator was leaving on the table.</p>
 </div>""" + s[_cover_end:]
-s = s.replace("</style>", """/* cover P&L card (desktop only) */
+s = s.replace("</style>", """/* cover: "after the fixes" number is the hero. The deck's ".big span" rule
+   (meant for the arrow) was shrinking the count-up span around $9,700. */
+.big .g{font-size:clamp(44px,min(8vw,8.6vh),100px);color:var(--gold);text-shadow:0 0 30px rgba(226,169,79,.45)}
+.big .g .cnt{font-size:inherit;color:inherit}
+/* cover P&L card (desktop only) */
 .pcard{display:none}
 @media (min-width:900px){
  .s.cv{position:relative}

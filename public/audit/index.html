@@ -118,6 +118,10 @@ h2.a2{color:var(--amber);margin-top:6px}
 @keyframes pulse{50%{transform:scale(1.12)}}
 .anim .s.in .plan label i{animation:tick .35s ease forwards;animation-delay:inherit}
 @media (prefers-reduced-motion:reduce){.anim *{transition:none!important;animation:none!important;opacity:1!important;transform:none!important;clip-path:none!important}}
+/* cover: "after the fixes" number is the hero. The deck's ".big span" rule
+   (meant for the arrow) was shrinking the count-up span around $9,700. */
+.big .g{font-size:clamp(44px,min(8vw,8.6vh),100px);color:var(--gold);text-shadow:0 0 30px rgba(226,169,79,.45)}
+.big .g .cnt{font-size:inherit;color:inherit}
 /* cover P&L card (desktop only) */
 .pcard{display:none}
 @media (min-width:900px){
