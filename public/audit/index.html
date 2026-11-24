@@ -124,6 +124,26 @@ h2.a2{color:var(--amber);margin-top:6px}
 .lf-n{color:#9fbcb8;font-size:15px;margin-top:.6vh}
 .lf2 ol{padding-left:22px;margin:2.4vh 0;color:#cfe2df;font-size:clamp(15px,2.1vh,18px);line-height:1.5}.lf2 li{margin-bottom:1vh}.lf2 li b{color:#fff}
 .lf-q{color:#cfe2df;font-size:15px;margin-top:2vh}.lf-q a{color:var(--gold)}
+/* phones: slimmer nav bar so every slide gets more height */
+@media (max-width:899px){
+ .deck{bottom:52px!important}.bar{bottom:52px}
+ .nav{height:52px;padding-top:0;padding-bottom:0}.nav button{width:38px;height:38px;font-size:18px}
+ .nav .c{font-size:13px}.nav .h{font-size:11px}
+}
+/* short screens: tighten the form slide (inputs stay 16px so iPhones don't zoom) */
+@media (max-height:640px){
+ .s.lf{padding-top:2.4vh;padding-bottom:2vh}
+ .lf-h{font-size:clamp(24px,min(7vw,5.6vh),40px)}
+ .lf-sub{font-size:15px;margin-top:6px}
+ #lff{gap:9px;margin-top:14px}
+ #lff label{gap:4px;font-size:13px}
+ #lff input,#lff select{padding:9px 12px}
+ #lff button{padding:12px;font-size:17px;margin-top:2px}
+ .lf-fine{font-size:12px;margin-top:0}
+ .lf-p{font-size:19px;margin-top:6px}.lf-n{font-size:13px}
+ .lf2 ol{font-size:14px;margin:10px 0;line-height:1.4}.lf2 li{margin-bottom:4px}
+ .lf2 .guar{font-size:14px;padding:8px 12px}.lf-q{font-size:14px;margin-top:10px}
+}
 </style></head><body>
 <div class="deck">
 
@@ -231,6 +251,25 @@ document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target
 deck.addEventListener('scroll',()=>requestAnimationFrame(upd));upd();
 }
 </script><script>
+// Auto-fit: shrink slide content that doesn't fit the screen height.
+(function(){
+var MIN=0.8,slides=[].slice.call(document.querySelectorAll('.deck .s'));
+function fitOne(s){
+  if(s.id==='get-audited')return;
+  var kids=[].slice.call(s.children),z=1;
+  kids.forEach(function(k){k.style.zoom='';});
+  while(s.scrollHeight>s.clientHeight+1&&z>MIN){
+    z=Math.max(MIN,z-0.025);
+    kids.forEach(function(k){k.style.zoom=z;});
+  }
+}
+function fitAll(){slides.forEach(fitOne);}
+var t;function later(){clearTimeout(t);t=setTimeout(fitAll,120);}
+if(document.readyState==='complete')fitAll();else addEventListener('load',fitAll);
+addEventListener('resize',later);addEventListener('orientationchange',later);
+})();
+</script>
+<script>
 // Lead form on the last slide: sends the lead to /api/audit-lead, then
 // shows the price and next steps without a page reload.
 (function(){
