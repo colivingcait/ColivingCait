@@ -28,7 +28,8 @@ form_slide = """<section class="s dark lf" id="get-audited"><div class="lf-in" i
 <p class="lf-fine">$500 per property &middot; Money back if I don&rsquo;t find at least $500 in savings</p>
 <div class="lf-m" role="status" aria-live="polite"></div>
 </form></div>
-<div class="lf-in lf2" id="lf2" hidden tabindex="-1"></div></section>"""
+<div class="lf-in lf2" id="lf2" hidden tabindex="-1"></div>
+<div class="lf-art" aria-hidden="true"><div class="lf-glow"></div><div class="lf-fallers"><span style="left:55%;animation-delay:0.00s;animation-duration:3.6s;--r0:43deg;--r1:179deg;--dx:-17px">💵</span><span style="left:29%;animation-delay:0.55s;animation-duration:4.6s;--r0:35deg;--r1:182deg;--dx:-7px">💵</span><span style="left:37%;animation-delay:1.10s;animation-duration:4.5s;--r0:-15deg;--r1:-73deg;--dx:2px">💵</span><span style="left:25%;animation-delay:1.65s;animation-duration:4.1s;--r0:7deg;--r1:-28deg;--dx:-1px">💸</span><span style="left:28%;animation-delay:2.20s;animation-duration:4.1s;--r0:-18deg;--r1:60deg;--dx:40px">💵</span><span style="left:32%;animation-delay:2.75s;animation-duration:3.8s;--r0:31deg;--r1:-171deg;--dx:-25px">💵</span><span style="left:49%;animation-delay:3.30s;animation-duration:4.5s;--r0:13deg;--r1:-5deg;--dx:-4px">💵</span><span style="left:34%;animation-delay:3.85s;animation-duration:3.8s;--r0:17deg;--r1:51deg;--dx:18px">💸</span><span style="left:36%;animation-delay:4.40s;animation-duration:4.6s;--r0:-1deg;--r1:38deg;--dx:24px">💵</span></div><div class="lf-pile"><span style="left:5.4%;bottom:-2px;transform:rotate(-1deg)">💵</span><span style="left:17.7%;bottom:0px;transform:rotate(2deg)">💵</span><span style="left:28.0%;bottom:1px;transform:rotate(-7deg)">💵</span><span style="left:36.8%;bottom:-2px;transform:rotate(19deg)">💵</span><span style="left:45.8%;bottom:-4px;transform:rotate(13deg)">💵</span><span style="left:55.4%;bottom:3px;transform:rotate(-7deg)">💵</span><span style="left:63.0%;bottom:0px;transform:rotate(-21deg)">💵</span><span style="left:73.5%;bottom:0px;transform:rotate(-4deg)">💵</span><span style="left:83.5%;bottom:-2px;transform:rotate(9deg)">💵</span><span style="left:15.5%;bottom:38px;transform:rotate(-9deg)">💵</span><span style="left:25.3%;bottom:38px;transform:rotate(1deg)">💵</span><span style="left:34.1%;bottom:34px;transform:rotate(-4deg)">💵</span><span style="left:44.5%;bottom:34px;transform:rotate(-10deg)">💵</span><span style="left:53.0%;bottom:36px;transform:rotate(-21deg)">💵</span><span style="left:64.7%;bottom:33px;transform:rotate(12deg)">💵</span><span style="left:73.5%;bottom:37px;transform:rotate(-7deg)">💵</span><span style="left:22.3%;bottom:64px;transform:rotate(-7deg)">💵</span><span style="left:32.5%;bottom:63px;transform:rotate(-26deg)">💵</span><span style="left:40.5%;bottom:68px;transform:rotate(1deg)">💵</span><span style="left:50.5%;bottom:62px;transform:rotate(-12deg)">💵</span><span style="left:58.6%;bottom:63px;transform:rotate(-21deg)">💵</span><span style="left:68.7%;bottom:67px;transform:rotate(22deg)">💵</span><span style="left:31.2%;bottom:91px;transform:rotate(9deg)">💵</span><span style="left:42.3%;bottom:96px;transform:rotate(-3deg)">💵</span><span style="left:50.1%;bottom:89px;transform:rotate(-5deg)">💵</span><span style="left:61.0%;bottom:89px;transform:rotate(12deg)">💵</span><span style="left:40.2%;bottom:115px;transform:rotate(22deg)">💵</span><span style="left:49.7%;bottom:120px;transform:rotate(-16deg)">💵</span><span class="lf-bag" style="left:46%;bottom:140px">💰</span></div></div></section>"""
 s = s[:end] + "\n" + form_slide + s[end:]
 
 # 2. Styles for the form slide, matching the deck (deep teal, gold, white).
@@ -53,6 +54,29 @@ css = """/* lead form (last slide) */
 .lf-n{color:#9fbcb8;font-size:15px;margin-top:.6vh}
 .lf2 ol{padding-left:22px;margin:2.4vh 0;color:#cfe2df;font-size:clamp(15px,2.1vh,18px);line-height:1.5}.lf2 li{margin-bottom:1vh}.lf2 li b{color:#fff}
 .lf-q{color:#cfe2df;font-size:15px;margin-top:2vh}.lf-q a{color:var(--gold)}
+.lf-go{display:block;margin-top:2.6vh;text-align:center;background:var(--gold);color:var(--deep);font-weight:bold;font-size:19px;padding:16px;border-radius:10px;text-decoration:none}
+.lf-go:hover{background:#ecb965}
+/* desktop: animated money pile beside the form */
+.lf-art{display:none}
+@media (min-width:900px){
+ .s.lf{flex-direction:row;align-items:center;justify-content:center;gap:5vw}
+ .s.lf .lf-in{flex:0 1 560px}
+ .lf-art{display:block;position:relative;flex:0 1 480px;height:min(68vh,560px);align-self:center}
+}
+.lf-glow{position:absolute;left:50%;bottom:4%;width:78%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(226,169,79,.35) 0%,rgba(226,169,79,.12) 45%,rgba(226,169,79,0) 70%);animation:lf-pulse 3.2s ease-in-out infinite}
+.lf-pile{position:absolute;left:0;right:0;bottom:6%;height:190px}
+.lf-pile span{position:absolute;font-size:46px;line-height:1;filter:drop-shadow(0 4px 6px rgba(0,0,0,.35))}
+.lf-pile .lf-bag{font-size:64px;animation:lf-bob 2.6s ease-in-out infinite}
+.lf-fallers{position:absolute;inset:0;overflow:hidden}
+.lf-fallers span{position:absolute;top:-12%;font-size:40px;line-height:1;opacity:0;animation-name:lf-drop;animation-timing-function:cubic-bezier(.45,.05,.55,.95);animation-iteration-count:infinite;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3))}
+@keyframes lf-drop{0%{opacity:0;transform:translate(0,0) rotate(var(--r0))}10%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translate(var(--dx),min(52vh,430px)) rotate(var(--r1))}}
+@keyframes lf-pulse{0%,100%{opacity:.75;transform:translateX(-50%) scale(.96)}50%{opacity:1;transform:translateX(-50%) scale(1.04)}}
+@keyframes lf-bob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.lf-fallers{display:none}.lf-glow,.lf-pile .lf-bag{animation:none}}
+.lf-rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
+.lf-rain span{position:absolute;top:-10vh;animation-name:lf-fall;animation-timing-function:linear;animation-fill-mode:both;will-change:transform}
+@keyframes lf-fall{from{transform:translate(0,0) rotate(var(--r0))}to{transform:translate(var(--dx),125vh) rotate(var(--r1))}}
+.lf-count{text-align:center;color:#cfe2df;font-size:15px;margin-top:1.2vh;min-height:1.3em}
 /* phones: slimmer nav bar so every slide gets more height */
 @media (max-width:899px){
  .deck{bottom:52px!important}.bar{bottom:52px}
@@ -117,22 +141,52 @@ var m=f.querySelector('.lf-m'),b=f.querySelector('button'),s1=document.getElemen
 var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function el(t,c,kids){var e=document.createElement(t);if(c)e.className=c;(kids||[]).forEach(function(k){e.appendChild(typeof k==='string'?document.createTextNode(k):k);});return e;}
 function money(n){return '$'+n.toLocaleString('en-US');}
-function step2(name,houses){
+function rainMoney(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var box=document.createElement('div');box.className='lf-rain';box.setAttribute('aria-hidden','true');
+  var bills=['💵','💵','💵','💸','💰'];
+  for(var i=0;i<40;i++){
+    var b=document.createElement('span');b.textContent=bills[i%bills.length];
+    var r0=Math.round(Math.random()*80-40),r1=r0+Math.round(Math.random()*360-180);
+    b.style.cssText='left:'+(Math.random()*100)+'%;font-size:'+(22+Math.random()*22)+'px;'+
+      'animation-duration:'+(2.4+Math.random()*1.8)+'s;animation-delay:'+(Math.random()*2.2)+'s;'+
+      '--dx:'+Math.round(Math.random()*120-60)+'px;--r0:'+r0+'deg;--r1:'+r1+'deg';
+    box.appendChild(b);
+  }
+  document.body.appendChild(box);
+  setTimeout(function(){box.remove();},6000);
+}
+function step2(name,houses,intakeUrl){
   var first=name.split(/\s+/)[0],n=houses==='6-10'?6:houses==='11+'?0:+houses,total=n*500,kids=[];
   kids.push(el('h2','lf-h',['You’re in, '+first+'!']));
   if(n){kids.push(el('p','lf-p',['Your audit: '+n+' house'+(n===1?'':'s')+' × $500 = '+money(total)]));
     if(houses==='6-10')kids.push(el('p','lf-n',['Final price depends on house count.']));}
   else kids.push(el('p','lf-p',['Larger portfolios get a custom quote. I’ll email you within a day.']));
-  var memo='“'+name+' Audit”';
-  var pay=n?[el('b','',['Pay by Zelle: ']),money(total)+' to '+ZELLE+', memo: '+memo+'.']
-           :[el('b','',['Pay by Zelle ']),'once you have your quote, to '+ZELLE+', memo: '+memo+'.'];
-  kids.push(el('ol','',[
-    el('li','',[el('b','',['Check your inbox. ']),'I just emailed you a link to your 5-minute intake: upload your P&Ls and share your PadSplit data.']),
-    el('li','',pay),
-    el('li','',[el('b','',['Report and call. ']),'Your audit starts once payment lands. Report in about 5 business days, then a 45-minute walkthrough call.'])]));
-  kids.push(el('div','guar',[el('small','',['Money-back guarantee']),'If the audit doesn’t find you at least $500 a year in savings per house, you get your money back.']));
-  var a=el('a','',['ColivingCait@gmail.com']);a.href='mailto:ColivingCait@gmail.com';
-  kids.push(el('p','lf-q',['Questions first? Email ',a]));
+  if(intakeUrl){
+    // Hand off straight to their intake page: button now, or automatically.
+    kids.push(el('p','lf-sub',['Next up: your 5-minute intake. Upload your P&Ls, share your PadSplit data and answer a few quick questions.']));
+    var go=el('a','lf-go',['Start my intake →']);go.href=intakeUrl;
+    var count=el('p','lf-count',[]);
+    kids.push(go,count);
+    kids.push(el('p','lf-n',['I also emailed you this link, so you can come back to it anytime.']));
+    rainMoney();
+    var left=5,tick=function(){
+      if(left<=0){count.textContent='Opening your intake…';location.href=intakeUrl;return;}
+      count.textContent='Taking you to your intake in '+left+'…';left--;setTimeout(tick,1000);
+    };
+    tick();
+  }else{
+    var memo='“'+name+' Audit”';
+    var pay=n?[el('b','',['Pay by Zelle: ']),money(total)+' to '+ZELLE+', memo: '+memo+'.']
+             :[el('b','',['Pay by Zelle ']),'once you have your quote, to '+ZELLE+', memo: '+memo+'.'];
+    kids.push(el('ol','',[
+      el('li','',[el('b','',['Check your inbox. ']),'I just emailed you the next steps for your audit.']),
+      el('li','',pay),
+      el('li','',[el('b','',['Report and call. ']),'Your audit starts once payment lands. Report in about 5 business days, then a 45-minute walkthrough call.'])]));
+    kids.push(el('div','guar',[el('small','',['Money-back guarantee']),'If the audit doesn’t find you at least $500 a year in savings per house, you get your money back.']));
+    var a=el('a','',['ColivingCait@gmail.com']);a.href='mailto:ColivingCait@gmail.com';
+    kids.push(el('p','lf-q',['Questions first? Email ',a]));
+  }
   kids.forEach(function(k){s2.appendChild(k);});
   s1.hidden=true;s1.style.display='none';s2.hidden=false;slide.scrollTop=0;s2.focus({preventScroll:true});
 }
@@ -143,8 +197,8 @@ f.addEventListener('submit',function(e){e.preventDefault();
   if(bad.length){m.textContent='Please fill in your name, email and how many houses you have.';bad[0].focus();return;}
   m.textContent='';b.disabled=true;b.textContent='One moment…';
   fetch('/api/audit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
-  .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);});})
-  .then(function(){step2(d.name,d.houses);})
+  .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);return j;});})
+  .then(function(j){step2(d.name,d.houses,j.intakeUrl);})
   .catch(function(err){b.disabled=false;b.textContent='Find my leaks →';m.textContent=(err&&err.message)||'Something went wrong. Please try again, or email ColivingCait@gmail.com.';});
 });})();
 </script></body>"""

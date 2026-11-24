@@ -146,5 +146,10 @@ export async function POST(request: Request) {
       { status: 502 },
     );
   }
-  return NextResponse.json({ ok: true, emailed: confirmed });
+  // The page sends them straight on to their intake (not for spam-trap hits).
+  return NextResponse.json({
+    ok: true,
+    emailed: confirmed,
+    intakeUrl: stored && !suspect ? `/audit/intake/${lead.id}` : null,
+  });
 }
