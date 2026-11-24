@@ -28,6 +28,7 @@ export const CK_TAGS = {
   CONTACT_FORM_SUBMITTED: "contact-form-submitted",
   MEETUP_INTERESTED: "meetup-interested",
   SHE_LEADS_INTERESTED: "she-leads-interested",
+  PORTFOLIO_AUDIT_SAMPLE_REQUESTED: "portfolio-audit-sample-requested",
   MEDIA_INQUIRY: "media-inquiry",
 
   // Calculator
