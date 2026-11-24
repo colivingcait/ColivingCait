@@ -87,21 +87,19 @@ export async function POST(request: Request) {
   // has filled it before, so flag the lead instead of dropping it.
   const suspect = Boolean(body.company);
 
-  const firstName = clean(body.firstName, 80);
+  // The slideshow form sends one "name" field; split it for the CRM.
+  // Older callers send firstName, so accept that too.
+  const fullName = clean(body.name, 120) || clean(body.firstName, 80);
+  const [firstName = "", ...rest] = fullName.split(/\s+/);
+  const lastName = rest.join(" ");
   const email = clean(body.email, 200);
   const phone = clean(body.phone, 40);
   const houses = clean(body.houses, 10);
   const issue = clean(body.issue, 60);
 
-  if (
-    !firstName ||
-    !EMAIL_RE.test(email) ||
-    phone.replace(/\D/g, "").length < 10 ||
-    !HOUSES.includes(houses) ||
-    !ISSUES.includes(issue)
-  ) {
+  if (!firstName || !EMAIL_RE.test(email) || !HOUSES.includes(houses)) {
     return NextResponse.json(
-      { error: "Please fill in your first name, email, phone number, number of houses and biggest issue." },
+      { error: "Please fill in your name, email and how many houses you have." },
       { status: 400 },
     );
   }
@@ -110,6 +108,7 @@ export async function POST(request: Request) {
   const result = await submitToCrm("contact", {
     email,
     firstName,
+    lastName: lastName || undefined,
     phone: phone || undefined,
     message: `Portfolio audit request: ${houses} PadSplit house${houses === "1" ? "" : "s"}${
       biggestIssue ? `. Biggest issue: ${biggestIssue}` : ""
@@ -121,7 +120,7 @@ export async function POST(request: Request) {
   let notified = false;
   let emailOutcome = "not configured (EMAIL_SERVER / EMAIL_FROM missing)";
   try {
-    notified = await notifyCaitlyn({ firstName, email, phone, houses, issue: biggestIssue, suspect });
+    notified = await notifyCaitlyn({ firstName: fullName, email, phone, houses, issue: biggestIssue, suspect });
     if (notified) emailOutcome = `sent to ${SITE.email}`;
   } catch (err) {
     emailOutcome = `failed: ${err instanceof Error ? err.message : String(err)}`;
