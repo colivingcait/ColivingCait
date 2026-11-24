@@ -50,7 +50,10 @@ export async function POST(request: Request) {
   }
 
   // Honeypot: a hidden field real visitors never fill in.
-  if (body.company) return NextResponse.json({ ok: true, emailed: true });
+  if (body.company) {
+    console.warn("[audit-link] honeypot filled; submission dropped", { email: body.email });
+    return NextResponse.json({ ok: true, emailed: true });
+  }
 
   const firstName = typeof body.firstName === "string" ? body.firstName.trim().slice(0, 80) : "";
   const email = typeof body.email === "string" ? body.email.trim().slice(0, 200) : "";
