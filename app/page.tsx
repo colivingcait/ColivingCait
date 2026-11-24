@@ -8,6 +8,7 @@ import {
   ATLANTA_WOMEN_INVESTORS_URL,
   EVENTBRITE_ORGANIZER_URL,
   HOUSE_HACKING_URL,
+  SHOW_LISTINGS,
 } from "@/lib/site";
 import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
@@ -51,9 +52,11 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5 opacity-0 translate-y-5 [animation:heroReveal_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
               <a href="/book" className="btn-primary">Book a Call</a>
-              <a href="/listings" className="btn-text">
-                View listings <span>→</span>
-              </a>
+              {SHOW_LISTINGS && (
+                <a href="/listings" className="btn-text">
+                  View listings <span>→</span>
+                </a>
+              )}
             </div>
           </div>
 

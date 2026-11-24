@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { EVENTBRITE_ORGANIZER_URL, HOUSE_HACKING_URL } from "@/lib/site";
+import {
+  EVENTBRITE_ORGANIZER_URL,
+  HOUSE_HACKING_URL,
+  SHOW_LISTINGS,
+} from "@/lib/site";
 
 // Nico's approved site footer. /listings and /book are CRM rewrites, so they
 // stay plain anchors — next/link would client-navigate inside this app.
@@ -12,7 +16,9 @@ const navigateA = [
 
 const navigateB = [
   { href: "/community", label: "Community" },
-  { href: "/listings", label: "Listings", plain: true },
+  ...(SHOW_LISTINGS
+    ? [{ href: "/listings", label: "Listings", plain: true }]
+    : []),
   { href: "/calculator", label: "Calculators" },
   { href: "/grow-with-me", label: "Grow With Me at KW" },
   { href: "/learn", label: "Learn" },

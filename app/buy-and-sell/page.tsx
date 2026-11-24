@@ -4,7 +4,7 @@ import RevealObserver from "@/components/RevealObserver";
 import BuySellForms from "@/components/BuySellForms";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { DEFAULT_OG_IMAGE } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SHOW_LISTINGS } from "@/lib/site";
 import { ZillowRatingLink, ZillowReviewGrid } from "@/components/ZillowReviews";
 
 export const metadata = {
@@ -245,11 +245,16 @@ export default function BuyAndSellPage() {
             <em className="italic text-gold font-light">Atlanta metro.</em>
           </h2>
           <p className="text-[15px] text-warmgray mb-12 max-w-[640px] mx-auto">
-            I work with buyers, sellers, and investors in Decatur, East Atlanta, and across DeKalb County — and the rest of the Atlanta metro.{" "}
-            <a href="/listings" className="text-gold-dark border-b border-brand">
-              See current listings
-            </a>
-            .
+            I work with buyers, sellers, and investors in Decatur, East Atlanta, and across DeKalb County — and the rest of the Atlanta metro.
+            {SHOW_LISTINGS && (
+              <>
+                {" "}
+                <a href="/listings" className="text-gold-dark border-b border-brand">
+                  See current listings
+                </a>
+                .
+              </>
+            )}
           </p>
 
           <div className="grid gap-6 max-w-[1100px] mx-auto text-left grid-cols-1 md:grid-cols-3">

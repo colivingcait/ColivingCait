@@ -60,3 +60,8 @@ export const DEFAULT_OG_IMAGE = {
   height: 1600,
   alt: SITE.personName,
 };
+
+/** Listings links are hidden site-wide for now. Flip to true to bring back
+ *  the nav, footer, homepage and Buy & Sell links. /listings itself still
+ *  resolves, so direct links and CRM cards keep working. */
+export const SHOW_LISTINGS = false;
