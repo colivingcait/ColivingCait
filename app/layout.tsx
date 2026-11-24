@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -15,20 +15,28 @@ import JsonLd, {
 
 // Brand fonts loaded once at the root and exposed via CSS variables so they
 // can be referenced by Tailwind's font-heading / font-sans utilities.
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
+// Self-hosted from app/fonts (the Latin variable-font files Google Fonts
+// serves) so builds never depend on fetching from Google: a bad Google
+// response crashes next/font/google in Next 14.
+const cormorant = localFont({
+  src: [
+    { path: "./fonts/cormorant-garamond-latin.woff2", weight: "300 600", style: "normal" },
+    { path: "./fonts/cormorant-garamond-italic-latin.woff2", weight: "300 600", style: "italic" },
+  ],
   variable: "--font-cormorant",
   display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+  adjustFontFallback: "Times New Roman",
 });
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  style: ["normal", "italic"],
+const dmSans = localFont({
+  src: [
+    { path: "./fonts/dm-sans-latin.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/dm-sans-italic-latin.woff2", weight: "300 700", style: "italic" },
+  ],
   variable: "--font-dm-sans",
   display: "swap",
+  fallback: ["Arial", "Helvetica", "sans-serif"],
 });
 
 export const metadata: Metadata = {
