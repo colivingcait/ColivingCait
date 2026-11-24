@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
 <!-- Realistic-looking (stylized, not a copy of real currency) $100 bill and
-     banded stack, used by the /audit deck and its link preview image.
+     banded stack, used by the /audit deck.
      <use href="#mb-bill"> is 240x102; <use href="#mb-stack"> is 240x132. -->
 <defs>
   <linearGradient id="mb-paper" x1="0" y1="0" x2="1" y2="1">

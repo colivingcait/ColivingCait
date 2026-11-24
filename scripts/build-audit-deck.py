@@ -13,11 +13,11 @@ src, out = sys.argv[1], sys.argv[2]
 s = open(src).read()
 
 # 0. Page title and link preview (iMessage, Slack, Facebook, LinkedIn...).
-#    The preview image is public/audit/og.jpg, made by scripts/render-audit-og.js.
+#    The preview image is public/audit/og.jpg (1200x630, designed by Caitlyn).
 import os, re
 TITLE = "Coliving Portfolio Performance Audit"
-DESC = "Full rooms, thin margins? Find out what your PadSplit houses really earn, and where the money's leaking. $500 per property, money back guarantee."
-OG_IMAGE = "https://www.colivingcait.com/audit/og.jpg"
+DESC = "Your rooms are full. But where's the profit? A performance analysis of your PadSplit houses: find out where all the money's going and learn how to fix it."
+OG_IMAGE = "https://www.colivingcait.com/audit/og.jpg?v=2"
 _meta = f"""<title>{TITLE}</title>
 <meta name="description" content="{DESC}">
 <link rel="canonical" href="https://www.colivingcait.com/audit">
@@ -29,7 +29,7 @@ _meta = f"""<title>{TITLE}</title>
 <meta property="og:image" content="{OG_IMAGE}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Full rooms. Thin margins. $8,200 a year left on the table.">
+<meta property="og:image:alt" content="Your rooms are full. But where's the profit? A real client house: $6,171 rent collected a month, $126 profit.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{TITLE}">
 <meta name="twitter:description" content="{DESC}">
