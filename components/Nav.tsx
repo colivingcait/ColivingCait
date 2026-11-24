@@ -31,6 +31,8 @@ const links: { href: string; label: string; plain?: boolean }[] = [
     : []),
   ...(SHOW_CALCULATORS ? [{ href: "/calculator", label: "Calculators" }] : []),
   { href: "/learn", label: "Learn" },
+  // /audit is a static page served by a rewrite, so it needs a full page load.
+  { href: "/audit", label: "Portfolio Audit", plain: true },
 ];
 
 export default function Nav() {
