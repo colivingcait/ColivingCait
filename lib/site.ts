@@ -65,3 +65,8 @@ export const DEFAULT_OG_IMAGE = {
  *  the nav, footer, homepage and Buy & Sell links. /listings itself still
  *  resolves, so direct links and CRM cards keep working. */
 export const SHOW_LISTINGS = false;
+
+/** Calculator links are hidden site-wide for now and the pages are left out
+ *  of the sitemap. Flip to true to bring them back. /calculator URLs still
+ *  resolve, so links inside the course lessons keep working. */
+export const SHOW_CALCULATORS = false;

@@ -2592,7 +2592,7 @@ export const houseHacking101: Course = {
         {
           type: "card",
           eyebrow: "Coaching · The Builder",
-          title: "$4,500 · 3 months",
+          title: "$3,000 · 3 months",
           paragraphs: [
             "Hands-on, 1:1 training for building your portfolio from the ground up.",
           ],
@@ -2601,9 +2601,10 @@ export const houseHacking101: Course = {
           type: "card",
           tone: "blush",
           eyebrow: "Coaching · The Operator",
-          title: "$1,000/month",
+          title: "$450/month",
           paragraphs: [
             "Ongoing consulting for active operators scaling their portfolio.",
+            "Includes a free audit of your portfolio.",
           ],
         },
         { type: "heading", content: "Want to invest passively" },

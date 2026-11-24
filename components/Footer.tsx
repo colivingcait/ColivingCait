@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   EVENTBRITE_ORGANIZER_URL,
   HOUSE_HACKING_URL,
+  SHOW_CALCULATORS,
   SHOW_LISTINGS,
 } from "@/lib/site";
 
@@ -19,7 +20,7 @@ const navigateB = [
   ...(SHOW_LISTINGS
     ? [{ href: "/listings", label: "Listings", plain: true }]
     : []),
-  { href: "/calculator", label: "Calculators" },
+  ...(SHOW_CALCULATORS ? [{ href: "/calculator", label: "Calculators" }] : []),
   { href: "/grow-with-me", label: "Grow With Me at KW" },
   { href: "/learn", label: "Learn" },
 ];

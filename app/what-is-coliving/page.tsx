@@ -5,7 +5,7 @@ import HickorySlider from "@/components/HickorySlider";
 import { portfolio } from "@/lib/properties";
 import NewsletterCaptureForm from "@/components/NewsletterCaptureForm";
 import { CK_TAGS } from "@/lib/convertkit";
-import { DEFAULT_OG_IMAGE } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SHOW_CALCULATORS } from "@/lib/site";
 
 export const metadata = {
   title: "What Is Coliving? How the Model Works",
@@ -275,6 +275,7 @@ export default function WhatIsColivingPage() {
       </section>
 
       {/* ===== 6. CALCULATOR CTA ===== */}
+      {SHOW_CALCULATORS && (
       <section
         className="px-8 lg:px-[60px] py-16 lg:py-[72px] text-center"
         style={{ background: "linear-gradient(135deg, #C4955A 0%, #D4A86A 100%)" }}
@@ -294,6 +295,7 @@ export default function WhatIsColivingPage() {
           </Link>
         </div>
       </section>
+      )}
 
       {/* ===== 8. THREE PATHS ===== */}
       <section className="px-8 lg:px-[60px] py-20 lg:py-[100px] bg-cream">

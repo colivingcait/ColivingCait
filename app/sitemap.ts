@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { courses } from "@/lib/courses";
-import { absoluteUrl } from "@/lib/site";
+import { SHOW_CALCULATORS, absoluteUrl } from "@/lib/site";
 
 // Marketing routes, ordered roughly by priority. Paywalled lesson routes are
 // deliberately excluded — they sit behind CourseGate, so indexing them would
@@ -28,7 +28,9 @@ const staticRoutes: Array<{
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  const pages: MetadataRoute.Sitemap = staticRoutes.map((r) => ({
+  const pages: MetadataRoute.Sitemap = staticRoutes
+    .filter((r) => SHOW_CALCULATORS || !r.path.startsWith("/calculator"))
+    .map((r) => ({
     url: absoluteUrl(r.path),
     lastModified,
     changeFrequency: r.changeFrequency,

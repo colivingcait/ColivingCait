@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { cn } from "@/lib/cn";
-import { SHOW_LISTINGS } from "@/lib/site";
+import { SHOW_CALCULATORS, SHOW_LISTINGS } from "@/lib/site";
 
 // Primary site navigation — frosted glass, transparent → solid on scroll.
 // Mirrors Section 7 of the playbook v2 + the HTML design files exactly.
@@ -29,7 +29,7 @@ const links: { href: string; label: string; plain?: boolean }[] = [
   ...(SHOW_LISTINGS
     ? [{ href: "/listings", label: "Listings", plain: true }]
     : []),
-  { href: "/calculator", label: "Calculators" },
+  ...(SHOW_CALCULATORS ? [{ href: "/calculator", label: "Calculators" }] : []),
   { href: "/learn", label: "Learn" },
 ];
 

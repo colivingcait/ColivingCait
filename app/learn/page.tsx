@@ -343,7 +343,7 @@ export default function LearnPage() {
 
             <div className="reveal reveal-d3 bg-white border border-soft p-10 lg:p-11">
               <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-1">
-                $4,500
+                $3,000
               </div>
               <span className="text-sm text-warmgray-light">
                 3 months · 1:1 · Limited spots
@@ -395,15 +395,21 @@ export default function LearnPage() {
           <div className="reveal mt-14 flex flex-col lg:flex-row gap-12 items-center p-12 bg-white border border-soft">
             <div className="flex-1 text-center lg:text-left">
               <div className="font-heading font-medium text-[48px] leading-none text-charcoal mb-1">
-                $1,000
+                $450
               </div>
               <span className="text-sm text-warmgray-light">
                 per month · month to month · cancel anytime
               </span>
+              <p className="text-sm text-warmgray mt-3">
+                Includes a free audit of your portfolio.{" "}
+                <a href="/audit" className="text-gold-dark border-b border-brand">
+                  See a sample
+                </a>
+              </p>
             </div>
             <div className="flex flex-col items-center gap-4 shrink-0">
               <a href="/book" className="btn-gold">
-                Start Now — $1,000/mo
+                Start Now — $450/mo
               </a>
             </div>
           </div>

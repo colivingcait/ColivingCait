@@ -2726,7 +2726,7 @@ export const coliving101: Course = {
         {
           type: "card",
           eyebrow: "Coaching · The Builder",
-          title: "$4,500 · 3 months",
+          title: "$3,000 · 3 months",
           paragraphs: [
             "Hands-on, 1:1 training for people building their coliving portfolio from the ground up. Three months of personalized guidance, deal reviews, and direct access to someone actively operating right now.",
           ],
@@ -2735,9 +2735,10 @@ export const coliving101: Course = {
           type: "card",
           tone: "blush",
           eyebrow: "Coaching · The Operator",
-          title: "$1,000/month",
+          title: "$450/month",
           paragraphs: [
             "For people already operating who need ongoing consulting, deal reviews, and tactical support as they scale.",
+            "Includes a free audit of your portfolio.",
           ],
         },
         { type: "heading", content: "Want to invest passively" },
