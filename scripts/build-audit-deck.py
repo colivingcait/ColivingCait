@@ -44,6 +44,38 @@ _money = re.sub(r"<!--.*?-->", "", _money, flags=re.S).strip()
 s, _n = re.subn(r"(<body[^>]*>)", lambda m: m.group(1) + _money, s, count=1)
 assert _n == 1, "deck has no <body>"
 
+# 0c. Desktop: the P&L card from the link preview fills the right side of the
+#     cover slide. Uses the deck's own .circ circle animation.
+_cover = s.index('<section class="s dark cv">')
+_cover_end = s.index("</section>", _cover)
+s = s[:_cover_end] + """<div class="pcard" aria-label="A full house, per month: rent collected $6,171, profit $126">
+<div class="pk">A full house &middot; per month</div>
+<div class="pr"><span>Rent collected</span><b><span class="circ ok">+$6,171</span></b></div>
+<div class="pr"><span>Fees &amp; management</span><b>$1,423</b></div>
+<div class="pr"><span>Operating expenses</span><b>$2,300</b></div>
+<div class="pr"><span>Taxes, insurance, mortgage</span><b>$2,322</b></div>
+<div class="pr pt"><span>Profit</span><b><span class="circ">+$126</span></b></div>
+<p class="pn"><b>Real client house.</b> This audit found $8,200 a year the operator was leaving on the table.</p>
+</div>""" + s[_cover_end:]
+s = s.replace("</style>", """/* cover P&L card (desktop only) */
+.pcard{display:none}
+@media (min-width:900px){
+ .s.cv{position:relative}
+ .s.cv h1{max-width:min(44vw,760px)}
+ .pcard{display:block;position:absolute;right:8vw;top:50%;transform:translateY(-50%);width:min(36vw,500px);
+  background:#fff;color:var(--ink);border-radius:14px;padding:clamp(18px,3vh,30px) clamp(18px,2vw,30px);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+ .pcard .pk{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold;color:var(--teal);margin-bottom:1vh}
+ .pcard .pr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:clamp(8px,1.4vh,13px) 2px;border-bottom:1px solid var(--line);font-size:clamp(15px,1.4vw,20px)}
+ .pcard .pr b{font-weight:normal;white-space:nowrap}
+ .pcard .pr.pt{border-bottom:0;font-weight:bold;font-size:clamp(17px,1.6vw,23px);padding-top:clamp(12px,2vh,18px)}
+ .pcard .pr.pt b{font-weight:bold}
+ .pcard .circ{color:#d62828}.pcard .circ.ok{color:var(--teal);border-color:var(--teal)}
+ .pcard .pn{font-size:clamp(12px,1vw,14.5px);color:var(--muted);margin-top:1.4vh;line-height:1.4}.pcard .pn b{color:var(--amber)}
+ .anim .cv .pcard{opacity:0;transform:translateY(calc(-50% + 18px));transition:opacity .7s ease .5s,transform .7s ease .5s}
+ .anim .cv.in .pcard{opacity:1;transform:translateY(-50%)}
+}
+</style>""", 1)
+
 # 1. Add the lead form as a new final slide, after "How it works".
 last = s.rindex('<section class="s">')
 end = s.index("</section>", last) + len("</section>")
