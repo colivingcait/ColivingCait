@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { submitToCrm } from "@/lib/crm";
 import { sendIntakeComplete } from "@/lib/audit/emails";
+import { TERMS_VERSION } from "@/lib/audit/terms";
 import {
   FILE_KINDS,
   downloadUrl,
@@ -37,8 +38,8 @@ export async function POST(request: Request) {
     name: clean(body.name, 120).replace(/\s+/g, " "),
     phone: clean(body.phone, 40),
     email: clean(body.email, 200),
-    referredBy: clean(body.referredBy, 200),
     manager: body.manager === "pm" ? "pm" : "self",
+    pmName: clean(body.pmName, 200),
     pmFee: clean(body.pmFee, 200),
     pmTenure: clean(body.pmTenure, 200),
     bugging: clean(body.bugging, 4000),
@@ -51,14 +52,15 @@ export async function POST(request: Request) {
   if (answers.phone.replace(/\D/g, "").length < 10) return bad("Please add a phone number I can reach you on.");
   if (!EMAIL_RE.test(answers.email)) return bad("Please add a valid email.");
   if (body.manager !== "self" && body.manager !== "pm") return bad("Please tell me who manages your houses.");
-  if (answers.manager === "pm" && (!answers.pmFee || !answers.pmTenure)) {
-    return bad("Please add your property manager's fee and how long they've managed your houses.");
+  if (answers.manager === "pm" && (!answers.pmName || !answers.pmFee || !answers.pmTenure)) {
+    return bad("Please add your property manager's name, their fee and how long they've managed your houses.");
   }
   if (!answers.bugging) return bad("Please tell me what's bugging you most about your portfolio.");
   if (body.padsplit !== "access" && body.padsplit !== "zip") return bad("Please choose how you'll share your PadSplit data.");
   if (answers.padsplit === "access" && body.padsplitDone !== true) {
     return bad("Please tick \"Done\" once you've added me to your PadSplit account.");
   }
+  if (body.termsAgreed !== true) return bad("Please agree to the Audit Terms.");
 
   // Only accept files that really are in this lead's folder.
   const claimed = Array.isArray(body.files) ? body.files.slice(0, 100) : [];
@@ -87,6 +89,8 @@ export async function POST(request: Request) {
   const completed: typeof lead = {
     ...lead,
     intakeCompletedAt: new Date().toISOString(),
+    termsAgreedAt: new Date().toISOString(),
+    termsVersion: TERMS_VERSION,
     intake: answers,
     files,
   };
@@ -117,7 +121,7 @@ export async function POST(request: Request) {
     fields: {
       houses: lead.houses,
       padsplit: answers.padsplit === "access" ? "account access" : "earnings export",
-      referred_by: answers.referredBy || undefined,
+      referred_by: lead.referredBy || undefined,
     },
   });
   log.push(crm.ok ? `CRM accepted ${crm.status} ${crm.body}` : `CRM FAILED ${crm.error} ${crm.body ?? ""}`);

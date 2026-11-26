@@ -333,3 +333,142 @@
   font-size: 15px;
   line-height: 1.5;
 }
+/* "I agree to the Audit Terms" line and the terms popup */
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 2px 14px;
+  font-size: 15px;
+  color: var(--deep);
+  cursor: pointer;
+}
+.terms input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--teal);
+  flex: none;
+}
+.termsLink {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--teal);
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.modalBack {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 24, 23, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.modal {
+  background: #fff;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.page .modalHead h2,
+.modalHead h2 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--deep);
+  margin: 0;
+  letter-spacing: normal;
+}
+.modalX {
+  background: none;
+  border: 0;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0 4px;
+}
+.modalBody {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 14px 22px 6px;
+}
+.modalBody ol {
+  list-style: decimal;
+  margin: 0;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+.modalBody li {
+  margin-bottom: 12px;
+}
+.modalBody b {
+  color: var(--deep);
+  font-weight: bold;
+}
+.modalBody li::marker {
+  font-weight: bold;
+  color: var(--teal);
+}
+.modalFoot {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--line);
+}
+.modalClose,
+.modalAgree {
+  font: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 9px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+.modalClose {
+  background: #fff;
+  color: var(--deep);
+  border: 1.5px solid #b9c6c4;
+}
+.modalAgree {
+  background: var(--gold);
+  color: var(--deep);
+  border: 0;
+}
+@media (max-width: 640px) {
+  .modalBack {
+    padding: 0;
+  }
+  .modal {
+    max-width: none;
+    max-height: none;
+    height: 100%;
+    border-radius: 0;
+  }
+  .modalFoot {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  .modalFoot button {
+    flex: 1;
+  }
+}

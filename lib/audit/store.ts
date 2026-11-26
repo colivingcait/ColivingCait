@@ -34,8 +34,8 @@ export type IntakeAnswers = {
   name: string;
   phone: string;
   email: string;
-  referredBy: string;
   manager: "self" | "pm";
+  pmName: string;
   pmFee: string;
   pmTenure: string;
   bugging: string;
@@ -51,9 +51,14 @@ export type Lead = {
   name: string;
   email: string;
   houses: HouseCount;
+  /** "Who referred you?" from the /audit form (owed a referral fee). */
+  referredBy?: string;
   createdAt: string;
   reminderSentAt?: string;
   intakeCompletedAt?: string;
+  /** When they ticked "I agree to the Audit Terms", and which version. */
+  termsAgreedAt?: string;
+  termsVersion?: string;
   intake?: IntakeAnswers;
   files?: StoredFile[];
 };

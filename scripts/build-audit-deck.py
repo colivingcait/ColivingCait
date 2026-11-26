@@ -94,6 +94,7 @@ form_slide = """<section class="s dark lf" id="get-audited"><div class="lf-in" i
 <label>Name<input name="name" type="text" autocomplete="name" required></label>
 <label>Email<input name="email" type="email" autocomplete="email" inputmode="email" required></label>
 <label>How many houses?<select name="houses" required><option value="">Choose one</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option value="6-10">6&ndash;10</option><option value="11+">11+</option></select></label>
+<label><span>Who referred you? <em class="lf-opt">(optional)</em></span><input name="referredBy" type="text" autocomplete="off" maxlength="120"></label>
 <input name="hp_7c2f" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="lf-hp">
 <button type="submit">Find my leaks &rarr;</button>
 <p class="lf-fine">$500 per property &middot; Money back if I don&rsquo;t find at least $500 in savings</p>
@@ -111,6 +112,7 @@ css = """/* lead form (last slide) */
 .lf-sub{color:#cfe2df;font-size:clamp(16px,2.4vh,21px);line-height:1.4;margin-top:1.4vh}
 #lff{display:flex;flex-direction:column;gap:1.7vh;margin-top:3.4vh}
 #lff label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:bold;color:#cfe2df}
+#lff .lf-opt{font-style:normal;font-weight:normal;color:#9fbcb8}
 #lff input,#lff select{font:inherit;font-size:16px;font-weight:normal;padding:12px 14px;border:1px solid #2f5553;border-radius:10px;background:#fff;color:var(--ink);width:100%}
 #lff select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--teal) 50%),linear-gradient(135deg,var(--teal) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:38px}
 #lff input:focus,#lff select:focus{outline:3px solid var(--gold);outline-offset:1px}
@@ -250,6 +252,8 @@ var ZELLE='velloraconsulting@gmail.com'; // Caitlyn's Zelle
 var f=document.getElementById('lff');if(!f)return;
 var m=f.querySelector('.lf-m'),b=f.querySelector('button'),s1=document.getElementById('lf1'),s2=document.getElementById('lf2'),slide=document.getElementById('get-audited');
 var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Referral links: colivingcait.com/audit?ref=NAME pre-fills "Who referred you?".
+try{var ref=new URLSearchParams(location.search).get('ref');if(ref)f.referredBy.value=ref.trim().slice(0,120);}catch(e){}
 function el(t,c,kids){var e=document.createElement(t);if(c)e.className=c;(kids||[]).forEach(function(k){e.appendChild(typeof k==='string'?document.createTextNode(k):k);});return e;}
 function money(n){return '$'+n.toLocaleString('en-US');}
 function rainMoney(){
@@ -303,14 +307,14 @@ function step2(name,houses,intakeUrl){
   s1.hidden=true;s1.style.display='none';s2.hidden=false;slide.scrollTop=0;s2.focus({preventScroll:true});
 }
 f.addEventListener('submit',function(e){e.preventDefault();
-  var d={name:f.name.value.trim().replace(/\s+/g,' '),email:f.email.value.trim(),houses:f.houses.value,company:f.hp_7c2f.value};
+  var d={name:f.name.value.trim().replace(/\s+/g,' '),email:f.email.value.trim(),houses:f.houses.value,referredBy:f.referredBy.value.trim().replace(/\s+/g,' '),company:f.hp_7c2f.value};
   var bad=[];if(!d.name)bad.push(f.name);if(!EMAIL.test(d.email))bad.push(f.email);if(!d.houses)bad.push(f.houses);
   [f.name,f.email,f.houses].forEach(function(x){x.classList.toggle('bad',bad.indexOf(x)>-1);});
   if(bad.length){m.textContent='Please fill in your name, email and how many houses you have.';bad[0].focus();return;}
   m.textContent='';b.disabled=true;b.textContent='One moment…';
   fetch('/api/audit-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
   .then(function(r){return r.json().catch(function(){return {};}).then(function(j){if(!r.ok)throw new Error(j.error);return j;});})
-  .then(function(j){if(window.__ph)__ph(function(p){p.identify(d.email,{email:d.email,name:d.name,houses:d.houses});p.capture('audit_form_submitted',{houses:d.houses});});step2(d.name,d.houses,j.intakeUrl);})
+  .then(function(j){if(window.__ph)__ph(function(p){p.identify(d.email,{email:d.email,name:d.name,houses:d.houses,referred_by:d.referredBy||undefined});p.capture('audit_form_submitted',{houses:d.houses,referred:!!d.referredBy});});step2(d.name,d.houses,j.intakeUrl);})
   .catch(function(err){b.disabled=false;b.textContent='Find my leaks →';m.textContent=(err&&err.message)||'Something went wrong. Please try again, or email ColivingCait@gmail.com.';});
 });})();
 </script></body>"""

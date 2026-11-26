@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { analytics } from "@/lib/analytics";
+import { AUDIT_TERMS } from "@/lib/audit/terms";
 import s from "./intake.module.css";
 
 export type IntakeLead = {
@@ -139,20 +140,69 @@ onRemove: (key: string) => void;
   );
 }
 
+/** The full Audit Terms in a popup: fills the screen and scrolls on phones. */
+function TermsModal({ onClose, onAgree }: { onClose: () => void; onAgree: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+  return (
+    <div className={s.modalBack} onClick={onClose}>
+      <div
+        className={s.modal}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="audit-terms-title"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className={s.modalHead}>
+          <h2 id="audit-terms-title">Audit Terms</h2>
+          <button ref={closeRef} type="button" className={s.modalX} onClick={onClose} aria-label="Close">
+            ×
+          </button>
+        </div>
+        <div className={s.modalBody}>
+          <ol>
+            {AUDIT_TERMS.map((t) => (
+              <li key={t.title}>
+                <b>{t.title}.</b> {t.body}
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div className={s.modalFoot}>
+          <button type="button" className={s.modalClose} onClick={onClose}>
+            Close
+          </button>
+          <button type="button" className={s.modalAgree} onClick={onAgree}>
+            I agree
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Done({ lead, name }: { lead: IntakeLead; name: string }) {
   return (
     <div className={`${s.page} ${s.done}`}>
       <div className={s.wrap}>
         <div className={s.hero}>
           <div className={s.kicker}>Coliving portfolio audit</div>
-          <h1>You&rsquo;re all set, {first(name)}!</h1>
-          <p>Your files and answers are in.</p>
+          <h1>Got it!</h1>
+          <p>
+            Your audit starts as soon as payment lands. You&rsquo;ll hear from me within 5 business days.
+          </p>
         </div>
         <div className={s.card}>
-          <p>
-            Your audit starts as soon as your payment lands. In about 5 business days, I&rsquo;ll reach out to book
-            your 45-minute walkthrough, where we&rsquo;ll go through your plan to plug the leaks, house by house.
-          </p>
           <div className={s.pay}>
             <b>Haven&rsquo;t paid yet?</b> {lead.payment}
           </div>
@@ -171,8 +221,8 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
   const [name, setName] = useState(lead.name);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState(lead.email);
-  const [referredBy, setReferredBy] = useState("");
   const [manager, setManager] = useState<"" | "self" | "pm">("");
+  const [pmName, setPmName] = useState("");
   const [pmFee, setPmFee] = useState("");
   const [pmTenure, setPmTenure] = useState("");
   const [bugging, setBugging] = useState("");
@@ -180,6 +230,8 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
   const [anythingElse, setAnythingElse] = useState("");
   const [padsplit, setPadsplit] = useState<"" | "access" | "zip">("");
   const [padsplitDone, setPadsplitDone] = useState(false);
+  const [termsAgreed, setTermsAgreed] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
   const [uploads, setUploads] = useState<Upload[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
   const [sending, setSending] = useState(false);
@@ -268,14 +320,15 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
     if (phone.replace(/\D/g, "").length < 10) problems.push("Add a phone number I can reach you on.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) problems.push("Add a valid email.");
     if (!manager) problems.push("Tell me who manages your houses.");
-    if (manager === "pm" && (!pmFee.trim() || !pmTenure.trim()))
-      problems.push("Add your property manager's fee and how long they've managed your houses.");
+    if (manager === "pm" && (!pmName.trim() || !pmFee.trim() || !pmTenure.trim()))
+      problems.push("Add your property manager's name, their fee and how long they've managed your houses.");
     if (!bugging.trim()) problems.push("Tell me what's bugging you most about your portfolio.");
     if (!ok("pnl")) problems.push("Upload at least one P&L.");
     if (!padsplit) problems.push("Choose how you'll share your PadSplit data.");
     if (padsplit === "access" && !padsplitDone) problems.push('Tick "Done" once you\'ve added me to your PadSplit account.');
     if (padsplit === "zip" && !ok("padsplit")) problems.push("Upload your PadSplit earnings export.");
     if (uploads.some((u) => u.status === "error")) problems.push("Retry or remove the files that didn't upload.");
+    if (!termsAgreed) problems.push("Agree to the Audit Terms.");
     setErrors(problems);
     if (problems.length) {
       errorsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -295,8 +348,8 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
           name,
           phone,
           email,
-          referredBy,
           manager,
+          pmName: manager === "pm" ? pmName : "",
           pmFee: manager === "pm" ? pmFee : "",
           pmTenure: manager === "pm" ? pmTenure : "",
           bugging,
@@ -304,6 +357,7 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
           anythingElse,
           padsplit,
           padsplitDone,
+          termsAgreed,
           files,
         }),
       });
@@ -367,19 +421,6 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
               required
             />
           </label>
-          <label className={s.field}>
-            <span>
-              Who referred you? <span className={s.opt}>(optional)</span>
-            </span>
-            <input
-              className={s.input}
-              value={referredBy}
-              onChange={(e) => setReferredBy(e.target.value)}
-              placeholder="A friend, a meetup, Instagram…"
-              autoComplete="off"
-              name="referredBy"
-            />
-          </label>
         </section>
 
         <section className={s.card}>
@@ -401,6 +442,16 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
           </div>
           {manager === "pm" && (
             <div className={s.sub}>
+              <label className={s.field}>
+                Property manager&rsquo;s name
+                <input
+                  className={s.input}
+                  value={pmName}
+                  onChange={(e) => setPmName(e.target.value)}
+                  placeholder="Company or person"
+                  name="pmName"
+                />
+              </label>
               <label className={s.field}>
                 What&rsquo;s their fee?
                 <input
@@ -556,11 +607,29 @@ export default function IntakeForm({ lead }: { lead: IntakeLead }) {
             </div>
           )}
         </div>
-        <button type="submit" className={s.submit} disabled={sending || busy}>
-          {sending ? "Sending…" : busy ? "Uploading files…" : "Find My Money!"}
+        <label className={s.terms}>
+          <input type="checkbox" checked={termsAgreed} onChange={(e) => setTermsAgreed(e.target.checked)} required />
+          <span>
+            I agree to the{" "}
+            <button type="button" className={s.termsLink} onClick={() => setTermsOpen(true)}>
+              Audit Terms
+            </button>
+          </span>
+        </label>
+        <button type="submit" className={s.submit} disabled={sending || busy || !termsAgreed}>
+          {sending ? "Sending…" : busy ? "Uploading files…" : "Send my data"}
         </button>
         <p className={s.fine}>Your files are stored privately and only Caitlyn can see them.</p>
       </form>
+      {termsOpen && (
+        <TermsModal
+          onClose={() => setTermsOpen(false)}
+          onAgree={() => {
+            setTermsAgreed(true);
+            setTermsOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }

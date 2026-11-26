@@ -29,6 +29,7 @@ function notifyCaitlyn(lead: Lead, suspect: boolean, intakeLink: string | null) 
 Name: ${lead.name}
 Email: ${lead.email}
 Houses: ${housesLabel(lead.houses)}
+Referred by: ${lead.referredBy || "(nobody)"}
 Price shown: ${total === null ? "custom quote (email them within a day)" : money(total)}
 Zelle memo: "${zelleMemo(lead.name)}"
 
@@ -87,6 +88,7 @@ export async function POST(request: Request) {
   const [firstName = "", ...rest] = name.split(" ");
   const email = clean(body.email, 200);
   const houses = clean(body.houses, 10);
+  const referredBy = clean(body.referredBy, 120).replace(/\s+/g, " ");
   if (!firstName || !EMAIL_RE.test(email) || !isHouseCount(houses)) {
     return NextResponse.json(
       { error: "Please fill in your name, email and how many houses you have." },
@@ -94,7 +96,14 @@ export async function POST(request: Request) {
     );
   }
 
-  const lead: Lead = { id: newLeadId(), name, email, houses, createdAt: new Date().toISOString() };
+  const lead: Lead = {
+    id: newLeadId(),
+    name,
+    email,
+    houses,
+    ...(referredBy ? { referredBy } : {}),
+    createdAt: new Date().toISOString(),
+  };
   const log: string[] = [];
 
   let stored = false;
@@ -122,9 +131,9 @@ export async function POST(request: Request) {
     email,
     firstName,
     lastName: rest.join(" ") || undefined,
-    message: `Portfolio audit request: ${housesLabel(lead.houses)}.`,
+    message: `Portfolio audit request: ${housesLabel(lead.houses)}.${referredBy ? ` Referred by ${referredBy}.` : ""}`,
     tags: suspect ? ["audit lead", "possible spam"] : ["audit lead"],
-    fields: { houses },
+    fields: { houses, referred_by: referredBy || undefined },
   });
   log.push(crm.ok ? `CRM accepted ${crm.status} ${crm.body}` : `CRM FAILED ${crm.error} ${crm.body ?? ""}`);
 

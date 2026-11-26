@@ -159,11 +159,12 @@ export function sendIntakeComplete(lead: Lead, links: { file: StoredFile; url: s
     ["Name", a.name],
     ["Phone", a.phone],
     ["Email", a.email],
-    ["Referred by", a.referredBy || "(not given)"],
+    ["Referred by", lead.referredBy || "(nobody)"],
     ["Houses", `${housesLabel(lead.houses)} (${total === null ? "custom quote" : `${money(total)} quoted`})`],
     ["Who manages the houses", a.manager === "pm" ? "Property manager" : "Self-managed"],
     ...(a.manager === "pm"
       ? ([
+          ["PM name", a.pmName],
           ["PM fee", a.pmFee],
           ["PM has managed them for", a.pmTenure],
         ] as [string, string][])
@@ -176,6 +177,12 @@ export function sendIntakeComplete(lead: Lead, links: { file: StoredFile; url: s
       a.padsplit === "access"
         ? `Added you to their PadSplit account (Team > Invite, Property Admin). Check for the invite.`
         : `Uploaded their earnings export`,
+    ],
+    [
+      "Agreed to the Audit Terms",
+      lead.termsAgreedAt
+        ? `${new Date(lead.termsAgreedAt).toLocaleString("en-US", { timeZone: "America/New_York", dateStyle: "medium", timeStyle: "short" })} ET (terms version ${lead.termsVersion})`
+        : "(not recorded)",
     ],
   ];
   const files = links.length
